@@ -20,4 +20,7 @@ https://github.com/swt83/laravel-googlecalendar (should port to L4)
 ```
 
 FullCalendar for views
-```http://arshaw.com/fullcalendar/docs/```
+```
+http://arshaw.com/fullcalendar/docs/
+```
+
