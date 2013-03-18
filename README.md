@@ -10,17 +10,18 @@ To run server
 
 Bundles links for documentations:
 ```
-https://github.com/JeffreyWay/Laravel-4-Generators
-https://github.com/patricktalmadge/bootstrapper/tree/develop
-https://github.com/Anahkiasen/former
-https://github.com/laravelbook/ardent
-https://github.com/cartalyst/sentry
+https://github.com/JeffreyWay/Laravel-4-Generators (console generator to speed up work)
+https://github.com/patricktalmadge/bootstrapper/tree/develop (design)
+https://github.com/Anahkiasen/former (form creation)
+https://github.com/laravelbook/ardent (model validation)
+http://docs.cartalyst.com/sentry-2/introduction (authentication)
 
 https://github.com/swt83/laravel-googlecalendar (should port to L4)
+
+https://github.com/codenitive/laravel-oneauth/issues/38 (twiter and fb avtentication only on final release)
 ```
 
 FullCalendar for views
 ```
 http://arshaw.com/fullcalendar/docs/
 ```
-
