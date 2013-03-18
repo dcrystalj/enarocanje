@@ -1,6 +1,11 @@
 {
 	"require": {
-		"laravel/framework": "4.0.*"
+		"laravel/framework": "4.0.*",
+		"way/generators": "dev-master",
+		"patricktalmadge/bootstrapper": "dev-develop",
+		"anahkiasen/former": "dev-agnostic",
+		"laravelbook/ardent": "1.0.*",
+		"cartalyst/sentry": "2.0.*"
 	},
 	"autoload": {
 		"classmap": [
@@ -13,7 +18,7 @@
 		]
 	},
 	"scripts": {
-		"post-update-cmd": "php artisan optimize"
+		
 	},
 	"minimum-stability": "dev"
 }

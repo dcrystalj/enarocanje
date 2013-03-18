@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Way\\Generators' => $vendorDir . '/way/generators/src/',
+    'Underscore' => $vendorDir . '/anahkiasen/underscore-php/src/',
     'Symfony\\Component\\Translation\\' => $vendorDir . '/symfony/translation/',
     'Symfony\\Component\\Routing\\' => $vendorDir . '/symfony/routing/',
     'Symfony\\Component\\Process\\' => $vendorDir . '/symfony/process/',
@@ -21,6 +23,15 @@ return array(
     'Psr\\Log\\' => $vendorDir . '/psr/log/',
     'PHPParser' => $vendorDir . '/nikic/php-parser/lib/',
     'Monolog' => $vendorDir . '/monolog/monolog/src/',
+    'LaravelBook\\Laravel4Powerpack' => $vendorDir . '/laravelbook/laravel4-powerpack/src/',
+    'LaravelBook\\Ardent' => $vendorDir . '/laravelbook/ardent/src/',
+    'Laravel' => $vendorDir . '/anahkiasen/former/src',
     'Illuminate' => $vendorDir . '/laravel/framework/src/',
+    'HtmlObject' => $vendorDir . '/anahkiasen/html-object/src/',
+    'Former' => $vendorDir . '/anahkiasen/former/src',
     'ClassPreloader' => $vendorDir . '/classpreloader/classpreloader/src/',
+    'Cartalyst\\Sentry' => $vendorDir . '/cartalyst/sentry/src/',
+    'Bootstrapper' => $vendorDir . '/patricktalmadge/bootstrapper/src',
+    'Basset' => $vendorDir . '/jasonlewis/basset/src/',
+    'Assetic' => $vendorDir . '/kriswallsmith/assetic/src/',
 );

@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => 'ltpo2.fri1.uni-lj.si',
+			'database'  => 'TPO14_2013',
+			'username'  => 'ttomazic',
+			'password'  => 'dqdd47p2',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

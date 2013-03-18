@@ -8,7 +8,12 @@ For simplicity we write everything in english.
 To run server 
 ```php artisan serve```
 
-Bundles links for documentations:
+L4 documentation:
+```
+http://four.laravel.com/
+```
+
+Bundles documentations:
 ```
 https://github.com/JeffreyWay/Laravel-4-Generators (console generator to speed up work)
 https://github.com/patricktalmadge/bootstrapper/tree/develop (design)
