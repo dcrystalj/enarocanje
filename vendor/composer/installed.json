@@ -591,57 +591,6 @@
         "homepage": "http://symfony.com"
     },
     {
-        "name": "swiftmailer/swiftmailer",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21",
-            "reference": "b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.4"
-        },
-        "time": "2013-02-04 10:09:01",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "4.3-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "files": [
-                "lib/swift_required.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Chris Corbyn"
-            }
-        ],
-        "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "http://swiftmailer.org",
-        "keywords": [
-            "mail",
-            "mailer"
-        ]
-    },
-    {
         "name": "monolog/monolog",
         "version": "1.3.1",
         "version_normalized": "1.3.1.0",
@@ -1297,107 +1246,6 @@
         "homepage": "http://symfony.com"
     },
     {
-        "name": "cartalyst/sentry",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/cartalyst/sentry.git",
-            "reference": "698d07e502337c860f7ef40c5647aac2ca4ff592"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/cartalyst/sentry/zipball/698d07e502337c860f7ef40c5647aac2ca4ff592",
-            "reference": "698d07e502337c860f7ef40c5647aac2ca4ff592",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "illuminate/cookie": "4.0.*",
-            "illuminate/database": "4.0.*",
-            "illuminate/session": "4.0.*",
-            "ircmaxell/password-compat": "1.0.*",
-            "mockery/mockery": "0.7.2"
-        },
-        "suggest": {
-            "dhorrigan/capsule": "Capsule is a small utility for managing database connections given to illuminate/database outside of Laravel 4.",
-            "illuminate/cookie": "Sentry provides an Illuminate cookie driver for cookie integration.",
-            "illuminate/database": "Sentry provides Eloquent models for User, Group and Throttle providers.",
-            "illuminate/session": "Sentry provides an Illuminate session driver for storage integration.",
-            "ircmaxell/password-compat": "A forward-compatible PHP 5.5 password package for password_* functions can be used as a hasher (NativeHasher) in Sentry."
-        },
-        "time": "2013-03-20 03:19:25",
-        "type": "library",
-        "extra": {
-            "component": "package",
-            "frameworks": [
-                "Laravel 3",
-                "Laravel 4",
-                "CodeIgniter 3",
-                "FuelPHP 1"
-            ],
-            "versions": {
-                "1": "1.1/master",
-                "2": "master"
-            },
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/Cartalyst/Sentry/Groups/Exceptions.php",
-                "src/Cartalyst/Sentry/Throttling/Exceptions.php",
-                "src/Cartalyst/Sentry/Users/Exceptions.php",
-                "src/migrations"
-            ],
-            "psr-0": {
-                "Cartalyst\\Sentry": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD License (3-clause)"
-        ],
-        "authors": [
-            {
-                "name": "Ben Corlett",
-                "email": "ben.corlett@cartalyst.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Cartalyst LLC",
-                "email": "help@cartalyst.com"
-            },
-            {
-                "name": "Bruno Gaspar",
-                "email": "bruno.gaspar@cartalyst.com",
-                "role": "Developer"
-            },
-            {
-                "name": "Dan Syme",
-                "email": "dan.syme@cartalyst.com",
-                "role": "Creator & Designer"
-            },
-            {
-                "name": "Daniel Petrie",
-                "email": "dan.petrie@cartalyst.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "PHP 5.3+ Fully-featured Authentication & Authorization System",
-        "keywords": [
-            "auth",
-            "codeigniter",
-            "fuelphp",
-            "laravel",
-            "security"
-        ]
-    },
-    {
         "name": "symfony/dom-crawler",
         "version": "2.2.x-dev",
         "version_normalized": "2.2.9999999.9999999-dev",
@@ -1491,59 +1339,6 @@
         "description": "A set of classes to create and manipulate HTML objects abstractions"
     },
     {
-        "name": "anahkiasen/former",
-        "version": "dev-agnostic",
-        "version_normalized": "dev-agnostic",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Anahkiasen/former.git",
-            "reference": "c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Anahkiasen/former/zipball/c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963",
-            "reference": "c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963",
-            "shasum": ""
-        },
-        "require": {
-            "anahkiasen/html-object": "dev-master",
-            "anahkiasen/underscore-php": "dev-master",
-            "illuminate/config": "4.0.*@dev",
-            "illuminate/container": "4.0.*@dev",
-            "illuminate/translation": "4.0.*@dev"
-        },
-        "require-dev": {
-            "mockery/mockery": "dev-master"
-        },
-        "time": "2013-03-20 20:03:38",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Former": "src",
-                "Laravel": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Maxime Fabre",
-                "email": "ehtnam6@gmail.com"
-            }
-        ],
-        "description": "A powerful form builder for the Laravel framework",
-        "homepage": "http://anahkiasen.github.com/former/",
-        "keywords": [
-            "bootstrap",
-            "form",
-            "foundation",
-            "laravel"
-        ]
-    },
-    {
         "name": "patricktalmadge/bootstrapper",
         "version": "dev-develop",
         "version_normalized": "dev-develop",
@@ -1598,18 +1393,172 @@
         ]
     },
     {
+        "name": "cartalyst/sentry",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cartalyst/sentry.git",
+            "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cartalyst/sentry/zipball/edd1414fa08fef8634924eb87d3e02b1399a188b",
+            "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "illuminate/cookie": "4.0.*",
+            "illuminate/database": "4.0.*",
+            "illuminate/session": "4.0.*",
+            "ircmaxell/password-compat": "1.0.*",
+            "mockery/mockery": "0.7.2"
+        },
+        "suggest": {
+            "dhorrigan/capsule": "Capsule is a small utility for managing database connections given to illuminate/database outside of Laravel 4.",
+            "illuminate/cookie": "Sentry provides an Illuminate cookie driver for cookie integration.",
+            "illuminate/database": "Sentry provides Eloquent models for User, Group and Throttle providers.",
+            "illuminate/session": "Sentry provides an Illuminate session driver for storage integration.",
+            "ircmaxell/password-compat": "A forward-compatible PHP 5.5 password package for password_* functions can be used as a hasher (NativeHasher) in Sentry."
+        },
+        "time": "2013-03-22 01:57:43",
+        "type": "library",
+        "extra": {
+            "component": "package",
+            "frameworks": [
+                "Laravel 3",
+                "Laravel 4",
+                "CodeIgniter 3",
+                "FuelPHP 1"
+            ],
+            "versions": {
+                "1": "1.1/master",
+                "2": "master"
+            },
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/Cartalyst/Sentry/Groups/Exceptions.php",
+                "src/Cartalyst/Sentry/Throttling/Exceptions.php",
+                "src/Cartalyst/Sentry/Users/Exceptions.php",
+                "src/migrations"
+            ],
+            "psr-0": {
+                "Cartalyst\\Sentry": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD License (3-clause)"
+        ],
+        "authors": [
+            {
+                "name": "Ben Corlett",
+                "email": "ben.corlett@cartalyst.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Cartalyst LLC",
+                "email": "help@cartalyst.com"
+            },
+            {
+                "name": "Bruno Gaspar",
+                "email": "bruno.gaspar@cartalyst.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Dan Syme",
+                "email": "dan.syme@cartalyst.com",
+                "role": "Creator & Designer"
+            },
+            {
+                "name": "Daniel Petrie",
+                "email": "dan.petrie@cartalyst.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "PHP 5.3+ Fully-featured Authentication & Authorization System",
+        "keywords": [
+            "auth",
+            "codeigniter",
+            "fuelphp",
+            "laravel",
+            "security"
+        ]
+    },
+    {
+        "name": "anahkiasen/former",
+        "version": "dev-agnostic",
+        "version_normalized": "dev-agnostic",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Anahkiasen/former.git",
+            "reference": "014cad818134ad0ce117ff866ce4998c3bd81501"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Anahkiasen/former/zipball/014cad818134ad0ce117ff866ce4998c3bd81501",
+            "reference": "014cad818134ad0ce117ff866ce4998c3bd81501",
+            "shasum": ""
+        },
+        "require": {
+            "anahkiasen/html-object": "dev-master",
+            "anahkiasen/underscore-php": "dev-master",
+            "illuminate/config": "4.0.*@dev",
+            "illuminate/container": "4.0.*@dev",
+            "illuminate/translation": "4.0.*@dev"
+        },
+        "require-dev": {
+            "mockery/mockery": "dev-master"
+        },
+        "time": "2013-03-20 22:51:27",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Former": "src",
+                "Laravel": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Maxime Fabre",
+                "email": "ehtnam6@gmail.com"
+            }
+        ],
+        "description": "A powerful form builder for the Laravel framework",
+        "homepage": "http://anahkiasen.github.com/former/",
+        "keywords": [
+            "bootstrap",
+            "form",
+            "foundation",
+            "laravel"
+        ]
+    },
+    {
         "name": "laravel/framework",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "1286d09e309be3e6674e54d9e8637ad15a563413"
+            "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/1286d09e309be3e6674e54d9e8637ad15a563413",
-            "reference": "1286d09e309be3e6674e54d9e8637ad15a563413",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
+            "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
             "shasum": ""
         },
         "require": {
@@ -1665,7 +1614,7 @@
             "iron-io/iron_mq": "1.4.4",
             "mockery/mockery": "0.7.2"
         },
-        "time": "2013-03-20 18:30:15",
+        "time": "2013-03-22 04:11:16",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1698,6 +1647,57 @@
         "keywords": [
             "framework",
             "laravel"
+        ]
+    },
+    {
+        "name": "swiftmailer/swiftmailer",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "7d490f435afdde9b54633bc2ecab6c153720614a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d490f435afdde9b54633bc2ecab6c153720614a",
+            "reference": "7d490f435afdde9b54633bc2ecab6c153720614a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.4"
+        },
+        "time": "2013-03-22 14:03:11",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.3-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Chris Corbyn"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "http://swiftmailer.org",
+        "keywords": [
+            "mail",
+            "mailer"
         ]
     }
 ]

@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Anahkiasen/former.git",
-                "reference": "c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963"
+                "reference": "014cad818134ad0ce117ff866ce4998c3bd81501"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Anahkiasen/former/zipball/c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963",
-                "reference": "c0aad8a359cca64a5d5b3c65e5f3409d1d0c6963",
+                "url": "https://api.github.com/repos/Anahkiasen/former/zipball/014cad818134ad0ce117ff866ce4998c3bd81501",
+                "reference": "014cad818134ad0ce117ff866ce4998c3bd81501",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "foundation",
                 "laravel"
             ],
-            "time": "2013-03-20 20:03:38"
+            "time": "2013-03-20 22:51:27"
         },
         {
             "name": "anahkiasen/html-object",
@@ -132,12 +132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/sentry.git",
-                "reference": "698d07e502337c860f7ef40c5647aac2ca4ff592"
+                "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/698d07e502337c860f7ef40c5647aac2ca4ff592",
-                "reference": "698d07e502337c860f7ef40c5647aac2ca4ff592",
+                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/edd1414fa08fef8634924eb87d3e02b1399a188b",
+                "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b",
                 "shasum": ""
             },
             "require": {
@@ -223,7 +223,7 @@
                 "laravel",
                 "security"
             ],
-            "time": "2013-03-20 03:19:25"
+            "time": "2013-03-22 01:57:43"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -440,12 +440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1286d09e309be3e6674e54d9e8637ad15a563413"
+                "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1286d09e309be3e6674e54d9e8637ad15a563413",
-                "reference": "1286d09e309be3e6674e54d9e8637ad15a563413",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
+                "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
                 "shasum": ""
             },
             "require": {
@@ -533,7 +533,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2013-03-20 18:30:15"
+            "time": "2013-03-22 04:11:16"
         },
         {
             "name": "laravelbook/ardent",
@@ -930,12 +930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21"
+                "reference": "7d490f435afdde9b54633bc2ecab6c153720614a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21",
-                "reference": "b6bfc8f7f8ae5dac7883885ee323dc3b53ab7d21",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d490f435afdde9b54633bc2ecab6c153720614a",
+                "reference": "7d490f435afdde9b54633bc2ecab6c153720614a",
                 "shasum": ""
             },
             "require": {
@@ -971,7 +971,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-02-04 10:09:01"
+            "time": "2013-03-22 14:03:11"
         },
         {
             "name": "symfony/browser-kit",
