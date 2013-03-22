@@ -1,0 +1,32 @@
+
+<!-- saved from url=(0159)https://raw.github.com/dcrystalj/enarocanje/6aef69af78f0cc38a327c9f1be679e97bb06a26e/nacrtovanjeBaze.txt?login=dcrystalj&token=7145ab2eeb40c5ca89c762fff6a53a0b -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css"></style></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">BAZA: 
+Tables:
+User, MacroService, MicroService, WorkingHours, Coupon, Holiday, Absence, ZIPCode, Worker
+
+User:
+ID, Name, Surname, Email, TimeZone, Language, (CustomerLocation), (HashPass)
+
+MacroService:
+ID, Name, Location, TelephoneNumber, Address, ZIPCode, Description, WorkingHours
+
+MicroService: 
+ID, Name, Length, Description, Price
+
+WorkingHours:
+ID, Day, From, To
+
+Breaks:
+ID, From, To, Day
+
+Holiday:
+ID, Name, Date, Country
+
+Absence:
+ID, Name, Date, Duration
+
+ZIPCode:
+ID, Zip, Postal
+
+Worker:
+ID, Name, Surname, MicroService, WorkingHours</pre></body></html>
