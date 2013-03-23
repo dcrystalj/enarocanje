@@ -132,12 +132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/sentry.git",
-                "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b"
+                "reference": "ae12c8e3f2670d64ad535d1d441f874677912e5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/edd1414fa08fef8634924eb87d3e02b1399a188b",
-                "reference": "edd1414fa08fef8634924eb87d3e02b1399a188b",
+                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/ae12c8e3f2670d64ad535d1d441f874677912e5a",
+                "reference": "ae12c8e3f2670d64ad535d1d441f874677912e5a",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,7 @@
                     "Cartalyst\\Sentry": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "BSD License (3-clause)"
             ],
@@ -223,7 +223,7 @@
                 "laravel",
                 "security"
             ],
-            "time": "2013-03-22 01:57:43"
+            "time": "2013-03-22 21:58:17"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -440,12 +440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9"
+                "reference": "8ad0d0a6dde889959517ff1c46d5cff6096e6df2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
-                "reference": "cfdb2ec165a81d4e90e260f6e2425eefeeed44c9",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/8ad0d0a6dde889959517ff1c46d5cff6096e6df2",
+                "reference": "8ad0d0a6dde889959517ff1c46d5cff6096e6df2",
                 "shasum": ""
             },
             "require": {
@@ -518,7 +518,7 @@
                     "Illuminate": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -533,7 +533,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2013-03-22 04:11:16"
+            "time": "2013-03-23 00:55:41"
         },
         {
             "name": "laravelbook/ardent",
@@ -1330,12 +1330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "13e8107d6360467250d1f5ed5c831c53e44efcde"
+                "reference": "6af424d4fee81987e76bc76aa4e811859ca70bac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/13e8107d6360467250d1f5ed5c831c53e44efcde",
-                "reference": "13e8107d6360467250d1f5ed5c831c53e44efcde",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/6af424d4fee81987e76bc76aa4e811859ca70bac",
+                "reference": "6af424d4fee81987e76bc76aa4e811859ca70bac",
                 "shasum": ""
             },
             "require": {
@@ -1355,7 +1355,7 @@
                     "Symfony/Component/HttpFoundation/Resources/stubs"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1371,7 +1371,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-19 20:41:20"
+            "time": "2013-03-23 07:49:54"
         },
         {
             "name": "symfony/http-kernel",
@@ -1449,12 +1449,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "521c1f4047204a198d7d98bb69f2508bfe83a5e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/521c1f4047204a198d7d98bb69f2508bfe83a5e0",
+                "reference": "521c1f4047204a198d7d98bb69f2508bfe83a5e0",
                 "shasum": ""
             },
             "require": {
@@ -1471,7 +1471,7 @@
                     "Symfony\\Component\\Process\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1487,7 +1487,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-02-18 21:28:10"
+            "time": "2013-03-23 07:49:54"
         },
         {
             "name": "symfony/routing",
