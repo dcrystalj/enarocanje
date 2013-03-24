@@ -1,5 +1,5 @@
 {
-    "hash": "276557adb6bd89153a19f935f4b1805b",
+    "hash": "f77cd546331770caeb7c2da46f8f238e",
     "packages": [
         {
             "name": "anahkiasen/former",
@@ -127,17 +127,54 @@
             "time": "2013-03-19 02:15:59"
         },
         {
+            "name": "barryvdh/laravel-ide-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-ide-helper.git",
+                "reference": "5ccb7ce9bc6ba3e30d978905ac5f1cf7a284d380"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/5ccb7ce9bc6ba3e30d978905ac5f1cf7a284d380",
+                "reference": "5ccb7ce9bc6ba3e30d978905ac5f1cf7a284d380",
+                "shasum": ""
+            },
+            "require": {
+                "dannykopping/docblock": "dev-master",
+                "illuminate/console": "4.0.x",
+                "illuminate/filesystem": "4.0.x",
+                "illuminate/support": "4.0.x",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Barryvdh\\LaravelIdeHelper": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Laravel IDE Helper, generates correct PHPDocs for all Facade classes, to improve auto-completion.",
+            "time": "2013-03-24 15:00:29"
+        },
+        {
             "name": "cartalyst/sentry",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cartalyst/sentry.git",
-                "reference": "ae12c8e3f2670d64ad535d1d441f874677912e5a"
+                "reference": "0317a9eb6340d67e1cf052253ece78ea10434fae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/ae12c8e3f2670d64ad535d1d441f874677912e5a",
-                "reference": "ae12c8e3f2670d64ad535d1d441f874677912e5a",
+                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/0317a9eb6340d67e1cf052253ece78ea10434fae",
+                "reference": "0317a9eb6340d67e1cf052253ece78ea10434fae",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +222,7 @@
                     "Cartalyst\\Sentry": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD License (3-clause)"
             ],
@@ -223,7 +260,7 @@
                 "laravel",
                 "security"
             ],
-            "time": "2013-03-22 21:58:17"
+            "time": "2013-03-24 06:20:53"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -271,6 +308,54 @@
                 "preload"
             ],
             "time": "2013-03-03 02:54:09"
+        },
+        {
+            "name": "dannykopping/docblock",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dannykopping/PHPDocBlock-lite.git",
+                "reference": "8ae1dc57434be68ca985bbce68502b515155805b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dannykopping/PHPDocBlock-lite/zipball/8ae1dc57434be68ca985bbce68502b515155805b",
+                "reference": "8ae1dc57434be68ca985bbce68502b515155805b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "DocBlock": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danny Kopping",
+                    "email": "dannykopping@gmail.com",
+                    "homepage": "http://dannykopping.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library for parsing PHP DocBlock comments",
+            "homepage": "https://github.com/dannykopping/PHPDocBlock-lite",
+            "keywords": [
+                "docblock",
+                "parse",
+                "parser",
+                "reflection"
+            ],
+            "time": "2012-10-21 16:59:06"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -440,12 +525,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8ad0d0a6dde889959517ff1c46d5cff6096e6df2"
+                "reference": "a04cba37dad5553932f23db05cdeecd3e75363fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8ad0d0a6dde889959517ff1c46d5cff6096e6df2",
-                "reference": "8ad0d0a6dde889959517ff1c46d5cff6096e6df2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a04cba37dad5553932f23db05cdeecd3e75363fa",
+                "reference": "a04cba37dad5553932f23db05cdeecd3e75363fa",
                 "shasum": ""
             },
             "require": {
@@ -518,7 +603,7 @@
                     "Illuminate": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -533,7 +618,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2013-03-23 00:55:41"
+            "time": "2013-03-23 21:15:36"
         },
         {
             "name": "laravelbook/ardent",
@@ -1355,7 +1440,7 @@
                     "Symfony/Component/HttpFoundation/Resources/stubs"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1380,12 +1465,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "4f512dbe806f52729494ec16013cb84f49968f27"
+                "reference": "3bfc8fda577fb671b2d9395a59fbc87f449fa61f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/4f512dbe806f52729494ec16013cb84f49968f27",
-                "reference": "4f512dbe806f52729494ec16013cb84f49968f27",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/3bfc8fda577fb671b2d9395a59fbc87f449fa61f",
+                "reference": "3bfc8fda577fb671b2d9395a59fbc87f449fa61f",
                 "shasum": ""
             },
             "require": {
@@ -1440,7 +1525,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-19 20:41:20"
+            "time": "2013-03-23 10:43:44"
         },
         {
             "name": "symfony/process",
@@ -1471,7 +1556,7 @@
                     "Symfony\\Component\\Process\\": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1651,7 +1736,8 @@
     "stability-flags": {
         "way/generators": 20,
         "patricktalmadge/bootstrapper": 20,
-        "anahkiasen/former": 20
+        "anahkiasen/former": 20,
+        "barryvdh/laravel-ide-helper": 20
     },
     "platform": [
 

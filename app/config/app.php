@@ -115,6 +115,8 @@ return array(
 		'Former\FormerServiceProvider',
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'LaravelBook\Laravel4Powerpack\Providers\PowerpackServiceProvider',
 	),
 
 	/*
@@ -203,6 +205,9 @@ return array(
 		'Typography'      => 'Bootstrapper\\Typography',
 		'Sentry' 		  => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Former' 		  => 'Former\Facades\Illuminate',
+		'HTML' => 'LaravelBook\Laravel4Powerpack\Facades\HTMLFacade',
+		'Form' => 'LaravelBook\Laravel4Powerpack\Facades\FormFacade',
+		'Str' => 'LaravelBook\Laravel4Powerpack\Facades\StrFacade',
 	),
 
 );

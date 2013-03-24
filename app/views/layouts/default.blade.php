@@ -8,43 +8,43 @@
 
 	<title>ecommerce</title>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js') }}
 
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet"/>
+	{{ HTML::style('bootstrap/css/bootstrap.min.css') }}
+	{{ HTML::style('bootstrap/css/bootstrap-responsive.min.css') }}
+	{{ HTML::style('css/style.css') }}
 	
 </head>
 <body>
 	<header>
 		<nav>
 			<ul class="nav nav-pills" >
-				<li {{ (Request::is('home') ? 'class="active"' : '') }}>
-					<a href="{{ URL::to('home') }}" >Home</a>
+				<li {{ (Request::is('home') || Request::is('/') ? 'class="active"' : '') }}>
+					{{ HTML::to( URL::to('home'), 'Home') }}
 				</li>
 				<li {{ (Request::is('find') ? 'class="active"' : '') }}>
-					<a href="{{ URL::to('find') }}">Find</a>
+					{{ HTML::to( URL::to('find'), 'Find') }}
 				</li>
 				<li {{ (Request::is('register') ? 'class="active"' : '') }}>
-					<a href="{{ URL::to('register') }}">Register</a>
+					{{ HTML::to( URL::to('register'), 'Register') }}
 				</li>
 
-				@if (Auth::check())
+				@if ( Auth::check() )
 					<li class="navbar-text">Logged in as {{ Auth::user()->fullName() }}</li>
 					<li class="divider-vertical"></li>
 					<li {{ (Request::is('account') ? 'class="active"' : '') }}>
-						<a href="{{ URL::to('account') }}}">Account</a>
+						{{ HTML::to( URL::to('account'), 'Account') }}
 					</li>
 					<li>
-						<a href="{{ URL::to('account/logout') }}">Logout</a>
+						{{ HTML::to( URL::to('account/logout'), 'Logout' ) }}
 					</li>
 				@else
 					<li {{ (Request::is('account/login') ? 'class="active"' : '') }}>
-						<a href="{{ URL::to('account/login') }}}">Login</a>
+						{{ HTML::to( URL::to('account/login'), 'Login' ) }}
 					</li>
 					<li {{ (Request::is('account/register') ? 'class="active"' : '') }}>
-						<a href="{{ URL::to('account/register') }}">Register</a>
+						{{ HTML::to( URL::to('account/register'), 'Register' }}
 					</li>
 				@endif
 
@@ -59,12 +59,9 @@
 
 		@yield('content')
 
-
-
-
 	</div>
 
-	<script src="js/main.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+	{{ HTML::script("js/main.js") }}
+	{{ HTML::script("bootstrap/js/bootstrap.min.js") }}
 </body>
 </html>
