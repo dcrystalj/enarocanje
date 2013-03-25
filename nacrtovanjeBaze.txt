@@ -13,10 +13,13 @@ ID, Name, Location, TelephoneNumber, Address, ZIPCode, Description, WorkingHours
 MicroService: 
 ID, Name, Length, Description, Price
 
-WorkingHours:
+WorkingHour:
 ID, Day, From, To
 
-Breaks:
+Break:
+ID, From, To, Day
+
+FreeDay:
 ID, From, To, Day
 
 Holiday:
