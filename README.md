@@ -19,7 +19,6 @@ https://github.com/JeffreyWay/Laravel-4-Generators (console generator to speed u
 https://github.com/patricktalmadge/bootstrapper/tree/develop (design)
 https://github.com/Anahkiasen/former (form creation)
 https://github.com/laravelbook/ardent (model validation)
-http://docs.cartalyst.com/sentry-2/introduction (authentication)
 https://github.com/laravelbook/laravel4-powerpack
 
 https://github.com/swt83/laravel-googlecalendar (should port to L4)
