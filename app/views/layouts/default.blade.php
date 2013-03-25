@@ -44,7 +44,7 @@
 						{{ HTML::to( URL::to('account/login'), 'Login' ) }}
 					</li>
 					<li {{ (Request::is('account/register') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account/register'), 'Register' }}
+						{{ HTML::to( URL::to('account/register'), 'Register') }}
 					</li>
 				@endif
 
