@@ -25,3 +25,15 @@ Route::get('find', function()
 {
 	return View::make('find');
 });
+
+Route::get('user', function()
+{
+	return View::make('user');
+});
+
+
+
+// application/routes.php
+#Route::controller('userRegValidationController');
+
+#Route::controller('account');
