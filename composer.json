@@ -5,7 +5,6 @@
 		"patricktalmadge/bootstrapper": "dev-develop",
 		"anahkiasen/former": "dev-agnostic",
 		"laravelbook/ardent": "1.0.*",
-		"cartalyst/sentry": "2.0.*",
 		"barryvdh/laravel-ide-helper": "dev-master"
 
 	},

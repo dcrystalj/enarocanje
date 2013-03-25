@@ -1,5 +1,5 @@
 {
-    "hash": "f77cd546331770caeb7c2da46f8f238e",
+    "hash": "bc353ba5de8f56724d6faf0220871781",
     "packages": [
         {
             "name": "anahkiasen/former",
@@ -162,105 +162,6 @@
             ],
             "description": "Laravel IDE Helper, generates correct PHPDocs for all Facade classes, to improve auto-completion.",
             "time": "2013-03-24 15:00:29"
-        },
-        {
-            "name": "cartalyst/sentry",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cartalyst/sentry.git",
-                "reference": "0317a9eb6340d67e1cf052253ece78ea10434fae"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/0317a9eb6340d67e1cf052253ece78ea10434fae",
-                "reference": "0317a9eb6340d67e1cf052253ece78ea10434fae",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "illuminate/cookie": "4.0.*",
-                "illuminate/database": "4.0.*",
-                "illuminate/session": "4.0.*",
-                "ircmaxell/password-compat": "1.0.*",
-                "mockery/mockery": "0.7.2"
-            },
-            "suggest": {
-                "dhorrigan/capsule": "Capsule is a small utility for managing database connections given to illuminate/database outside of Laravel 4.",
-                "illuminate/cookie": "Sentry provides an Illuminate cookie driver for cookie integration.",
-                "illuminate/database": "Sentry provides Eloquent models for User, Group and Throttle providers.",
-                "illuminate/session": "Sentry provides an Illuminate session driver for storage integration.",
-                "ircmaxell/password-compat": "A forward-compatible PHP 5.5 password package for password_* functions can be used as a hasher (NativeHasher) in Sentry."
-            },
-            "type": "library",
-            "extra": {
-                "component": "package",
-                "frameworks": [
-                    "Laravel 3",
-                    "Laravel 4",
-                    "CodeIgniter 3",
-                    "FuelPHP 1"
-                ],
-                "versions": {
-                    "1": "1.1/master",
-                    "2": "master"
-                },
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/Cartalyst/Sentry/Groups/Exceptions.php",
-                    "src/Cartalyst/Sentry/Throttling/Exceptions.php",
-                    "src/Cartalyst/Sentry/Users/Exceptions.php",
-                    "src/migrations"
-                ],
-                "psr-0": {
-                    "Cartalyst\\Sentry": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD License (3-clause)"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Corlett",
-                    "email": "ben.corlett@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Cartalyst LLC",
-                    "email": "help@cartalyst.com"
-                },
-                {
-                    "name": "Bruno Gaspar",
-                    "email": "bruno.gaspar@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Syme",
-                    "email": "dan.syme@cartalyst.com",
-                    "role": "Creator & Designer"
-                },
-                {
-                    "name": "Daniel Petrie",
-                    "email": "dan.petrie@cartalyst.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP 5.3+ Fully-featured Authentication & Authorization System",
-            "keywords": [
-                "auth",
-                "codeigniter",
-                "fuelphp",
-                "laravel",
-                "security"
-            ],
-            "time": "2013-03-24 06:20:53"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -525,12 +426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a04cba37dad5553932f23db05cdeecd3e75363fa"
+                "reference": "aea6b03f00b278c77805a8c9ce32479c3041d8c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a04cba37dad5553932f23db05cdeecd3e75363fa",
-                "reference": "a04cba37dad5553932f23db05cdeecd3e75363fa",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/aea6b03f00b278c77805a8c9ce32479c3041d8c5",
+                "reference": "aea6b03f00b278c77805a8c9ce32479c3041d8c5",
                 "shasum": ""
             },
             "require": {
@@ -618,7 +519,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2013-03-23 21:15:36"
+            "time": "2013-03-24 18:20:52"
         },
         {
             "name": "laravelbook/ardent",
