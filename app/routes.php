@@ -31,7 +31,7 @@ Route::get('user', function()
 	return View::make('user');
 });
 
-
+Route::resource('ureservation' , 'CustomerReservation');
 
 // application/routes.php
 #Route::controller('userRegValidationController');

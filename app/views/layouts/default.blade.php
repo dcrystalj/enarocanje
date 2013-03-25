@@ -6,7 +6,9 @@
 	<meta name="author" content="TPO">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>ecommerce</title>
+	<title>
+		@yield('title')
+	</title>
 
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}
 	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js') }}
@@ -54,7 +56,9 @@
 	
 	<div class="container">		
 
-		<h1>Hello Majster</h1>
+		<h1>
+			@yield('title')
+		</h1>
 
 
 		@yield('content')

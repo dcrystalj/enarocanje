@@ -1,9 +1,9 @@
 @extends('layouts.default')
 
 @section('title')
-    Hello
+    Make reservation
 @stop
 
 @section('content')
-    <p>Example</p>
+    <p>here i will add fullcalendar</p>
 @stop
