@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('title')
+    wrong Form  =)
+@stop
+
 @section('content')
 	<h1>User registration</h1>
     <form method="POST" action="http://localhost:8000/app/controllers/UserRegValidationController.php" accept-charset="UTF-8">
