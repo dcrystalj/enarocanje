@@ -1,6 +1,6 @@
 <?php
 
-class UserRegValidationController extends BaseController {
+class Validation extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,7 +15,7 @@ class UserRegValidationController extends BaseController {
 	|
 	*/
 
-	public function validate()
+	public function getValidate()
 	{
 		#echo "asdllllllllllllldsa"
 		#$panda = Input::get();

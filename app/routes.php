@@ -31,9 +31,14 @@ Route::get('user', function()
 	return View::make('user');
 });
 
+Route::get('userWithFormer', function()
+{
+	return View::make('userWithFormer');
+});
+
 
 
 // application/routes.php
-#Route::controller('userRegValidationController');
+#route::controller('UserRegValidationController');
 
 #Route::controller('account');
