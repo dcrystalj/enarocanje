@@ -24,24 +24,25 @@
 			<!-- using bootstrapper design -->
 			{{ Navigation::pills(
 				Navigation::links([
-					[
-						'Home',
-						URL::to('home'), 					
-						(Request::is('home') || Request::is('/'))
-					],
-					[
-						'Find',
-						URL::to('find'), 					
-						(Request::is('find'))
-					],
-					[
-						'Register',
-						URL::to('register'), 					
-						(Request::is('register'))
-					],						
+					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
+					['Find', URL::to('find'), Request::is('find')],					
 				])
 			)}}
 		</nav>
+		<div>
+			@if ( ! Auth::check() )
+				{{ Navigation::pills(
+					Navigation::links([
+						['Login', URL::to('account/login'), Request::is('account/login')], 
+						['Register', URL::to('register'), Request::is('register')],
+					])
+				)}}	
+			@else
+				<li class="navbar-text">
+					Logged in as {{ HTML::to(URL::to('user'), Auth::user()->fullName()) }}
+				</li>
+			@endif
+		</div>
 	</header>	
 	
 	<div class="container">		
