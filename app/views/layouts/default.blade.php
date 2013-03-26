@@ -21,37 +21,27 @@
 <body>
 	<header>
 		<nav>
-			<ul class="nav nav-pills" >
-				<li {{ (Request::is('home') || Request::is('/') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('home'), 'Home') }}
-				</li>
-				<li {{ (Request::is('find') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('find'), 'Find') }}
-				</li>
-				<li {{ (Request::is('register') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('register'), 'Register') }}
-				</li>
-
-				@if ( Auth::check() )
-					<li class="navbar-text">Logged in as {{ Auth::user()->fullName() }}</li>
-					<li class="divider-vertical"></li>
-					<li {{ (Request::is('account') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account'), 'Account') }}
-					</li>
-					<li>
-						{{ HTML::to( URL::to('account/logout'), 'Logout' ) }}
-					</li>
-				@else
-					<li {{ (Request::is('account/login') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account/login'), 'Login' ) }}
-					</li>
-					<li {{ (Request::is('account/register') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account/register'), 'Register') }}
-					</li>
-				@endif
-
-			</ul>
-
+			<!-- using bootstrapper design -->
+			{{ Navigation::pills(
+				Navigation::links([
+					[
+						'Home',
+						URL::to('home'), 					
+						(Request::is('home') || Request::is('/'))
+					],
+					[
+						'Find',
+						URL::to('find'), 					
+						(Request::is('find'))
+					],
+					[
+						'Register',
+						URL::to('register'), 					
+						(Request::is('register'))
+					],						
+				])
+			)}}
+		</nav>
 	</header>	
 	
 	<div class="container">		
