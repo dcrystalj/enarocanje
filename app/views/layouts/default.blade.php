@@ -25,7 +25,7 @@
 			{{ Navigation::pills(
 				Navigation::links([
 					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
-					['Find', URL::to('find'), Request::is('find')],					
+					['Find', URL::to('find'), Request::is('find')],										
 				])
 			)}}
 		</nav>
