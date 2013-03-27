@@ -33,6 +33,19 @@ Route::get('user', function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 
+Route::get('/',function()
+{
+	return View::make('registerP');
+});
+
+Route::get('registerP',function()
+{
+	return View::make('registerP');
+});
+
+Route::controller('providerRegistrationH','ProviderRegistrationHandler');
+Route::controller('providerRegistrationV','ProviderRegistrationVal');
+
 // application/routes.php
 #Route::controller('userRegValidationController');
 

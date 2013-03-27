@@ -28,8 +28,8 @@
 				<li {{ (Request::is('find') ? 'class="active"' : '') }}>
 					{{ HTML::to( URL::to('find'), 'Find') }}
 				</li>
-				<li {{ (Request::is('register') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('register'), 'Register') }}
+				<li {{ (Request::is('registerP') ? 'class="active"' : '') }}>
+					{{ HTML::to( URL::to('registerP'), 'Register') }}
 				</li>
 
 				@if ( Auth::check() )
