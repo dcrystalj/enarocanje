@@ -32,6 +32,13 @@
 					{{ HTML::to( URL::to('registerP'), 'Register') }}
 				</li>
 
+				<li {{ (Request::is('ProviderServiceSettings') ? 'class="active"' : '') }}>
+					{{ HTML::to( URL::to('ProviderServiceSettings'), 'Settings') }}
+				</li>
+				<li {{ (Request::is('ManageServices') ? 'class="active"' : '') }}>
+					{{ HTML::to( URL::to('ManageServices'), 'ManageServices') }}
+				</li>
+
 				@if ( Auth::check() )
 					<li class="navbar-text">Logged in as {{ Auth::user()->fullName() }}</li>
 					<li class="divider-vertical"></li>
@@ -44,9 +51,6 @@
 				@else
 					<li {{ (Request::is('account/login') ? 'class="active"' : '') }}>
 						{{ HTML::to( URL::to('account/login'), 'Login' ) }}
-					</li>
-					<li {{ (Request::is('account/register') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account/register'), 'Register') }}
 					</li>
 				@endif
 

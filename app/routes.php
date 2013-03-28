@@ -46,6 +46,26 @@ Route::get('registerP',function()
 Route::controller('providerRegistrationH','ProviderRegistrationHandler');
 Route::controller('providerRegistrationV','ProviderRegistrationVal');
 
+Route::get('/',function()
+{
+	return View::make('ProviderServiceSettings');
+});
+
+Route::get('ProviderServiceSettings',function()
+{
+	return View::make('ProviderServiceSettings');
+});
+
+Route::get('/',function()
+{
+	return View::make('ManageServices');
+});
+
+Route::get('ManageServices',function()
+{
+	return View::make('ManageServices');
+});
+
 // application/routes.php
 #Route::controller('userRegValidationController');
 
