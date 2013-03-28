@@ -10,7 +10,6 @@
         <label for="name">Name:</label>
         <input type="text" name="name" id="name">
         <label for="length">Length:</label>
-        <label for="language">Language:</label>
         <select>
         	<option value="15">15 min</option>
         	<option value="30">30 min</option>
