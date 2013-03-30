@@ -19,23 +19,22 @@
 {{Former::text('Email')}}
 {{Former::password('Password')}}
 {{Former::password('Password')}}
-<?php 
-	echo "Timezone ";
-	echo "<select>";
+
+	{{ "Timezone " }}
+	{{ "<select>" }}
 	for ($i=-11;$i<=12;$i++) {
 		if($i<0) echo "<option value='$i'>$i</option>";
 		else if($i>0) echo "<option value='+$i'>$i</option>";
 		else echo "<option selected='selected' value='$i'>UTC</option>";
 	}
-	echo "</select> <br />";
-    echo "Language ";
-    echo "  <select>";
-    echo "      <option value='english'>English</option>";	
-    echo "      <option value='slovenian'>Slovenian</option>";
-    echo "      <option value='italian'>Italian</option>";
-    echo "      <option value='german'>German</option>";
-    echo "  </select>";
-?>  
+	{{ "</select> <br />"; }}
+    {{ "Language "; }}
+    {{ "  <select>"; }}
+    {{ "      <option value='english'>English</option>"; }}
+    {{ "      <option value='slovenian'>Slovenian</option>"; }}
+    {{ "      <option value='italian'>Italian</option>"; }}
+    {{ "      <option value='german'>German</option>"; }}
+    {{ "  </select>"; }}
 {{Former::actions()->submit('Submit')}}
 {{Former::close()}}
 
