@@ -5,12 +5,9 @@
 @stop
 
 @section('content')
-    <form method="POST" action="http://localhost/app/controllers/ProviderRegistrationHandler.php" accept-charset="UTF-8">
-    <label for="name">Service Name:</label>
-    <input type="text" name="name" id="name">
-    <label for="Email">E-mail:</label>
-    <input type="text" name="email" id="email">
-    </br>
-    <input type="submit" value="Register">
-</form>
+    {{ Former::open() }}
+    {{ Former::text('Service Name:')->autofocus() }}
+    {{ Former::text('Email:') }}
+    {{ Former::actions()->submit('Register') }}
+    {{ Former::close() }}   
 @stop
