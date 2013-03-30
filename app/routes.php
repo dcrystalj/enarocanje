@@ -28,8 +28,15 @@ Route::get('find', function()
 
 Route::get('user', function()
 {
-	return View::make('user');
+	return View::make('userWithFormer');
 });
+
+Route::get('userWithFormer', function()
+{
+	return View::make('userWithFormer');
+});
+
+
 
 Route::resource('ureservation' , 'CustomerReservation');
 
@@ -43,8 +50,15 @@ Route::get('registerP',function()
 	return View::make('registerP');
 });
 
+Route::get('registerU',function()
+{
+	return View::make('registerU');
+});
+
 Route::controller('providerRegistrationH','ProviderRegistrationHandler');
 Route::controller('providerRegistrationV','ProviderRegistrationVal');
+#Route::controller('UserRegistrationH','UserRegistrationH');
+#Route::controller('UserRegistrationV','UserRegistrationV');
 
 Route::get('/',function()
 {
@@ -67,6 +81,6 @@ Route::get('ManageServices',function()
 });
 
 // application/routes.php
-#Route::controller('userRegValidationController');
+//route::controller('UserwithformerregistrationsController');
 
 #Route::controller('account');
