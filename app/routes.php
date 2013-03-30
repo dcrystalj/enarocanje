@@ -57,8 +57,8 @@ Route::get('registerU',function()
 
 Route::controller('providerRegistrationH','ProviderRegistrationHandler');
 Route::controller('providerRegistrationV','ProviderRegistrationVal');
-Route::controller('UserRegistrationH','UserRegistrationH');
-Route::controller('UserRegistrationV','UserRegistrationV');
+#Route::controller('UserRegistrationH','UserRegistrationH');
+#Route::controller('UserRegistrationV','UserRegistrationV');
 
 Route::get('/',function()
 {
