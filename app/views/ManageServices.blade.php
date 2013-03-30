@@ -5,6 +5,17 @@
 @stop
 
 @section('content')
+    $durations = [15 min, 30 min, 45 min, 1 h, 1 h 15 min,1 h 30 min, 1 h 45 min, 2 h];
+    
+    {{ Former::open() }}
+    {{ Former::text('Name:')->autofocus() }}
+    {{ Former::text('Length:') }}
+    <!-- {{ Former::select('duration')->options($durations, 8) }} -->
+    {{ Former::password('Description:*') }}
+    {{ Former::password('Price:*') }}
+    {{ Former::four_text('* - Optional') }}
+    {{ Former::actions()->submit('Add service') }}
+    {{ Former::close() }}   
     <div>
         <form method="POST" action="" accept-charset="UTF-8">
         <label for="name">Name:</label>

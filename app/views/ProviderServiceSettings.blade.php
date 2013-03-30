@@ -5,9 +5,19 @@
 @stop
 
 @section('content')
+    <?php $languages = [English,Slovenian]?>
+    {{ Former::open() }}
+    {{ Former::text('Service name:')->autofocus() }}
+    {{ Former::text('E-mail:') }}
+    {{ Language: }}
+    {{ Former::select('language')->options($languages) }}
+    {{ Former::password('Change Password:') }}
+    {{ Former::password('Re-type password:') }}
+    {{ Former::actions()->submit('Save settings') }}
+    {{ Former::close() }}   
     <form method="POST" action="" accept-charset="UTF-8">
     <label for="name">Service Name:</label>
-    <input type="text" name="name" id="name">
+    <input type="text" name="name" id="name">s
     <label for="Email">E-mail:</label>
     <input type="text" name="email" id="email">
     <label for="language">Language:</label>
