@@ -50,8 +50,15 @@ Route::get('registerP',function()
 	return View::make('registerP');
 });
 
+Route::get('registerU',function()
+{
+	return View::make('registerU');
+});
+
 Route::controller('providerRegistrationH','ProviderRegistrationHandler');
 Route::controller('providerRegistrationV','ProviderRegistrationVal');
+Route::controller('UserRegistrationH','UserRegistrationH');
+Route::controller('UserRegistrationV','UserRegistrationV');
 
 Route::get('/',function()
 {
@@ -74,6 +81,6 @@ Route::get('ManageServices',function()
 });
 
 // application/routes.php
-#route::controller('UserRegValidationController');
+//route::controller('UserwithformerregistrationsController');
 
 #Route::controller('account');

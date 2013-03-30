@@ -26,7 +26,8 @@
 				Navigation::links([
 					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
 					['Find', URL::to('find'), Request::is('find')],	
-					['Register',URL::to('registerP'),Request::is('registerP')],
+					['Provider registration',URL::to('registerP'),Request::is('registerP')],
+					['User registration',URL::to('registerU'),Request::is('registerU')],
 					['Settings',URL::to('ProviderServiceSettings'),Request::is('ProviderServiceSettings')],									
 					['ManageServices',URL::to('ManageServices'),Request::is('ManageServices')],
 				])
