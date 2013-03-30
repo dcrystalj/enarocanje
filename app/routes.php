@@ -28,19 +28,17 @@ Route::get('find', function()
 
 Route::get('user', function()
 {
-	return View::make('user');
+	return View::make('userWithFormer');
 });
 
-<<<<<<< HEAD
 Route::get('userWithFormer', function()
 {
 	return View::make('userWithFormer');
 });
 
 
-=======
+
 Route::resource('ureservation' , 'CustomerReservation');
->>>>>>> 0bad566f24e5d8676c7464aad090139622dee969
 
 // application/routes.php
 #route::controller('UserRegValidationController');
