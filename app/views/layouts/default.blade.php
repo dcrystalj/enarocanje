@@ -21,15 +21,31 @@
 <body>
 	<header>
 		<nav>
-			<ul class="nav nav-pills" >
-				<li {{ (Request::is('home') || Request::is('/') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('home'), 'Home') }}
+			<!-- using bootstrapper design -->
+			{{ Navigation::pills(
+				Navigation::links([
+					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
+					['Find', URL::to('find'), Request::is('find')],	
+					['Register',URL::to('registerP'),Request::is('registerP')],
+					['Settings',URL::to('ProviderServiceSettings'),Request::is('ProviderServiceSettings')],									
+					['ManageServices',URL::to('ManageServices'),Request::is('ManageServices')],
+				])
+			)}}
+		</nav>
+		<div>
+			@if ( ! Auth::check() )
+				{{ Navigation::pills(
+					Navigation::links([
+						['Login', URL::to('account/login'), Request::is('account/login')], 
+						['Register', URL::to('register'), Request::is('register')],
+					])
+				)}}	
+			@else
+				<li class="navbar-text">
+					Logged in as {{ HTML::to(URL::to('user'), Auth::user()->fullName()) }}
 				</li>
 				<li {{ (Request::is('find') ? 'class="active"' : '') }}>
 					{{ HTML::to( URL::to('find'), 'Find') }}
-				</li>
-				<li {{ (Request::is('register') ? 'class="active"' : '') }}>
-					{{ HTML::to( URL::to('register'), 'Register') }}
 				</li>
 
 				@if ( Auth::check() )
@@ -45,13 +61,12 @@
 					<li {{ (Request::is('account/login') ? 'class="active"' : '') }}>
 						{{ HTML::to( URL::to('account/login'), 'Login' ) }}
 					</li>
-					<li {{ (Request::is('account/register') ? 'class="active"' : '') }}>
-						{{ HTML::to( URL::to('account/register'), 'Register') }}
-					</li>
 				@endif
 
 			</ul>
 
+			@endif
+		</div>
 	</header>	
 	
 	<div class="container">		

@@ -202,10 +202,9 @@ return array(
 		'Thumbnail'       	=> 'Bootstrapper\\Thumbnail',
 		'Typeahead'       	=> 'Bootstrapper\\Typeahead',
 		'Typography'      	=> 'Bootstrapper\\Typography',
-		'Former' 		  	=> 'Former\Facades\Illuminate',
+		'Former' 		  	=> 'Former\\Facades\\Illuminate',
 		'HTML'				=> 'LaravelBook\Laravel4Powerpack\Facades\HTMLFacade',
-		'Form'				=> 'LaravelBook\Laravel4Powerpack\Facades\FormFacade',
 		'Str'				=> 'LaravelBook\Laravel4Powerpack\Facades\StrFacade',
 	),
-
+		
 );

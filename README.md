@@ -5,6 +5,8 @@ e-narocanje, za TPO
 
 For simplicity we write everything in english.
 
+fist ```composer install``` or ```composer update```
+
 To run server 
 ```php artisan serve```
 
@@ -17,6 +19,7 @@ Bundles documentations:
 ```
 https://github.com/JeffreyWay/Laravel-4-Generators (console generator to speed up work)
 https://github.com/patricktalmadge/bootstrapper/tree/develop (design)
+-> examples http://bootstrapper.aws.af.cm/basecss
 https://github.com/Anahkiasen/former (form creation)
 https://github.com/laravelbook/ardent (model validation)
 https://github.com/laravelbook/laravel4-powerpack

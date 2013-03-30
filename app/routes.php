@@ -40,6 +40,39 @@ Route::get('userWithFormer', function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 
+Route::get('/',function()
+{
+	return View::make('registerP');
+});
+
+Route::get('registerP',function()
+{
+	return View::make('registerP');
+});
+
+Route::controller('providerRegistrationH','ProviderRegistrationHandler');
+Route::controller('providerRegistrationV','ProviderRegistrationVal');
+
+Route::get('/',function()
+{
+	return View::make('ProviderServiceSettings');
+});
+
+Route::get('ProviderServiceSettings',function()
+{
+	return View::make('ProviderServiceSettings');
+});
+
+Route::get('/',function()
+{
+	return View::make('ManageServices');
+});
+
+Route::get('ManageServices',function()
+{
+	return View::make('ManageServices');
+});
+
 // application/routes.php
 #route::controller('UserRegValidationController');
 
