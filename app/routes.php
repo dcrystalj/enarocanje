@@ -31,10 +31,6 @@ Route::get('user', function()
 	return View::make('userWithFormer');
 });
 
-Route::get('userWithFormer', function()
-{
-	return View::make('userWithFormer');
-});
 
 
 
@@ -50,9 +46,9 @@ Route::get('registerP',function()
 	return View::make('registerP');
 });
 
-Route::get('registerU',function()
+Route::get('registerUser',function()
 {
-	return View::make('registerU');
+	return View::make('registerUser');
 });
 
 Route::controller('providerRegistrationH','ProviderRegistrationHandler');
