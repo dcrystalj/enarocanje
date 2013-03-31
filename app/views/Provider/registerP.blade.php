@@ -9,7 +9,7 @@
 	$rules = array('Service Name:'     => 'required|max:20|alpha',
                    'Email:'    => 'required',);
 ?>
-    {{ Former::open('ProviderServiceSettings','POST')->rules($rules) }}
+    {{ Former::open()->rules($rules) }}
     {{ Former::text('Service Name:')->autofocus() }}
     {{ Former::text('Email:') }}
     {{ Former::actions()->submit('Register') }}
