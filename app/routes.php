@@ -26,16 +26,7 @@ Route::get('find', function()
 	return View::make('find');
 });
 
-Route::get('user', function()
-{
-	return View::make('userWithFormer');
-});
-
-
-
-
 Route::resource('ureservation' , 'CustomerReservation');
-
 
 Route::get('registerP',function()
 {
@@ -64,3 +55,5 @@ Route::get('ManageServices',function()
 });
 
 #Route::controller('account');
+#Route::controller('UserregistrationsController','UserregistrationsController');
+#Route::controller('UserregistrationsController');
