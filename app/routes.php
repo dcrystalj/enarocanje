@@ -28,18 +28,13 @@ Route::get('find', function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 
-Route::get('registerP',function()
-{
-	return View::make('registerP');
-});
+Route::resource('registerP','Provider');
 
 Route::get('registerUser',function()
 {
 	return View::make('registerUser');
 });
 
-Route::controller('providerRegistrationH','ProviderRegistrationHandler');
-Route::controller('providerRegistrationV','ProviderRegistrationVal');
 #Route::controller('UserRegistrationH','UserRegistrationH');
 #Route::controller('UserRegistrationV','UserRegistrationV');
 
