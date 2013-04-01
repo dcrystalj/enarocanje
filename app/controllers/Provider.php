@@ -29,7 +29,17 @@ class Provider extends BaseController {
 	 */
 	public function store()
 	{
-		// input::all();
+		$rules = array('Service Name:'     => 'max:20|alpha',
+                       'Email:'    => 'required|email',);
+		$validation = Validator::make(Input::all(),$rules);
+		if($validation->fails())
+		{
+			return Redirect::to('provider/create')->withErrors($validation);
+		}
+		else
+		{
+			return View::make('home');
+		}
 	}
 
 	/**
@@ -64,6 +74,7 @@ class Provider extends BaseController {
 	{
 		//
 	}
+
 
 	/**
 	 * Remove the specified resource from storage.

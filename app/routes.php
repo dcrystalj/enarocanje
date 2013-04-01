@@ -28,8 +28,6 @@ Route::get('find', function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 
-Route::resource('registerP','Provider');
-
 Route::get('registerUser',function()
 {
 	return View::make('registerUser');
@@ -38,16 +36,9 @@ Route::get('registerUser',function()
 #Route::controller('UserRegistrationH','UserRegistrationH');
 #Route::controller('UserRegistrationV','UserRegistrationV');
 
-
-Route::get('ProviderServiceSettings',function()
-{
-	return View::make('ProviderServiceSettings');
-});	
-
-Route::get('ManageServices',function()
-{
-	return View::make('ManageServices');
-});
+Route::resource('provider','Provider');
+Route::resource('providerSettings','ProviderServiceSettings');
+Route::resource('ManageServices','ManageServices');
 
 #Route::controller('account');
 #Route::controller('UserregistrationsController','UserregistrationsController');

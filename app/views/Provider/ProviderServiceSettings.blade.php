@@ -11,11 +11,11 @@
     $language[2] = "Italian";
     $language[3] = "German";
 ?>
-    {{ Former::open() }}
+    {{ Former::open('providerSettings') }}
     {{ Former::text('Service name:')->autofocus() }}
     {{ Former::text('E-mail:') }}
     {{ Former::select('Language')->options($language) }}
-    {{ Former::password('Change Password:') }}
+    {{ Former::password('Change password:') }}
     {{ Former::password('Re-type password:') }}
     {{ Former::actions()->submit('Save settings') }}
     {{ Former::close() }}   
