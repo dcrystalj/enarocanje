@@ -11,7 +11,7 @@
     $language[2] = "Italian";
     $language[3] = "German";
 ?>
-    {{ Former::open('providerSettings') }}
+    {{ Former::open('provider') }}
     {{ Former::text('Service name:')->autofocus() }}
     {{ Former::text('E-mail:') }}
     {{ Former::select('Language')->options($language) }}
