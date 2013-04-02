@@ -34,7 +34,6 @@ Route::get('registerUser',function()
 });
 
 Route::resource('provider','Provider');
-Route::resource('providerSettings','ProviderServiceSettings');
 Route::resource('ManageServices','ManageServices');
 
 Route::resource('riba','User');

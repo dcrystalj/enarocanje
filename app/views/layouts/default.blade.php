@@ -28,7 +28,7 @@
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('registerUser'),Request::is('registerUser')],
-					['Settings',URL::to('providerSettings/create'),Request::is('providerSettings/create')],									
+					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 				])
 			)}}

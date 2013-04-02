@@ -59,9 +59,9 @@ class Provider extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		//
+		return View::make('Provider.ProviderServiceSettings');
 	}
 
 	/**
@@ -72,7 +72,19 @@ class Provider extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = array('Service Name:'     => 'required|max:20|alpha',
+                       'E-mail:'    => 'email',
+                       'Change password:'    =>  'confirmed');
+
+		$validation = Validator::make(Input::all(),$rules);
+		if($validation->fails())
+		{
+			return Redirect::to('provider/edit')->withErrors($validation);
+		}
+		else
+		{
+			return View::make('find');
+		}
 	}
 
 
