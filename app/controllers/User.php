@@ -1,6 +1,6 @@
 <?php
 
-class Provider extends BaseController {
+class User extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class Provider extends BaseController {
 	 */
 	public function index()
 	{
-		return 'asd';
+		return "lol";
 	}
 
 	/**
@@ -19,7 +19,7 @@ class Provider extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('Provider.registerP');
+		return "lol";
 	}
 
 	/**
@@ -29,17 +29,7 @@ class Provider extends BaseController {
 	 */
 	public function store()
 	{
-		$rules = array('Service Name:'     => 'max:20|alpha',
-                       'Email:'    => 'required|email',);
-		$validation = Validator::make(Input::all(),$rules);
-		if($validation->fails())
-		{
-			return Redirect::to('provider/create')->withErrors($validation);
-		}
-		else
-		{
-			return View::make('home');
-		}
+		//
 	}
 
 	/**
@@ -74,7 +64,6 @@ class Provider extends BaseController {
 	{
 		//
 	}
-
 
 	/**
 	 * Remove the specified resource from storage.

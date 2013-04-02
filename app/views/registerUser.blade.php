@@ -25,7 +25,7 @@
       'Language' => 'min:1',
     );
 ?>
-{{Former::open("http://localhost:8000/app/controllers/RegisterUser.php")->rules($rules)}}
+{{Former::open("riba")->rules($rules)}}
 {{Former::text('Name')->class('myclass')->autofocus()}}
 {{Former::text('Surname')->class('myclass')}}
 {{Former::text('Email')}}

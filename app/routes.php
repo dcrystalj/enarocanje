@@ -33,13 +33,8 @@ Route::get('registerUser',function()
 	return View::make('registerUser');
 });
 
-#Route::controller('UserRegistrationH','UserRegistrationH');
-#Route::controller('UserRegistrationV','UserRegistrationV');
-
 Route::resource('provider','Provider');
 Route::resource('providerSettings','ProviderServiceSettings');
 Route::resource('ManageServices','ManageServices');
 
-#Route::controller('account');
-#Route::controller('UserregistrationsController','UserregistrationsController');
-#Route::controller('UserregistrationsController');
+Route::resource('riba','User');
