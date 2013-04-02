@@ -14,15 +14,12 @@
             $duration[5]="1h 30 min";
             $duration[6]="1h 45 min";
             $duration[7]="2 h";
-
-            $rules = array('Name:'     => 'required|max:20|alpha',
-                  'Length:'   => 'required',);
     ?>  
-    {{ Former::open()->rules($rules) }}
+    {{ Former::open('ManageServices') }}
     {{ Former::text('Name:')->autofocus() }}
     {{ Former::select('Length:')->options($duration, 1) }} 
-    {{ Former::password('Description:') }}
-    {{ Former::password('Price:') }}
+    {{ Former::text('Description:') }}
+    {{ Former::Number('Price:') }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   
    

@@ -1,10 +1,30 @@
 <?php
 
-class ProviderRegistration extends BaseController {
+class ManageServices extends BaseController {
 
 	public function index()
 	{
-		return View::make('ManageServices');
+	}
+
+		public function create()
+	{
+		return View::make('Provider.ManageServices');
+	}
+
+	public function store()
+	{
+		$rules = array('Name:'      => 'max:20|alpha',
+                       'Description:'    => 'alpha',
+                       'Price:'       => 'numeric');
+		$validation = Validator::make(Input::all(),$rules);
+		if($validation->fails())
+		{
+			return Redirect::to('ManageServices/create')->withErrors($validation);
+		}
+		else
+		{
+			return View::make('home');
+		}
 	}
 
 
