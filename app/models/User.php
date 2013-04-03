@@ -5,6 +5,15 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
+
+	$id;
+	$name;
+	$surname;
+	$email;
+	$password;
+	$language;
+	$time_zone;
+
 	/**
 	 * The database table used by the model.
 	 *

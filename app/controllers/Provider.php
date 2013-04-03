@@ -29,7 +29,7 @@ class Provider extends BaseController {
 	 */
 	public function store()
 	{
-		$rules = array('Service Name:'     => 'max:20|alpha',
+		$rules = array('Service Name:'     => 'required|max:20|alpha',
                        'Email:'    => 'required|email',);
 		$validation = Validator::make(Input::all(),$rules);
 		if($validation->fails())
@@ -59,7 +59,7 @@ class Provider extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit()
+	public function edit($id)
 	{
 		return View::make('Provider.ProviderServiceSettings');
 	}
