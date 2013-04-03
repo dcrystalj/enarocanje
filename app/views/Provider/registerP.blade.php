@@ -6,8 +6,8 @@
 
 @section('content')
     {{ Former::open('provider') }}
-    {{ Former::text('Service Name:')->autofocus() }}
-    {{ Former::text('Email:') }}
+    {{ Former::text('sname','Service Name:')->autofocus() }}
+    {{ Former::text('email','Email:') }}
     {{ Former::actions()->submit('Register') }}
     {{ Former::close() }}   
 @stop

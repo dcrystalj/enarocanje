@@ -29,8 +29,8 @@ class Provider extends BaseController {
 	 */
 	public function store()
 	{
-		$rules = array('Service Name:'     => 'max:20|alpha',
-                       'Email:'    => 'required|email',);
+		$rules = array('sname'     		=> 'required|max:20|alpha',
+                       'email'    			=> 'required|email',);
 		$validation = Validator::make(Input::all(),$rules);
 		if($validation->fails())
 		{
@@ -72,9 +72,9 @@ class Provider extends BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = array('Service Name:'     => 'required|max:20|alpha',
-                       'E-mail:'    => 'email',
-                       'Change password:'    =>  'confirmed');
+		$rules = array('Service Name:'     		=>  'required|max:20|alpha',
+                       'E-mail:'    			=>  'email',
+                       'Change password:'   	=>  'confirmed');
 
 		$validation = Validator::make(Input::all(),$rules);
 		if($validation->fails())
