@@ -34,10 +34,15 @@ class Provider extends BaseController {
 		$validation = Validator::make(Input::all(),$rules);
 		if($validation->fails())
 		{
-			return Redirect::to('provider/create')->withErrors($validation);
+			Input::flash();
+			return Redirect::to('provider/create')->with_errors($validation)->with_input();
 		}
 		else
 		{
+			/*
+			send mail
+			 */
+			
 			return View::make('home');
 		}
 	}
