@@ -11,7 +11,7 @@ class CreateMacroServiceTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('service', function($table) {
+		Schema::create('macservice', function($table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('location');
@@ -31,7 +31,7 @@ class CreateMacroServiceTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('service');
+		Schema::drop('macservice');
 	}
 
 }

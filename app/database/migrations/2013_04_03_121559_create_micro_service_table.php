@@ -11,7 +11,7 @@ class CreateMicroServiceTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('service', function($table) {
+		Schema::create('micservice', function($table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->integer('length');
@@ -28,7 +28,7 @@ class CreateMicroServiceTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('service');
+		Schema::drop('micservice');
 	}
 
 }
