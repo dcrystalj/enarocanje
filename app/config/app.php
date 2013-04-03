@@ -115,7 +115,6 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-		'LaravelBook\Laravel4Powerpack\Providers\PowerpackServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
 	),
 
