@@ -116,6 +116,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'LaravelBook\Laravel4Powerpack\Providers\PowerpackServiceProvider',
+		'Zizaco\Confide\ConfideServiceProvider',
 	),
 
 	/*
@@ -203,6 +204,7 @@ return array(
 		'Typeahead'       	=> 'Bootstrapper\\Typeahead',
 		'Typography'      	=> 'Bootstrapper\\Typography',
 		'Former' 		  	=> 'Former\\Facades\\Illuminate',
+		'Confide'   		=> 'Zizaco\Confide\ConfideFacade',
 	),
 		
 );

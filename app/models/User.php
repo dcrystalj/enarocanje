@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Zizaco\Confide\ConfideUser;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -27,6 +28,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password');
+
+
+    public static $rules = array(
+        'email' 		=> 'required|email',
+        'password'	 	=> 'required|between:4,20|confirmed',
+    );
+
+
 
 	/**
 	 * Get the unique identifier for the user.
