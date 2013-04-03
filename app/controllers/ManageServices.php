@@ -13,7 +13,7 @@ class ManageServices extends BaseController {
 
 	public function store()
 	{
-		$rules = array('Name:'      => 'max:20|alpha',
+		$rules = array('Name:'      => 'required|max:20|alpha',
                        'Description:'    => 'alpha',
                        'Price:'       => 'numeric');
 		$validation = Validator::make(Input::all(),$rules);

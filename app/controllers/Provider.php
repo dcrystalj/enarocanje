@@ -31,6 +31,7 @@ class Provider extends BaseController {
 	{
 		$rules = array('sname'     		=> 'required|max:20|alpha',
                        'email'    			=> 'required|email',);
+		
 		$validation = Validator::make(Input::all(),$rules);
 		if($validation->fails())
 		{
@@ -64,7 +65,7 @@ class Provider extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit()
+	public function edit($id)
 	{
 		return View::make('Provider.ProviderServiceSettings');
 	}
