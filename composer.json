@@ -6,7 +6,7 @@
 		"anahkiasen/former": "dev-agnostic",
 		"laravelbook/ardent": "dev-master",
 		"barryvdh/laravel-ide-helper": "dev-master",
-		"zizaco/confide": "dev-master"
+		"j20/php-uuid":"dev-master"
 
 	},
 	"autoload": {

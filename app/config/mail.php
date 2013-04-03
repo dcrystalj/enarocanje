@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => "dcrystalj@gmail.com", 'name' => "enarocanje"),
+	'from' => array('address' => "jure@jurebajt.com", 'name' => "jure bajt"),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => "989c3af6-edf0-4d59-a8ec-31510ee4204e",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,6 +93,6 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => "989c3af6-edf0-4d59-a8ec-31510ee4204e",
 
 );

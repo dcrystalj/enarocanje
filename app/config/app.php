@@ -115,7 +115,6 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-		'Zizaco\Confide\ConfideServiceProvider',
 	),
 
 	/*
@@ -203,7 +202,7 @@ return array(
 		'Typeahead'       	=> 'Bootstrapper\\Typeahead',
 		'Typography'      	=> 'Bootstrapper\\Typography',
 		'Former' 		  	=> 'Former\\Facades\\Illuminate',
-		'Confide'   		=> 'Zizaco\Confide\ConfideFacade',
+		'Uuid'           	=> 'J20\Uuid\Uuid',
 	),
 		
 );

@@ -14,21 +14,17 @@ class ConfideSetupUsersTable extends Migration {
         Schema::create('users', function($table)
         {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email');
+            $table->string('name');
+            $table->string('email')->unique();
             $table->string('password');
+            $table->string('time_zone');
+            $table->string('language');
             $table->string('confirmation_code');
+            $table->integer('status')->default(0); // 0 -> user, 1 -> provider, -1 -> blocked...
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
         });
-
-        // Creates password reminders table
-        Schema::create('password_reminders', function($t)
-        {
-            $t->string('email');
-            $t->string('token');
-            $t->timestamp('created_at');
-        });
+        
     }
 
     /**
@@ -38,7 +34,6 @@ class ConfideSetupUsersTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('password_reminders');
         Schema::drop('users');
     }
 
