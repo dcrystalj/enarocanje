@@ -6,9 +6,8 @@
 
 @section('content')
 
-	@if(Session::get('status'))
-	<p>{{ Typography::error( Session::get('status') ) }}</p>
-	@endif
+	
+	<p>{{ Typography::error( Session::get('status','') ) }}</p>
 
     {{ Former::open('provider')->rules($rules) }}
     {{ Former::text('sname','Service Name:')->autofocus() }}

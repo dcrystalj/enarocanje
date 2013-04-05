@@ -140,8 +140,9 @@ class Provider extends BaseController {
 			return View::make('Provider.confirmation',compact('uuid'))->with('rules',$this->rules1);
 		}
 
-		$status = "Something went wrong, please try again";
-		return View::make('Provider.registerP',compact('mainerrors'));
+		return View::make('Provider.registerP')
+					->with('rules',$this->rules1)
+					->with('status','Something went wrong, please try again');
 	}
 
 	public function postConfirm($uuid)
@@ -153,8 +154,8 @@ class Provider extends BaseController {
 			Input::flash(); //input data remains in form
 			return Redirect::to('provider/confirm/' . $uuid)->withErrors($validation);
 		}
-		$user  = User::where('confirmation_code','=',$uuid)->first();
 
+		$user  = User::where('confirmation_code','=',$uuid)->first();
 		if($user){
 				$user->confirmed = 1;
 				$user->password = Hash::make(Input::get('pass1'));
@@ -162,9 +163,10 @@ class Provider extends BaseController {
 				return "successfully confirmed";			
 		}
 
-		return View::make('Provider.registerP',compact('mainerrors'))->with('rules',$this->rules1); //TODO rules
+		return View::make('Provider.registerP')
+					->with('rules',$this->rules1)
+					->with('status','Something went wrong, please try again');
 	}
-
 
 
 

@@ -6,9 +6,7 @@
 
 @section('content')
 
-	@if(Session::get('status'))
-	<p>{{ Typography::error( Session::get('status') ) }}</p>
-	@endif
+	<p>{{ Typography::error( Session::get('status','') ) }}</p>
     
 
     {{ Former::open('provider/confirm/' . $uuid)->rules($rules) }}
