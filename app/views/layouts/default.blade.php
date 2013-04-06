@@ -10,12 +10,14 @@
 		@yield('title')
 	</title>
 
-	{{ Html::script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}
-	{{ Html::script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js') }}
+	{{ Html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}
+	{{ Html::script('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js') }}
 
 	{{ Html::style('bootstrap/css/bootstrap.min.css') }}
 	{{ Html::style('bootstrap/css/bootstrap-responsive.min.css') }}
 	{{ Html::style('css/style.css') }}
+
+    @yield('assets')
 	
 </head>
 <body>

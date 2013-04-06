@@ -25,6 +25,7 @@ Route::get('registerUser',function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
+Route::get('/service/{id}/time','ManageServices@timetable');
 
 //provider controller
 Route::resource('provider','Provider');

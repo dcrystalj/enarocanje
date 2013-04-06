@@ -6,7 +6,7 @@ class ManageServices extends BaseController {
 	{
 	}
 
-		public function create()
+	public function create()
 	{
 		return View::make('Provider.ManageServices');
 	}
@@ -27,5 +27,12 @@ class ManageServices extends BaseController {
 		}
 	}
 
+	public function timetable()
+	{
+		return View::make('Provider.TimeTable');
+	}
+
+	public function shoxw() {
+	}
 
 }
