@@ -40,7 +40,7 @@ class CustomerReservation extends BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return View::make('reservation.show');
 	}
 
 	/**
