@@ -103,7 +103,6 @@ class UserController extends BaseController {
 	{
 		//
 	}
-=======
 /*
 |--------------------------------------------------------------------------
 | Confide Controller Template
@@ -114,7 +113,7 @@ class UserController extends BaseController {
 |
 */
 
-class UserController extends BaseController {
+class UserControllera extends BaseController {
 
     /**
      * Displays the form for account creation
