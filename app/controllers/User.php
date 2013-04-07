@@ -9,7 +9,7 @@ class User extends BaseController {
 	 */
 	public function index()
 	{
-		return "lol";
+		return "loll";
 	}
 
 	/**
@@ -29,7 +29,7 @@ class User extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		echo "wat";
 	}
 
 	/**

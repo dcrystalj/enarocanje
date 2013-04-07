@@ -10,7 +10,11 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		// $this->call('UserTableSeeder');
+
 		$this->call('MicserviceTableSeeder');
+		$this->call('MacroserviceTableSeeder');
+		$this->call('WorkinghourTableSeeder');
+
 	}
 
 }

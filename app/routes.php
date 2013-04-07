@@ -15,6 +15,15 @@ Route::get('find', function()
 	return View::make('find');
 });
 
+
+Route::get('registerUserError', function()
+{
+	return View::make('registerUserError');
+});
+
+Route::resource('ureservation' , 'CustomerReservation');
+
+
 //TODO to user controller
 Route::get('registerUser',function()
 {
@@ -27,6 +36,9 @@ Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
 Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
+
+Route::resource('riba','Riba');
+Route::resource('user','UserController');
 
 //provider controller
 Route::resource('provider','Provider');

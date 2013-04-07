@@ -1,6 +1,6 @@
 <?php
 
-class UserregistrationsController extends BaseController {
+class Riba extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function index()
 	{
-		//
+		return "lol";
 	}
 
 	/**
@@ -19,7 +19,7 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function create()
 	{
-		//
+		return "lol";
 	}
 
 	/**
@@ -29,7 +29,7 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		return "olo";
 	}
 
 	/**
