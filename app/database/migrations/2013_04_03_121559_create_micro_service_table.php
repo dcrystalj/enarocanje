@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTable extends Migration {
+class CreateMicroServiceTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,14 +11,12 @@ class CreateUserTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function($table) {
+		Schema::create('micservice', function($table) {
 			$table->increments('id');
 			$table->string('name');
-			$table->string('surname');
-			$table->string('email')->unique();
-			$table->string('password',64);
-			$table->string('time_zone');
-			$table->string('language');
+			$table->integer('length');
+			$table->string('description');
+			$table->integer('price');
 			$table->timestamps();
 		});
 	}
@@ -30,7 +28,7 @@ class CreateUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('micservice');
 	}
 
 }

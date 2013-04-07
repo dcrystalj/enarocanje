@@ -6,14 +6,14 @@ class ManageServices extends BaseController {
 	{
 	}
 
-		public function create()
+	public function create()
 	{
 		return View::make('Provider.ManageServices');
 	}
 
 	public function store()
 	{
-		$rules = array('Name:'      => 'max:20|alpha',
+		$rules = array('Name:'      => 'required|max:20|alpha',
                        'Description:'    => 'alpha',
                        'Price:'       => 'numeric');
 		$validation = Validator::make(Input::all(),$rules);
@@ -27,5 +27,12 @@ class ManageServices extends BaseController {
 		}
 	}
 
+	public function timetable()
+	{
+		return View::make('Provider.TimeTable');
+	}
+
+	public function shoxw() {
+	}
 
 }

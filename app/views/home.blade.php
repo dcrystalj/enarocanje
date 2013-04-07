@@ -5,13 +5,15 @@
 @stop
 
 @section('content')
+
     <p>Example</p>
 
-    <h3>primer forme</h3>
-    {{ Former::open() }}
-	{{ Former::text('name')->autofocus() }}
-	{{ Former::text('surname') }}
-	{{ Former::password('password') }}
-	{{ Former::actions()->submit('Submit') }}
-	{{ Former::close() }}	
+    @if (isset($message))
+	<p>{{ Typography::warning($message) }}</p>
+	@endif
+
+	@if (isset($success))
+	<p>{{ Typography::warning('Email was sent') }}</p>
+	@endif
+
 @stop
