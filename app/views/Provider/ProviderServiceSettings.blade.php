@@ -12,7 +12,8 @@
     $language[3] = "German";
 ?>
     {{ Former::open('provider') }}
-    {{ Former::text('Service name:')->autofocus() }}
+    {{ Former::populate($user) }}
+    {{ Former::text('name','Service name:')->autofocus() }}
     {{ Former::text('E-mail:') }}
     {{ Former::select('Language')->options($language) }}
     {{ Former::password('Change password:') }}

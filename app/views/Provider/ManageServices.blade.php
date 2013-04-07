@@ -22,5 +22,25 @@
     {{ Former::Number('Price:') }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   
+
+ <!--   <table>
+        <tr>
+            <td> Id </td>
+            <td> Name </td>
+            <td> Length </td>
+            <td> Description </td>
+            <td> Price </td>
+        </tr>    -->
+    <!--</table>-->
    
 @stop
+
+@foreach ($micservice as $service)
+            <tr>
+                <td> $service->id </td>
+                <td> $service->name </td>
+                <td> $service->length </td>
+                <td> $service->description </td>
+                <td> $service->price </td>
+            </tr>
+        @endforeach 

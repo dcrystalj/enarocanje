@@ -58,7 +58,7 @@ class Provider extends BaseController {
 			$user->save();
 
 			//send mail
-			try{
+			try{	
 				$this->sendmail( $user->email, $user->confirmation_code );
 			}
 			catch(Exception $e)
@@ -92,7 +92,8 @@ class Provider extends BaseController {
 	 */
 	public function edit($id)
 	{
-		return View::make('Provider.ProviderServiceSettings');
+
+		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id));
 	}
 
 	/**
@@ -160,7 +161,8 @@ class Provider extends BaseController {
 				$user->confirmed = 1;
 				$user->password = Hash::make(Input::get('pass1'));
 				$user->save();
-				return "successfully confirmed";			
+				return Redirect::to('provider/' . $user->id . '/edit');
+
 		}
 
 		return View::make('Provider.registerP')
@@ -187,10 +189,9 @@ class Provider extends BaseController {
 	protected function sendmail($mail, $data)
 	{
 		$uuid['code'] = $data; 
-
-		Mail::send('emails.welcome', $uuid, function($m)
+		Mail::send('emails.welcome', $uuid, function($m)use($mail)
 		{
-		    $m->to('dcrystalj@gmail.com', 'John Smith')->subject('Welcome!');
+		    $m->to( $mail , 'John Smith')->subject('Welcome!')->setCharset('UTF-8');;
 		});
 	}
 
