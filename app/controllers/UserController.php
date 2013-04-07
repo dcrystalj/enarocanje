@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 class UserController extends BaseController {
 
@@ -327,6 +326,5 @@ class UserController extends BaseController {
         
         return Redirect::to('/');
     }
->>>>>>> 03bc326e3711e3f4d278a05d271d5f79c390d7af
 
 }
