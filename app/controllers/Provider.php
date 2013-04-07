@@ -160,11 +160,7 @@ class Provider extends BaseController {
 		$uuid['code'] = $data; 
 		Mail::send('emails.welcome', $uuid, function($m)use($mail)
 		{
-<<<<<<< HEAD
 		    $m->to( $mail , 'John Smith')->subject('Welcome!')->setCharset('UTF-8');;
-=======
-		    $m->to('dcrystalj@gmail.com', 'John Smith')->subject('Welcome!')->setCharset('UTF-8');;
->>>>>>> 03bc326e3711e3f4d278a05d271d5f79c390d7af
 		});
 	}
 
