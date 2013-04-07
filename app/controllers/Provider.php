@@ -139,19 +139,6 @@ class Provider extends BaseController {
 	    				->with('rules',$this->rules1);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//-------------------------------------
 	//custom helpers
 	//-------------------------------------

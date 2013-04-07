@@ -14,33 +14,36 @@
             $duration[5]="1h 30 min";
             $duration[6]="1h 45 min";
             $duration[7]="2 h";
+
+            $MicroService = Microservice::All();
     ?>  
     {{ Former::open('ManageServices') }}
-    {{ Former::text('Name:')->autofocus() }}
-    {{ Former::select('Length:')->options($duration, 1) }} 
-    {{ Former::text('Description:') }}
-    {{ Former::Number('Price:') }}
+    {{ Former::text('name','Name:')->autofocus() }}
+    {{ Former::select('length','Length:')->options($duration, 1) }} 
+    {{ Former::text('description','Description:') }}
+    {{ Former::Number('price','Price:') }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   
 
- <!--   <table>
+    <table>
         <tr>
             <td> Id </td>
             <td> Name </td>
             <td> Length </td>
             <td> Description </td>
             <td> Price </td>
-        </tr>    -->
-    <!--</table>-->
+            <td> </td>
+        </tr>
+        @foreach ($MicroService as $service)
+            <tr>
+                <td> <?php echo $service->id ?> </td>
+                <td> <?php echo $service->name ?> </td>
+                <td> <?php echo $service->length ?> </td>
+                <td> <?php echo $service->description ?> </td>
+                <td> <?php echo $service->price ?> </td>
+                <td> <a href="">Edit</a> <a href="">Delete</a> </td>
+            </tr>
+        @endforeach     
+    </table>
    
 @stop
-
-@foreach ($micservice as $service)
-            <tr>
-                <td> $service->id </td>
-                <td> $service->name </td>
-                <td> $service->length </td>
-                <td> $service->description </td>
-                <td> $service->price </td>
-            </tr>
-        @endforeach 

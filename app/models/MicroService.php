@@ -1,9 +1,10 @@
 <?php
 
 class MicroService extends Eloquent {
-	$id;
-	$name;
-	$length;
-	$description;
-	$price;
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'micservice';
 }

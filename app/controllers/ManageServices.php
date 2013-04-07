@@ -23,9 +23,34 @@ class ManageServices extends BaseController {
 		}
 		else
 		{
-			return View::make('home');
+			$micservice = new MicroService;
+			$micservice->name 	= Input::get( 'name' );
+			$micservice->length    = Input::get( 'length' );
+			$micservice->description    = Input::get( 'cescription' );
+			$micservice->price    = Input::get( 'price' );
+			$micservice->save();
+			return View::make('ManageServices/create')->with('status','New service added');
 		}
 	}
+
+	public function edit($id)
+	{
+		
+	}
+
+
+	public function update($id)
+	{
+	
+	}
+
+
+
+	public function destroy($id)
+	{
+		//
+	}
+
 
 	public function timetable()
 	{
