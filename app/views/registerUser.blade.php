@@ -11,10 +11,7 @@
         else if($i>0) $timezone[$i] = "+".$i;
         else $timezone[$i] =  "UTC";
     }
-    $language[0] = "English";
-    $language[1] = "Slovenian";
-    $language[2] = "Italian";
-    $language[3] = "German";
+    $language = array("English","Slovenian", "Italian","German");
     $rules = array(
       'Name'     => 'required|max:20|alpha',
       'Surname'  => 'required|max:20|alpha',
@@ -25,7 +22,7 @@
       'Language' => 'min:1',
     );
 ?>
-{{Former::open("riba")->rules($rules)}}
+{{Former::open("user")->rules($rules)}}
 {{Former::text('Name')->class('myclass')->autofocus()}}
 {{Former::text('Surname')->class('myclass')}}
 {{Former::text('Email')}}

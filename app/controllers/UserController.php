@@ -1,6 +1,6 @@
 <?php
 
-class UserregistrationsController extends BaseController {
+class UserController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function index()
 	{
-		//
+		return "loll";
 	}
 
 	/**
@@ -19,7 +19,7 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function create()
 	{
-		//
+		return "lol";
 	}
 
 	/**
@@ -29,7 +29,35 @@ class UserregistrationsController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		echo "wat";
+		$rules = array(
+	      'Name'     => 'required|min:11|max:20|alpha',
+	      'Surname'  => 'required|min:1|max:20|alpha',
+	      'Email'    => 'email',
+	      'Password' => 'size:5',
+	      'Password2' => 'size:5',
+	      'Timezone' => 'min:1',
+	      'Language' => 'min:1',
+	    );
+
+			//return View::make('home');
+
+		$validation = Validator::make(Input::all(),$rules);
+		if($validation->fails())
+		{
+			echo "fail";
+			//return Redirect::to('user/create')->withErrors($validation);
+			return View::make('registerUserError');
+			//return View::make('home');
+		}
+		else
+		{
+			echo "uspešno";
+			//return View::make('home');
+			return View::make('home');
+		}
+
+
 	}
 
 	/**

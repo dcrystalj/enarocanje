@@ -26,6 +26,11 @@ Route::get('find', function()
 	return View::make('find');
 });
 
+Route::get('registerUserError', function()
+{
+	return View::make('registerUserError');
+});
+
 Route::resource('ureservation' , 'CustomerReservation');
 
 Route::get('registerUser',function()
@@ -37,3 +42,5 @@ Route::resource('provider','Provider');
 Route::resource('ManageServices','ManageServices');
 
 Route::resource('riba','Riba');
+Route::resource('user','UserController');
+
