@@ -109,22 +109,7 @@ class Provider extends BaseController {
 		if($validation->fails())
 		{
 			return Redirect::to('provider/confirm/' . $token)->withErrors($validation)->with('rules',$this->rules1);
-		}
-
-/*
-		$user  = User::where('confirmation_code','=',$uuid)->first();
-		if($user){
-				$user->confirmed = 1;
-				$user->password = Hash::make(Input::get('pass1'));
-				$user->save();
-				return Redirect::to('provider/' . $user->id . '/edit');
-
-		}
-
-		return View::make('Provider.registerP')
-					->with('rules',$this->rules1)
-					->with('status','Something went wrong, please try again');
-		*/			
+		}		
 		//save
 		$remind =  DB::table('password_reminders')->where('token', Input::get('token'))->first();
 		if($remind)	$user = User::where('email',$remind->email)->first();

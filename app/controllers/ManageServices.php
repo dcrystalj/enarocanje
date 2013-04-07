@@ -2,34 +2,36 @@
 
 class ManageServices extends BaseController {
 
+	public $rules = array('name'      => 'required|max:20|alpha',
+	                      //'lenght'    => 'alpha',
+	                      'description'  => 'alpha|max:250',     
+						  'price'        => 'numeric');
+
 	public function index()
 	{
 	}
 
 	public function create()
 	{
-		return View::make('Provider.ManageServices');
+		return View::make('Provider.ManageServices')->with('rules',$this->rules);
 	}
 
 	public function store()
 	{
-		$rules = array('Name:'      => 'required|max:20|alpha',
-                       'Description:'    => 'alpha',
-                       'Price:'       => 'numeric');
-		$validation = Validator::make(Input::all(),$rules);
+		$validation = Validator::make(Input::all(),$this->rules);
 		if($validation->fails())
 		{
-			return Redirect::to('ManageServices/create')->withErrors($validation);
+			return Redirect::to('ManageServices/create')->withErrors($validation)->with('rules',$this->rules);
 		}
 		else
 		{
 			$micservice = new MicroService;
 			$micservice->name 	= Input::get( 'name' );
 			$micservice->length    = Input::get( 'length' );
-			$micservice->description    = Input::get( 'cescription' );
+			$micservice->description    = Input::get( 'description' );
 			$micservice->price    = Input::get( 'price' );
 			$micservice->save();
-			return View::make('ManageServices/create')->with('status','New service added');
+			return Redirect::to('ManageServices/create')->with('status','New service added')->with('rules',$this->rules);
 		}
 	}
 

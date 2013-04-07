@@ -17,7 +17,10 @@
 
             $MicroService = Microservice::All();
     ?>  
-    {{ Former::open('ManageServices') }}
+
+
+
+    {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
     {{ Former::select('length','Length:')->options($duration, 1) }} 
     {{ Former::text('description','Description:') }}
@@ -36,12 +39,12 @@
         </tr>
         @foreach ($MicroService as $service)
             <tr>
-                <td> <?php echo $service->id ?> </td>
-                <td> <?php echo $service->name ?> </td>
-                <td> <?php echo $service->length ?> </td>
-                <td> <?php echo $service->description ?> </td>
-                <td> <?php echo $service->price ?> </td>
-                <td> <a href="">Edit</a> <a href="">Delete</a> </td>
+                <td> {{ $service->id }} </td>
+                <td> {{ $service->name }} </td>
+                <td> {{ $service->length }} </td>
+                <td> {{ $service->description }} </td>
+                <td> {{ $service->price }} </td>
+                <td> {{ Html::link('ManageServices/' . $service->id . '/edit','Edit') }} {{ Html::link('ManageServices/' . $service->id . '/destroy','Delete') }}</td>
             </tr>
         @endforeach     
     </table>
