@@ -8,9 +8,12 @@ TimeTable
 {{ Html::style('css/fc/fullcalendar.css') }}
 <!-- {{ Html::style('css/fc/fullcalendar.print.css') }} -->
 {{ Html::script('js/fc/fullcalendar.js') }}
+{{ Html::script('js/fc/fullcalendar.ext.js') }}
 @stop
 
 @section('content')
+<a href="#" id="clear_callendar">[Clear]</a>
+<a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
 <div id='calendar'></div>
 	<script>
 	var calendar;
@@ -21,48 +24,21 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
-			header: {
-				left: '',
-				center: 'title',
-				right: '',
+			columnFormat: {
+				week: 'ddd', // Mon 9/7
 			},
 			selectable: true,
 			selectHelper: true,
 			defaultView: 'agendaWeek',
-			date: '2',
+			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+				cal_clear_day(calendar, event);
+			},
 			select: function(start, end, allDay) {
-				// Check this day
-				var events = calendar.fullCalendar('clientEvents');
-				for(var i=0; i<events.length; i++) {
-					if(events[i].start.getDay() == start.getDay()) {
-						if(events[i].disabled) {
-							// Preveri ure - premakni/ne-dodaj
-						} else {
-							calendar.fullCalendar('removeEvents', events[i]._id);
-						}
-					}
-				}
-
+				cal_clear_day(calendar, start);
 				calendar.fullCalendar('unselect');
-				if(first) {
-					start.setDate(start.getDate()-start.getDay()); // First day in week
-					end.setDate(end.getDate()-end.getDay()); // Same day
-					for(var day=0; day<7; day++) {
-						var s = new Date(start.getTime()+1000*3600*24*day);
-						var e = new Date(end.getTime()+1000*3600*24*day);
 
-						calendar.fullCalendar('renderEvent',
-											  {
-												  title: 'Working day',
-												  start: s,
-												  end: e,
-												  allDay: allDay,
-											  },
-											  true // make the event "stick"
-											 );
-					}
-					first = false;
-				} else {
+				// Helper
+				function insert(start, end)  {
 					calendar.fullCalendar('renderEvent',
 										  {
 											  title: 'Working day',
@@ -72,6 +48,19 @@ TimeTable
 										  },
 										  true // make the event "stick"
 										 );
+				}
+
+				if(first) {
+					start.setDate(start.getDate()-start.getDay()); // First day in week
+					end.setDate(end.getDate()-end.getDay()); // Same day
+					for(var day=0; day<7; day++) {
+						var s = new Date(start.getTime()+1000*3600*24*day);
+						var e = new Date(end.getTime()+1000*3600*24*day);
+						insert(s, e);
+					}
+					first = false;
+				} else {
+					insert(start, end);
 				}
 			},
 			eventClick: function(event, jsEvent, view) {
@@ -90,8 +79,8 @@ TimeTable
 			events: [
 				{
 					title: 'test',
-					start: '2013-04-1 10:00:00',
-					end: '2013-04-1 12:00:00',
+					start: '2013-04-6 10:00:00',
+					end: '2013-04-6 12:00:00',
 					allDay: false,
 					editable: false,
 					className: 'busy',
@@ -99,60 +88,36 @@ TimeTable
 				}
 			]
 		});
-		function addCalButton(where, text, id, cb) {
-			var my_button = '<span id="'+id+'" class="fc-button fc-button-month fc-state-default fc-corner-left fc-corner-right" unselectable="on">'+text+'</span>';
-			var space = '<span class="fc-header-space"></span>';
-			if(where == 'left')
-				my_button = space+my_button;
-			else if(where == 'right')
-				my_button += space;
 
-			$("td.fc-header-" + where).append(my_button);
-			if(cb) $('#'+id).click(cb);
-//			$("#" + id).button();
-		}
-
-		addCalButton("right", "Insert breaks", "insert_breaks");
-		addCalButton("left", "Reset", "reset_callendar", function() {
+		// Buttons
+		$('#clear_callendar').click(function(e) {
+			e.preventDefault();
 			var events = calendar.fullCalendar('clientEvents');
 			for(var i=0; i<events.length; i++)
 				calendar.fullCalendar('removeEvents', events[i]._id);
 			first = true;
 		});
-
+		$('#insert_breaks').click(function(e) {
+		});
 	});
+	</script>
 
-</script>
 <style>
-
-	body {
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		}
-
-	#wrapper {
-	width: 900px;
-	   margin: 0 auto;
-	}
-	#calendar {
-		}
-
-	.fc-agenda-allday {
+/* Hide unnecessary things */
+.fc-header, .fc-agenda-allday {
 	display: none;
-	}
+}
 
-	.busy {
-		background-color: gray;
-		border: none;
-		border-radius: 0px !important;
-		margin-left: -3px;
-		width: 118px !important;
-	}
-    .busy div {
-		display: none;
-	}
+.busy {
+	background-color: gray;
+	border: none;
+	border-radius: 0px !important;
+	margin-left: -3px;
+	width: 118px !important;
+}
+.busy div {
+	display: none;
+}
 </style>
 
 @stop

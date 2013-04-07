@@ -9,9 +9,10 @@
 	<p>{{ Typography::error( Session::get('status','') ) }}</p>
     
 
-    {{ Former::open('provider/confirm/' . $uuid)->rules($rules) }}
-    {{ Former::password('pass1','Password:') }}
-    {{ Former::password('pass2','Re-type password:') }}
+    {{ Former::open()->rules($rules) }}
+    {{ Former::hidden('token',$token) }}
+    {{ Former::password('password','Password:') }}
+    {{ Former::password('password_confirmation','Re-type password:') }}
     {{ Former::actions()->submit('Submit') }}
     {{ Former::close() }}   
 

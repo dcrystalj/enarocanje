@@ -26,8 +26,9 @@ Route::get('registerUser',function()
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
 Route::get('/service/{id}/time','ManageServices@timetable');
+Route::get('/service/{id}/breaks','ManageServices@breaks');
 
 //provider controller
 Route::resource('provider','Provider');
-Route::get('provider/confirm/{uuid}','Provider@getConfirm');
-Route::post('provider/confirm/{uuid}','Provider@postConfirm');
+Route::get('provider/confirm/{token}','Provider@getConfirm');
+Route::post('provider/confirm/{token}','Provider@postConfirm');

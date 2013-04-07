@@ -12,4 +12,8 @@
 	<p>{{ Typography::warning($message) }}</p>
 	@endif
 
+	@if (isset($success))
+	<p>{{ Typography::warning('Email was sent') }}</p>
+	@endif
+
 @stop

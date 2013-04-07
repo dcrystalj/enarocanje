@@ -9,38 +9,24 @@ class Provider extends BaseController {
     );
 
     public $rules1 = array(
-    	'pass1'		=> 'same:pass2|between:4,20',
-    	'pass2'		=> 'required',
+    	'password'		=> 'same:password_confirmation|between:4,20|confirmed',
+    	'password_confirmation'		=> 'required',
     );
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
 	public function index()
 	{
-		return 'asd';
+		return Redirect::to('/');
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
 	public function create()
 	{
 
 		return View::make('Provider.registerP')->with('rules', $this->rules);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
 	public function store()
 	{
+
 		$validation = Validator::make(Input::all(),$this->rules);
 
 		if($validation->fails())
@@ -50,26 +36,19 @@ class Provider extends BaseController {
 		}
 		else
 		{	
-			//save mail and send mail with confirmation link
+			//save user and send mail with confirmation link
 			$user = new User;
 			$user->name 	= Input::get( 'sname' );
 			$user->email    = Input::get( 'email' );
-			$user->confirmation_code = $this->generateUuid();	
 			$user->save();
 
 			//send mail
-			try{	
-				$this->sendmail( $user->email, $user->confirmation_code );
-			}
-			catch(Exception $e)
-			{
-				$user->delete();
-				return $e;
-				return Redirect::to('provider/create')->with('status','mail was not sent, please retry \n');
-			}
 
-	        return View::make('home')->with('message','Success, mail sent');
-			
+			Config::set('auth.reminder.email', 'emails.auth.welcome');
+			return Password::remind(['email' => $user->email ], function($m)
+			{
+			    $m->setCharset('UTF-8');
+			}) ;
 		}
 	}
 
@@ -84,24 +63,14 @@ class Provider extends BaseController {
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function edit($id)
 	{
 
 		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id));
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function update($id)
 	{
 		$rules = array('Service Name:'     		=>  'required|max:20|alpha',
@@ -120,42 +89,29 @@ class Provider extends BaseController {
 	}
 
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function destroy($id)
 	{
 		//
 	}
 
-	public function getConfirm($uuid)
+	public function getConfirm($token)
 	{
-		//get user to confirm
-		$user  = User::where('confirmation_code','=',$uuid)->first();
-
-		if($user) //if code exists render password view
-		{ 
-			return View::make('Provider.confirmation',compact('uuid'))->with('rules',$this->rules1);
-		}
-
-		return View::make('Provider.registerP')
+		return View::make('Provider.confirmation')
 					->with('rules',$this->rules1)
-					->with('status','Something went wrong, please try again');
+					->with('token',$token);
 	}
 
-	public function postConfirm($uuid)
+	public function postConfirm($token)
 	{
-
+		//validation
 		$validation = Validator::make(Input::all(),$this->rules1);
 		if($validation->fails())
 		{
-			Input::flash(); //input data remains in form
-			return Redirect::to('provider/confirm/' . $uuid)->withErrors($validation);
+			return Redirect::to('provider/confirm/' . $token)->withErrors($validation)->with('rules',$this->rules1);
 		}
 
+/*
 		$user  = User::where('confirmation_code','=',$uuid)->first();
 		if($user){
 				$user->confirmed = 1;
@@ -168,6 +124,19 @@ class Provider extends BaseController {
 		return View::make('Provider.registerP')
 					->with('rules',$this->rules1)
 					->with('status','Something went wrong, please try again');
+		*/			
+		//save
+		$remind =  DB::table('password_reminders')->where('token', Input::get('token'))->first();
+		if($remind)	$user = User::where('email',$remind->email)->first();
+		if(isset($user)){
+		    $user->password = Hash::make(Input::get('password'));
+		    $user->confirmed = 1;
+		    $user->save();
+			return View::make('home')->with('message','Success');
+	    }
+	    return Redirect::to('provider/confirm/' . $token)
+	    				->with('status','Wrong token')
+	    				->with('rules',$this->rules1);
 	}
 
 
@@ -191,7 +160,11 @@ class Provider extends BaseController {
 		$uuid['code'] = $data; 
 		Mail::send('emails.welcome', $uuid, function($m)use($mail)
 		{
+<<<<<<< HEAD
 		    $m->to( $mail , 'John Smith')->subject('Welcome!')->setCharset('UTF-8');;
+=======
+		    $m->to('dcrystalj@gmail.com', 'John Smith')->subject('Welcome!')->setCharset('UTF-8');;
+>>>>>>> 03bc326e3711e3f4d278a05d271d5f79c390d7af
 		});
 	}
 
