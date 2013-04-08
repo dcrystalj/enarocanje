@@ -16,7 +16,7 @@ TimeTable
 <a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
 <style> 
 .fc-event, .fc-event-vert, .fc-event-draggable, .fc-event-start, .fc-event-end, .ui-draggable, .ui-resizable {
-	background	: rgba(192,192,192, 0.6) !important;
+	/*background	: rgba(192,192,192, 0.6) !important;*/
 }
 .fc-event-time {
 	display: none;
@@ -43,6 +43,7 @@ TimeTable
 			},
 			select: function(start, end, allDay) {
 				//cal_clear_day(calendar, start);
+				
 				calendar.fullCalendar('unselect');
 
 				// Helper
@@ -51,7 +52,7 @@ TimeTable
 										  {
 											  title: 'Working day',
 											  start: start,
-											  end: end,
+											  end: start+1,
 											  allDay: false,
 										  },
 										  true // make the event "stick"
@@ -61,7 +62,9 @@ TimeTable
 				 insert(start, end);
 			},
 			eventClick: function(event, jsEvent, view) {
-				calendar.fullCalendar('removeEvents', [event._id]);
+				calendar.fullCalendar('removeEvents', function(event){
+					return event.editable;
+				});
 			},
 			editable: true,
 			slotMinutes: 15,
@@ -74,7 +77,7 @@ TimeTable
             error: function() {
                 alert('there was an error while fetching events!');
             },
-            
+            editable: false,
             textColor: 'grey' // a non-ajax option
         }
 

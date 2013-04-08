@@ -20,7 +20,8 @@ class MicroserviceApiController extends BaseController
 					"title"  => "",
 					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
 					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
-					"allDay" => false
+					"allDay" => false,
+					"editable"=> false,
 				);
 				$from = "00:00:00";
 				$lastday ++;
