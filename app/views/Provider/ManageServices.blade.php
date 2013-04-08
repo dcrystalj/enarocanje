@@ -6,19 +6,19 @@
 
 @section('content')
     <?php 
-            $duration[0]="15 min";
-            $duration[1]="30 min";
-            $duration[2]="45 min";
-            $duration[3]="1 h";
-            $duration[4]="1 h 15 min";
-            $duration[5]="1h 30 min";
-            $duration[6]="1h 45 min";
-            $duration[7]="2 h";
+            $duration[15]="15 min";
+            $duration[30]="30 min";
+            $duration[45]="45 min";
+            $duration[60]="1 h";
+            $duration[75]="1 h 15 min";
+            $duration[90]="1h 30 min";
+            $duration[105]="1h 45 min";
+            $duration[120]="2 h";
 
             $MicroService = Microservice::All();
     ?>  
 
-
+    
 
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
