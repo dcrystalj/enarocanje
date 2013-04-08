@@ -29,3 +29,5 @@ Route::resource('user','UserController');
 Route::resource('provider','Provider');
 Route::get('provider/confirm/{token}','Provider@getConfirm');
 Route::post('provider/confirm/{token}','Provider@postConfirm');
+
+Route::controller('microserviceapi', 'MicroserviceApiController');
