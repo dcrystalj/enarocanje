@@ -17,7 +17,6 @@ TimeTable
 <div id='calendar'></div>
 	<script>
 	var calendar;
-    var first = true;
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();

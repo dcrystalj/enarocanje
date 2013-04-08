@@ -18,21 +18,12 @@ Route::get('find', function()
 
 Route::resource('ureservation' , 'CustomerReservation');
 
-
-//TODO to user controller
-Route::get('user/registerUser',function()
-{
-	return View::make('user/registerUser');
-});
-
-
-
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
 Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
 
-Route::resource('user/UserController','UserController');
+Route::resource('user','UserController');
 
 //provider controller
 Route::resource('provider','Provider');
