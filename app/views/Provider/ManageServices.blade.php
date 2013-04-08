@@ -18,11 +18,11 @@
             $MicroService = Microservice::All();
     ?>  
 
-    
+    <p>{{ Typography::error( Session::get('status','') ) }}</p>
 
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
-    {{ Former::select('length','Length:')->options($duration, 1) }} 
+    {{ Former::select('length','Length:')->options($duration) }} 
     {{ Former::text('description','Description:') }}
     {{ Former::Number('price','Price:') }}
     {{ Former::actions()->submit('Add service') }}
@@ -44,7 +44,12 @@
                 <td> {{ $service->length }} </td>
                 <td> {{ $service->description }} </td>
                 <td> {{ $service->price }} </td>
-                <td> {{ Html::link('ManageServices/' . $service->id . '/edit','Edit') }} {{ Html::link('ManageServices/' . $service->id . '/destroy','Delete') }}</td>
+                <td> {{ Html::link('ManageServices/' . $service->id . '/edit','Edit') }} 
+
+                    {{ Form::open(array('method' => 'DELETE', 'url' => 'ManageServices/' . $service->id)) }}
+                    {{ Form::submit('Delete') }}
+                    {{ Form::close() }}
+                </td>
             </tr>
         @endforeach     
     </table>

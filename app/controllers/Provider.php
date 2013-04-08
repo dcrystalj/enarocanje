@@ -4,7 +4,7 @@ class Provider extends BaseController {
 
 	//rules for registering
 	public $rules = array(
-		'sname'		=> 'required|max:20|alpha',
+		'name'		=> 'required|max:20|alpha',
         'email'		=> 'required|email|unique:users',
     );
 
@@ -13,6 +13,12 @@ class Provider extends BaseController {
     	'password_confirmation'		=> 'required',
     );
 
+    public $rules2 = array(
+    	'name'		=> 'required|max:20|alpha',
+        'email'		=> 'required|email|unique:users',	
+        'password'		=> 'same:password_confirmation|between:4,20|confirmed',
+    	'password_confirmation'		=> 'required',
+   	);
 	public function index()
 	{
 		return Redirect::to('/');
@@ -38,7 +44,7 @@ class Provider extends BaseController {
 		{	
 			//save user and send mail with confirmation link
 			$user = new User;
-			$user->name 	= Input::get( 'sname' );
+			$user->name 	= Input::get( 'name' );
 			$user->email    = Input::get( 'email' );
 			$user->save();
 
@@ -73,18 +79,30 @@ class Provider extends BaseController {
 
 	public function update($id)
 	{
-		$rules = array('Service Name:'     		=>  'required|max:20|alpha',
-                       'E-mail:'    			=>  'email',
-                       'Change password:'   	=>  'confirmed');
-
-		$validation = Validator::make(Input::all(),$rules);
+		$input = Input::all();
+		$validation = Validator::make($input,$this->rules);
 		if($validation->fails())
 		{
-			return Redirect::to('provider/edit')->withErrors($validation);
-		}
+			return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules)->with('user',User::find($id));
+		}		
 		else
 		{
-			return View::make('find');
+			$user = User::find($id);
+			if(isset($user))
+			{
+		    	if(($input->name))
+		    	{
+		    		$user->name = $input->name;	
+		    	}
+		    	if($input->email){
+		    		$user->email = $input->email;		
+		    	}
+		    	if($input->password){
+		    		$user->password = Hash::make($input->password);	
+		    	}
+		    	$user->save();			
+		    }
+		    return Redirect::to('provider/' . $id . '/edit')->with('status','Settings saved.')->with('user',User::find($id));
 		}
 	}
 
@@ -117,7 +135,8 @@ class Provider extends BaseController {
 		    $user->password = Hash::make(Input::get('password'));
 		    $user->confirmed = 1;
 		    $user->save();
-			return View::make('home')->with('message','Success');
+			//return View::make('home')->with('message','Success');
+			return Redirect::to('provider/' . $user->id . '/edit');
 	    }
 	    return Redirect::to('provider/confirm/' . $token)
 	    				->with('status','Wrong token')

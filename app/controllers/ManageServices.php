@@ -3,7 +3,6 @@
 class ManageServices extends BaseController {
 
 	public $rules = array('name'      => 'required|max:20|alpha',
-	                      //'lenght'    => 'alpha',
 	                      'description'  => 'alpha|max:250',     
 						  'price'        => 'numeric');
 
@@ -37,28 +36,41 @@ class ManageServices extends BaseController {
 
 	public function edit($id)
 	{
-		
+		$service = MicroService::find($id);
+		return View::make('Provider.EditService')->with('rules',$this->rules)->with('service',$service);
 	}
 
 
 	public function update($id)
 	{
-		
+		if (($micservice = MicroService::find($id)))
+		{
+			$micservice->name 	= Input::get( 'name' );
+			$micservice->length    = Input::get( 'length' );
+			$micservice->description    = Input::get( 'description' );
+			$micservice->price    = Input::get( 'price' );
+			$micservice->save();
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . '');
+		}
+		else
+		{
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
+		}	
 	}
 
 
 
 	public function destroy($id)
 	{
-		/*if (($micservice = MircroService::find($id)))
+		if (($micservice = MicroService::find($id)))
 		{
 			$micservice->delete();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . 'deleted!');
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . ' deleted!');
 		}
 		else
 		{
 			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
-		}*/
+		}
 	}
 
 
