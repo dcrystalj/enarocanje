@@ -20,6 +20,7 @@ Route::resource('ureservation' , 'CustomerReservation');
 
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
+Route::post('/service/{id}/time/submit','ManageServices@submit_time');
 Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
 

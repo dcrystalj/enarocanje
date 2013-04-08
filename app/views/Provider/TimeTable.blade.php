@@ -13,7 +13,8 @@ TimeTable
 
 @section('content')
 <a href="#" id="clear_callendar">[Clear]</a>
-<a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
+<a href="/service/<?=$id ?>/breaks" id="insert_breaks">[Insert breaks]</a>
+<a href="#" id="save">[Save]</a>
 <div id='calendar'></div>
 	<script>
 	var calendar;
@@ -53,7 +54,7 @@ TimeTable
 				if(first) {
 					start.setDate(start.getDate()-start.getDay()); // First day in week
 					end.setDate(end.getDate()-end.getDay()); // Same day
-					for(var day=0; day<7; day++) {
+						for(var day=0; day<7; day++) {
 						var s = new Date(start.getTime()+1000*3600*24*day);
 						var e = new Date(end.getTime()+1000*3600*24*day);
 						insert(s, e);
@@ -79,8 +80,8 @@ TimeTable
 			events: [
 				{
 					title: 'test',
-					start: '2013-04-6 10:00:00',
-					end: '2013-04-6 12:00:00',
+					start: '2013-04-08 10:00:00',
+					end: '2013-04-08 12:00:00',
 					allDay: false,
 					editable: false,
 					className: 'busy',
@@ -97,7 +98,12 @@ TimeTable
 				calendar.fullCalendar('removeEvents', events[i]._id);
 			first = true;
 		});
-		$('#insert_breaks').click(function(e) {
+		// $('#insert_breaks').click(function(e) {
+		// });
+		$('#save').click(function(e) {
+			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
+				alert(data);
+			});
 		});
 	});
 	</script>
@@ -113,7 +119,7 @@ TimeTable
 	border: none;
 	border-radius: 0px !important;
 	margin-left: -3px;
-	width: 118px !important;
+	width: 157px !important;
 }
 .busy div {
 	display: none;
