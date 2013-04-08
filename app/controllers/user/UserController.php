@@ -34,26 +34,37 @@ class UserController extends BaseController {
 	      'Name'     => 'required|max:20|alpha',
 	      'Surname'  => 'required|max:20|alpha',
 	      'Email'    => 'required|email',
-	      'password' => 'required|same:|min:6|max:30',
-	      'repeat' => 'required|min:6|max:30',
+	      'password' => 'required|between:6,30',
+	      'repeat' => 'required|same:password|min:6|between:6,30',
 	      'Timezone' => 'min:1',
 	      'Language' => 'min:1',
 	    );
 
-			//return View::make('home');
+			//return View::make('home');->with('rules',$this->rules1);
 
-		$validation = Validator::make(Input::all(),$rules);
+		$validation = Validator::make(Input::all(),$this->$rules);
 		if($validation->fails())
 		{
 			echo "fail";
 			Input::flash(); //input data remains in form
-            return Redirect::to('user/registerUser')->withErrors($validation);
+            return View::make('user/registerUser')->withErrors($validation);
 		}
 		else
 		{
 			echo "uspešno";
-			//return View::make('home');
+
+			$user = new User;
+			$user->name 	= Input::get( 'Name' );
+			$user->surname    = Input::get( 'Surname' );
+			$user->email 	= Input::get( 'Email' );
+			$user->password = Hash::make(Input::get('password'));
+			$user->timezone    = Input::get( 'Timezone' );
+			$user->language 	= Input::get( 'Language' );
+			$user->confirmed = 1;
+
+			$user->save();
 			return View::make('home');
+			//return View::make('home')->with('message','Suksess');
 		}
 
 

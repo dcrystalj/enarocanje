@@ -29,7 +29,7 @@
 					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
-					['User registration',URL::to('registerUser'),Request::is('registerUser')],
+					['User registration',URL::to('user/registerUser'),Request::is('user/registerUser')],
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 				])
