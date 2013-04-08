@@ -43,14 +43,22 @@ class ManageServices extends BaseController {
 
 	public function update($id)
 	{
-	
+		
 	}
 
 
 
 	public function destroy($id)
 	{
-		//
+		/*if (($micservice = MircroService::find($id)))
+		{
+			$micservice->delete();
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . 'deleted!');
+		}
+		else
+		{
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
+		}*/
 	}
 
 
