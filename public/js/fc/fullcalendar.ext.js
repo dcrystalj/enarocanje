@@ -57,3 +57,28 @@ function cal_repair_event(cal, event) {
 		}
 	}
 }
+
+/*
+  Save selection.
+*/
+function cal_save(cal, url, callback, check) {
+	var events = calendar.fullCalendar('clientEvents');
+	var submit = [];
+	for(var i=0; i<events.length; i++) {
+		if(check) {
+			if(check(events[i]))
+				submit.push(cal_event_data(events[i]));
+		} else {
+			submit.push(cal_event_data(events[i]));
+		}
+	}
+	$.post(url, {'events': JSON.stringify(submit)}, callback);
+}
+
+function cal_event_data(event) {
+	return {
+		start: event.start,
+		end: event.end,
+		title: event.title,
+	};
+}
