@@ -12,19 +12,11 @@
         else $timezone[$i] =  "UTC";
     }
     $language = array("English","Slovenian", "Italian","German");
-    $rules = array(
-      'Name'     => 'required|max:20|alpha',
-      'Surname'  => 'required|max:20|alpha',
-      'Email'    => 'required|email',
-      'password' => 'required|min:6',
-      'repeat' => 'required|min:6',
-      'Timezone' => 'min:1',
-      'Language' => 'min:1',
-    );
+
 ?>
-{{Former::open("user/UserController")->rules($rules)}}
-{{Former::text('Name')->class('myclass')->autofocus()}}
-{{Former::text('Surname')->class('myclass')}}
+{{Former::open('user')->rules($rules)}}
+{{Former::text('Name')->autofocus()}}
+{{Former::text('Surname')}}
 {{Former::text('Email')}}
 {{Former::password('password','Password')}}
 {{Former::password('repeat','Repeat password')}}
