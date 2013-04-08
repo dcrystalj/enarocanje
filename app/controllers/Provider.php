@@ -123,3 +123,4 @@ class Provider extends BaseController {
 	    				->with('status','Wrong token')
 	    				->with('rules',$this->rules1);
 	}
+}
