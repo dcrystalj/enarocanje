@@ -15,19 +15,19 @@
     $rules = array(
       'Name'     => 'required|max:20|alpha',
       'Surname'  => 'required|max:20|alpha',
-      'Email'    => 'email',
-      'Password' => 'size:5',
-      'Password2' => 'size:5',
+      'Email'    => 'required|email',
+      'password' => 'required|min:6',
+      'repeat' => 'required|min:6',
       'Timezone' => 'min:1',
       'Language' => 'min:1',
     );
 ?>
-{{Former::open("user")->rules($rules)}}
+{{Former::open("user/UserController")->rules($rules)}}
 {{Former::text('Name')->class('myclass')->autofocus()}}
 {{Former::text('Surname')->class('myclass')}}
 {{Former::text('Email')}}
-{{Former::password('Password')}}
-{{Former::password('Password2')}}
+{{Former::password('password','Password')}}
+{{Former::password('repeat','Repeat password')}}
 {{Former::select('Timezone')->options($timezone,"UTC",true)}}
 {{Former::select('Language')->options($language)}}
 {{Former::actions()->submit('Submit')}}
