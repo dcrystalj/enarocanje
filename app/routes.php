@@ -7,7 +7,7 @@ Route::get('/', function()
 
 Route::get('home', function()
 {
-	return View::make('home');
+	return View::make('home')->with('status',Session::get('status'));
 });
 
 Route::get('find', function()
@@ -15,10 +15,53 @@ Route::get('find', function()
 	return View::make('find');
 });
 
+Route::get('login',function()
+{	
+	$rules = array(
+		'email'    => 'required|email',
+		'password' => 'required|between:4,20'
+	);	
+	return View::make('login')->with('rules',$rules);
+});
+Route::post('login',function()
+{
+	$rules = array(
+		'email'    => 'required|email',
+		'password' => 'required|between:4,20'
+	);
+
+	$input = Input::all();
+	$input['confirmed'] = 1;
+
+	if(Auth::attempt($input))
+	{
+		return Redirect::to('home');//->with('status','You have been sucessfully logged in.');  
+	}
+	else
+	{
+		return View::make('login')
+			 	->with('error','Could not login, please try again')
+			 	->with('rules',$rules);
+	}
+});
+
+Route::get('logout',function()
+{
+	Auth::logout();
+	return View::make('home')->with('status', 'Sucessfully logged out.');
+});
+
+
+
+
+
 Route::get('user/registerUser', function()
 {
 	return View::make('user/registerUser');
 });
+
+
+
 
 Route::resource('ureservation' , 'CustomerReservation');
 
@@ -41,21 +84,7 @@ Route::post('user/confirm/{token}','user@postConfirm');
 
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
-//login controller
-Route::get('/UserLogin',function()
-{
-	return View::make('UserLogin');
-});
-Route::post('UserLogin',function()
-{
-	$email = Input::get('email');
-	$password = Input::get('password');
-	$remember = Input::get('Remember');
-	if(Auth::attempt(array('username' => $email, 'password' => $password)))
-	{
-		return Redirect::to('UserLogin')->with('status','User sucessfully loged in.');  
-	}
-});
+
 /*Route::post('Logout',function()
 {
 	Auth::logout();

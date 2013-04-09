@@ -16,4 +16,8 @@
 	<p>{{ Alert::warning('Email was sent') }}</p>
 	@endif
 
+	@if (Auth::check())
+	<p> {{ Auth::user()->email }} U're logged in </p>
+	@endif
+
 @stop
