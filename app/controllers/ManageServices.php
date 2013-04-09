@@ -85,7 +85,18 @@ class ManageServices extends BaseController {
 	
 	public function submit_time($id) {
 		$events = Input::get('events');
-		$object = json_decode($events);
-		print $events;
+		$events = json_decode($events);
+		DB::table('working_hour')->where('macservice_id', $id)->delete();
+		foreach($events as $event) {
+			$day = date('w', strtotime($event->start));
+			$start = date('G:i', strtotime($event->start));
+			$end = date('G:i', strtotime($event->end));
+			DB::table('working_hour')->insert(array(
+												  'macservice_id' => $id,
+												  'day' => $day,
+												  'from' => $start,
+												  'to' => $end,
+											  ));
+		}
 	}
 }
