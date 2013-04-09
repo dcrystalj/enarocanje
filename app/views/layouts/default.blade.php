@@ -32,7 +32,8 @@
 					['User registration',URL::to('user/registerUser'),Request::is('user/registerUser')],
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
-					['Login',URL::to('Login/create'),Request::is('ManageServices/create')],
+					['Login',URL::to('UserLogin'),Request::is('UserLogin')],
+					['Logout',URL::to('Logout'),Request::is('Logout')],
 				])
 			)}}
 		</nav>

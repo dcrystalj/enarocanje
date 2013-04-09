@@ -35,5 +35,24 @@ Route::post('provider/confirm/{token}','Provider@postConfirm');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 //login controller
-Route::resource('UserLogin','Login');
+Route::get('/UserLogin',function()
+{
+	return View::make('UserLogin');
+});
+Route::post('UserLogin',function()
+{
+	$email = Input::get('email');
+	$password = Input::get('password');
+	$remember = Input::get('Remember');
+	if(Auth::attempt(array('username' => $email, 'password' => $password)))
+	{
+		return Redirect::to('UserLogin')->with('status','User sucessfully loged in.');  
+	}
+});
+/*Route::post('Logout',function()
+{
+	Auth::logout();
+	return Redirect::to('UserLogin');
+});*/
+
 
