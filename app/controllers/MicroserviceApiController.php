@@ -10,13 +10,14 @@ class MicroserviceApiController extends BaseController
 		$timetable = [];
 		$from = "00:00:00";
 		$lastday = 0;
-
+		$j=0;
 		foreach ($workingHours as $wh) 
 		{
 			while($lastday < $wh->day)
 			{
 				$day = $this->dayToString($lastday);
 				$timetable[] = array(
+					"id"	 => "$j",
 					"title"  => "",
 					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
 					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
@@ -25,10 +26,12 @@ class MicroserviceApiController extends BaseController
 				);
 				$from = "00:00:00";
 				$lastday ++;
+				$j++;
 			}
 			
 			$day = $this->dayToString($wh->day);
 			$timetable[] = array(
+				"id"	 => "$j",
 				"title"  => "",
 				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
 				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
@@ -36,12 +39,14 @@ class MicroserviceApiController extends BaseController
 			);
 			$from = $wh->to;
 			$lastday = $wh->day;
+			$j++;
 		}
 		
 		while($lastday < 7)
 		{
 			$day = $this->dayToString($lastday);
 			$timetable[] = array(
+				"id"	 => "$j",
 				"title"  => "",
 				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
 				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
@@ -49,6 +54,7 @@ class MicroserviceApiController extends BaseController
 			);
 			$from = "00:00:00";
 			$lastday ++;
+			$j++;
 		}
 
 

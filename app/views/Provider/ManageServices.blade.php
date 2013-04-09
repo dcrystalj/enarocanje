@@ -49,7 +49,7 @@
     }?>
 
     {{ Table::hover_open() }}
-    {{ Table::headers('Id', 'Name', 'Length', 'Description', 'Price', '') }}
+    {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

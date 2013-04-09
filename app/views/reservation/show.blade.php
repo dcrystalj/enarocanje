@@ -12,20 +12,37 @@ TimeTable
 @stop
 
 @section('content')
-<a href="#" id="clear_callendar">[Clear]</a>
-<a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
-<style> 
-.fc-event, .fc-event-vert, .fc-event-draggable, .fc-event-start, .fc-event-end, .ui-draggable, .ui-resizable {
-	/*background	: rgba(192,192,192, 0.6) !important;*/
-}
-.fc-event-time {
-	display: none;
-}
-</style>
+<p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
+
 <div id='calendar'></div>
 	<script>
+
+	function isOverlapping(start, end){
+		var array = calendar.fullCalendar('clientEvents');
+		for(i in array){
+			if(array[i].start != start && array[i].end != end){ 
+			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
+				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
+				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
+				start < array[i].start && start < array[i].end && end > array[i].start && end > array[i].end ){
+					return true;
+			}}
+		}
+		return false;
+	};
+	function time(str){
+		var currentTime = str;
+		var hours = currentTime.getHours()
+		var minutes = currentTime.getMinutes()
+		if (minutes < 10){
+		minutes = "0" + minutes
+		}
+		return hours + ":" + minutes + " ";
+
+	};
+
 	var calendar;
-	
+	var defaultLength = 45;
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
@@ -36,41 +53,61 @@ TimeTable
 				week: 'ddd', // Mon 9/7
 			},
 			selectable: true,
+			unselectAuto: true,
 			selectHelper: true,
 			defaultView: 'agendaWeek',
-			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				
+			firstDay: 1,
+			disableResizing: true,
+			eventAfterRender: function(event, element, view) {  
+			  var width = $(element).width()+8;
+			  $(element).css('width', width + 'px');
 			},
+			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+			
+			 	if (isOverlapping(event.start, event.end)) {
+			 		alert("Timetable overlapps");
+			 		calendar.fullCalendar('removeEvents',event.id);
+			 	}
+			},
+
 			select: function(start, end, allDay) {
 				//cal_clear_day(calendar, start);
 				
 				calendar.fullCalendar('unselect');
-
+				calendar.fullCalendar('removeEvents', -5);
 				// Helper
+				end = new Date(start);
+        		end.setMinutes(start.getMinutes() + defaultLength);
+
 				function insert(start, end)  {
 					calendar.fullCalendar('renderEvent',
 										  {
-											  title: 'Working day',
+										  	  id: '-5',
+											  title: 'Your choice: '+time(start)+' to '+time(end),
 											  start: start,
-											  end: start+1,
+											  end: end,
 											  allDay: false,
+											  editable: true,
 										  },
 										  true // make the event "stick"
 										 );
+					
+				};
+				if(!isOverlapping(start,end)){
+					insert(start, end);
 				}
-
-				 insert(start, end);
+				
 			},
 			eventClick: function(event, jsEvent, view) {
 				calendar.fullCalendar('removeEvents', function(event){
 					return event.editable;
 				});
 			},
-			editable: true,
+			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
 
-        // your event source
+        // when not working
         {
             url: 'http://localhost:8000/microserviceapi/timetable/4',
             type: 'GET',
@@ -78,7 +115,9 @@ TimeTable
                 alert('there was an error while fetching events!');
             },
             editable: false,
-            textColor: 'grey' // a non-ajax option
+            //color: rgba(192,192,192, 0.6) // a non-ajax option
+            color: "rgba(192,192,192, 0.5)",
+            className: "termin"
         }
 
         // any other sources...
@@ -87,16 +126,17 @@ TimeTable
 		});
 
 		// Buttons
-		$('#clear_callendar').click(function(e) {
+		$('#reserve').click(function(e) {
 			e.preventDefault();
+			confirm
 			
 		});
 	});
 	</script>
 
 <style>
-/* Hide unnecessary things */
-.fc-header, .fc-agenda-allday {
+
+.fc-header, .fc-agenda-allday, .fc-event-time{
 	display: none;
 }
 
@@ -109,6 +149,14 @@ TimeTable
 }
 .busy div {
 	display: none;
+}
+
+.fc-event {
+	border:0px !important;
+	width: 100% ;
+}
+table.em-calendar {
+width: 100%;
 }
 </style>
 
