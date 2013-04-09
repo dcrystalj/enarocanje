@@ -12,11 +12,37 @@ TimeTable
 @stop
 
 @section('content')
-<a href="#" id="clear_callendar">[Clear]</a>
-<a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
+<p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
+
 <div id='calendar'></div>
 	<script>
+
+	function isOverlapping(start, end){
+		var array = calendar.fullCalendar('clientEvents');
+		for(i in array){
+			if(array[i].start != start && array[i].end != end){ 
+			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
+				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
+				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
+				start < array[i].start && start < array[i].end && end > array[i].start && end > array[i].end ){
+					return true;
+			}}
+		}
+		return false;
+	};
+	function time(str){
+		var currentTime = str;
+		var hours = currentTime.getHours()
+		var minutes = currentTime.getMinutes()
+		if (minutes < 10){
+		minutes = "0" + minutes
+		}
+		return hours + ":" + minutes + " ";
+
+	};
+
 	var calendar;
+	var defaultLength = 45;
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
@@ -27,83 +53,90 @@ TimeTable
 				week: 'ddd', // Mon 9/7
 			},
 			selectable: true,
+			unselectAuto: true,
 			selectHelper: true,
 			defaultView: 'agendaWeek',
-			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				cal_clear_day(calendar, event);
+			firstDay: 1,
+			disableResizing: true,
+			eventAfterRender: function(event, element, view) {  
+			  var width = $(element).width()+8;
+			  $(element).css('width', width + 'px');
 			},
-			select: function(start, end, allDay) {
-				cal_clear_day(calendar, start);
-				calendar.fullCalendar('unselect');
+			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+			
+			 	if (isOverlapping(event.start, event.end)) {
+			 		$(".alert").alert("Timetable overlapps");
+			 		calendar.fullCalendar('removeEvents',event.id);
+			 	}
+			},
 
+			select: function(start, end, allDay) {
+				//cal_clear_day(calendar, start);
+				
+				calendar.fullCalendar('unselect');
+				calendar.fullCalendar('removeEvents', -5);
 				// Helper
+				end = new Date(start);
+        		end.setMinutes(start.getMinutes() + defaultLength);
+
 				function insert(start, end)  {
 					calendar.fullCalendar('renderEvent',
 										  {
-											  title: 'Working day',
+										  	  id: '-5',
+											  title: 'Your choice: '+time(start)+' to '+time(end),
 											  start: start,
 											  end: end,
-											  allDay: allDay,
+											  allDay: false,
+											  editable: true,
 										  },
 										  true // make the event "stick"
 										 );
-				}
-
-				if(first) {
-					start.setDate(start.getDate()-start.getDay()); // First day in week
-					end.setDate(end.getDate()-end.getDay()); // Same day
-					for(var day=0; day<7; day++) {
-						var s = new Date(start.getTime()+1000*3600*24*day);
-						var e = new Date(end.getTime()+1000*3600*24*day);
-						insert(s, e);
-					}
-					first = false;
-				} else {
+					
+				};
+				if(!isOverlapping(start,end)){
 					insert(start, end);
 				}
+				
 			},
 			eventClick: function(event, jsEvent, view) {
-				var from = prompt("From").split(':');
-				var to = prompt("To").split(':');
-				event.start.setHours(parseInt(from[0]));
-				if(from.length == 2)
-					event.start.setMinutes(parseInt(from[1]));
-				event.end.setHours(parseInt(to[0]));
-				if(to.length == 2)
-					event.end.setMinutes(parseInt(to[1]));
-				calendar.fullCalendar('updateEvent', event);
+				calendar.fullCalendar('removeEvents', function(event){
+					return event.editable;
+				});
 			},
-			editable: true,
+			//editable: true,
 			slotMinutes: 15,
-			events: [
-				{
-					title: 'test',
-					start: '2013-04-6 10:00:00',
-					end: '2013-04-6 12:00:00',
-					allDay: false,
-					editable: false,
-					className: 'busy',
-					disabled: true,
-				}
-			]
+			eventSources: [
+
+        // when not working
+        {
+            url: 'http://localhost:8000/microserviceapi/timetable/4',
+            type: 'GET',
+            error: function() {
+                alert('there was an error while fetching events!');
+            },
+            editable: false,
+            //color: rgba(192,192,192, 0.6) // a non-ajax option
+            color: "rgba(192,192,192, 0.5)",
+            className: "termin"
+        }
+
+        // any other sources...
+
+    ]
 		});
 
 		// Buttons
-		$('#clear_callendar').click(function(e) {
+		$('#reserve').click(function(e) {
 			e.preventDefault();
-			var events = calendar.fullCalendar('clientEvents');
-			for(var i=0; i<events.length; i++)
-				calendar.fullCalendar('removeEvents', events[i]._id);
-			first = true;
-		});
-		$('#insert_breaks').click(function(e) {
+			confirm
+			
 		});
 	});
 	</script>
 
 <style>
-/* Hide unnecessary things */
-.fc-header, .fc-agenda-allday {
+
+.fc-header, .fc-agenda-allday, .fc-event-time{
 	display: none;
 }
 
@@ -116,6 +149,14 @@ TimeTable
 }
 .busy div {
 	display: none;
+}
+
+.fc-event {
+	border:0px !important;
+	width: 100% ;
+}
+table.em-calendar {
+width: 100%;
 }
 </style>
 

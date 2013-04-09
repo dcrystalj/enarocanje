@@ -32,6 +32,7 @@
 					['User registration',URL::to('user/create'),Request::is('user/create')],
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
+					['Login',URL::to('Login/create'),Request::is('ManageServices/create')],
 				])
 			)}}
 		</nav>
@@ -78,6 +79,9 @@
 			@yield('title')
 		</h1>
 
+		@if (isset($status))
+		<p>{{ Alert::error( Session::get('status')) }}</p>
+		@endif
 
 		@yield('content')
 

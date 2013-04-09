@@ -18,35 +18,37 @@
             $MicroService = Microservice::All();
     ?>  
 
-    
-
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
-    {{ Former::select('length','Length:')->options($duration, 1) }} 
+    {{ Former::select('length','Length:')->options($duration) }} 
     {{ Former::text('description','Description:') }}
     {{ Former::Number('price','Price:') }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   
 
-    <table>
-        <tr>
-            <td> Id </td>
-            <td> Name </td>
-            <td> Length </td>
-            <td> Description </td>
-            <td> Price </td>
-            <td> </td>
-        </tr>
-        @foreach ($MicroService as $service)
-            <tr>
-                <td> {{ $service->id }} </td>
-                <td> {{ $service->name }} </td>
-                <td> {{ $service->length }} </td>
-                <td> {{ $service->description }} </td>
-                <td> {{ $service->price }} </td>
-                <td> {{ Html::link('ManageServices/' . $service->id . '/edit','Edit') }} {{ Html::link('ManageServices/' . $service->id . '/destroy','Delete') }}</td>
-            </tr>
-        @endforeach     
-    </table>
+    <?php 
+    $tbody = []; 
+    $i = 1; 
+    foreach ($MicroService as $service){
+        $link1  =    Form::open(array('method' => 'DELETE', 'url' => 'ManageServices/' . $service->id));
+        $link1 .=    Form::submit('Delete');
+        $link1 .=    Form::close();
+
+        $tbody[]= [
+            'id'     => $i, 
+            'name'   => $service->name, 
+            'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
+            'desc'   => $service->description, 
+            'price'  => $service->price, 
+            'link'   => Html::link('ManageServices/' . $service->id . '/edit','Edit') ,
+            'link1'  => $link1
+         ];
+         $i++;
+    }?>
+
+    {{ Table::hover_open() }}
+    {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
+    {{ Table::body($tbody) }}
+    {{ Table::close() }}
    
 @stop
