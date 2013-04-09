@@ -29,7 +29,7 @@
 					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
-					['User registration',URL::to('user/registerUser'),Request::is('user/registerUser')],
+					['User registration',URL::to('user/create'),Request::is('user/create')],
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('UserLogin'),Request::is('UserLogin')],
@@ -80,6 +80,9 @@
 			@yield('title')
 		</h1>
 
+		@if (isset($status))
+		<p>{{ Alert::error( Session::get('status')) }}</p>
+		@endif
 
 		@yield('content')
 

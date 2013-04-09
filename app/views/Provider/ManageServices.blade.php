@@ -18,8 +18,6 @@
             $MicroService = Microservice::All();
     ?>  
 
-    <p>{{ Typography::error( Session::get('status','') ) }}</p>
-
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
     {{ Former::select('length','Length:')->options($duration) }} 
@@ -48,7 +46,7 @@
          $i++;
     }?>
     {{ Table::hover_open() }}
-    {{ Table::headers('Id', 'Name', 'Length', 'Description', 'Price', '') }}
+    {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

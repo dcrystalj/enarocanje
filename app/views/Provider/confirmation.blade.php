@@ -6,9 +6,6 @@
 
 @section('content')
 
-	<p>{{ Typography::error( Session::get('status','') ) }}</p>
-    
-
     {{ Former::open()->rules($rules) }}
     {{ Former::hidden('token',$token) }}
     {{ Former::password('password','Password:') }}

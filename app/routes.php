@@ -15,6 +15,10 @@ Route::get('find', function()
 	return View::make('find');
 });
 
+Route::get('user/registerUser', function()
+{
+	return View::make('user/registerUser');
+});
 
 Route::resource('ureservation' , 'CustomerReservation');
 
@@ -26,10 +30,13 @@ Route::get('/service/{id}/breaks','ManageServices@breaks');
 
 Route::resource('user','UserController');
 
-//provider controller
 Route::resource('provider','Provider');
 Route::get('provider/confirm/{token}','Provider@getConfirm');
 Route::post('provider/confirm/{token}','Provider@postConfirm');
+
+Route::resource('user','UserController');
+Route::get('user/confirm/{token}','user@getConfirm');
+Route::post('user/confirm/{token}','user@postConfirm');
 
 
 Route::controller('microserviceapi', 'MicroserviceApiController');
