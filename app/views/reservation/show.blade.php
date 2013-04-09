@@ -30,6 +30,7 @@ TimeTable
 		}
 		return false;
 	};
+
 	function time(str){
 		var currentTime = str;
 		var hours = currentTime.getHours()
@@ -66,7 +67,8 @@ TimeTable
 			
 			 	if (isOverlapping(event.start, event.end)) {
 			 		$(".alert").alert("Timetable overlapps");
-			 		calendar.fullCalendar('removeEvents',event.id);
+			 		revertFunc();
+			 		// calendar.fullCalendar('removeEvents',event.id);
 			 	}
 			},
 
@@ -83,7 +85,7 @@ TimeTable
 					calendar.fullCalendar('renderEvent',
 										  {
 										  	  id: '-5',
-											  title: 'Your choice: '+time(start)+' to '+time(end),
+											  title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
 											  start: start,
 											  end: end,
 											  allDay: false,
@@ -128,7 +130,11 @@ TimeTable
 		// Buttons
 		$('#reserve').click(function(e) {
 			e.preventDefault();
-			confirm
+			//var allevents = calendar.fullCalendar( 'clientEvents' ,-5 );
+
+			 bootbox.confirm("Are you sure you want to make reservation on ? ", function(result) {
+			   return
+			}); 
 			
 		});
 	});
