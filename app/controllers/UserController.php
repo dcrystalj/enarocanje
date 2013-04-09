@@ -1,14 +1,14 @@
 <?php
 
 class UserController extends BaseController {
-    private $rules = array(
-          'Name'     => 'required|max:20|alpha',
-          'Surname'  => 'required|max:20|alpha',
-          'Email'    => 'required|email',
+    public $rules = array(
+          'name'     => 'required|max:20|alpha',
+          'surname'  => 'required|max:20|alpha',
+          'email'    => 'required|email|unique:users',
           'password' => 'required|between:6,30',
           'repeat' => 'required|same:password|min:6|between:6,30',
-          'Timezone' => 'min:1',
-          'Language' => 'min:1',
+          'timezone' => 'min:1',
+          'language' => 'min:1',
         );
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class UserController extends BaseController {
      */
     public function index()
     {
-        return "loll";
+        return "index";
     }
 
     /**
@@ -45,28 +45,34 @@ class UserController extends BaseController {
         $validation = Validator::make(Input::all(),$this->rules);
         if($validation->fails())
         {
-            echo "fail";
+            //echo "fail";
             Input::flash(); //input data remains in form
-            return View::make('user.registerUser')
+            return Redirect::to('user/create')
                         ->withErrors($validation)
                         ->with('rules',$this->rules);
         }
         else
         {
-            return "uspešno";
+            //return "uspešno";
 
             $user = new User;
-            $user->name     = Input::get( 'Name' );
-            $user->surname    = Input::get( 'Surname' );
-            $user->email    = Input::get( 'Email' );
+            $user->name     = Input::get( 'name' );
+            $user->surname    = Input::get( 'surname' );
+            $user->email    = Input::get( 'email' );
             $user->password = Hash::make(Input::get('password'));
-            $user->timezone    = Input::get( 'Timezone' );
-            $user->language     = Input::get( 'Language' );
-            $user->confirmed = 1;
+            $user->time_zone    = Input::get( 'timezone' );
+            $user->language     = Input::get( 'language' );
+            $user->confirmed = 0;
+            //$user->confirmed = 1;
 
             $user->save();
-            return View::make('home');
-            //return View::make('home')->with('message','Suksess');
+            Config::set('auth.reminder.email', 'emails.auth.userWelcome');
+            return Password::remind(['email' => $user->email ], function($m)
+            {
+                $m->setCharset('UTF-8');
+            }) ;
+            //return View::make('home');
+            return View::make('home')->with('message','Suksess');
         }
 
 
@@ -116,4 +122,22 @@ class UserController extends BaseController {
         //
     }
 
+    public function getConfirm($token)
+    {
+        $remind =  DB::table('password_reminders')->where('token', Input::get('token'))->first();
+        if($remind) $user = User::where('email',$remind->email)->first();
+        if(isset($user)){
+            $user->confirmed = 1;
+            $user->save();
+            return View::make('user.registerUserSuccess');
+        }
+        return Redirect::to('user/confirm/' . $token)
+                        ->with('status','Wrong token')
+                        ->with('rules',$this->rules1);
+
+    }
+    public function postConfirm($token)
+    {
+        return View::make('find');
+    }
 }

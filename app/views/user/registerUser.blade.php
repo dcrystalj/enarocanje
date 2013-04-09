@@ -15,13 +15,13 @@
 
 ?>
 {{Former::open('user')->rules($rules)}}
-{{Former::text('Name')->autofocus()}}
-{{Former::text('Surname')}}
-{{Former::text('Email')}}
+{{Former::text('name','Name')->autofocus()}}
+{{Former::text('surname','Surname')}}
+{{Former::text('email','Email')}}
 {{Former::password('password','Password')}}
 {{Former::password('repeat','Repeat password')}}
-{{Former::select('Timezone')->options($timezone,"UTC",true)}}
-{{Former::select('Language')->options($language)}}
+{{Former::select('timezone','Timezone')->options($timezone,"UTC",true)}}
+{{Former::select('language','Language')->options($language)}}
 {{Former::actions()->submit('Submit')}}
 {{Former::close()}}
 
