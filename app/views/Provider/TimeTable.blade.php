@@ -25,6 +25,11 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			minTime: 6,
+			maxTime: 21,
+			firstDay: 1,
+			axisFormat: 'HH:mm',
+			ignoreTimezone: false,
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -54,7 +59,7 @@ TimeTable
 				if(first) {
 					start.setDate(start.getDate()-start.getDay()); // First day in week
 					end.setDate(end.getDate()-end.getDay()); // Same day
-						for(var day=0; day<7; day++) {
+						for(var day=1; day<=7; day++) {
 						var s = new Date(start.getTime()+1000*3600*24*day);
 						var e = new Date(end.getTime()+1000*3600*24*day);
 						insert(s, e);
@@ -77,17 +82,14 @@ TimeTable
 			},
 			editable: true,
 			slotMinutes: 15,
-			events: [
+			eventSources: [
 				{
-					title: 'test',
-					start: '2013-04-08 10:00:00',
-					end: '2013-04-08 12:00:00',
-					allDay: false,
-					editable: false,
-					className: 'busy',
-					disabled: true,
+					url: 'http://localhost:8000/microserviceapi/workinghours/<?= $id ?>',
+					type: 'GET',
+					error: function() { alert('there was an error while fetching events!'); },
+					editable: true,
 				}
-			]
+			],
 		});
 
 		// Buttons
@@ -102,7 +104,7 @@ TimeTable
 		// });
 		$('#save').click(function(e) {
 			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
-				alert(data);
+						alert("Timetable saved.")
 			});
 		});
 	});
