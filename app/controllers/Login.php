@@ -19,7 +19,7 @@ class Login extends BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('UserLogin');
 	}
 
 	/**

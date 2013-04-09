@@ -50,7 +50,7 @@ class ManageServices extends BaseController {
 			$micservice->description    = Input::get( 'description' );
 			$micservice->price    = Input::get( 'price' );
 			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . '');
+			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . 'updated.');
 		}
 		else
 		{
