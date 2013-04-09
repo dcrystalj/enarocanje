@@ -88,9 +88,10 @@ class ManageServices extends BaseController {
 		$events = json_decode($events);
 		DB::table('working_hour')->where('macservice_id', $id)->delete();
 		foreach($events as $event) {
-			$day = date('w', strtotime($event->start));
+			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));
 			$end = date('G:i', strtotime($event->end));
+			print "$day: $start ... $end\n";
 			DB::table('working_hour')->insert(array(
 												  'macservice_id' => $id,
 												  'day' => $day,

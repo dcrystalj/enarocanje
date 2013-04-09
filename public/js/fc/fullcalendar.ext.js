@@ -72,7 +72,6 @@ function cal_save(cal, url, callback, check) {
 			submit.push(cal_event_data(events[i]));
 		}
 	}
-	alert(JSON.stringify(submit));
 	$.post(url, {'events': JSON.stringify(submit)}, callback);
 }
 
