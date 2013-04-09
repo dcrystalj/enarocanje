@@ -72,13 +72,27 @@ function cal_save(cal, url, callback, check) {
 			submit.push(cal_event_data(events[i]));
 		}
 	}
+	alert(JSON.stringify(submit));
 	$.post(url, {'events': JSON.stringify(submit)}, callback);
 }
 
 function cal_event_data(event) {
 	return {
-		start: event.start,
-		end: event.end,
+		start: d(event.start),
+		end: d(event.end),
 		title: event.title,
 	};
+}
+
+function d(t) {
+	var y = t.getFullYear();
+	var M = t.getMonth()+1;
+	var d = t.getDate();
+	var h = t.getHours();
+	var m = t.getMinutes();
+	if(M < 10) M = '0'+M;
+	if(d < 10) d = '0'+d;
+	if(h < 10) h = '0'+h;
+	if(m < 10) m = '0'+m;
+	return y+'-'+M+'-'+d+' '+h+':'+m;
 }

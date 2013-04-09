@@ -25,6 +25,7 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			  ignoreTimezone: false,
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -77,17 +78,6 @@ TimeTable
 			},
 			editable: true,
 			slotMinutes: 15,
-			events: [
-				{
-					title: 'test',
-					start: '2013-04-08 10:00:00',
-					end: '2013-04-08 12:00:00',
-					allDay: false,
-					editable: false,
-					className: 'busy',
-					disabled: true,
-				}
-			]
 		});
 
 		// Buttons
@@ -101,8 +91,8 @@ TimeTable
 		// $('#insert_breaks').click(function(e) {
 		// });
 		$('#save').click(function(e) {
-			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
-				alert(data);
+				cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
+						alert("Timetable saved.")
 			});
 		});
 	});
