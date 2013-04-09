@@ -6,7 +6,7 @@ class MicroserviceApiController extends BaseController
 	{
 		
 		$i=4;
-		$workingHours = Whours::where('macservice_id',1)->get();
+		$workingHours = Whours::where('macservice_id',1)->orderBy('day')->get();
 		$timetable = [];
 		$from = "00:00:00";
 		$lastday = 0;

@@ -33,7 +33,7 @@ Route::post('login',function()
 	$input = Input::all();
 	$input['confirmed'] = 1;
 
-	if(Auth::attempt($input))
+	if(Auth::attempt($input,true))
 	{
 		return Redirect::to('home');//->with('status','You have been sucessfully logged in.');  
 	}
