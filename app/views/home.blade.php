@@ -9,13 +9,11 @@
     <p>Example</p>
 
     @if (isset($message))
-	<p>{{ Typography::warning($message) }}</p>
+	<p>{{ Alert::warning($message) }}</p>
 	@endif
-	
-	<p>{{ Typography::error( Session::get('status','') ) }}</p>
-	
+
 	@if (isset($success))
-	<p>{{ Typography::warning('Email was sent') }}</p>
+	<p>{{ Alert::warning('Email was sent') }}</p>
 	@endif
 
 @stop

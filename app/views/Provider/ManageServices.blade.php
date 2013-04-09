@@ -18,8 +18,6 @@
             $MicroService = Microservice::All();
     ?>  
 
-    <p>{{ Typography::error( Session::get('status','') ) }}</p>
-
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
     {{ Former::select('length','Length:')->options($duration) }} 

@@ -79,6 +79,9 @@
 			@yield('title')
 		</h1>
 
+		@if (isset($status))
+		<p>{{ Alert::error( Session::get('status')) }}</p>
+		@endif
 
 		@yield('content')
 

@@ -65,7 +65,7 @@ TimeTable
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 			
 			 	if (isOverlapping(event.start, event.end)) {
-			 		alert("Timetable overlapps");
+			 		$(".alert").alert("Timetable overlapps");
 			 		calendar.fullCalendar('removeEvents',event.id);
 			 	}
 			},
