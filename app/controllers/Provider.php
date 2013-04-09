@@ -54,7 +54,7 @@ class Provider extends BaseController {
 			return Password::remind(['email' => $user->email ], function($m)
 			{
 			    $m->setCharset('UTF-8');
-			}) ;
+			})->with('status','Confirmation email sent.') ;
 		}
 	}
 
