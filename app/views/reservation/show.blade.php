@@ -14,9 +14,18 @@ TimeTable
 @section('content')
 <a href="#" id="clear_callendar">[Clear]</a>
 <a href="/service/123/breaks" id="insert_breaks">[Insert breaks]</a>
+<style> 
+.fc-event, .fc-event-vert, .fc-event-draggable, .fc-event-start, .fc-event-end, .ui-draggable, .ui-resizable {
+	/*background	: rgba(192,192,192, 0.6) !important;*/
+}
+.fc-event-time {
+	display: none;
+}
+</style>
 <div id='calendar'></div>
 	<script>
 	var calendar;
+	
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
@@ -30,10 +39,11 @@ TimeTable
 			selectHelper: true,
 			defaultView: 'agendaWeek',
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				cal_clear_day(calendar, event);
+				
 			},
 			select: function(start, end, allDay) {
-				cal_clear_day(calendar, start);
+				//cal_clear_day(calendar, start);
+				
 				calendar.fullCalendar('unselect');
 
 				// Helper
@@ -42,61 +52,44 @@ TimeTable
 										  {
 											  title: 'Working day',
 											  start: start,
-											  end: end,
-											  allDay: allDay,
+											  end: start+1,
+											  allDay: false,
 										  },
 										  true // make the event "stick"
 										 );
 				}
 
-				if(first) {
-					start.setDate(start.getDate()-start.getDay()); // First day in week
-					end.setDate(end.getDate()-end.getDay()); // Same day
-					for(var day=0; day<7; day++) {
-						var s = new Date(start.getTime()+1000*3600*24*day);
-						var e = new Date(end.getTime()+1000*3600*24*day);
-						insert(s, e);
-					}
-					first = false;
-				} else {
-					insert(start, end);
-				}
+				 insert(start, end);
 			},
 			eventClick: function(event, jsEvent, view) {
-				var from = prompt("From").split(':');
-				var to = prompt("To").split(':');
-				event.start.setHours(parseInt(from[0]));
-				if(from.length == 2)
-					event.start.setMinutes(parseInt(from[1]));
-				event.end.setHours(parseInt(to[0]));
-				if(to.length == 2)
-					event.end.setMinutes(parseInt(to[1]));
-				calendar.fullCalendar('updateEvent', event);
+				calendar.fullCalendar('removeEvents', function(event){
+					return event.editable;
+				});
 			},
 			editable: true,
 			slotMinutes: 15,
-			events: [
-				{
-					title: 'test',
-					start: '2013-04-6 10:00:00',
-					end: '2013-04-6 12:00:00',
-					allDay: false,
-					editable: false,
-					className: 'busy',
-					disabled: true,
-				}
-			]
+			eventSources: [
+
+        // your event source
+        {
+            url: 'http://localhost:8000/microserviceapi/timetable/4',
+            type: 'GET',
+            error: function() {
+                alert('there was an error while fetching events!');
+            },
+            editable: false,
+            textColor: 'grey' // a non-ajax option
+        }
+
+        // any other sources...
+
+    ]
 		});
 
 		// Buttons
 		$('#clear_callendar').click(function(e) {
 			e.preventDefault();
-			var events = calendar.fullCalendar('clientEvents');
-			for(var i=0; i<events.length; i++)
-				calendar.fullCalendar('removeEvents', events[i]._id);
-			first = true;
-		});
-		$('#insert_breaks').click(function(e) {
+			
 		});
 	});
 	</script>

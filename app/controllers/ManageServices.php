@@ -74,12 +74,18 @@ class ManageServices extends BaseController {
 	}
 
 
-	public function timetable()
+	public function timetable($macro_id)
 	{
-		return View::make('Provider.TimeTable');
+		return View::make('Provider.TimeTable', array('id' => $macro_id));
 	}
 
-	public function shoxw() {
+	public function breaks($macro_id) {
+		return View::make('Provider.Breaks', array('id' => $macro_id));
 	}
-
+	
+	public function submit_time($id) {
+		$events = Input::get('events');
+		$object = json_decode($events);
+		print $events;
+	}
 }
