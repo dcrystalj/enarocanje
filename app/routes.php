@@ -14,6 +14,10 @@ Route::get('find', function()
 {
 	return View::make('find');
 });
+Route::get('profile', function()
+{
+	return View::make('userProfile');
+});
 
 Route::get('login',function()
 {	

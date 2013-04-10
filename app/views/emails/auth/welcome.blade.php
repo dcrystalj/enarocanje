@@ -7,7 +7,7 @@
 		<h2>Set Password</h2>
 
 		<div>
-			Wawawa : to set your new password, complete this form: {{ URL::to('user/confirm', array($token)) }}.
+			To set your new password, complete this form: {{ URL::to('user/confirm', array($token)) }}.
 		</div>
 	</body>
 </html>
