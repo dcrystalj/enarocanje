@@ -140,7 +140,9 @@ TimeTable
 		$('#save').click(function(e) {
 			e.preventDefault();
 			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
-				window.location = "/service/<?=$id ?>/breaks";
+				bootbox.alert("Timetable saved.", function() {
+					window.location = "/service/<?=$id ?>/breaks";
+				});
 			});
 		});
 	});

@@ -33,3 +33,6 @@ ID, Zip, Postal
 
 Worker:
 ID, Name, Surname, MicroService, WorkingHours</pre></body></html>
+
+Reservations:
+ID, from, to, day, microservice
