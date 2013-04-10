@@ -1,4 +1,8 @@
 <!DOCTYPE Html>
+
+<?php 	
+	$id = 0;
+?>
 <Html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -31,7 +35,7 @@
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('user/create'),Request::is('user/create')],
-					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
+					['Settings',URL::to('provider/' . $id . '/edit'),Request::is('provider/' . $id . '/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('login'),Request::is('login')],
 					['Logout',URL::to('logout'),Request::is('logout')],

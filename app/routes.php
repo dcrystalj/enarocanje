@@ -40,12 +40,13 @@ Route::post('login',function()
 
 	if(Auth::attempt(array('email' => $email, 'password' => $password)))
 	{
-		return Redirect::route('home')->with('status','You have been successfully logged in.');  
+		$user = User::find($email);
+		return Redirect::route('home')->with('status','You have been successfully logged in.')->with($user);  
 	}
 	else
 	{
 		return View::make('login')
-			 	->with('error','Could not login, please try again')
+			 	->with('status','Could not login, please try again')
 			 	->with('rules',$rules);
 	}
 });
