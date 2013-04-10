@@ -15,9 +15,7 @@ class Provider extends BaseController {
 
     public $rules2 = array(
     	'name'		=> 'required|max:20|alpha',
-        'email'		=> 'required|email|unique:users',	
         'password'		=> 'same:password_confirmation|between:4,20|confirmed',
-    	'password_confirmation'		=> 'required',
    	);
 	public function index()
 	{
@@ -73,32 +71,27 @@ class Provider extends BaseController {
 	public function edit($id)
 	{
 
-		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id));
+		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id))->with('rules',$this->rules2);
 	}
 
 
 	public function update($id)
 	{
 		$input = Input::all();
-		$validation = Validator::make($input,$this->rules);
+		$validation = Validator::make($input,$this->rules2);
 		if($validation->fails())
 		{
-			return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules)->with('user',User::find($id));
+			return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules2)->with('user',User::find($id));
 		}		
 		else
 		{
 			$user = User::find($id);
 			if(isset($user))
 			{
-		    	if(($input->name))
-		    	{
-		    		$user->name = $input->name;	
-		    	}
-		    	if($input->email){
-		    		$user->email = $input->email;		
-		    	}
-		    	if($input->password){
-		    		$user->password = Hash::make($input->password);	
+		    	$user->name = $input['name'];	
+		    	$user->language = $input['language'];
+		    	if($input['password']){
+		    		$user->password = Hash::make($input['password']);	
 		    	}
 		    	$user->save();			
 		    }

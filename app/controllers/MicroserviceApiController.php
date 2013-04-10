@@ -148,7 +148,8 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function getBreaks($id) {
-		$workingHours = Breaks::where('macservice_id',$id)->get();
+		
+		$workingHours = Breakt::where('macservice_id',$id)->get();
 		$timetable = [];
 
 		foreach ($workingHours as $wh) 
