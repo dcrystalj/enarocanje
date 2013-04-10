@@ -34,7 +34,7 @@
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('login'),Request::is('login')],
-					['Logout',URL::to('logout'),Request::is('logout')],
+					['Logout',URL::to('logout'),Request::is('logout')],['Profile',URL::to('profile'),Request::is('profile')],
 				])
 			)}}
 		</nav>
