@@ -141,7 +141,7 @@ TimeTable
 					type: 'GET',
 					editable: false,
 					//color: rgba(192,192,192, 0.6) // a non-ajax option
-					color: "red"
+					color: "red",
 				}
 			]
 		});
