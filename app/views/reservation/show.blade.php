@@ -115,32 +115,35 @@ TimeTable
 			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
-
-        // when not working
-        {
-            url: 'http://localhost:8000/microserviceapi/timetable/4',
-            type: 'GET',
-            error: function() {
-                alert('there was an error while fetching events!');
-            },
-            editable: false,
-            //color: rgba(192,192,192, 0.6) // a non-ajax option
-            color: "rgba(192,192,192, 0.5)",
-            className: "termin"
-        },
-
-        {
-            url: 'http://localhost:8000/microserviceapi/usertimetable/4',
-            type: 'GET',
-            editable: false,
-            //color: rgba(192,192,192, 0.6) // a non-ajax option
-            color: "red"
-
-        }
-
-        // any other sources...
-
-    ]
+				// when not working
+				{
+					url: 'http://localhost:8000/microserviceapi/timetable/4',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/breaks/1',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/usertimetable/4',
+					type: 'GET',
+					editable: false,
+					//color: rgba(192,192,192, 0.6) // a non-ajax option
+					color: "red"
+				}
+			]
 		});
 
 		// Buttons

@@ -195,7 +195,7 @@ Breaks
 		$('#save').click(function(e) {
 			e.preventDefault();
 			cal_save(calendar, '/service/<?= $id ?>/breaks/submit', function(d) {
-				alert('Saved.');
+				bootbox.alert("Breaks saved.");
 			}, function(ev) {
 				return ev.editable;
 			});
