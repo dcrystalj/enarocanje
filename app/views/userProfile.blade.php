@@ -1,0 +1,1 @@
+The userProfile.blade.php view.
