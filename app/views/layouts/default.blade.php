@@ -35,50 +35,19 @@
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('user/create'),Request::is('user/create')],
-					['Settings',URL::to('provider/' . $id . '/edit'),Request::is('provider/' . $id . '/edit')],									
+					['Settings',URL::to('provider/' . $id . '/edit'),Request::is('provider/' . $id . '/edit')],			
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
-					['Login',URL::to('login'),Request::is('login')],
-					['Logout',URL::to('logout'),Request::is('logout')],['Profile',URL::to('profile'),Request::is('profile')],
+					['Login',URL::to('app/login'),Request::is('app/login')],
+					['Logout',URL::to('app/logout'),Request::is('app/logout')],
+					['Profile',URL::to('profile'),Request::is('profile')],
 					['Working Hours',URL::to('service/1/time'),Request::is('service/1/time')],
 					['Reservation',URL::to('ureservation'),Request::is('ureservation')],
 				])
 			)}}
 		</nav>
-		<!-- <div>
-			@if ( ! Auth::check() )
-				{{ Navigation::pills(
-					Navigation::links([
-						['Login', URL::to('account/login'), Request::is('account/login')], 
-						['Register', URL::to('register'), Request::is('register')],
-					])
-				)}}	
-			@else
-				<li class="navbar-text">
-					Logged in as {{ Html::to(URL::to('user'), Auth::user()->fullName()) }}
-				</li>
-				<li {{ (Request::is('find') ? 'class="active"' : '') }}>
-					{{ Html::to( URL::to('find'), 'Find') }}
-				</li>
-
-				@if ( Auth::check() )
-					<li class="navbar-text">Logged in as {{ Auth::user()->fullName() }}</li>
-					<li class="divider-vertical"></li>
-					<li {{ (Request::is('account') ? 'class="active"' : '') }}>
-						{{ Html::to( URL::to('account'), 'Account') }}
-					</li>
-					<li>
-						{{ Html::to( URL::to('account/logout'), 'Logout' ) }}
-					</li>
-				@else
-					<li {{ (Request::is('account/login') ? 'class="active"' : '') }}>
-						{{ Html::to( URL::to('account/login'), 'Login' ) }}
-					</li>
-				@endif
-
-			</ul>
-
-			@endif
-		</div> -->
+		<div>
+			
+		</div>
 	</header>	
 	
 	<div class="container">		
