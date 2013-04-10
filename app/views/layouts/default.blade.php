@@ -80,7 +80,7 @@
 		<h1>
 			@yield('title')
 		</h1>
-
+		<div id="statusmessage" class="alert-warning alert" style="display:none;"></div>
 		@if (isset($status))
 		<p>{{ Alert::warning( $status) }}</p>
 		@endif
