@@ -56,24 +56,6 @@ class MicroserviceApiController extends BaseController
 			$lastday ++;
 			$j++;
 		}
-
-		//breaks
-		$breaks = Breaks::where('macservice_id',$id)->get();
-		foreach ($breaks as $b) 
-		{
-			$day = $this->dayToString($b->day);
-			$timetable[] = array(
-					"id"	 => "$j",
-					"title"  => "",
-					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $b->from ,
-					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $b->to ,
-					"allDay" => false,
-					"editable"=> false,
-				);
-			$lastday ++;
-			$j++;
-		}
-
 		return json_encode($timetable);
 	}
 
