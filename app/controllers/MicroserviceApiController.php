@@ -23,6 +23,7 @@ class MicroserviceApiController extends BaseController
 					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
 					"allDay" => false,
 					"editable"=> false,
+					"test" => "test"
 				);
 				$from = "00:00:00";
 				$lastday ++;
@@ -35,7 +36,8 @@ class MicroserviceApiController extends BaseController
 				"title"  => "",
 				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
 				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
-				"allDay" => false
+				"allDay" => false,
+				"test" => "test"
 			);
 			$from = $wh->to;
 			$lastday = $wh->day;
@@ -46,39 +48,43 @@ class MicroserviceApiController extends BaseController
 		{
 			$day = $this->dayToString($lastday);
 			$timetable[] = array(
-				"id"	 => "$j",
-				"title"  => "",
-				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
-				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
-				"allDay" => false
+				"id"       => "$j",
+				"title"    => "",
+				"start"    => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
+				"end"      => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
+				"allDay"   => false,
+				"test"     => "test",
+				"editable" => false
 			);
 			$from = "00:00:00";
 			$lastday ++;
 			$j++;
 		}
+
 		return json_encode($timetable);
 	}
 
 	public function getUsertimetable($id)
 	{
+		$timetable =[];
 		$micserviceid = 1;
 		$userid = 35;
 		$r = Reservation::where('microservice',$micserviceid)
 						->where('user',$userid)
 						->get();
-		$j = 100;
+		$j = 1000;
 		foreach ($r as $b) 
 		{
 			$day         = $this->dayToString($b->day);
 			$title       = "Your reservation: \nfrom  " . $b->from ." to " . $b->to;
 
 			$timetable[] = array(
-					"id"	 => "$j",
+					"id"	 => $b->id,
 					"title"  => $title,
 					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $b->from ,
 					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $b->to ,
 					"allDay" => false,
-					"editable"=> false,
+					"editable"=> false
 			);
 			$j++;
 		}
@@ -87,10 +93,10 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function postReservation($id){
-
+		$userid = 35;
 		$microservid = 1;
 		$events = Input::get('event');
-		$events = json_decode($events);
+		$event = json_decode($events);
 
 		$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); //Monday - day 0
 		$start = date('G:i', strtotime($event->start));
@@ -99,9 +105,25 @@ class MicroserviceApiController extends BaseController
 		$r               = new Reservation;
 		$r->from         = $start;
 		$r->to           = $end;
-		$r->microservice = $microserviceid;
+		$r->microservice = $microservid;
 		$r->day          = $day;
+		$r->user 		 = $userid;
 		$r->save();
+
+	}
+
+	public function postDeletereservation($id){
+		$userid = 35;
+		$microservid = 1;
+
+ 		$r = Reservation::where('microservice',$microservid)
+					->where('id',Input::get('event'))
+					->where('user',$userid)
+					->delete();
+		if($r)			
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+		else
+			return json_encode(array('success'=>false,'text'=>'Sucessfully deleted'));
 
 	}
 
@@ -138,7 +160,7 @@ class MicroserviceApiController extends BaseController
 				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
 				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
 				"allDay" => false,
-				"editable"=> true,
+				"test"	 => "test"
 			);
 		}
 		return json_encode($timetable);

@@ -49,7 +49,7 @@ class Provider extends BaseController {
 
 			//send mail
 
-			Config::set('auth.reminder.email', 'emails.welcome');
+			Config::set('auth.reminder.email', 'emails.auth.welcome');
 			return Password::remind(['email' => $user->email ], function($m)
 			{
 			    $m->setCharset('UTF-8');

@@ -39,10 +39,12 @@
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('login'),Request::is('login')],
 					['Logout',URL::to('logout'),Request::is('logout')],['Profile',URL::to('profile'),Request::is('profile')],
+					['Working Hours',URL::to('service/1/time'),Request::is('service/1/time')],
+					['Reservation',URL::to('ureservation'),Request::is('ureservation')],
 				])
 			)}}
 		</nav>
-		<div>
+		<!-- <div>
 			@if ( ! Auth::check() )
 				{{ Navigation::pills(
 					Navigation::links([
@@ -76,7 +78,7 @@
 			</ul>
 
 			@endif
-		</div>
+		</div> -->
 	</header>	
 	
 	<div class="container">		
@@ -84,7 +86,7 @@
 		<h1>
 			@yield('title')
 		</h1>
-
+		<div id="statusmessage" class="alert-warning alert" style="display:none;"></div>
 		@if (isset($status))
 		<p>{{ Alert::warning( $status) }}</p>
 		@endif
