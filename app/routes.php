@@ -86,10 +86,4 @@ Route::post('user/confirm/{token}','user@postConfirm');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 
-/*Route::post('Logout',function()
-{
-	Auth::logout();
-	return Redirect::to('UserLogin');
-});*/
-
 
