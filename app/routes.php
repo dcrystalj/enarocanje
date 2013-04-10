@@ -5,10 +5,10 @@ Route::get('/', function()
 	return View::make('home');
 });
 
-Route::get('home', function()
+Route::get('home',array('as' => 'home', function()
 {
 	return View::make('home')->with('status',Session::get('status'));
-});
+}));
 
 Route::get('find', function()
 {
@@ -30,12 +30,15 @@ Route::post('login',function()
 		'password' => 'required|between:4,20'
 	);
 
-	$input = Input::all();
-	$input['confirmed'] = 1;
+	//$input = Input::all();
+	$user = array(
+            'email' => Input::get('email'),
+            'password' => Input::get('password')
+        );
 
-	if(Auth::attempt($input,true))
+	if(Auth::attempt($user,true))
 	{
-		return Redirect::to('home');//->with('status','You have been sucessfully logged in.');  
+		return Redirect::route('home');//->with('status','You have been sucessfully logged in.');  
 	}
 	else
 	{
@@ -51,19 +54,11 @@ Route::get('logout',function()
 	return View::make('home')->with('status', 'Sucessfully logged out.');
 });
 
-
-
-
-
 Route::get('user/registerUser', function()
 {
 	return View::make('user/registerUser');
 });
 
-
-
-
-Route::resource('ureservation' , 'CustomerReservation');
 
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
@@ -71,17 +66,18 @@ Route::post('/service/{id}/time/submit','ManageServices@submit_time');
 Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
 
-Route::resource('user','UserController');
 
+//provider
 Route::resource('provider','Provider');
 Route::get('provider/confirm/{token}','Provider@getConfirm');
 Route::post('provider/confirm/{token}','Provider@postConfirm');
 
+//user
 Route::resource('user','UserController');
-Route::get('user/confirm/{token}','user@getConfirm');
-Route::post('user/confirm/{token}','user@postConfirm');
+Route::get('user/confirm/{token}','UserController@getConfirm');
+Route::post('user/confirm/{token}','UserController@postConfirm');
 
-
+//calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 
