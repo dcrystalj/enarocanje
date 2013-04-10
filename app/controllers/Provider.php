@@ -50,7 +50,7 @@ class Provider extends BaseController {
 
 			//send mail
 
-			Config::set('auth.reminder.email', 'emails.auth.welcome');
+			Config::set('auth.reminder.email', 'emails.welcome');
 			return Password::remind(['email' => $user->email ], function($m)
 			{
 			    $m->setCharset('UTF-8');
@@ -136,8 +136,8 @@ class Provider extends BaseController {
 		    $user->confirmed = 1;
 		    $user->status = 2;
 		    $user->save();
-			//return View::make('home')->with('message','Success');
-			return Redirect::to('provider/' . $user->id . '/edit');
+			return View::make('home')->with('message','Success');
+			//return Redirect::to('provider/' . $user->id . '/edit');
 	    }
 	    return Redirect::to('provider/confirm/' . $token)
 	    				->with('status','Wrong token')
