@@ -31,14 +31,16 @@ Route::post('login',function()
 	);
 
 	//$input = Input::all();
-	$user = array(
+	/*$user = array(
             'email' => Input::get('email'),
             'password' => Input::get('password')
-        );
+        );*/
+	$email = Input::get('email');
+	$password = Input::get('password');
 
-	if(Auth::attempt($user,true))
+	if(Auth::attempt(array('email' => $email, 'password' => $password)))
 	{
-		return Redirect::route('home');//->with('status','You have been sucessfully logged in.');  
+		return Redirect::route('home')->with('status','You have been successfully logged in.');  
 	}
 	else
 	{
