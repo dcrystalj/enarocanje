@@ -1,11 +1,10 @@
-@extends('layouts.default')
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<h2>asddddddddddddd</h2>
 
-@section('title')
-    User registration
-@stop
-
-@section('content')
-
-{{<p>Successful registration. Gz!</p>}}
-
-@stop
+	</body>
+</html>

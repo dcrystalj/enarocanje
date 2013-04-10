@@ -43,6 +43,12 @@ TimeTable
 
 	};
 
+	function countClientEvents(){
+			return calendar.fullCalendar('clientEvents',function(e){
+				return !e.test && e.id!=-5;}).length;
+
+	};
+
 	var calendar;
 	var defaultLength = 45;
 	$(document).ready(function() {
@@ -68,7 +74,7 @@ TimeTable
 			axisFormat: 'HH:mm',
 			eventAfterRender: function(event, element, view) {  
 			  var width = $(element).width()+8;
-			  $(element).css('width', width + 'px');
+			  $(element).css('width', width + 'px').css('font-size',10).css('line-height',1).css('padding-top','2px');
 			},
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
@@ -96,8 +102,8 @@ TimeTable
 											  start: start,
 											  end: end,
 											  allDay: false,
-											  editable: true,
-										  },
+											  editable: true
+											},
 										  true // make the event "stick"
 										 );
 					
@@ -115,7 +121,6 @@ TimeTable
 			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
-				// when not working
 				{
 					url: 'http://localhost:8000/microserviceapi/timetable/4',
 					type: 'GET',
@@ -142,21 +147,41 @@ TimeTable
 					editable: false,
 					//color: rgba(192,192,192, 0.6) // a non-ajax option
 					color: "red",
+					test: "test"
 				}
-			]
-		});
 
+		    ],
+		    //check if data has been fetched
+		    loading: function(bool) {
+		    	//if client has'nt already made reservation hide delete button
+				if(!bool && countClientEvents()==0)
+				{
+					$('#delete').hide();
+				}
+		    }, 
+			
+		});
+	
+		
 		// Buttons
 		$('#reserve').click(function(e) {
 			e.preventDefault();
-			var allevents = calendar.fullCalendar( 'clientEvents',-5 );
+			var allevents = calendar.fullCalendar( 'clientEvents',-5);
+
+			if(countClientEvents()){
+				bootbox.alert("You have already made reservation. Please delete it first." + countClientEvents());
+				return;
+			}
+
 			bootbox.confirm(
 				"Are you sure you want to make reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
 		  	 	if(result){
 					var submit = cal_event_data(allevents[0]);
-					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){});
-		  	 	}else{
-		  	 		return;
+					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){
+							window.location.reload();
+						}
+					);
+
 		  	 	}
 				return;
 			});			
@@ -166,36 +191,31 @@ TimeTable
 		$('#delete').click(function(e) {
 			e.preventDefault();
 			var allevents = calendar.fullCalendar( 'clientEvents',function(e){
-				return e.id>=100;
-			} );
+				return !e.test;
+			});
+
 			bootbox.confirm(
 				"Are you sure you want to delete reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
 		  	 	if(result){
-					var submit = cal_event_data(allevents[0]);
-					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){});
-		  	 	}else{
-		  	 		return;
+					$.post('http://localhost:8000/microserviceapi/deletereservation/4', {'event': allevents[0].id}, function(e){
+						e = JSON.parse(e);
+						$('#statusmessage').text(e.text).show();
+						if(e.success)
+							calendar.fullCalendar('removeEvents', allevents[0].id);
+					});
 		  	 	}
 				return;
 			});			
 			
 		});
 
-		function countClientEvents(){
-			return calendar.fullCalendar('clientEvents',function(e){return e.id>=100;}).length;
-		};
-
-		if( parseInt(countClientEvents())== 0)
-		{
-			$('#delete').hide();
-		}
 
 	});
 	</script>
 
 <style>
 
-.fc-header, .fc-agenda-allday, .fc-event-time{
+.fc-agenda-allday, .fc-event-time{
 	display: none;
 }
 

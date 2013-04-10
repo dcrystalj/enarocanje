@@ -1,4 +1,8 @@
 <!DOCTYPE Html>
+
+<?php 	
+	$id = 72;
+?>
 <Html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -31,14 +35,16 @@
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('user/create'),Request::is('user/create')],
-					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
+					['Settings',URL::to('provider/' . $id . '/edit'),Request::is('provider/' . $id . '/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('login'),Request::is('login')],
-					['Logout',URL::to('logout'),Request::is('logout')],
+					['Logout',URL::to('logout'),Request::is('logout')],['Profile',URL::to('profile'),Request::is('profile')],
+					['Working Hours',URL::to('service/1/time'),Request::is('service/1/time')],
+					['Reservation',URL::to('ureservation'),Request::is('ureservation')],
 				])
 			)}}
 		</nav>
-		<div>
+		<!-- <div>
 			@if ( ! Auth::check() )
 				{{ Navigation::pills(
 					Navigation::links([
@@ -72,7 +78,7 @@
 			</ul>
 
 			@endif
-		</div>
+		</div> -->
 	</header>	
 	
 	<div class="container">		
@@ -80,7 +86,7 @@
 		<h1>
 			@yield('title')
 		</h1>
-
+		<div id="statusmessage" class="alert-warning alert" style="display:none;"></div>
 		@if (isset($status))
 		<p>{{ Alert::warning( $status) }}</p>
 		@endif

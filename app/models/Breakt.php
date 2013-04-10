@@ -1,6 +1,6 @@
 <?php
 
-class Breaks extends Eloquent {
+class Breakt extends Eloquent {
 	protected $table = 'break';
 
 }

@@ -1,12 +1,10 @@
 @extends('layouts.default')
 
 @section('title')
-    Hello
+    Home
 @stop
 
 @section('content')
-
-    <p>Example</p>
 
     @if (isset($message))
 	<p>{{ Alert::warning($message) }}</p>
@@ -15,9 +13,8 @@
 	@if (isset($success))
 	<p>{{ Alert::warning('Email was sent') }}</p>
 	@endif
-
 	@if (Auth::check())
-	<p> {{ Auth::user()->email }} U're logged in </p>
+	<p> {{ Auth::user()->email }} You are logged in </p>
 	@endif
 
 @stop
