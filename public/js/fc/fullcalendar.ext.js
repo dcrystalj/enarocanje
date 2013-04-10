@@ -77,21 +77,24 @@ function cal_save(cal, url, callback, check) {
 
 function cal_event_data(event) {
 	return {
-		start: d(event.start),
-		end: d(event.end),
+		start: getDate(event.start),
+		end: getDate(event.end),
 		title: event.title,
 	};
 }
 
-function d(t) {
+function getHour(t) {
+	var h = t.getHours();
+	var m = t.getMinutes();
+	if(h < 10) h = '0'+h;
+	if(m < 10) m = '0'+m;
+	return h+':'+m;
+}
+function getDate(t) {
 	var y = t.getFullYear();
 	var M = t.getMonth()+1;
 	var d = t.getDate();
-	var h = t.getHours();
-	var m = t.getMinutes();
 	if(M < 10) M = '0'+M;
 	if(d < 10) d = '0'+d;
-	if(h < 10) h = '0'+h;
-	if(m < 10) m = '0'+m;
-	return y+'-'+M+'-'+d+' '+h+':'+m;
+	return y+'-'+M+'-'+d+getHour(t);
 }

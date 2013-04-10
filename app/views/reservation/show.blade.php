@@ -50,6 +50,9 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			minTime: 6,
+			maxTime: 21,
+			axisFormat: 'HH:mm',
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -163,6 +166,10 @@ TimeTable
 }
 table.em-calendar {
 width: 100%;
+}
+.fc-agenda-slots tr * {
+	height: 10px !important;
+	line-height: 10px;
 }
 </style>
 
