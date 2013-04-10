@@ -38,14 +38,9 @@ class UserController extends BaseController {
      */
     public function store()
     {
-        
-
-            //return View::make('home');->with('rules',$this->rules1);
-
         $validation = Validator::make(Input::all(),$this->rules);
         if($validation->fails())
         {
-            //echo "fail";
             Input::flash(); //input data remains in form
             return Redirect::to('user/create')
                         ->withErrors($validation)
@@ -53,8 +48,6 @@ class UserController extends BaseController {
         }
         else
         {
-            //return "uspešno";
-
             $user = new User;
             $user->name     = Input::get( 'name' );
             $user->surname    = Input::get( 'surname' );
