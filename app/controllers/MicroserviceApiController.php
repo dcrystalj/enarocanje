@@ -6,7 +6,7 @@ class MicroserviceApiController extends BaseController
 	{
 		
 		$i=4;
-		$workingHours = Whours::where('macservice_id',1)->get();
+		$workingHours = Whours::where('macservice_id',1)->orderBy('day')->get();
 		$timetable = [];
 		$from = "00:00:00";
 		$lastday = 0;
@@ -64,6 +64,25 @@ class MicroserviceApiController extends BaseController
 	public function getWorkinghours($id)
 	{
 		$workingHours = Whours::where('macservice_id',$id)->get();
+		$timetable = [];
+
+		foreach ($workingHours as $wh) 
+		{
+			$day = $this->dayToString($wh->day);
+			$timetable[] = array(
+				"id"	 => $wh->id,
+				"title"  => "",
+				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
+				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
+				"allDay" => false,
+				"editable"=> true,
+			);
+		}
+		return json_encode($timetable);
+	}
+
+	public function getBreaks($id) {
+		$workingHours = Breaks::where('macservice_id',$id)->get();
 		$timetable = [];
 
 		foreach ($workingHours as $wh) 

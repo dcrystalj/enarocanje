@@ -12,7 +12,11 @@ TimeTable
 @stop
 
 @section('content')
-<p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
+<p>
+{{ Button::success_link('#','Reset',array('id' => 'reset')) }}
+&nbsp;&nbsp;
+{{ Button::success_link("#",'Save',array('id' => 'save')) }}
+</p>
 
 <div id='calendar'></div>
 	<script>
@@ -43,7 +47,6 @@ TimeTable
 	};
 
 	var calendar;
-	var defaultLength = 45;
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
@@ -57,21 +60,18 @@ TimeTable
 			unselectAuto: true,
 			selectHelper: true,
 			defaultView: 'agendaWeek',
-			disableResizing: true,
-			minTime: 6,
-			maxTime: 21,
 			firstDay: 1,
-			axisFormat: 'HH:mm',
+			disableResizing: true,
 			eventAfterRender: function(event, element, view) {  
 			  var width = $(element).width()+8;
 			  $(element).css('width', width + 'px');
 			},
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
+			
 			 	if (isOverlapping(event.start, event.end)) {
-			 		//$(".alert").alert("Timetable overlapps");
+			 		$(".alert").alert("Timetable overlapps");
 			 		revertFunc();
-			 		
+			 		// calendar.fullCalendar('removeEvents',event.id);
 			 	}
 			},
 
@@ -79,15 +79,10 @@ TimeTable
 				//cal_clear_day(calendar, start);
 				
 				calendar.fullCalendar('unselect');
-				calendar.fullCalendar('removeEvents', -5);
-				// Helper
-				end = new Date(start);
-        		end.setMinutes(start.getMinutes() + defaultLength);
 
 				function insert(start, end)  {
 					calendar.fullCalendar('renderEvent',
 										  {
-										  	  id: '-5',
 											  title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
 											  start: start,
 											  end: end,
@@ -111,40 +106,43 @@ TimeTable
 			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
-
-        // when not working
-        {
-            url: 'http://localhost:8000/microserviceapi/timetable/4',
-            type: 'GET',
-            error: function() {
-                alert('there was an error while fetching events!');
-            },
-            editable: false,
-            //color: rgba(192,192,192, 0.6) // a non-ajax option
-            color: "rgba(192,192,192, 0.5)",
-            className: "termin"
-        }
-
-        // any other sources...
-
-    ]
+				{
+					url: 'http://localhost:8000/microserviceapi/breaks/<?= $id ?>',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: true,
+					//color: rgba(192,192,192, 0.6) // a non-ajax option
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/timetable/<?= $id ?>',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					//color: rgba(192,192,192, 0.6) // a non-ajax option
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				}
+			]
 		});
 
 		// Buttons
-		$('#reserve').click(function(e) {
+		$('#reset').click(function(e) {
 			e.preventDefault();
-			var allevents = calendar.fullCalendar( 'clientEvents',-5 );
-			bootbox.confirm(
-				"Are you sure you want to make reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
-		  	 	if(result){
-					var submit = cal_event_data(allevents[0]);
-					$.post(url, {'event': JSON.stringify(submit)}, callback);
-		  	 	}else{
-		  	 		return;
-		  	 	}
-		
-			});			
-			
+			var events = calendar.fullCalendar('clientEvents');
+			for(var i=0; i<events.length; i++)
+				calendar.fullCalendar('removeEvents', events[i]._id);
+		});
+		$('#save').click(function(e) {
+			e.preventDefault();
+			cal_save(calendar, '/service/<?= $id ?>/breaks/submit', function(d) {
+				alert('Saved.');
+			}, function(ev) {
+				return ev.editable;
+			});
 		});
 	});
 	</script>
