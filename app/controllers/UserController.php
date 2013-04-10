@@ -42,7 +42,8 @@ class UserController extends BaseController {
         if($validation->fails())
         {
             Input::flash(); //input data remains in form
-            return View::make('user.registerUser')->with('message','Please correct your data.');
+            return Redirect::to('user/create')
+                ->with('message','Please correct your data.');
 
             //return Redirect::to('user/create')->with_input();
         }
