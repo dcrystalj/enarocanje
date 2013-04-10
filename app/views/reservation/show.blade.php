@@ -13,6 +13,7 @@ TimeTable
 
 @section('content')
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
+<p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
 
 <div id='calendar'></div>
 	<script>
@@ -24,7 +25,7 @@ TimeTable
 			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
 				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
 				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
-				start < array[i].start && start < array[i].end && end > array[i].start && end > array[i].end ){
+				start < array[i].start && start < array[i].end && end >= array[i].start && end >= array[i].end ){
 					return true;
 			}}
 		}
@@ -50,6 +51,9 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			minTime: 6,
+			maxTime: 21,
+			axisFormat: 'HH:mm',
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -111,23 +115,35 @@ TimeTable
 			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
-
-        // when not working
-        {
-            url: 'http://localhost:8000/microserviceapi/timetable/4',
-            type: 'GET',
-            error: function() {
-                alert('there was an error while fetching events!');
-            },
-            editable: false,
-            //color: rgba(192,192,192, 0.6) // a non-ajax option
-            color: "rgba(192,192,192, 0.5)",
-            className: "termin"
-        }
-
-        // any other sources...
-
-    ]
+				// when not working
+				{
+					url: 'http://localhost:8000/microserviceapi/timetable/4',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/breaks/1',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/usertimetable/4',
+					type: 'GET',
+					editable: false,
+					//color: rgba(192,192,192, 0.6) // a non-ajax option
+					color: "red"
+				}
+			]
 		});
 
 		// Buttons
@@ -138,14 +154,42 @@ TimeTable
 				"Are you sure you want to make reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
 		  	 	if(result){
 					var submit = cal_event_data(allevents[0]);
-					$.post(url, {'event': JSON.stringify(submit)}, callback);
+					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){});
 		  	 	}else{
 		  	 		return;
 		  	 	}
-		
+				return;
 			});			
 			
 		});
+
+		$('#delete').click(function(e) {
+			e.preventDefault();
+			var allevents = calendar.fullCalendar( 'clientEvents',function(e){
+				return e.id>=100;
+			} );
+			bootbox.confirm(
+				"Are you sure you want to delete reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
+		  	 	if(result){
+					var submit = cal_event_data(allevents[0]);
+					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){});
+		  	 	}else{
+		  	 		return;
+		  	 	}
+				return;
+			});			
+			
+		});
+
+		function countClientEvents(){
+			return calendar.fullCalendar('clientEvents',function(e){return e.id>=100;}).length;
+		};
+
+		if( parseInt(countClientEvents())== 0)
+		{
+			$('#delete').hide();
+		}
+
 	});
 	</script>
 
@@ -172,6 +216,10 @@ TimeTable
 }
 table.em-calendar {
 width: 100%;
+}
+.fc-agenda-slots tr * {
+	height: 10px !important;
+	line-height: 10px;
 }
 </style>
 

@@ -9,7 +9,7 @@ class CustomerReservation extends BaseController {
 	 */
 	public function index()
 	{
-		return View::make('ureservation.index');
+		return View::make('reservation.show');
 	}
 
 	/**

@@ -2,11 +2,11 @@
 
 class MicroserviceApiController extends BaseController
 {
-	public function getTimetable($i)
+	public function getTimetable($id)
 	{
 		
-		$i=4;
-		$workingHours = Whours::where('macservice_id',1)->orderBy('day')->get();
+		$id=1;
+		$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
 		$timetable = [];
 		$from = "00:00:00";
 		$lastday = 0;
@@ -56,9 +56,53 @@ class MicroserviceApiController extends BaseController
 			$lastday ++;
 			$j++;
 		}
+		return json_encode($timetable);
+	}
 
+	public function getUsertimetable($id)
+	{
+		$micserviceid = 1;
+		$userid = 35;
+		$r = Reservation::where('microservice',$micserviceid)
+						->where('user',$userid)
+						->get();
+		$j = 100;
+		foreach ($r as $b) 
+		{
+			$day         = $this->dayToString($b->day);
+			$title       = "Your reservation: \nfrom  " . $b->from ." to " . $b->to;
+
+			$timetable[] = array(
+					"id"	 => "$j",
+					"title"  => $title,
+					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $b->from ,
+					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $b->to ,
+					"allDay" => false,
+					"editable"=> false,
+			);
+			$j++;
+		}
 
 		return json_encode($timetable);
+	}
+
+	public function postReservation($id){
+
+		$microservid = 1;
+		$events = Input::get('event');
+		$events = json_decode($events);
+
+		$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); //Monday - day 0
+		$start = date('G:i', strtotime($event->start));
+		$end = date('G:i', strtotime($event->end));
+
+		$r               = new Reservation;
+		$r->from         = $start;
+		$r->to           = $end;
+		$r->microservice = $microserviceid;
+		$r->day          = $day;
+		$r->save();
+
 	}
 
 	public function getWorkinghours($id)
