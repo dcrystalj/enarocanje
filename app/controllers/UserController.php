@@ -129,11 +129,10 @@ class UserController extends BaseController {
         if(isset($user)){
             $user->confirmed = 1;
             $user->save();
-            return View::make('user.registerUserSuccess');
+            return View::make('user.registerUserSuccess')->with('success','Congratz');
         }
-        return Redirect::to('user/confirm/' . $token)
-                        ->with('status','Wrong token')
-                        ->with('rules',$this->rules1);
+        return Redirect::to('home')
+                        ->with('status','Wrong token');
 
     }
     public function postConfirm($token)

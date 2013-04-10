@@ -57,18 +57,21 @@ TimeTable
 			unselectAuto: true,
 			selectHelper: true,
 			defaultView: 'agendaWeek',
-			firstDay: 1,
 			disableResizing: true,
+			minTime: 6,
+			maxTime: 21,
+			firstDay: 1,
+			axisFormat: 'HH:mm',
 			eventAfterRender: function(event, element, view) {  
 			  var width = $(element).width()+8;
 			  $(element).css('width', width + 'px');
 			},
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-			
+				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
 			 	if (isOverlapping(event.start, event.end)) {
-			 		$(".alert").alert("Timetable overlapps");
+			 		//$(".alert").alert("Timetable overlapps");
 			 		revertFunc();
-			 		// calendar.fullCalendar('removeEvents',event.id);
+			 		
 			 	}
 			},
 
@@ -130,11 +133,17 @@ TimeTable
 		// Buttons
 		$('#reserve').click(function(e) {
 			e.preventDefault();
-			//var allevents = calendar.fullCalendar( 'clientEvents' ,-5 );
-
-			 bootbox.confirm("Are you sure you want to make reservation on ? ", function(result) {
-			   return
-			}); 
+			var allevents = calendar.fullCalendar( 'clientEvents',-5 );
+			bootbox.confirm(
+				"Are you sure you want to make reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
+		  	 	if(result){
+					var submit = cal_event_data(allevents[0]);
+					$.post(url, {'event': JSON.stringify(submit)}, callback);
+		  	 	}else{
+		  	 		return;
+		  	 	}
+		
+			});			
 			
 		});
 	});
