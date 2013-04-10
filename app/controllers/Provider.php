@@ -135,8 +135,8 @@ class Provider extends BaseController {
 		    $user->password = Hash::make(Input::get('password'));
 		    $user->confirmed = 1;
 		    $user->save();
-			//return View::make('home')->with('message','Success');
-			return Redirect::to('provider/' . $user->id . '/edit');
+			return View::make('home')->with('message','Success');
+			//return Redirect::to('provider/' . $user->id . '/edit');
 	    }
 	    return Redirect::to('provider/confirm/' . $token)
 	    				->with('status','Wrong token')
