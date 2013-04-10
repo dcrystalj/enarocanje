@@ -81,6 +81,25 @@ class MicroserviceApiController extends BaseController
 		return json_encode($timetable);
 	}
 
+	public function getBreaks($id) {
+		$workingHours = Breaks::where('macservice_id',$id)->get();
+		$timetable = [];
+
+		foreach ($workingHours as $wh) 
+		{
+			$day = $this->dayToString($wh->day);
+			$timetable[] = array(
+				"id"	 => $wh->id,
+				"title"  => "",
+				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
+				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
+				"allDay" => false,
+				"editable"=> true,
+			);
+		}
+		return json_encode($timetable);
+	}
+
 	protected function dayToString($i){
 		$day[0]="Monday";
 		$day[1]="Tuesday";

@@ -68,6 +68,7 @@ Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ureservation' , 'CustomerReservation');
 Route::resource('ManageServices','ManageServices');
 Route::post('/service/{id}/time/submit','ManageServices@submit_time');
+Route::post('/service/{id}/breaks/submit','ManageServices@submit_breaks');
 Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
 
