@@ -36,7 +36,7 @@ class Provider extends BaseController {
 		if($validation->fails())
 		{
 			Input::flash(); //input data remains in form
-			return Redirect::to('provider/create');
+			return Redirect::to('provider/create')->with('rules',$this->rules);
 		}
 		else
 		{	
