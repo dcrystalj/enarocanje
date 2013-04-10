@@ -104,7 +104,7 @@ TimeTable
 		// });
 		$('#save').click(function(e) {
 			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
-						alert("Timetable saved.")
+						bootbox.alert("Timetable saved.")
 			});
 		});
 	});
