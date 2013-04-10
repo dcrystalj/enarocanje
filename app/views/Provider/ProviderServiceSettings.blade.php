@@ -11,12 +11,12 @@
     $language[2] = "Italian";
     $language[3] = "German";
 ?>
-    {{ Former::open() }}
+    {{ Former::open('provider/' . $user->id)->method('PUT') }}
+    {{ Former::populate($user) }}
     {{ Former::text('name','Service name:')->autofocus() }}
-    {{ Former::text('email','Email:') }}
     {{ Former::select('language','Language')->options($language) }}
     {{ Former::password('Change password:') }}
-    {{ Former::password_confirmation('Re-type password:') }}
+    {{ Former::password('password_confirmation','Re-type password:') }}
     {{ Former::actions()->submit('Save settings') }}
     {{ Former::close() }}   
 @stop
