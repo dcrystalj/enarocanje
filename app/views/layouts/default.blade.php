@@ -12,7 +12,8 @@
 
 	{{ Html::script('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}
 	{{ Html::script('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js') }}
-
+	{{ Html::script('js/bootbox.min.js') }}
+	
 	{{ Html::style('bootstrap/css/bootstrap.min.css') }}
 	{{ Html::style('bootstrap/css/bootstrap-responsive.min.css') }}
 	{{ Html::style('css/style.css') }}
@@ -32,8 +33,8 @@
 					['User registration',URL::to('user/create'),Request::is('user/create')],
 					['Settings',URL::to('provider/edit'),Request::is('provider/edit')],									
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
-					['Login',URL::to('UserLogin'),Request::is('UserLogin')],
-					['Logout',URL::to('Logout'),Request::is('Logout')],
+					['Login',URL::to('login'),Request::is('login')],
+					['Logout',URL::to('logout'),Request::is('logout')],
 				])
 			)}}
 		</nav>
@@ -81,7 +82,11 @@
 		</h1>
 
 		@if (isset($status))
-		<p>{{ Alert::error( Session::get('status')) }}</p>
+		<p>{{ Alert::warning( $status) }}</p>
+		@endif
+
+		@if (isset($error))
+		<p>{{ Alert::error( $error) }}</p>
 		@endif
 
 		@yield('content')

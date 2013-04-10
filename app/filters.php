@@ -12,7 +12,9 @@
 */
 App::before(function($request)
 {
-	//
+	if (Session::has('user')) {
+		Auth::login(Session::get('user'));
+	}
 });
 
 

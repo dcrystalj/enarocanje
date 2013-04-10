@@ -5,7 +5,6 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-
 	/**
 	 * The database table used by the model.
 	 *
@@ -27,7 +26,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function getAuthIdentifier()
 	{
-		return $this->getKey();
+		return $this->email;
 	}
 
 	/**
