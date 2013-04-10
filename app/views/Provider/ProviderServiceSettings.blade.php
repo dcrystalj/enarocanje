@@ -11,8 +11,7 @@
     $language[2] = "Italian";
     $language[3] = "German";
 ?>
-    {{ Former::open('provider/' . $user->id, 'PUT') }}
-    {{ Former::populate($user) }}
+    {{ Former::open() }}
     {{ Former::text('name','Service name:')->autofocus() }}
     {{ Former::text('email','Email:') }}
     {{ Former::select('language','Language')->options($language) }}

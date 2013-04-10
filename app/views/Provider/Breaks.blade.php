@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-TimeTable
+Breaks
 @stop
 
 @section('assets')
@@ -12,8 +12,24 @@ TimeTable
 @stop
 
 @section('content')
+<div id="event-dialog" class="modal hide fade">
+  <!-- dialog contents -->
+  <div class="modal-body">
+	  From: <input type="time" placeholder="08:00" id="efrom" /><br />
+	  To: &nbsp;&nbsp;&nbsp;&nbsp;<input type="time" placeholder="16:00" id="eto" />
+  </div>
+  <!-- dialog buttons -->
+	<div class="modal-footer">
+	<a href="#" class="b_cancel btn">Cancel</a>
+	  <a href="#" class="b_delete btn btn-danger">Delete</a>
+	  <a href="#" class="b_save btn btn-success">Submit</a>
+	</div>
+</div>
+								
 <p>
-{{ Button::success_link('#','Reset',array('id' => 'reset')) }}
+{{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
+&nbsp;&nbsp;
+{{ Button::link("/service/$id/time", 'Back') }}
 &nbsp;&nbsp;
 {{ Button::success_link("#",'Save',array('id' => 'save')) }}
 </p>
@@ -47,12 +63,16 @@ TimeTable
 	};
 
 	var calendar;
+	var before_resize;
 	$(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			minTime: 6,
+			maxTime: 21,
+			axisFormat: 'HH:mm',
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -61,11 +81,21 @@ TimeTable
 			selectHelper: true,
 			defaultView: 'agendaWeek',
 			firstDay: 1,
-			disableResizing: true,
 			eventAfterRender: function(event, element, view) {  
 			  var width = $(element).width()+8;
 			  $(element).css('width', width + 'px');
 			},
+			/* eventResizeStart: function(event, jsEvent, ui, view) { */
+			/* 	before_resize = event.end; */
+			/* }, */
+			/* eventResizeStop: function(event, jsEvent, ui, view) { */
+			/* 	if (isOverlapping(event.start, event.end)) { */
+			/* 		alert('no'); */
+			/*  		$(".alert").alert("Timetable overlapps"); */
+			/* 		event.end = before_resize; */
+			/*  	} */
+			/* 	alert('yes'); */
+			/* }, */
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 			
 			 	if (isOverlapping(event.start, event.end)) {
@@ -99,8 +129,33 @@ TimeTable
 				
 			},
 			eventClick: function(event, jsEvent, view) {
-				calendar.fullCalendar('removeEvents', function(event){
-					return event.editable;
+				if(!event.editable) return;
+				$('#efrom').val(getHour(event.start));
+				$('#eto').val(getHour(event.end));
+				$('#event-dialog').modal({
+					backdrop: 'static',
+					keyboard: true,
+					show: true,
+				});
+				$('#event-dialog a.b_delete').click(function() {
+					calendar.fullCalendar('removeEvents', event._id);
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_cancel').click(function() {
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_save').click(function() {
+					var from = $('#efrom').val().split(':');
+					var to = $('#eto').val().split(':');
+					event.start.setHours(parseInt(from[0], 10));
+					event.start.setMinutes(parseInt(from[1], 10));
+					event.end.setHours(parseInt(to[0], 10));
+					event.end.setMinutes(parseInt(to[1], 10));
+					calendar.fullCalendar('updateEvent', event);
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog').on('hide', function() {
+					$('#event-dialog').off('click');
 				});
 			},
 			//editable: true,
@@ -134,12 +189,13 @@ TimeTable
 			e.preventDefault();
 			var events = calendar.fullCalendar('clientEvents');
 			for(var i=0; i<events.length; i++)
-				calendar.fullCalendar('removeEvents', events[i]._id);
+				if(events[i].editable)
+					calendar.fullCalendar('removeEvents', events[i]._id);
 		});
 		$('#save').click(function(e) {
 			e.preventDefault();
 			cal_save(calendar, '/service/<?= $id ?>/breaks/submit', function(d) {
-				alert('Saved.');
+				bootbox.alert("Breaks saved.");
 			}, function(ev) {
 				return ev.editable;
 			});
@@ -149,7 +205,7 @@ TimeTable
 
 <style>
 
-.fc-header, .fc-agenda-allday, .fc-event-time{
+.fc-header, .fc-agenda-allday, .termin .fc-event-time {
 	display: none;
 }
 
@@ -170,6 +226,11 @@ TimeTable
 }
 table.em-calendar {
 width: 100%;
+}
+
+.fc-agenda-slots tr * {
+	height: 10px !important;
+	line-height: 10px;
 }
 </style>
 

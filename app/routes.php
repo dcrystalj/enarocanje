@@ -14,6 +14,10 @@ Route::get('find', function()
 {
 	return View::make('find');
 });
+Route::get('profile', function()
+{
+	return View::make('userProfile');
+});
 
 Route::get('login',function()
 {	
@@ -31,19 +35,22 @@ Route::post('login',function()
 	);
 
 	//$input = Input::all();
-	$user = array(
+	/*$user = array(
             'email' => Input::get('email'),
             'password' => Input::get('password')
-        );
+        );*/
+	$email = Input::get('email');
+	$password = Input::get('password');
 
-	if(Auth::attempt($user,true))
+	if(Auth::attempt(array('email' => $email, 'password' => $password)))
 	{
-		return Redirect::route('home');//->with('status','You have been sucessfully logged in.');  
+		$user = User::find($email);
+		return Redirect::route('home')->with('status','You have been successfully logged in.')->with($user);  
 	}
 	else
 	{
 		return View::make('login')
-			 	->with('error','Could not login, please try again')
+			 	->with('status','Could not login, please try again')
 			 	->with('rules',$rules);
 	}
 });

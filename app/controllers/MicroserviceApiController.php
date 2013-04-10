@@ -48,32 +48,15 @@ class MicroserviceApiController extends BaseController
 		{
 			$day = $this->dayToString($lastday);
 			$timetable[] = array(
-				"id"	 => "$j",
-				"title"  => "",
-				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
-				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
-				"allDay" => false,
-				"test" => "test"
+				"id"       => "$j",
+				"title"    => "",
+				"start"    => date("Y-m-d", strtotime("$day this week")) . " " . $from ,
+				"end"      => date("Y-m-d", strtotime("$day this week")) . " " . "23:59:59" ,
+				"allDay"   => false,
+				"test"     => "test",
+				"editable" => false
 			);
 			$from = "00:00:00";
-			$lastday ++;
-			$j++;
-		}
-
-		//breaks
-		$breaks = Breaks::where('macservice_id',$id)->get();
-		foreach ($breaks as $b) 
-		{
-			$day = $this->dayToString($b->day);
-			$timetable[] = array(
-					"id"	 => "$j",
-					"title"  => "",
-					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $b->from ,
-					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $b->to ,
-					"allDay" => false,
-					"editable"=> false,
-					"test" => "test"
-				);
 			$lastday ++;
 			$j++;
 		}
@@ -177,7 +160,7 @@ class MicroserviceApiController extends BaseController
 				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
 				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
 				"allDay" => false,
-				"editable"=> true,
+				"test"	 => "test"
 			);
 		}
 		return json_encode($timetable);

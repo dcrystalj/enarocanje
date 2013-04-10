@@ -17,6 +17,8 @@ return array(
 
 	'driver' => 'eloquent',
 
+	'username' => 'email',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Authentication Model

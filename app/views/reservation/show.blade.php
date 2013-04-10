@@ -57,6 +57,9 @@ TimeTable
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		calendar = $('#calendar').fullCalendar({
+			minTime: 6,
+			maxTime: 21,
+			axisFormat: 'HH:mm',
 			columnFormat: {
 				week: 'ddd', // Mon 9/7
 			},
@@ -71,7 +74,7 @@ TimeTable
 			axisFormat: 'HH:mm',
 			eventAfterRender: function(event, element, view) {  
 			  var width = $(element).width()+8;
-			  $(element).css('width', width + 'px');
+			  $(element).css('width', width + 'px').css('font-size',10).css('line-height',1).css('padding-top','2px');
 			},
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
@@ -118,31 +121,34 @@ TimeTable
 			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
-
-		        // when not working
-		        {
-		            url: 'http://localhost:8000/microserviceapi/timetable/4',
-		            type: 'GET',
-		            error: function() {
-		                alert('there was an error while fetching events!');
-		            },
-		            editable: false,
-		            //color: rgba(192,192,192, 0.6) // a non-ajax option
-		            color: "rgba(192,192,192, 0.5)",
-		            className: "termin",
-		            disabled: true
-		        },
-
-		        {
-		            url: 'http://localhost:8000/microserviceapi/usertimetable/4',
-		            type: 'GET',
-		            editable: false,
-		            //color: rgba(192,192,192, 0.6) // a non-ajax option
-		            color: "red",
-		            disabled: false,
-		            test: "test"
-
-		        }
+				{
+					url: 'http://localhost:8000/microserviceapi/timetable/4',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/breaks/1',
+					type: 'GET',
+					error: function() {
+						alert('there was an error while fetching events!');
+					},
+					editable: false,
+					color: "rgba(192,192,192, 0.5)",
+					className: "termin"
+				},
+				{
+					url: 'http://localhost:8000/microserviceapi/usertimetable/4',
+					type: 'GET',
+					editable: false,
+					//color: rgba(192,192,192, 0.6) // a non-ajax option
+					color: "red",
+					test: "test"
+				}
 
 		    ],
 		    //check if data has been fetched
@@ -153,9 +159,9 @@ TimeTable
 					$('#delete').hide();
 				}
 		    }, 
-
+			
 		});
-		
+	
 		
 		// Buttons
 		$('#reserve').click(function(e) {
@@ -230,6 +236,10 @@ TimeTable
 }
 table.em-calendar {
 width: 100%;
+}
+.fc-agenda-slots tr * {
+	height: 10px !important;
+	line-height: 10px;
 }
 </style>
 

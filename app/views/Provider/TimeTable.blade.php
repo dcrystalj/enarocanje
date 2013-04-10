@@ -12,14 +12,33 @@ TimeTable
 @stop
 
 @section('content')
-<a href="#" id="clear_callendar">[Clear]</a>
-<a href="/service/<?=$id ?>/breaks" id="insert_breaks">[Insert breaks]</a>
-<a href="#" id="save">[Save]</a>
+<div id="event-dialog" class="modal hide fade">
+  <!-- dialog contents -->
+  <div class="modal-body">
+	  From: <input type="time" placeholder="08:00" id="efrom" /><br />
+	  To: &nbsp;&nbsp;&nbsp;&nbsp;<input type="time" placeholder="16:00" id="eto" />
+  </div>
+  <!-- dialog buttons -->
+	<div class="modal-footer">
+	<a href="#" class="b_cancel btn">Cancel</a>
+	  <a href="#" class="b_delete btn btn-danger">Delete</a>
+	  <a href="#" class="b_save btn btn-success">Submit</a>
+	</div>
+</div>
+
+<p>
+{{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
+&nbsp;&nbsp;
+{{ Button::link("/service/$id/breaks", 'Breaks', array('id' => 'breaks')) }}
+&nbsp;&nbsp;
+{{ Button::success_link("#", 'Save', array('id' => 'save')) }}
+</p>
+
 <div id='calendar'></div>
 	<script>
 	var calendar;
     var first = true;
-	$(document).ready(function() {
+    $(document).ready(function() {
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -70,15 +89,33 @@ TimeTable
 				}
 			},
 			eventClick: function(event, jsEvent, view) {
-				var from = prompt("From").split(':');
-				var to = prompt("To").split(':');
-				event.start.setHours(parseInt(from[0]));
-				if(from.length == 2)
-					event.start.setMinutes(parseInt(from[1]));
-				event.end.setHours(parseInt(to[0]));
-				if(to.length == 2)
-					event.end.setMinutes(parseInt(to[1]));
-				calendar.fullCalendar('updateEvent', event);
+				$('#efrom').val(getHour(event.start));
+				$('#eto').val(getHour(event.end));
+				$('#event-dialog').modal({
+					backdrop: 'static',
+					keyboard: true,
+					show: true,
+				});
+				$('#event-dialog a.b_delete').click(function() {
+					calendar.fullCalendar('removeEvents', event._id);
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_cancel').click(function() {
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_save').click(function() {
+					var from = $('#efrom').val().split(':');
+					var to = $('#eto').val().split(':');
+					event.start.setHours(parseInt(from[0], 10));
+					event.start.setMinutes(parseInt(from[1], 10));
+					event.end.setHours(parseInt(to[0], 10));
+					event.end.setMinutes(parseInt(to[1], 10));
+					calendar.fullCalendar('updateEvent', event);
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog').on('hide', function() {
+					$('#event-dialog').off('click');
+				});
 			},
 			editable: true,
 			slotMinutes: 15,
@@ -93,18 +130,19 @@ TimeTable
 		});
 
 		// Buttons
-		$('#clear_callendar').click(function(e) {
+		$('#reset').click(function(e) {
 			e.preventDefault();
 			var events = calendar.fullCalendar('clientEvents');
 			for(var i=0; i<events.length; i++)
 				calendar.fullCalendar('removeEvents', events[i]._id);
 			first = true;
 		});
-		// $('#insert_breaks').click(function(e) {
-		// });
 		$('#save').click(function(e) {
+			e.preventDefault();
 			cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
-						bootbox.alert("Timetable saved.")
+				bootbox.alert("Timetable saved.", function() {
+					window.location = "/service/<?=$id ?>/breaks";
+				});
 			});
 		});
 	});
@@ -125,6 +163,10 @@ TimeTable
 }
 .busy div {
 	display: none;
+}
+.fc-agenda-slots tr * {
+	height: 10px !important;
+	line-height: 10px;
 }
 </style>
 
