@@ -1,14 +1,5 @@
 <!DOCTYPE Html>
-<?php 
-	if (Session::has('user'))
-{
-     $user = Session::get('user');
-}
-else{
-	//$user['id'] = 0;
-}
 
-?>
 <Html lang="en">
 <head>
 	<meta charset="utf-8">
