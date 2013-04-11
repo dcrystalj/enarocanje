@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Service settings
+    Provider settings
 @stop
 
 @section('content')
@@ -11,10 +11,15 @@
     $language[2] = "Italian";
     $language[3] = "German";
 ?>
+
+    @if (isset($message))
+        <p>{{ Alert::warning($message) }}</p>
+    @endif
   
     {{ Former::open('provider/' . $user->id)->rules($rules)->method('PUT') }}
     {{ Former::populate($user) }}
-    {{ Former::text('name','Service name:')->autofocus() }}
+    {{ Former::text('name','Name:')->autofocus() }}
+    {{ Former::text('surname','Last name:') }}
     {{ Former::select('language','Language')->options($language) }}
     {{ Former::password('password','Change password:') }}
     {{ Former::password('password_confirmation','Re-type password:') }}

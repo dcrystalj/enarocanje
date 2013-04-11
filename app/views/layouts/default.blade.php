@@ -1,11 +1,13 @@
 <!DOCTYPE Html>
+<?php 
+	if (Session::has('user'))
+{
+     $user = Session::get('user');
+}
+else{
+	//$user['id'] = 0;
+}
 
-<?php 	
-<<<<<<< HEAD
-	$id = 47;
-=======
-	$id = 72;
->>>>>>> c5cc5f3d0ef67447533703513cef01b4485a6aa3
 ?>
 <Html lang="en">
 <head>
@@ -33,13 +35,13 @@
 	<header>
 		<nav>
 			<!-- using bootstrapper design -->
+			<!--	['Provider settings',URL::to('provider/' . $user->id . '/edit'),Request::is('provider/' . $user->id . '/edit')], -->
 			{{ Navigation::pills(
 				Navigation::links([
 					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
 					['Find', URL::to('find'), Request::is('find')],	
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('user/create'),Request::is('user/create')],
-					['Settings',URL::to('provider/' . $id . '/edit'),Request::is('provider/' . $id . '/edit')],			
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
 					['Login',URL::to('app/login'),Request::is('app/login')],
 					['Logout',URL::to('app/logout'),Request::is('app/logout')],

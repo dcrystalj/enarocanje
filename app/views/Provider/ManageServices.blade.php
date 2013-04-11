@@ -5,23 +5,26 @@
 @stop
 
 @section('content')
-    <?php 
-            $duration[15]="15 min";
-            $duration[30]="30 min";
-            $duration[45]="45 min";
-            $duration[60]="1 h";
-            $duration[75]="1 h 15 min";
-            $duration[90]="1h 30 min";
-            $duration[105]="1h 45 min";
-            $duration[120]="2 h";
+    <script type="text/javascript" charset="utf-8" src="js/DataTables/media/js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/DataTables/media/js/jquery.dataTables.js"></script>
 
-            $MicroService = Microservice::All();
+    <?php 
+        $duration[15]="15 min";
+        $duration[30]="30 min";
+        $duration[45]="45 min";
+        $duration[60]="1 h";
+        $duration[75]="1 h 15 min";
+        $duration[90]="1h 30 min";
+        $duration[105]="1h 45 min";
+        $duration[120]="2 h";
+
+        $MicroService = Microservice::All();
     ?>  
 
     {{ Former::open('ManageServices')->rules($rules) }}
     {{ Former::text('name','Name:')->autofocus() }}
     {{ Former::select('length','Length:')->options($duration) }} 
-    {{ Former::text('description','Description:') }}
+    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::Number('price','Price:') }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   

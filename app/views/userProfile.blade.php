@@ -6,14 +6,6 @@
 
 @section('content')
 <?php
-$name = 'Matic';
-//$id = Auth::user()->email;
-$email =  DB::table('users')
-->where('name', $name)->first()->email;
-//echo $email;
-//echo $id;
-//echo $user->id;
-//echo Auth::user();
 
 if (Auth::check())
 {
@@ -26,17 +18,8 @@ else
 	echo "<br /> <br/>";
 }
 ?>
-
-
-{{Former::label('Name')}}
-{{Former::label($name)}}
-{{Former::label('Surname')}}
-{{Former::label($name)}}
-{{Former::label('Email')}}
-{{Former::label($name)}}
-{{Former::label('Timezone')}}
-{{Former::label($name)}}
-{{Former::label('Language')}}
-{{Former::label($name)}}
-
+{{ Former::open() }}
+{{ Former::populate($user) }}
+{{ Former::label('email')}}
+{{ Former::close() }}
 @stop
