@@ -45,6 +45,7 @@
          ];
          $i++;
     }?>
+
     {{ Table::hover_open() }}
     {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}

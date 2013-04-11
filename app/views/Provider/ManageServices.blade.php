@@ -5,9 +5,7 @@
 @stop
 
 @section('content')
-    <script type="text/javascript" charset="utf-8" src="js/DataTables/media/js/jquery.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/DataTables/media/js/jquery.dataTables.js"></script>
-
+    
     <?php 
         $duration[15]="15 min";
         $duration[30]="30 min";
@@ -48,7 +46,8 @@
          ];
          $i++;
     }?>
-    {{ Table::hover_open() }}
+
+    {{ Table::hover_open(["class"=>'sortable']) }}
     {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
