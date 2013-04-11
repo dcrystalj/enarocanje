@@ -19,48 +19,6 @@ Route::get('profile', function()
 	return View::make('userProfile');
 });
 
-Route::get('login',function()
-{	
-	$rules = array(
-		'email'    => 'required|email',
-		'password' => 'required|between:4,20'
-	);	
-	return View::make('login')->with('rules',$rules);
-});
-Route::post('login',function()
-{
-	$rules = array(
-		'email'    => 'required|email',
-		'password' => 'required|between:4,20'
-	);
-
-	//$input = Input::all();
-	/*$user = array(
-            'email' => Input::get('email'),
-            'password' => Input::get('password')
-        );*/
-	$email = Input::get('email');
-	$password = Input::get('password');
-
-	if(Auth::attempt(array('email' => $email, 'password' => $password)))
-	{
-		$user = User::find($email);
-		return Redirect::route('home')->with('status','You have been successfully logged in.')->with($user);  
-	}
-	else
-	{
-		return View::make('login')
-			 	->with('status','Could not login, please try again')
-			 	->with('rules',$rules);
-	}
-});
-
-Route::get('logout',function()
-{
-	Auth::logout();
-	return View::make('home')->with('status', 'Sucessfully logged out.');
-});
-
 Route::get('user/registerUser', function()
 {
 	return View::make('user/registerUser');
@@ -88,5 +46,6 @@ Route::post('user/confirm/{token}','UserController@postConfirm');
 //calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
+Route::controller('app','AppController');
 
 

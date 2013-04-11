@@ -16,7 +16,6 @@ class Provider extends BaseController {
     public $rules2 = array(
     	'name'		=> 'required|max:20|alpha',
         'password'		=> 'same:password_confirmation|between:4,20|confirmed',
-    	'password_confirmation'		=> 'required',
    	);
 	public function index()
 	{
@@ -37,7 +36,7 @@ class Provider extends BaseController {
 		if($validation->fails())
 		{
 			Input::flash(); //input data remains in form
-			return Redirect::to('provider/create');
+			return Redirect::to('provider/create')->with('rules',$this->rules);
 		}
 		else
 		{	
@@ -72,7 +71,7 @@ class Provider extends BaseController {
 	public function edit($id)
 	{
 
-		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id));
+		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id))->with('rules',$this->rules2);
 	}
 
 
@@ -82,20 +81,18 @@ class Provider extends BaseController {
 		$validation = Validator::make($input,$this->rules2);
 		if($validation->fails())
 		{
-				return Redirect::to('home');
-			//return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules)->with('user',User::find($id));
+			
+			return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules2)->with('user',User::find($id));
 		}		
 		else
 		{
 			$user = User::find($id);
 			if(isset($user))
 			{
-		    	if((Input::get('name')))
-		    	{
-		    		$user->name = Input::get('name');	
-		    	}
-		    	if($input->password){
-		    		$user->password = Hash::make($input->password);	
+		    	$user->name = $input['name'];	
+		    	$user->language = $input['language'];
+		    	if($input['password']){
+		    		$user->password = Hash::make($input['password']);	
 		    	}
 		    	$user->save();			
 		    }

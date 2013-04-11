@@ -12,9 +12,15 @@
 */
 App::before(function($request)
 {
-	//if (Session::has('user')) {
-	//	Auth::login(Session::get('user'));
-	//}
+	if (Session::has('user')) {
+		Auth::login(Session::get('user'));
+	}
+	else{
+		if(Cookie::has('user')){
+			Session::put('user',Cookie::get('user'));
+			Auth::login(Cookie::get('user'));
+		}
+	}
 });
 
 

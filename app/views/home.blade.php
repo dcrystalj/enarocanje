@@ -17,4 +17,7 @@
 	<p> {{ Auth::user()->email }} You are logged in </p>
 	@endif
 
+	<p> {{ Session::get('user') . "sdf" }} You are not logged in </p>
+	
+
 @stop
