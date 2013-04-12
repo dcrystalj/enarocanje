@@ -4,7 +4,7 @@ class MicroService extends Eloquent {
 
 	protected $table = 'micservice';
 
-	public function macroService()
+	public function macroservice()
     {
         return $this->belongsTo('MacroService');
     }

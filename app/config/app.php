@@ -203,7 +203,6 @@ return array(
 		'Typeahead'       	=> 'Bootstrapper\\Typeahead',
 		'Typography'      	=> 'Bootstrapper\\Typography',
 		'Former' 		  	=> 'Former\\Facades\\Illuminate',
-		'Uuid'           	=> 'J20\Uuid\Uuid',
 	),
 		
 );

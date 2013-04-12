@@ -4,8 +4,8 @@ class MacroService extends Eloquent {
 
 	protected $table = 'macservice';
 
-	public function microServices()
+	public function microservices()
     {
-        return $this->hasMany('MicroService');
+        return $this->hasMany('MicroService', 'macservice_id');
     }
 }

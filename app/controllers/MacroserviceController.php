@@ -48,7 +48,7 @@ class MacroserviceController extends BaseController {
 			$mac->name = Input::get( 'name' );
 			$mac->description = Input::get('description');
 			$mac->save();
-			
+
 			if($mac){
 				return Redirect::route('macro.create')
 								->with('id',$mac->id)
@@ -71,7 +71,7 @@ class MacroserviceController extends BaseController {
 	
 	public function show($id)
 	{
-
+		return "show";
 		
 	}
 
