@@ -42,7 +42,8 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::route('home');
+	 if(!Session::has('user')) return Redirect::route('home')->with('error','You have no permissions. Please login first');
+	//if (Auth::guest()) return Redirect::route('home');
 });
 
 

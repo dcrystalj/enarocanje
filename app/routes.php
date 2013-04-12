@@ -7,7 +7,10 @@ Route::get('/', function()
 
 Route::get('home',array('as' => 'home', function()
 {
-	return View::make('home')->with('status',Session::get('status'));
+		return View::make('home')
+				->with('status',Session::get('status'))
+				->with('error',Session::get('error'))
+				->with('success',Session::get('success'));
 }));
 
 Route::get('find', function()
@@ -17,7 +20,7 @@ Route::get('find', function()
 Route::get('profile', function()
 {
 	return View::make('userProfile');
-});
+})->before('auth');
 
 Route::get('user/registerUser', function()
 {
