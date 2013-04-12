@@ -46,7 +46,7 @@
          ];
          $i++;
     }?>
-
+    
     {{ Table::hover_open(["class"=>'sortable']) }}
     {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}
