@@ -33,6 +33,7 @@
 					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
 					['User registration',URL::to('user/create'),Request::is('user/create')],
 					['ManageServices',URL::to('ManageServices/create'),Request::is('ManageServices/create')],
+					['Services',URL::to('macro/create'),Request::is('macro/create')],
 					['Login',URL::to('app/login'),Request::is('app/login')],
 					['Logout',URL::to('app/logout'),Request::is('app/logout')],
 					['Profile',URL::to('profile'),Request::is('profile')],
@@ -51,7 +52,14 @@
 		<h1>
 			@yield('title')
 		</h1>
+
+		<!-- this is shown only with javascript, for example in calendar view -->
 		<div id="statusmessage" class="alert-warning alert" style="display:none;"></div>
+		
+		@if (isset($success))
+		<p>{{ Alert::success( $success) }}</p>
+		@endif
+
 		@if (isset($status))
 		<p>{{ Alert::warning( $status) }}</p>
 		@endif

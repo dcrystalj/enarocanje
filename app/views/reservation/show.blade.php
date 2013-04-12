@@ -6,7 +6,7 @@ TimeTable
 
 @section('assets')
 {{ Html::style('css/fc/fullcalendar.css') }}
-<!-- {{ Html::style('css/fc/fullcalendar.print.css') }} -->
+{{-- Html::style('css/fc/fullcalendar.print.css') --}}
 {{ Html::script('js/fc/fullcalendar.js') }}
 {{ Html::script('js/fc/fullcalendar.ext.js') }}
 @stop
@@ -31,6 +31,10 @@ TimeTable
 		}
 		return false;
 	};
+
+	function fromTo(event){
+		return event.start.getDate()+"-"+(event.start.getMonth()+1)+"-"+(event.start.getYear()+1900) + " from " + time(event.start) +" to "+time(event.end);
+	}
 
 	function time(str){
 		var currentTime = str;
@@ -72,17 +76,20 @@ TimeTable
 			maxTime: 21,
 			firstDay: 1,
 			axisFormat: 'HH:mm',
-			eventAfterRender: function(event, element, view) {  
-			  var width = $(element).width()+8;
-			  $(element).css('width', width + 'px').css('font-size',10).css('line-height',1).css('padding-top','2px');
+			eventAfterRender: function(event, element, view) {
+
+			  var width = $(element).width()+12;
+			  $(element).css('width', width + 'px')
+			  			.css('padding', '0 2px')
+			  			.css('margin-right', '-2px')
+			  			.css('margin-left', '-2px')
+			  			.css('font-size',10)
+			  			.css('line-height',1)
+			  			.css('padding-top','2px');
 			},
 			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
-			 	if (isOverlapping(event.start, event.end)) {
-			 		//$(".alert").alert("Timetable overlapps");
-			 		revertFunc();
-			 		
-			 	}
+			 	if (isOverlapping(event.start, event.end)) { revertFunc();	}
 			},
 
 			select: function(start, end, allDay) {
@@ -118,7 +125,6 @@ TimeTable
 					return event.editable;
 				});
 			},
-			//editable: true,
 			slotMinutes: 15,
 			eventSources: [
 				{
@@ -153,7 +159,7 @@ TimeTable
 		    ],
 		    //check if data has been fetched
 		    loading: function(bool) {
-		    	//if client has'nt already made reservation hide delete button
+		    	//if client hasnt already made reservation, then hide delete button
 				if(!bool && countClientEvents()==0)
 				{
 					$('#delete').hide();
@@ -173,8 +179,7 @@ TimeTable
 				return;
 			}
 
-			bootbox.confirm(
-				"Are you sure you want to make reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
+			bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
 					var submit = cal_event_data(allevents[0]);
 					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){

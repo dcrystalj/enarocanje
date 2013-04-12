@@ -36,6 +36,11 @@ Route::get('/service/{id}/time','ManageServices@timetable');
 Route::get('/service/{id}/breaks','ManageServices@breaks');
 
 
+//macroservice
+Route::resource('macro','MacroserviceController');
+Route::get('macro/{id}/activate','MacroserviceController@getActivated');
+
+
 //provider
 Route::resource('provider','Provider');
 Route::get('provider/confirm/{token}','Provider@getConfirm');
