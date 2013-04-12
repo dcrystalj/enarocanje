@@ -200,8 +200,9 @@ TimeTable
 					$.post('http://localhost:8000/microserviceapi/deletereservation/4', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
-						if(e.success)
+						if(e.success){
 							calendar.fullCalendar('removeEvents', allevents[0].id);
+						}
 					});
 		  	 	}
 				return;

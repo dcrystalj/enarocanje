@@ -78,22 +78,25 @@ class MicroserviceApiController extends BaseController
 	public function getUsertimetable($id)
 	{
 		$timetable =[];
+		//TODO
 		$micserviceid = 1;
 		$userid = 35;
+
+
 		$r = Reservation::where('microservice',$micserviceid)
 						->where('user',$userid)
 						->get();
 		$j = 1000;
 		foreach ($r as $b) 
 		{
-			$day         = $this->dayToString($b->day);
+			$date        = $b->date;
 			$title       = "Your reservation: \nfrom  " . $b->from ." to " . $b->to;
 
 			$timetable[] = array(
 					"id"	 => $b->id,
 					"title"  => $title,
-					"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $b->from ,
-					"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $b->to ,
+					"start"  => $date . " " . $b->from ,
+					"end"    => $date . " " . $b->to ,
 					"allDay" => false,
 					"editable"=> false
 			);
@@ -109,7 +112,7 @@ class MicroserviceApiController extends BaseController
 		$events = Input::get('event');
 		$event = json_decode($events);
 
-		$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); //Monday - day 0
+		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
 		$start = date('G:i', strtotime($event->start));
 		$end = date('G:i', strtotime($event->end));
 
@@ -117,10 +120,13 @@ class MicroserviceApiController extends BaseController
 		$r->from         = $start;
 		$r->to           = $end;
 		$r->microservice = $microservid;
-		$r->day          = $day;
+		$r->date          = $date;
 		$r->user 		 = $userid;
 		$r->save();
 
+		if($r){
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+		}
 	}
 
 	public function postDeletereservation($id){
@@ -132,9 +138,9 @@ class MicroserviceApiController extends BaseController
 					->where('user',$userid)
 					->delete();
 		if($r)			
-			return Response::json(array('success'=>true,'text'=>'Sucessfully deleted'));
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
 		else
-			return Response::json(array('success'=>false,'text'=>'Sucessfully deleted'));
+			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again'));
 
 	}
 
