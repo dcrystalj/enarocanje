@@ -45,6 +45,11 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::route('home');
 });
 
+Route::filter('auth1', function()
+{
+	if (Auth::check() == FALSE ) return Redirect::route('find');
+});
+
 
 Route::filter('guest', function()
 {
@@ -69,3 +74,4 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+

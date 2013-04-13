@@ -42,20 +42,20 @@ class UserController extends BaseController {
         if($validation->fails())
         {
             Input::flash(); //input data remains in form
-            return Redirect::to('user/create')
-                ->with('message','Please correct your data.');
+            Redirect::back()->with('rules',$this->rules)->withErrors($validation);
 
             //return Redirect::to('user/create')->with_input();
         }
         else
         {
+            $languageArray = array("English","Slovenian", "Italian","German");
             $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
             $user->email     = Input::get( 'email' );
             $user->password  = Hash::make(Input::get('password'));
             $user->time_zone = Input::get( 'timezone' );
-            $user->language  = Input::get( 'language' );
+            $user->language  = $languageArray[Input::get( 'language' )];
             $user->confirmed = 0;
 
             $user->save();

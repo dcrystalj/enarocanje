@@ -14,10 +14,15 @@ Route::get('find', function()
 {
 	return View::make('find');
 });
-Route::get('profile', function()
+Route::get('profile',array('before' => 'auth1',function()
 {
-	return View::make('userProfile');
-});
+	return View::make('app/login');
+}));
+
+Route::get('profile',array('after' => 'auth1',function()
+{
+	return View::make('user.userProfile');
+}));
 
 Route::get('user/registerUser', function()
 {
