@@ -6,34 +6,23 @@
 
 @section('content')
 
-    {{ Former::open() }}
-    {{ Former::text('name','Service name:')->autofocus() }}
-    {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
-    {{ Former::textarea('contact','Contact:')->rows(5)->columns(50) }}
-    {{ Former::actions()->submit('Add service') }}
-    {{ Former::close() }}   
 
     <?php 
-        $MicroService = MacroService::All();
+        $macroService = MacroService::whereActive(0)->get();
         $tbody = []; 
         $i = 1; 
-        foreach ($MicroService as $service){
-            $link1  =    Form::open(array('method' => 'DELETE', 'url' => 'macro/' . $service->id));
-            $link1 .=    Form::submit('Delete');
-            $link1 .=    Form::close();
-    
+        foreach ($macroService as $service){    
             $tbody[]= [
                 'id'     => $i, 
                 'name'   => $service->name, 
-                'link'   => Html::link('macro/' . $service->id . '/edit','Edit') ,
-                'link1'  => $link1
+                'link'   => Html::link(URL::route('macro.micro.index', $service->id),'Choose')
              ];
              $i++;
         }
     ?>
 
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Name', 'Description', '') }}
+    {{ Table::headers('#', 'Name', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

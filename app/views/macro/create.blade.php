@@ -27,7 +27,8 @@
         foreach ($macroservice as $service){
             if($service->active==0)
             {
-                $deactivate =    Form::open(array('method' => 'DELETE', 'url' => 'macro/' . $service->id));
+                $deactivate =    Form::open(array('method' => 'DELETE', 
+                                                'url' => URL::route('macro.destroy',$service->id)));
                 $deactivate .=    Form::submit('Deactivate');
                 $deactivate .=    Form::close();
         
@@ -35,13 +36,14 @@
                     'id'          => $i, 
                     'name'        => $service->name, 
                     'description' => $service->description, 
-                    'link'        => Html::link('macro/' . $service->id . '/edit','Edit'),
+                    'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
                     'deactivate'  => $deactivate
                  ];
                  $i++;
             }
             else{
-                $activate =    Form::open(array('method' => 'GET', 'url' => 'macro/' . $service->id . '/activate'));
+                $activate =    Form::open(array('method' => 'GET', 
+                                        'url' => URL::route('macroactivate',$service->id)));
                 $activate .=    Form::submit('Activate');
                 $activate .=    Form::close();
         

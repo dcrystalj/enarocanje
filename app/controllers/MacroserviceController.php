@@ -5,36 +5,24 @@ class MacroserviceController extends BaseController {
 	public $rules = array(
         'name'		=> 'required',
     );
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+
 	public function index()
 	{
-		$macservice = MacroService::all();
-		return View::make('macro.index')->with('macroservice',$macroservice);
+		return View::make('macro.index');
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
+
 	public function create()
 	{
 		return View::make('macro.create')
 					->with('rules',$this->rules)
 					->with('status',Session::get('status'))
+					->with('errors',Session::get('errors'))
 					->with('error',Session::get('error'))
 					->with('success',Session::get('success'));
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
+
 	public function store()
 	{
 
@@ -52,58 +40,40 @@ class MacroserviceController extends BaseController {
 			if($mac){
 				return Redirect::route('macro.create')
 								->with('id',$mac->id)
-								->with('rules',$this->rules)
 								->with('success','successfully saved');
 			}
 		}
 
-		return Redirect::route('macro.create')
-							->with('rules',$this->rules)
-							->withErrors($validation);
+		return Redirect::route('macro.create');
 	}
 
-	/** display for all users about this service
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	
+
+
 	public function show($id)
 	{
 		return "show";
 		
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function edit($id)
 	{
 		$mac = MacroService::whereId($id)->first();
 		if($mac) //is macrosrevice in database
 		{
 			return View::make('macro.create')
-						->with('mac',$mac)
-						->with('rules',$this->rules);
+						->with('rules',$this->rules)
+						->with('mac',$mac);
 		}
 		
-		return Redirect::route('macro.create')
-						->with('rules',$this->rules);
+		return Redirect::route('macro.create');
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
+
 	public function update($id)
 	{
-		$mac = MacroService::whereId($id)->first();
+		$mac = MacroService::find($id);
 		if(!$mac) //is macrosrevice not in database
 		{
 			return App::abort(404);
@@ -120,19 +90,14 @@ class MacroserviceController extends BaseController {
 
 			if($mac){
 				return Redirect::route('macro.create')
-								->with('id',$mac->id)
 								->with('success','Successfully edited');
 			}
 		}
 
-		return Redirect::route('macro.create')
-							->with('rules',$this->rules)
-							->withErrors($validation);
+		return Redirect::route('macro.create');
 	}
 
-	/**
-	 * not realy realy delete but deactivATE
-	 */
+
 	 
 	public function destroy($id)
 	{

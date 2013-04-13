@@ -38,10 +38,12 @@ Route::get('/service/{id}/breaks','ManageServices@breaks');
 
 //macroservice
 Route::resource('macro','MacroserviceController');
-Route::get('macro/{id}/activate','MacroserviceController@getActivated');
+Route::get('macro/{id}/activate',array(	'as' 	=> 'macroactivate', 
+										'uses'	=> 'MacroserviceController@getActivated'));
 
 //microservice extending macro
 Route::resource('macro.micro','MicroserviceController');
+Route::get('macro/{mac}/micro/{mic}/activate',array('as'=>'microactivate','uses'=>'MicroserviceController@getActivated'));
 
 //provider
 Route::resource('provider','Provider');

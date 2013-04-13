@@ -8,72 +8,122 @@ class MicroserviceController extends BaseController {
 
 	public function index($mac)
 	{
-		return MacroService::find($mac)->microservices;
+		return View::make('micro.index')->with('mac',$mac);
 	}
 
-	public function create()
+	public function create($mac)
 	{
-		return View::make('Provider.ManageServices')->with('rules',$this->rules);
+		return View::make('micro.create')					
+					->with('rules',$this->rules)
+					->with('mac',MacroService::find($mac))
+					->with('errors',Session::get('errors'))
+					->with('status',Session::get('status'))
+					->with('error',Session::get('error'))
+					->with('success',Session::get('success'));
 	}
 
-	public function store()
+	public function store($mac)
 	{
 		$validation = Validator::make(Input::all(),$this->rules);
-		if($validation->fails())
+
+		if($validation->passes())
 		{
-			return Redirect::to('ManageServices/create')->withErrors($validation)->with('rules',$this->rules);
-		}
-		else
-		{
-			$micservice = new MicroService;
-			$micservice->name 	= Input::get( 'name' );
-			$micservice->length    = Input::get( 'length' );
-			$micservice->description    = Input::get( 'description' );
-			$micservice->price    = Input::get( 'price' );
+			
+			$micservice                = new MicroService;
+			$micservice->name          = Input::get( 'name' );
+			$micservice->length        = Input::get( 'length' );
+			$micservice->description   = Input::get( 'description' );
+			$micservice->price         = Input::get( 'price' );
+			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
+			$micservice->macservice_id = $mac;
 			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','New service added')->with('rules',$this->rules);
+
+			if($micservice)
+			{
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','successfully saved');
+			}
 		}
+		return Redirect::route('macro.micro.create',$mac)
+						->withErrors($validation);
 	}
 
-	public function edit($id)
+	public function edit($mac,$mic)
 	{
-		$service = MicroService::find($id);
-		return View::make('Provider.EditService')->with('rules',$this->rules)->with('service',$service);
-	}
-
-
-	public function update($id)
-	{
-		if (($micservice = MicroService::find($id)))
+		$service = MacroService::find($mac)->microservices()->find($mic);
+		if($service) //is macrosrevice in database
 		{
-			$micservice->name 	= Input::get( 'name' );
-			$micservice->length    = Input::get( 'length' );
-			$micservice->description    = Input::get( 'description' );
-			$micservice->price    = Input::get( 'price' );
+			return View::make('micro.create')
+							->with('mic',$service)
+							->with('mac',MacroService::find($mac))
+							->with('rules',$this->rules);
+		}
+		
+		return Redirect::route('macro.micro.create',$mac)
+						->with('error','Wrong service');
+	}
+
+
+	public function update($mac, $mic)
+	{
+		$micservice = MacroService::find($mac)->microservices()->find($mic);
+		if(!$micservice) //is macrosrevice not in database
+		{
+			return App::abort(404);
+		}
+		
+		$validation = Validator::make(Input::all(),$this->rules);
+
+		if($validation->passes())
+		{
+			
+			$micservice->name          = Input::get( 'name' );
+			$micservice->length        = Input::get( 'length' );
+			$micservice->description   = Input::get( 'description' );
+			$micservice->price         = Input::get( 'price' );
+			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
+			$micservice->macservice_id = $mac;
 			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . 'updated.');
+
+			if($micservice){
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Successfully edited');
+			}
 		}
-		else
-		{
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
-		}	
+
+		return Redirect::route('macro.micro.create');
+
 	}
 
 
 
-	public function destroy($id)
+	public function destroy($mac,$mic)
 	{
-		if (($micservice = MicroService::find($id)))
+		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
 		{
-			$micservice->delete();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . ' deleted!');
+			$micservice->active=-1;
+			$micservice->save();
+
+			return Redirect::route('macro.micro.create',$mac)
+							->with('status','Service ' . $micservice->name . ' was deactivated!');
 		}
-		else
-		{
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
-		}
+		
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not deactivated.\nPlease try again.");
 	}
 
+	public function getActivated($mac, $mic)
+	{
+		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
+		{
+			$micservice->active=0;
+			$micservice->save();
+			return Redirect::route('macro.micro.create',$mac)
+							->with('success','Service ' . $micservice->name . ' was activated!');
+		}
+		
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not activated.\nPlease try again.");
+		
+	}
 
 	public function timetable($macro_id)
 	{
@@ -112,7 +162,8 @@ class MicroserviceController extends BaseController {
 			$end = date('G:i', strtotime($event->end));
 			print "$day: $start ... $end\n";
 			DB::table('break')->insert(array(
-										   'macservice_id' => $id,
+										   'm
+										   acservice_id' => $id,
 										   'day' => $day,
 										   'from' => $start,
 										   'to' => $end,
