@@ -8,4 +8,9 @@ class MacroService extends Eloquent {
     {
         return $this->hasMany('MicroService', 'macservice_id');
     }
+
+	public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }
