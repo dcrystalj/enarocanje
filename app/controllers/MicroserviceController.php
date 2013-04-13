@@ -107,6 +107,7 @@ class MicroserviceController extends BaseController {
 		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active=-1;
+			$micservice->activefrom =Input::get('date');
 			$micservice->save();
 
 			return Redirect::route('macro.micro.create',$mac)
@@ -120,8 +121,10 @@ class MicroserviceController extends BaseController {
 	{
 		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
 		{
-			$micservice->active=0;
+			$micservice->active     =0;
+			$micservice->activefrom =Input::get('date');
 			$micservice->save();
+
 			return Redirect::route('macro.micro.create',$mac)
 							->with('success','Service ' . $micservice->name . ' was activated!');
 		}

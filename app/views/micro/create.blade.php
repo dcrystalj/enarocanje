@@ -41,32 +41,26 @@
             foreach ($microservice as $service){
                 if($service->active==0)
                 {
-                    $deactivate =    Form::open(array('method' => 'DELETE', 
-                                                    'url' => URL::route('macro.micro.destroy',[$mac->id,$service->id])));
-                    $deactivate .=    Form::submit('Deactivate');
-                    $deactivate .=    Form::close();
-            
+                    
                     $allActivated[]= [
                         'id'     => $i, 
                         'name'   => $service->name, 
                         'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
                         'desc'   => $service->description, 
                         'price'  => $service->price, 
-                        'link'   => Html::link(URL::route('macro.micro.edit',[$mac->id, $service->id]),'Edit') ,
-                        'deactivate'  => $deactivate
+                        'link'   => Html::link(
+                                        URL::route('macro.micro.edit',
+                                            [$mac->id, $service->id]), 'Edit'),
+                        'deactivate'  => deactivate($mac->id, $service->id)
                      ];
                      $i++;
                 }
                 else{
-                    $activate =    Form::open(array('method' => 'GET', 
-                                                    'url' => URL::route('microactivate',[$mac->id,$service->id])));
-                    $activate .=    Form::submit('Activate');
-                    $activate .=    Form::close();
-            
+
                     $allDeactivated[] = [
                         'name'        => $service->name, 
                         'description' => $service->description, 
-                        'link1'       => $activate
+                        'link1'       => activate($mac->id, $service->id)
                      ];
                 }
             }
@@ -87,4 +81,40 @@
         @endif
 
     @endif
+
+    <?php 
+    function deactivate($macId,$micId)
+    {
+        $deactivate =    Form::open(array('method' => 'DELETE', 
+                                        'url' => URL::route('macro.micro.destroy',[$macId,$micId]),
+                                        'class'    => 'deactivate'));
+        $deactivate .=    Form::hidden('date','',['id'=>'hiddendate']);
+        $deactivate .=    Form::submit('Deactivate');
+        $deactivate .=    Form::close();
+        return $deactivate;
+    }
+    function activate($macId,$micId)
+    {
+        $activate = Form::open(array('method' => 'GET', 
+                                    'url'    => URL::route('microactivate',[$macId,$micId]),
+                                    'class'    => 'activate'));
+        $activate .=    Form::hidden('date','',['id'=>'hiddendate']);
+        $activate .=    Form::submit('Activate');
+        $activate .=    Form::close();
+        return $activate;
+    }
+
+    ?>
+
+    <div id="event-dialog" class="modal hide fade">
+        <!-- dialog contents -->
+        <div class="modal-body">
+          <span id="spanfrom">From:</span> <input type="date" value="{{ date('Y-m-d',strtotime('now')) }}" id="efrom" /><br />
+        </div>
+          <!-- dialog buttons -->
+        <div class="modal-footer">
+            <a href="#" class="b_cancel btn">Cancel</a>
+            <a href="#" class="b_save btn btn-success">Submit</a>
+        </div>
+    </div>
 @stop

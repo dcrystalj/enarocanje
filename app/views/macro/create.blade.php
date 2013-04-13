@@ -27,30 +27,24 @@
         foreach ($macroservice as $service){
             if($service->active==0)
             {
-                $deactivate =    Form::open(array('method' => 'DELETE', 
-                                                'url' => URL::route('macro.destroy',$service->id)));
-                $deactivate .=    Form::submit('Deactivate');
-                $deactivate .=    Form::close();
+                
         
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
-                    'deactivate'  => $deactivate
+                    'deactivate'  => deactivate($service->id)
                  ];
                  $i++;
             }
             else{
-                $activate =    Form::open(array('method' => 'GET', 
-                                        'url' => URL::route('macroactivate',$service->id)));
-                $activate .=    Form::submit('Activate');
-                $activate .=    Form::close();
+                
         
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'description' => $service->description, 
-                    'link1'       => $activate
+                    'activate'       => activate($service->id)
                  ];
             }
         }
@@ -69,5 +63,24 @@
     {{ Table::body($allDeactivated) }}
     {{ Table::close() }}
     @endif
-   
+
+    <?php 
+    function deactivate($serviceId)
+    {
+        $deactivate =    Form::open(array('method' => 'DELETE', 
+                                            'url' => URL::route('macro.destroy',$serviceId)));
+        $deactivate .=    Form::submit('Deactivate');
+        $deactivate .=    Form::close();
+        return $deactivate;
+    }
+    
+    function activate($serviceId)
+    {
+        $activate = Form::open(array('method' => 'GET', 
+                                        'url' => URL::route('macroactivate',$serviceId)));
+        $activate .= Form::submit('Activate');
+        $activate .= Form::close();
+        return $activate;
+    }
+    ?>
 @stop
