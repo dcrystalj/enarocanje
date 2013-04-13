@@ -61,9 +61,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 
-	public function isProvider()
+	public function scopeIsProvider($q)
 	{
-		return $this->status == 2;
+		return $q->where('status',2);
 	}
 
 

@@ -6,6 +6,11 @@ class MacroserviceController extends BaseController {
         'name'		=> 'required',
     );
 
+	public function __construct() {
+		$this->beforeFilter('auth',['only'=>['index','create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
+	}
+
 	public function index()
 	{
 		return View::make('macro.index');

@@ -1,4 +1,11 @@
 <?php
+Route::filter('provider',function()
+{
+	if (User::whereEmail(Auth::user()->email)->where('status','<',2)->first()) 
+	{
+		return Redirect::route('home')->with('error','You have no permissions.');
+	}
+});
 
 Route::get('/', function()
 {
@@ -28,7 +35,7 @@ Route::get('user/registerUser', function()
 });
 
 
-Route::resource('ureservation' , 'CustomerReservation');
+
 Route::resource('ManageServices','ManageServices');
 Route::post('/service/{id}/time/submit','ManageServices@submit_time');
 Route::post('/service/{id}/breaks/submit','ManageServices@submit_breaks');
@@ -44,6 +51,8 @@ Route::get('macro/{id}/activate',array(	'as' 	=> 'macroactivate',
 //microservice extending macro
 Route::resource('macro.micro','MicroserviceController');
 Route::get('macro/{mac}/micro/{mic}/activate',array('as'=>'microactivate','uses'=>'MicroserviceController@getActivated'));
+
+Route::resource('macro.micro.reservation' , 'CustomerReservation');
 
 //provider
 Route::resource('provider','Provider');

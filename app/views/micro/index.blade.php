@@ -16,7 +16,7 @@
         $duration[105]="1h 45 min";
         $duration[120]="2 h";
 
-        $mic = MacroService::find($mac)->microservices()->whereActive(0);
+        $mic = MacroService::find($mac)->microservices()->whereActive(0)->get();
     ?>
 
     @if(count($mic)==0)
@@ -32,7 +32,7 @@
                 'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
-                'link'   => Html::link(URL::route('macro.micro.index',$mac),'Reservate')
+                'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
              ];
              $i++;
         }?>

@@ -12,47 +12,15 @@ TimeTable
 @stop
 
 @section('content')
+{{ "macroservice : ".$mac }}
+{{ "microservice : ".$mic }}
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
 
 <div id='calendar'></div>
 	<script>
 
-	function isOverlapping(start, end){
-		var array = calendar.fullCalendar('clientEvents');
-		for(i in array){
-			if(array[i].start != start && array[i].end != end){ 
-			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
-				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
-				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
-				start < array[i].start && start < array[i].end && end >= array[i].start && end >= array[i].end ){
-					return true;
-			}}
-		}
-		return false;
-	};
-
-	function fromTo(event){
-		return event.start.getDate()+"-"+(event.start.getMonth()+1)+"-"+(event.start.getYear()+1900) + " from " + time(event.start) +" to "+time(event.end);
-	}
-
-	function time(str){
-		var currentTime = str;
-		var hours = currentTime.getHours()
-		var minutes = currentTime.getMinutes()
-		if (minutes < 10){
-		minutes = "0" + minutes
-		}
-		return hours + ":" + minutes + " ";
-
-	};
-
-	function countClientEvents(){
-			return calendar.fullCalendar('clientEvents',function(e){
-				return !e.test && e.id!=-5;}).length;
-
-	};
-
+	
 	var calendar;
 	var defaultLength = 45;
 	$(document).ready(function() {
@@ -80,8 +48,6 @@ TimeTable
 
 			  var width = $(element).width()+12;
 			  $(element).css('width', width + 'px')
-			  			.css('padding', '0 2px')
-			  			.css('margin-right', '-2px')
 			  			.css('margin-left', '-2px')
 			  			.css('font-size',10)
 			  			.css('line-height',1)
@@ -200,7 +166,7 @@ TimeTable
 			});
 
 			bootbox.confirm(
-				"Are you sure you want to delete reservation on " + allevents[0].start.getDate()+"-"+(allevents[0].start.getMonth()+1)+"-"+(allevents[0].start.getYear()+1900) + " from " + time(allevents[0].start) +" to "+time(allevents[0].end)+" ?", function(result) {
+				"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
 					$.post('http://localhost:8000/microserviceapi/deletereservation/4', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
