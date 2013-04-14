@@ -170,23 +170,28 @@ class MicroserviceApiController extends BaseController
 		$name = Input::get('mail');
 
 		$tempuser = new User;
-		$tempuser->email = $mail;
-		$tempuser->name = $name;
+		$tempuser->email = $event->data->mail;
+		$tempuser->name = $event->data->name;
 		$tempuser->save();
+		if($tempuser){
+			Session::put('user',$tempuser);
+			Auth::login($tempuser);
+			
 
-		$r               = new Reservation;
-		$r->from         = $start;
-		$r->to           = $end;
-		$r->micservice_id = $microservid;
-		$r->date          = $date;
-		$r->user_id	 	= $tempuser->id;
-		$r->save();
+			$r               = new Reservation;
+			$r->from         = $start;
+			$r->to           = $end;
+			$r->micservice_id = $microservid;
+			$r->date          = $date;
+			$r->user_id	 	= $tempuser->id;
+			$r->save();
 
-		if($r){
-			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			if($r){
+				return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			}
+
 		}
-
-
+		return json_encode(array('success'=>false,'text'=>'Email is already taken, please login first'));
 	}
 
 
