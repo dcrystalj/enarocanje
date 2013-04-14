@@ -58,7 +58,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '/microserviceapi/timetable/<?= $mac ?>',
+			url: '{{ route("api_mic_timetable", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -66,7 +66,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/breaks/<?= $mac ?>',
+			url: '{{ route("api_mic_breaks", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -74,7 +74,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/usertimetable/<?= $mic ?>',
+			url: '{{ route("api_mic_utimetable", array($mic)) }}',
 			error: cal_error,
 			type: 'GET',
 			editable: false,
@@ -107,7 +107,7 @@ $(function() {
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	if(result){
 				var submit = cal_event_data(allevents[0]);
-				$.post('/microserviceapi/reservation/<?= $mic ?>', {'event': JSON.stringify(submit)}, function(){
+				$.post('{{ route("api_mic_reservation", array($mic)) }}', {'event': JSON.stringify(submit)}, function(){
 					window.location.reload();
 				});
 		  	}

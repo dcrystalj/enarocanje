@@ -56,7 +56,7 @@ fc_init({
 	// Load events
 	eventSources: [
 		{
-			url: '/microserviceapi/workinghours/<?= $id ?>',
+			url: '{{ route("api_mic_whours", array($id)) }}',
 			type: 'GET',
 			error: function() { alert('there was an error while fetching events!'); },
 			editable: true,
@@ -74,9 +74,9 @@ $(function() {
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
-		cal_save(calendar, "/service/<?=$id ?>/time/submit", function(data) {
+		cal_save(calendar, '{{ route("timetable_submit", array($id)) }}', function(data) {
 			bootbox.alert("Timetable saved.", function() {
-				window.location = "/service/<?=$id ?>/breaks";
+				window.location = '{{ route("breaks", array($id) )}}';
 			});
 		});
 	});
