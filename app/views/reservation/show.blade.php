@@ -119,8 +119,10 @@ $(function() {
 					$('#event-dialog').modal('hide');
 				});
 				$('#event-dialog a.b_save').click(function() {
-					submit.name = $('#name').val();
-					submit.mail = $('#mail').val();
+					submit.data =  {
+						'name' : $('#name').val(),
+						'mail' : $('#mail').val()
+					}
 
 					$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);

@@ -166,11 +166,11 @@ class MicroserviceApiController extends BaseController
 		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
 		$start = date('G:i', strtotime($event->start));
 		$end = date('G:i', strtotime($event->end));
-		$mail = $event->mail;
-		$name = $event->name;
+		$mail = Input::get('name');
+		$name = Input::get('mail');
 
-		$tmpuser = new Tempuser;
-		$tempuser->mail = $mail;
+		$tempuser = new User;
+		$tempuser->email = $mail;
 		$tempuser->name = $name;
 		$tempuser->save();
 
@@ -179,7 +179,7 @@ class MicroserviceApiController extends BaseController
 		$r->to           = $end;
 		$r->micservice_id = $microservid;
 		$r->date          = $date;
-		$r->tmpuser_id	 = $tempuser->id;
+		$r->user_id	 	= $tempuser->id;
 		$r->save();
 
 		if($r){
