@@ -38,7 +38,6 @@
 					['Logout',URL::to('app/logout'),Request::is('app/logout')],
 					['Profile',URL::to('profile'),Request::is('profile')],
 					['Working Hours',URL::to('service/1/time'),Request::is('service/1/time')],
-					['Reservation',URL::to('ureservation'),Request::is('ureservation')],
 				])
 			)}}
 		</nav>
