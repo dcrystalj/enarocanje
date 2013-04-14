@@ -169,10 +169,12 @@ class MicroserviceApiController extends BaseController
 		$mail = Input::get('name');
 		$name = Input::get('mail');
 
-		$tempuser = new User;
-		$tempuser->email = $event->data->mail;
-		$tempuser->name = $event->data->name;
-		$tempuser->save();
+		if(User::whereEmail($mail)){
+			$tempuser = new User;
+			$tempuser->email = $event->data->mail;
+			$tempuser->name = $event->data->name;
+			$tempuser->save();
+		}
 		if($tempuser){
 			Session::put('user',$tempuser);
 			Auth::login($tempuser);

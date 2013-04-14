@@ -42,8 +42,7 @@ fc_init({
 		calendar.fullCalendar('unselect');
 		calendar.fullCalendar('removeEvents', -1);
 		// Helper
-		end = new Date(start);
-        end.setMinutes(start.getMinutes() + defaultLength);
+		end =  new Date(start.getTime() + defaultLength*60000);
 
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
@@ -74,11 +73,15 @@ fc_init({
 			className: "termin"
 		},
 		{
+			@if(Auth::check())
+			
 			url: '{{ route("api_mic_utimetable", array($mic)) }}',
-			error: cal_error,
+			error: 'cal_error',
 			type: 'GET',
 			editable: false,
-			color: "red",
+			color: "red"
+			
+			@endif
 		}
 		
 	],

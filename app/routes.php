@@ -71,7 +71,7 @@ Route::controller('microserviceapi', 'MicroserviceApiController');
 Route::post('/microserviceapi/workinghours/{id}', array('as' => 'api_mic_whours', 'uses' => 'ManageServiceApiController@getWorkinghours'));
 Route::get('/microserviceapi/breaks/{id}', array('as' => 'api_mic_breaks', 'uses' => 'ManageServiceApiController@getBreaks'));
 Route::get('/microserviceapi/timetable/{id}', array('as' => 'api_mic_timetable', 'uses' => 'ManageServiceApiController@getTimetable'));
-Route::get('/microserviceapi/usertimetable/{id}', array('as' => 'api_mic_utimetable', 'uses' => 'ManageServiceApiController@getUsertimetable'));
+Route::get('/microserviceapi/usertimetable/{id}', array('before'=>'auth', 'as' => 'api_mic_utimetable', 'uses' => 'ManageServiceApiController@getUsertimetable'));
 Route::post('/microserviceapi/reservation/{id}', array('as' => 'api_mic_reservation', 'uses' => 'ManageServiceApiController@postReservation'));
 Route::post('/microserviceapi/deletereservation/{id}', array('as' => 'api_mic_rm_reservation', 'uses' => 'ManageServiceApiController@postDeleteReservation'));
 Route::post('/microserviceapi/registration/{id}', array('as' => 'api_mic_registration', 'uses' => 'ManageServiceApiController@postRegistration'));

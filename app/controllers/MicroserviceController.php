@@ -7,7 +7,7 @@ class MicroserviceController extends BaseController {
 						  'price'        => 'numeric');
 
 	public function __construct() {
-		$this->beforeFilter('auth',['only'=>['index','create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('auth',['only'=>['create','store','edit','update','destroy','getActivated']]);
 		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
 	}
 
