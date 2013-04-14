@@ -23,7 +23,12 @@ class Provider extends BaseController {
 	public function create()
 	{
 
-		return View::make('Provider.registerP')->with('rules', $this->rules);
+		return View::make('Provider.registerP')
+					->with('rules', $this->rules)
+					->with('status',Session::get('status'))
+					->with('errors',Session::get('errors'))
+					->with('error',Session::get('error'))
+					->with('success',Session::get('success'));
 	}
 
 	public function store()
@@ -34,7 +39,7 @@ class Provider extends BaseController {
 		if($validation->fails())
 		{
 			Input::flash(); //input data remains in form
-			return Redirect::to('provider/create')->with('rules',$this->rules)->withErrors($validation);
+			return Redirect::to('provider/create')->withErrors($validation);
 		}
 		else
 		{	
@@ -47,10 +52,12 @@ class Provider extends BaseController {
 			//send mail
 
 			Config::set('auth.reminder.email', 'emails.auth.welcome');
-			return Password::remind(['email' => $user->email ], function($m)
+			Password::remind(['email' => $user->email ], function($m)
 			{
 			    $m->setCharset('UTF-8');
 			});
+
+			return Redirect::home()->with('success','Your activation mail was sent on email');
 		}
 	}
 
@@ -120,7 +127,7 @@ class Provider extends BaseController {
 		    $user->save();
 		    //Session::put('user',Auth::user());
 		    Session::put('user',$user);
-			return View::make('home')->with('message','Registration successfully completed.');
+			return View::make('home')->with('success','Registration successfully completed.');
 	    }
 	    App::abort(404, 'Page not found');
 	}

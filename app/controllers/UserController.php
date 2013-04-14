@@ -17,7 +17,7 @@ class UserController extends BaseController {
      */
     public function index()
     {
-        return View::make('home')->with('message','Please confirm the registration trough email link, which should be delivered shortly');
+        return View::make('home')->with('success','Please confirm the registration trough email link, which should be delivered shortly');
     }
 
     /**
@@ -28,7 +28,12 @@ class UserController extends BaseController {
     public function create()
     {
         return View::make('user.registerUser')
-                    ->with('rules',$this->rules);
+                    ->with('rules', $this->rules)
+                    ->with('status',Session::get('status'))
+                    ->with('errors',Session::get('errors'))
+                    ->with('error',Session::get('error'))
+                    ->with('success',Session::get('success'));
+    
     }
 
     /**
@@ -43,7 +48,7 @@ class UserController extends BaseController {
         {
             Input::flash(); //input data remains in form
             return Redirect::to('user/create')
-                ->with('message','Please correct your data.');
+                            ->withErrors($validation);
 
             //return Redirect::to('user/create')->with_input();
         }
@@ -60,11 +65,12 @@ class UserController extends BaseController {
 
             $user->save();
             Config::set('auth.reminder.email', 'emails.auth.userWelcome');
-            return Password::remind(['email' => $user->email ], function($m)
+            Password::remind(['email' => $user->email ], function($m)
             {
                 $m->setCharset('UTF-8');
             }) ;
-            //return View::make('home');
+
+            return Redirect::home()->with('success','Your activation mail was sent on email');
         }
 
 
@@ -117,17 +123,15 @@ class UserController extends BaseController {
     public function getConfirm($token)
     {
         $remind =  DB::table('password_reminders')->where('token', $token)->first();
-        //return $remind->email;
+
         if($remind) $user = User::where('email',$remind->email)->first();
         
-        if(isset($user)){
-            //return "asd";
+        if(isset($user))
+        {
             $user->confirmed = 1;
             $user->save();
-            return View::make('home')
-                        ->with('status','Registration successful');
-            //return View::make('user.registerUserSuccess');
-            //return View::make('user.registerUserSuccess')->with('success','Congratz');
+            Session::put('user',$user);
+            return View::make('home')->with('success','Registration successfully completed.');
         }
         return Redirect::to('home')
                         ->with('status','Wrong token');
