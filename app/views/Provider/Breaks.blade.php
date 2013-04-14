@@ -31,11 +31,8 @@ fc_init({
 		$(element).css('width', width + 'px');
 	},
 	eventDrop: function(event, dayDelta, minDelta, allDay, rf) {
-		if (isOverlapping(event.start, event.end)) {
-			alert('alert not working...');
-//			$(".alert").alert("Timetable overlapps");
+		if (isOverlapping(event.start, event.end))
 			rf();
-		}
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
