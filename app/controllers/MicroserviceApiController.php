@@ -146,17 +146,19 @@ class MicroserviceApiController extends BaseController
 
 	public function getWorkinghours($id)
 	{
+		$start = Input::get('start')+(24*3600); //get first day
+				
 		$workingHours = Whours::where('macservice_id',$id)->get();
 		$timetable = [];
 
 		foreach ($workingHours as $wh) 
 		{
-			$day = $this->dayToString($wh->day);
+			$date = $start+$wh->day*3600*24; // offset
 			$timetable[] = array(
 				"id"	 => $wh->id,
 				"title"  => "",
-				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
-				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
+				"start"  => date("Y-m-d", $date) . " " . $wh->from ,
+				"end"    => date("Y-m-d", $date) . " " . $wh->to ,
 				"allDay" => false,
 				"editable"=> true,
 			);
