@@ -14,6 +14,7 @@ class RemovePriceFromMicserviceTable extends Migration {
 		Schema::table('micservice', function($t) 
 		{
 			$t->dropColumn('price');
+			$t->decimal('price');
 		});
 	}
 
@@ -25,6 +26,7 @@ class RemovePriceFromMicserviceTable extends Migration {
 	public function down()
 	{
 		Schema::table('micservice', function($t) {
+		        $t->decimal('price');
 			$t->dropColumn('price');
 		});
 	}
