@@ -176,6 +176,38 @@ class MicroserviceApiController extends BaseController
 		return Response::json($timetable);
 	}
 
+	public function posetRegistration($id){
+		
+		$microservid = $id;
+		$events = Input::get('event');
+		$event = json_decode($events);
+
+		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start = date('G:i', strtotime($event->start));
+		$end = date('G:i', strtotime($event->end));
+		$mail = $event->mail;
+		$name = $event->name;
+
+		$tmpuser = new Tempuser;
+		$tempuser->mail = $mail;
+		$tempuser->name = $name;
+		$tempuser->save();
+
+		$r               = new Reservation;
+		$r->from         = $start;
+		$r->to           = $end;
+		$r->micservice_id = $microservid;
+		$r->date          = $date;
+		$r->tmpuser_id	 = $tempuser->id;
+		$r->save();
+
+		if($r){
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+		}
+
+
+	}
+
 
 	//----------------------------------------
 	//helpers
