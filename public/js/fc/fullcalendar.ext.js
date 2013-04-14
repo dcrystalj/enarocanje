@@ -1,3 +1,26 @@
+var calendar;
+function fc_init(opts, id) {
+	if(typeof id == 'undefined')
+		id='#calendar';
+	calendar = $(id).fullCalendar($.extend(fc_defs, opts));
+}
+// Helper
+function fc_insert(start, end, data)  {
+	if(typeof data == 'undefined')
+		data = {};
+	if(!data['eventType'])
+		alert('Event type is missing!!!!');
+	calendar.fullCalendar('renderEvent',
+						  $.extend({
+							  title: 'Working day',
+							  start: start,
+							  end: end,
+							  allDay: false,
+							  editable: true,
+						  }, data),
+						  true // make the event "stick"
+						 );
+}
 /*
 Event:
     - fc event
@@ -58,6 +81,37 @@ function cal_repair_event(cal, event) {
 	}
 }
 
+function cal_show_dialog(event) {
+	if(!event.source.editable) return;
+	$('#efrom').val(getHour(event.start));
+	$('#eto').val(getHour(event.end));
+	$('#event-dialog').modal({
+		backdrop: 'static',
+		keyboard: true,
+		show: true,
+	});
+	$('#event-dialog a.b_delete').click(function() {
+		calendar.fullCalendar('removeEvents', event._id);
+		$('#event-dialog').modal('hide');
+	});
+	$('#event-dialog a.b_cancel').click(function() {
+		$('#event-dialog').modal('hide');
+	});
+	$('#event-dialog a.b_save').click(function() {
+		var from = $('#efrom').val().split(':');
+		var to = $('#eto').val().split(':');
+		event.start.setHours(parseInt(from[0], 10));
+		event.start.setMinutes(parseInt(from[1], 10));
+		event.end.setHours(parseInt(to[0], 10));
+		event.end.setMinutes(parseInt(to[1], 10));
+		calendar.fullCalendar('updateEvent', event);
+		$('#event-dialog').modal('hide');
+	});
+	$('#event-dialog').on('hide', function() {
+		$('#event-dialog').off('click');
+	});
+}
+
 /*
   Save selection.
 */
@@ -73,6 +127,13 @@ function cal_save(cal, url, callback, check) {
 		}
 	}
 	$.post(url, {'events': JSON.stringify(submit)}, callback);
+}
+
+function cal_error() {
+	bootbox.dialog("There was an error while fetching events!", [{
+		"label" : ":(",
+		"class" : "btn-danger",
+		}]);
 }
 
 function cal_event_data(event) {
@@ -139,6 +200,6 @@ function isOverlapping(start, end){
 
 	function countClientEvents(){
 			return calendar.fullCalendar('clientEvents',function(e){
-				return !e.test && e.id!=-5;}).length;
+				return (e.eventType=='reservation' && e.id != -1);}).length;
 
 	};

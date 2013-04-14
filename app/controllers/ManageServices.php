@@ -74,8 +74,7 @@ class ManageServices extends BaseController {
 	}
 
 
-	public function timetable($macro_id)
-	{
+	public function timetable($macro_id) {
 		return View::make('Provider.TimeTable', array('id' => $macro_id));
 	}
 
