@@ -6,16 +6,20 @@
 
 @section('content')
     
- 
-    @if(isset($mac))
-        {{ Former::open('macro/'. $mac->id)->method('PUT')->rules($rules) }}
+     @if(isset($mac))
+        {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
         {{ Former::populate($mac) }}
     @else
-        {{ Former::open('macro')->rules($rules) }}
+        {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::text('name','Service name:')->autofocus() }}
+    {{ Former::text('name','Provider service name:')->autofocus() }}
+    {{ Former::text('address', 'City:')}}
+    {{ Former::text('street','Street:')}}
+    {{ Former::select('ZIPcode','ZIP code:')}}
+    {{ Former::text('email','Email:')}}
+    {{ Former::text('telN','Telephone Number:')}}
+    {{ Former::text('SiteUrl','URL to your site:')}}
     {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
-    {{ Former::textarea('contact','Contact:')->rows(5)->columns(50) }}
     {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
     {{ Former::close() }}   
 

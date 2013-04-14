@@ -24,8 +24,9 @@
         @else
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
-
-        {{ Former::text('name','Service name:')->autofocus() }}
+        @if (isset($service))
+        <p> Add services to {{$service()->name }} </p>
+        @endif
         {{ Former::text('name','Name:')->autofocus() }}
         {{ Former::select('length','Length:')->options($duration) }} 
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}

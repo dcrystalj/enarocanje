@@ -4,6 +4,13 @@ class MacroserviceController extends BaseController {
 
 	public $rules = array(
         'name'		=> 'required',
+        'address'   => 'required|alpha',
+        'street'    => 'alpha|numeric',
+        'ZIPcode'   => 'required|numeric',
+        'email' 	=> 'required|email|unique',
+        'telN' 		=> 'numeric|match:/+()/',
+        'SiteUrl'   => 'active_url',
+        'description' => 'max:1024'
     );
 
 	public function __construct() {

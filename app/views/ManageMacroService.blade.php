@@ -5,25 +5,28 @@
 @stop
 
 @section('content')
-    
     <?php 
-        $duration[15]="15 min";
-        $duration[30]="30 min";
-        $duration[45]="45 min";
-        $duration[60]="1 h";
-        $duration[75]="1 h 15 min";
-        $duration[90]="1h 30 min";
-        $duration[105]="1h 45 min";
-        $duration[120]="2 h";
+            $duration[15]="15 min";
+            $duration[30]="30 min";
+            $duration[45]="45 min";
+            $duration[60]="1 h";
+            $duration[75]="1 h 15 min";
+            $duration[90]="1h 30 min";
+            $duration[105]="1h 45 min";
+            $duration[120]="2 h";
 
-        $MicroService = Microservice::All();
+            $MicroService = Microservice::All();
     ?>  
 
-    {{ Former::open('ManageServices')->rules($rules) }}
-    {{ Former::text('name','Name:')->autofocus() }}
-    {{ Former::select('length','Duration:')->options($duration) }} 
-    {{ Former::Number('price','Price:') }}
-    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
+    {{ Former::open() }}
+    {{ Former::text('name','Provider service name:')->autofocus() }}
+    {{ Former::text('address', 'City:')}}
+    {{ Former::text('street','Street:')}}
+    {{ Former::select('ZIPcode','ZIP code:')}}
+    {{ Former::text('email','Email:')}}
+    {{ Former::text('telN','Telephone Number:')}}
+    {{ Former::text('SiteUrl','Url to your site:')}}
+    {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
     {{ Former::actions()->submit('Add service') }}
     {{ Former::close() }}   
 
@@ -46,8 +49,8 @@
          ];
          $i++;
     }?>
-    
-    {{ Table::hover_open(["class"=>'sortable']) }}
+
+    {{ Table::hover_open() }}
     {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
