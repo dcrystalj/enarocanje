@@ -157,7 +157,7 @@ class MicroserviceApiController extends BaseController
 		return Response::json($timetable);
 	}
 
-	public function posetRegistration($id){
+	public function postRegistration($id){
 		
 		$microservid = $id;
 		$events = Input::get('event');

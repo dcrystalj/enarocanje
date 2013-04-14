@@ -106,8 +106,37 @@ $(function() {
 
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 
-		  	if(result){			
-		  	 	cal_show_dialog_register(cal_event_data(allevents[0]),'{{ route("api_mic_registration", array($mic)) }}');	
+		  	if(result){	
+
+		  		var submit = cal_event_data(allevents[0]);
+
+		  		$('#event-dialog').modal({
+					backdrop: 'static',
+					keyboard: true,
+					show: true,
+				});
+				$('#event-dialog a.b_cancel').click(function() {
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_save').click(function() {
+					submit.name = $('#name').val();
+					submit.mail = $('#mail').val();
+
+					$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+						var js = JSON.parse(e);
+						if (js.success){
+							window.location.reload();
+						}
+						else{
+							$('#event-dialog').modal('hide');
+						}
+					});
+
+					
+				});
+				$('#event-dialog').on('hide', function() {
+					$('#event-dialog').off('click');
+				});		
 		  	}
 			return;
 		});			
