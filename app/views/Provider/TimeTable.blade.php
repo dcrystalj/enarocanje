@@ -24,7 +24,6 @@ TimeTable
 
 <div id='calendar'></div>
 <script>
-var first = true;
 @include('calendar_def')
 
 fc_init({
@@ -38,7 +37,7 @@ fc_init({
 		cal_clear_day(calendar, start);
 		calendar.fullCalendar('unselect');
 
-		if(first) {
+		if(!calendar.fullCalendar('clientEvents').length) {
 			start.setDate(start.getDate()-start.getDay()); // First day in week
 			end.setDate(end.getDate()-end.getDay()); // Same day
 			for(var day=1; day<=7; day++) {
@@ -46,7 +45,6 @@ fc_init({
 				var e = new Date(end.getTime()+1000*3600*24*day);
 				fc_insert(s, e, {eventType: 'work'});
 			}
-			first = false;
 		} else {
 			fc_insert(start, end, {eventType: 'work'});
 		}
@@ -73,7 +71,6 @@ $(function() {
 		var events = calendar.fullCalendar('clientEvents');
 		for(var i=0; i<events.length; i++)
 			calendar.fullCalendar('removeEvents', events[i]._id);
-		first = true;
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
