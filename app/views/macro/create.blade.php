@@ -35,7 +35,7 @@
                     'description' => $service->description, 
                     'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
                     'deactivate'  => deactivate($service->id),
-                    'micro' => Html::link( URL::route('macro.micro.create',$mac->id), 'Micro')
+                    'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Micro')
                  ];
                  $i++;
             }
@@ -46,7 +46,7 @@
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'activate'       => activate($service->id),
-                    'micro' => Html::link( URL::route('macro.micro.create',$mac->id), 'Micro')
+                    'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Micro')
                  ];
             }
         }
