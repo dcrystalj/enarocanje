@@ -108,7 +108,6 @@ class ManageServices extends BaseController {
 			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));
 			$end = date('G:i', strtotime($event->end));
-			print "$day: $start ... $end\n";
 			DB::table('break')->insert(array(
 										   'macservice_id' => $id,
 										   'day' => $day,

@@ -144,7 +144,7 @@ class MicroserviceApiController extends BaseController
 		$start = Input::get('start')+(24*3600); //get first day
 				
 		$workingHours = Whours::where('macservice_id',$id)->get();
-		$timetable = [];
+		$timetable = array();
 
 		foreach ($workingHours as $wh) 
 		{
@@ -163,39 +163,20 @@ class MicroserviceApiController extends BaseController
 
 	public function getBreaks($id) {
 		
-		$break = Breakt::where('macservice_id',$id)->get();
-		$timetable = [];
+		$breaks = Breakt::where('macservice_id',$id)->get();
+		$timetable = array();
 
-		$start = date("Y-m-d", Input::get('start')); //get start day
-		$end   = date("Y-m-d", Input::get('end'));
-
-		while(strcmp($start,$end)<=0)
-		{
-
-			$day = $this->stringToDay(date("l",strtotime("$start"))); //get from 0 to 6 what day is it
-
-			//are there any breaks today?
-			if($this->isDayInArray($break, $day))
-			{
-				$i=0;
-				while($break[$i]->day != $day){
-					$i++;
-				}
-	
-				while(isset($break[$i]) && $break[$i]->day == $day)
-				{
-					$timetable[] = array(
-						"id"       => $break[$i]->id,
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->to,
-						"allDay"   => false,
-						'eventType' => 'break',
-					);
-					$i++;
-				}
-			}
-			$start =  date("Y-m-d", strtotime("$start +1 day"));
+		$start = Input::get('start')+3600*24; //get start day
+		foreach($breaks as $break) {
+			$date = $start+$break->day*3600*24; // offset
+			$timetable[] = array(
+				"id"       => $break->id,
+				"title"    => "",
+				"start"    => date("Y-m-d", $date) . " " . $break->from, 
+				"end"      => date("Y-m-d", $date) . " " . $break->to,
+				"allDay"   => false,
+				'eventType' => 'break',
+			);
 		}
 		return Response::json($timetable);
 	}
