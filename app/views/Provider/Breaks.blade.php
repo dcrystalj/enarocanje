@@ -41,25 +41,20 @@ fc_init({
 		//cal_clear_day(calendar, start);
 		calendar.fullCalendar('unselect');
 		if(!isOverlapping(start,end))
-				fc_insert(start, end);
+			fc_insert(start, end, {eventType: 'break'});
 	},
 	eventClick: cal_show_dialog,
 	eventSources: [
 		{
 			url: '/microserviceapi/breaks/<?= $id ?>',
 			type: 'GET',
-			error: function() {
-				alert('there was an error while fetching events!');
-			},
+			error: cal_error,
 			editable: true,
-			//color: rgba(192,192,192, 0.6) // a non-ajax option
 		},
 		{
 			url: '/microserviceapi/timetable/<?= $id ?>',
 			type: 'GET',
-			error: function() {
-				alert('there was an error while fetching events!');
-			},
+			error: cal_error,
 			editable: false,
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
@@ -81,9 +76,9 @@ $(function() {
 		cal_save(calendar, '/service/<?= $id ?>/breaks/submit', function(d) {
 			bootbox.alert("Breaks saved.");
 		}, function(ev) {
-			return ev.editable;
+			return (ev.eventType == 'break');
 		});
-		});
+	});
 });
 </script>
 

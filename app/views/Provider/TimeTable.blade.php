@@ -44,11 +44,11 @@ fc_init({
 			for(var day=1; day<=7; day++) {
 				var s = new Date(start.getTime()+1000*3600*24*day);
 				var e = new Date(end.getTime()+1000*3600*24*day);
-				fc_insert(s, e);
+				fc_insert(s, e, {eventType: 'work'});
 			}
 			first = false;
 		} else {
-			fc_insert(start, end);
+			fc_insert(start, end, {eventType: 'work'});
 		}
 	},
 

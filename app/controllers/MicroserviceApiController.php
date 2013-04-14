@@ -36,8 +36,7 @@ class MicroserviceApiController extends BaseController
 						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
 						"end"      => date("Y-m-d", strtotime("$start")) . " " . $workingHours[$i]->from,
 						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
+						'eventType' => 'free',
 					);
 
 					$from = $workingHours[$i]->to;
@@ -51,8 +50,7 @@ class MicroserviceApiController extends BaseController
 						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
 						"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59",
 						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
+						'eventType' => 'free',
 				);
 
 			}else{ //is day off
@@ -63,8 +61,8 @@ class MicroserviceApiController extends BaseController
 					"start"    => date("Y-m-d", strtotime("$start")) . " " . "00:00:00" ,
 					"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59" ,
 					"allDay"   => false,
-					"editable" => false,
-					"test"     => "test"
+					'eventType' => 'free',
+
 				);
 
 			}
@@ -98,7 +96,7 @@ class MicroserviceApiController extends BaseController
 					"start"  => $date . " " . $b->from ,
 					"end"    => $date . " " . $b->to ,
 					"allDay" => false,
-					"editable"=> false
+					'eventType' => 'reservation',
 			);
 			$j++;
 		}
@@ -160,7 +158,7 @@ class MicroserviceApiController extends BaseController
 				"start"  => date("Y-m-d", $date) . " " . $wh->from ,
 				"end"    => date("Y-m-d", $date) . " " . $wh->to ,
 				"allDay" => false,
-				"editable"=> true,
+				'eventType' => 'work',
 			);
 		}
 		return Response::json($timetable);
@@ -195,8 +193,7 @@ class MicroserviceApiController extends BaseController
 						"start"    => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->from, 
 						"end"      => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->to,
 						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
+						'eventType' => 'break',
 					);
 					$i++;
 				}
@@ -221,20 +218,14 @@ class MicroserviceApiController extends BaseController
 		return $day[$i];
 	}
 	protected function stringToDay($i){
-		$day[0]="Monday";
-		$day[1]="Tuesday";
-		$day[2]="Wednesday";
-		$day[3]="Thursday";
-		$day[4]="Friday";
-		$day[5]="Saturday";
-		$day[6]="Sunday";
-
-		foreach ($day as $key => $value) {
-			if (strcmp($value,$i)==0){
-				return $key;
-			}
-		}
-		return "";
+		$day['Monday'] = 0;
+		$day['Tuesday'] = 1;
+		$day['Wednesday'] = 2;
+		$day['Thursday'] = 3;
+		$day['Friday'] = 4;
+		$day['Saturday'] = 5;
+		$day['Sunday'] = 6;
+		return isset($day[$i])?$day[$i]:'';
 	}
 
 	protected function isDayInArray($workingHours,$day){

@@ -8,12 +8,15 @@ function fc_init(opts, id) {
 function fc_insert(start, end, data)  {
 	if(typeof data == 'undefined')
 		data = {};
+	if(!data['eventType'])
+		alert('Event type is missing!!!!');
 	calendar.fullCalendar('renderEvent',
 						  $.extend({
 							  title: 'Working day',
 							  start: start,
 							  end: end,
 							  allDay: false,
+							  editable: true,
 						  }, data),
 						  true // make the event "stick"
 						 );
@@ -79,7 +82,7 @@ function cal_repair_event(cal, event) {
 }
 
 function cal_show_dialog(event) {
-	if(!event.editable) return;
+	if(!event.source.editable) return;
 	$('#efrom').val(getHour(event.start));
 	$('#eto').val(getHour(event.end));
 	$('#event-dialog').modal({
@@ -124,6 +127,13 @@ function cal_save(cal, url, callback, check) {
 		}
 	}
 	$.post(url, {'events': JSON.stringify(submit)}, callback);
+}
+
+function cal_error() {
+	bootbox.dialog("There was an error while fetching events!", [{
+		"label" : ":(",
+		"class" : "btn-danger",
+		}]);
 }
 
 function cal_event_data(event) {
@@ -190,6 +200,6 @@ function isOverlapping(start, end){
 
 	function countClientEvents(){
 			return calendar.fullCalendar('clientEvents',function(e){
-				return !e.test && e.id!=-5;}).length;
+				return (e.eventType=='reservation' && e.id != -1);}).length;
 
 	};
