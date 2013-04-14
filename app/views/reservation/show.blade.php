@@ -12,8 +12,8 @@ Reservation
 @stop
 
 @section('content')
-{{ "macroservice : ".$mac }}
-{{ "microservice : ".$mic }}
+@include('calendar_register');
+
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
 
@@ -58,7 +58,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '/microserviceapi/timetable/<?= $mac ?>',
+			url: '{{ route("api_mic_timetable", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -66,7 +66,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/breaks/<?= $mac ?>',
+			url: '{{ route("api_mic_breaks", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -74,7 +74,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/usertimetable/<?= $mic ?>',
+			url: '{{ route("api_mic_utimetable", array($mic)) }}',
 			error: cal_error,
 			type: 'GET',
 			editable: false,
@@ -105,11 +105,40 @@ $(function() {
 		}
 
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
-		  	if(result){
-				var submit = cal_event_data(allevents[0]);
-				$.post('/microserviceapi/reservation/<?= $mic ?>', {'event': JSON.stringify(submit)}, function(){
-					window.location.reload();
+
+		  	if(result){	
+
+		  		var submit = cal_event_data(allevents[0]);
+
+		  		$('#event-dialog').modal({
+					backdrop: 'static',
+					keyboard: true,
+					show: true,
 				});
+				$('#event-dialog a.b_cancel').click(function() {
+					$('#event-dialog').modal('hide');
+				});
+				$('#event-dialog a.b_save').click(function() {
+					submit.data =  {
+						'name' : $('#name').val(),
+						'mail' : $('#mail').val()
+					}
+
+					$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+						var js = JSON.parse(e);
+						if (js.success){
+							window.location.reload();
+						}
+						else{
+							$('#event-dialog').modal('hide');
+						}
+					});
+
+					
+				});
+				$('#event-dialog').on('hide', function() {
+					$('#event-dialog').off('click');
+				});		
 		  	}
 			return;
 		});			
@@ -118,13 +147,13 @@ $(function() {
 	$('#delete').click(function(e) {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', function(e){
-			return !e.test;
+			return e.eventType=="reservation";
 		});
 
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('/microserviceapi/deletereservation/<?= $mic ?>', {'event': allevents[0].id}, function(e){
+					$.post('{{ route("api_mic_rm_reservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){

@@ -169,6 +169,7 @@ function getDate(t) {
 
 //crystal.. =) ->
 //----------------
+
 function isOverlapping(start, end){
 		var array = calendar.fullCalendar('clientEvents');
 		for(i in array){
