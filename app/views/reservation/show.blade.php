@@ -108,8 +108,6 @@ $(function() {
 
 		  	if(result){	
 
-		  		var submit = cal_event_data(allevents[0]);
-
 		  		$('#event-dialog').modal({
 					backdrop: 'static',
 					keyboard: true,
@@ -119,10 +117,12 @@ $(function() {
 					$('#event-dialog').modal('hide');
 				});
 				$('#event-dialog a.b_save').click(function() {
-					submit.data =  {
-						'name' : $('#name').val(),
-						'mail' : $('#mail').val()
-					}
+					var submit =  {	start: getDate(allevents[0].start),
+									end: getDate(allevents[0].end),
+									title: allevents[0].title,
+									data:{	'name' : $('#name').val(),
+											'mail' : $('#mail').val()
+									}}
 
 					$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);

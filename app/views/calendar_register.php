@@ -3,7 +3,7 @@
   <div class="modal-body">
   Enter yor info:<br />
 	name:&nbsp;<input type="text" id="name" /><br />
-	email:&nbsp;<input type="email" id="email" />
+	email:&nbsp;<input type="email" id="mail" />
   </div>
   <!-- dialog buttons -->
   <div class="modal-footer">
