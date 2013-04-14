@@ -75,16 +75,14 @@ class MicroserviceApiController extends BaseController
 
 	public function getUsertimetable($id)
 	{
-		$timetable =[];
+		$timetable = array();
 		//TODO
-		$micserviceid = 1;
-		$userid = 35;
+		$micserviceid = $id;
+		$userid = Auth::user()->id;
 
-
-		$r = Reservation::where('microservice',$micserviceid)
-						->where('user',$userid)
+		$r = Reservation::where('micservice_id',$micserviceid)
+						->where('user_id',$userid)
 						->get();
-		$j = 1000;
 		foreach ($r as $b) 
 		{
 			$date        = $b->date;
@@ -98,15 +96,14 @@ class MicroserviceApiController extends BaseController
 					"allDay" => false,
 					'eventType' => 'reservation',
 			);
-			$j++;
 		}
 
 		return Response::json($timetable);
 	}
 
 	public function postReservation($id){
-		$userid = 35;
-		$microservid = 1;
+		$userid = Auth::user()->id;
+		$microservid = $id;
 		$events = Input::get('event');
 		$event = json_decode($events);
 
@@ -117,9 +114,9 @@ class MicroserviceApiController extends BaseController
 		$r               = new Reservation;
 		$r->from         = $start;
 		$r->to           = $end;
-		$r->microservice = $microservid;
+		$r->micservice_id = $microservid;
 		$r->date          = $date;
-		$r->user 		 = $userid;
+		$r->user_id		 = $userid;
 		$r->save();
 
 		if($r){
@@ -128,12 +125,12 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function postDeletereservation($id){
-		$userid = 35;
-		$microservid = 1;
+		$userid = Auth::user()->id;
+		$microservid = $id;
 
- 		$r = Reservation::where('microservice',$microservid)
-					->where('id',Input::get('event'))
-					->where('user',$userid)
+ 		$r = Reservation::where('micservice_id',$microservid)
+			// ->where('id',Input::get('event')) FIXME : je to potrebno?
+					->where('user_id',$userid)
 					->delete();
 		if($r)			
 			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
