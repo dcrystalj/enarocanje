@@ -124,7 +124,7 @@ $(function() {
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('/microserviceapi/deletereservation/<?= $mic ?>', {'event': allevents[0].id}, function(e){
+					$.post('{{ route("api_mic_rm_reservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){
