@@ -185,7 +185,7 @@ class MicroserviceApiController extends BaseController
 				while(isset($break[$i]) && $break[$i]->day == $day)
 				{
 					$timetable[] = array(
-						"id"       => "1",
+						"id"       => $break[$i]->id,
 						"title"    => "",
 						"start"    => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->from, 
 						"end"      => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->to,
