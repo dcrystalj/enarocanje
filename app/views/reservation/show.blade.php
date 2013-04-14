@@ -107,7 +107,7 @@ $(function() {
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){			
-		  	 	cal_show_dialog_register(cal_event_data(allevents[0]));	
+		  	 	cal_show_dialog_register(cal_event_data(allevents[0]),'{{ route("api_mic_registration", array($mic)) }}');	
 		  	}
 			return;
 		});			

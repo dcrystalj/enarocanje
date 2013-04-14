@@ -204,7 +204,7 @@ function isOverlapping(start, end){
 				return (e.eventType=='reservation' && e.id != -1);}).length;
 
 	};
-function cal_show_dialog_register(p1) {
+function cal_show_dialog_register(p1,p2link) {
 	var submit = p1;
 	$('#event-dialog').modal({
 		backdrop: 'static',
@@ -218,7 +218,7 @@ function cal_show_dialog_register(p1) {
 		submit.name = $('#name').val();
 		submit.mail = $('#mail').val();
 
-		$.post('/microserviceapi/registration',{'event': JSON.stringify(submit)},function(e){
+		$.post(p2link,{'event': JSON.stringify(submit)},function(e){
 			var js = JSON.parse(e);
 			if (js.success){
 				window.location.reload();
