@@ -12,8 +12,8 @@ Reservation
 @stop
 
 @section('content')
-{{ "macroservice : ".$mac }}
-{{ "microservice : ".$mic }}
+@include('calendar_register');
+
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
 
@@ -105,11 +105,9 @@ $(function() {
 		}
 
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
-		  	if(result){
-				var submit = cal_event_data(allevents[0]);
-				$.post('{{ route("api_mic_reservation", array($mic)) }}', {'event': JSON.stringify(submit)}, function(){
-					window.location.reload();
-				});
+
+		  	if(result){			
+		  	 	cal_show_dialog_register(cal_event_data(allevents[0]));	
 		  	}
 			return;
 		});			
@@ -118,7 +116,7 @@ $(function() {
 	$('#delete').click(function(e) {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', function(e){
-			return !e.test;
+			return e.eventType=="reservation";
 		});
 
 		bootbox.confirm(

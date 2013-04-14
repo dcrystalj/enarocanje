@@ -28,42 +28,18 @@ class MicroserviceApiController extends BaseController
 					$i++;
 				}
 
-				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day){
-
-					$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $workingHours[$i]->from,
-						"allDay"   => false,
-						'eventType' => 'free',
-					);
-
+				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
+				{
+					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
 					$from = $workingHours[$i]->to;
 					$i++;
 				}
 
-
-				$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59",
-						"allDay"   => false,
-						'eventType' => 'free',
-				);
+				$timetable[] = $this->timetableArray($i,$start,$from,"23:59:59");
 
 			}else{ //is day off
 
-				$timetable[] = array(
-					"id"       => "$j",
-					"title"    => "",
-					"start"    => date("Y-m-d", strtotime("$start")) . " " . "00:00:00" ,
-					"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59" ,
-					"allDay"   => false,
-					'eventType' => 'free',
-
-				);
+				$timetable[] = $this->timetableArray($i,$start,"00:00:00","23:59:59");
 
 			}
 			$start =  date("Y-m-d", strtotime("$start +1 day"));
@@ -181,6 +157,38 @@ class MicroserviceApiController extends BaseController
 		return Response::json($timetable);
 	}
 
+	public function posetRegistration($id){
+		
+		$microservid = $id;
+		$events = Input::get('event');
+		$event = json_decode($events);
+
+		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start = date('G:i', strtotime($event->start));
+		$end = date('G:i', strtotime($event->end));
+		$mail = $event->mail;
+		$name = $event->name;
+
+		$tmpuser = new Tempuser;
+		$tempuser->mail = $mail;
+		$tempuser->name = $name;
+		$tempuser->save();
+
+		$r               = new Reservation;
+		$r->from         = $start;
+		$r->to           = $end;
+		$r->micservice_id = $microservid;
+		$r->date          = $date;
+		$r->tmpuser_id	 = $tempuser->id;
+		$r->save();
+
+		if($r){
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+		}
+
+
+	}
+
 
 	//----------------------------------------
 	//helpers
@@ -214,5 +222,17 @@ class MicroserviceApiController extends BaseController
 			}
 		} 
 		return false;
+	}
+
+	protected function timetableArray($id, $start, $from, $to){
+		$array =  array(
+						"id"       => "$id",
+						"title"    => "",
+						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
+						"end"      => date("Y-m-d", strtotime("$start")) . " " . $to,
+						"allDay"   => false,
+						'eventType' => 'free'
+					);
+		return $array;
 	}
 }
