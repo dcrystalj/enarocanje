@@ -58,7 +58,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '/microserviceapi/timetable/<?= $mac ?>',
+			url: '{{ route("api_mic_timetable", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -66,7 +66,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/breaks/<?= $mac ?>',
+			url: '{{ route("api_mic_breaks", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -74,7 +74,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/usertimetable/<?= $mic ?>',
+			url: '{{ route("api_mic_utimetable", array($mic)) }}',
 			error: cal_error,
 			type: 'GET',
 			editable: false,
@@ -105,10 +105,9 @@ $(function() {
 		}
 
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
-		  	if(result){			
 
+		  	if(result){			
 		  	 	cal_show_dialog_register(cal_event_data(allevents[0]));	
-				
 		  	}
 			return;
 		});			
@@ -123,7 +122,7 @@ $(function() {
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('/microserviceapi/deletereservation/<?= $mic ?>', {'event': allevents[0].id}, function(e){
+					$.post('{{ route("api_mic_rm_reservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){

@@ -31,11 +31,8 @@ fc_init({
 		$(element).css('width', width + 'px');
 	},
 	eventDrop: function(event, dayDelta, minDelta, allDay, rf) {
-		if (isOverlapping(event.start, event.end)) {
-			alert('alert not working...');
-//			$(".alert").alert("Timetable overlapps");
+		if (isOverlapping(event.start, event.end))
 			rf();
-		}
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
@@ -46,13 +43,13 @@ fc_init({
 	eventClick: cal_show_dialog,
 	eventSources: [
 		{
-			url: '/microserviceapi/breaks/<?= $id ?>',
+			url: '{{ route("api_mic_breaks", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: true,
 		},
 		{
-			url: '/microserviceapi/timetable/<?= $id ?>',
+			url: '{{ route("api_mic_timetable", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -73,7 +70,7 @@ $(function() {
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
-		cal_save(calendar, '/service/<?= $id ?>/breaks/submit', function(d) {
+		cal_save(calendar, '{{ route("breaks_submit", array($id)) }}', function(d) {
 			bootbox.alert("Breaks saved.");
 		}, function(ev) {
 			return (ev.eventType == 'break');
