@@ -58,7 +58,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '/microserviceapi/timetable/4',
+			url: '/microserviceapi/timetable/<?= $mac ?>',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -66,7 +66,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/breaks/1',
+			url: '/microserviceapi/breaks/<?= $mac ?>',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -74,7 +74,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '/microserviceapi/usertimetable/4',
+			url: '/microserviceapi/usertimetable/<?= $mic ?>',
 			error: cal_error,
 			type: 'GET',
 			editable: false,
@@ -107,7 +107,7 @@ $(function() {
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	if(result){
 				var submit = cal_event_data(allevents[0]);
-				$.post('/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){
+				$.post('/microserviceapi/reservation/<?= $mic ?>', {'event': JSON.stringify(submit)}, function(){
 					window.location.reload();
 				});
 		  	}
@@ -124,11 +124,14 @@ $(function() {
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('/microserviceapi/deletereservation/4', {'event': allevents[0].id}, function(e){
+					$.post('/microserviceapi/deletereservation/<?= $mic ?>', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){
-							calendar.fullCalendar('removeEvents', allevents[0].id);
+							$('#delete').hide();
+							calendar.fullCalendar('removeEvents', function(e) {
+								return e.eventType == 'reservation';
+							});
 						}
 					});
 		  	 	}

@@ -48,9 +48,11 @@ Route::resource('macro','MacroserviceController');
 Route::get('macro/{id}/activate',array(	'as' 	=> 'macroactivate', 
 										'uses'	=> 'MacroserviceController@getActivated'));
 
+
 //microservice extending macro
 Route::resource('macro.micro','MicroserviceController');
 Route::get('macro/{mac}/micro/{mic}/activate',array('as'=>'microactivate','uses'=>'MicroserviceController@getActivated'));
+
 
 Route::resource('macro.micro.reservation' , 'CustomerReservation');
 
