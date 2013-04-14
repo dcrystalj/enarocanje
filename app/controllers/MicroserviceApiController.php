@@ -28,42 +28,18 @@ class MicroserviceApiController extends BaseController
 					$i++;
 				}
 
-				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day){
-
-					$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $workingHours[$i]->from,
-						"allDay"   => false,
-						'eventType' => 'free',
-					);
-
+				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
+				{
+					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
 					$from = $workingHours[$i]->to;
 					$i++;
 				}
 
-
-				$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59",
-						"allDay"   => false,
-						'eventType' => 'free',
-				);
+				$timetable[] = $this->timetableArray($i,$start,$from,"23:59:59");
 
 			}else{ //is day off
 
-				$timetable[] = array(
-					"id"       => "$j",
-					"title"    => "",
-					"start"    => date("Y-m-d", strtotime("$start")) . " " . "00:00:00" ,
-					"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59" ,
-					"allDay"   => false,
-					'eventType' => 'free',
-
-				);
+				$timetable[] = $this->timetableArray($i,$start,"00:00:00","23:59:59");
 
 			}
 			$start =  date("Y-m-d", strtotime("$start +1 day"));
@@ -233,5 +209,17 @@ class MicroserviceApiController extends BaseController
 			}
 		} 
 		return false;
+	}
+
+	protected function timetableArray($id, $start, $from, $to){
+		$array =  array(
+						"id"       => "$id",
+						"title"    => "",
+						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
+						"end"      => date("Y-m-d", strtotime("$start")) . " " . $to,
+						"allDay"   => false,
+						'eventType' => 'free'
+					);
+		return $array;
 	}
 }

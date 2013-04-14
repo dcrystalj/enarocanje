@@ -106,10 +106,15 @@ $(function() {
 
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	if(result){
-				var submit = cal_event_data(allevents[0]);
-				$.post('/microserviceapi/reservation/<?= $mic ?>', {'event': JSON.stringify(submit)}, function(){
-					window.location.reload();
-				});
+		  		bootbox.confirm("Are you sure"), function(resulted) {
+					if(resulted){
+						var submit = cal_event_data(allevents[0]);
+						$.post('/microserviceapi/reservation/<?= $mic ?>', {'event': JSON.stringify(submit)}, function(){
+							window.location.reload();
+						});
+					}
+
+				}
 		  	}
 			return;
 		});			
@@ -118,7 +123,7 @@ $(function() {
 	$('#delete').click(function(e) {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', function(e){
-			return !e.test;
+			return e.eventType=="reservation";
 		});
 
 		bootbox.confirm(
