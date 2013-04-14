@@ -64,9 +64,9 @@ $(function() {
 	$('#reset').click(function(e) {
 		e.preventDefault();
 		var events = calendar.fullCalendar('clientEvents');
-		for(var i=0; i<events.length; i++)
-			if(events[i].editable)
-				calendar.fullCalendar('removeEvents', events[i]._id);
+		calendar.fullCalendar('removeEvents', function(e) {
+			return (e.eventType == 'break');
+		});
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
