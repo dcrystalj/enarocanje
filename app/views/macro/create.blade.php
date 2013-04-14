@@ -20,12 +20,12 @@
     {{ Former::close() }}   
 
     <?php 
-        $macroservice = MacroService::all();
+        $macroservice = Auth::user()->macroservices;
         $allActivated = []; 
         $allDeactivated = [];
         $i = 1; 
         foreach ($macroservice as $service){
-            if($service->active==0)
+            if($service->active==0 )
             {
                 
         
@@ -34,7 +34,8 @@
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
-                    'deactivate'  => deactivate($service->id)
+                    'deactivate'  => deactivate($service->id),
+                    'micro' => Html::link( URL::route('macro.micro.create',$mac->id), 'Micro')
                  ];
                  $i++;
             }
@@ -44,7 +45,8 @@
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'description' => $service->description, 
-                    'activate'       => activate($service->id)
+                    'activate'       => activate($service->id),
+                    'micro' => Html::link( URL::route('macro.micro.create',$mac->id), 'Micro')
                  ];
             }
         }
@@ -81,6 +83,6 @@
         $activate .= Form::submit('Activate');
         $activate .= Form::close();
         return $activate;
-    }
+    } 
     ?>
 @stop

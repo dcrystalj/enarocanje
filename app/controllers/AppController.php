@@ -8,7 +8,12 @@ class AppController extends BaseController
 	);
 
 	public function getLogin(){	
-		return View::make('app.login')->with('rules',$this->rules);
+		return View::make('app.login')
+					->with('rules',$this->rules)
+					->with('status',Session::get('status'))
+					->with('errors',Session::get('errors'))
+					->with('error',Session::get('error'))
+					->with('success',Session::get('success'));
 	}
 
 	public function postLogin(){
@@ -17,7 +22,7 @@ class AppController extends BaseController
 
 		if($validation->fails())
 		{
-			return  Redirect::back()->with('rules',$this->rules)->withErrors($validation);
+			return  Redirect::back()->withErrors($validation);
 		}
 		else
 		{
@@ -25,13 +30,13 @@ class AppController extends BaseController
 			{
 				Session::put('user',Auth::user());
 				Cookie::forever('user',Auth::user());
-				return Redirect::route('home')->with('status', 'Sucessfully logged in.'); 
+				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
 			 
 			}
 			else
 			{
 				return  Redirect::back()
-					 	->with('status','Could not login, please try again')
+					 	->with('error','Could not login, please try again')
 					 	->with('rules',$this->rules);
 			}
 		}

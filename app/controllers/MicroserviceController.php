@@ -20,7 +20,7 @@ class MicroserviceController extends BaseController {
 	{
 		return View::make('micro.create')					
 					->with('rules',$this->rules)
-					->with('mac',MacroService::find($mac))
+					->with('mac', Auth::user()->macroservices()->find($mac))
 					->with('errors',Session::get('errors'))
 					->with('status',Session::get('status'))
 					->with('error',Session::get('error'))
@@ -55,12 +55,12 @@ class MicroserviceController extends BaseController {
 
 	public function edit($mac,$mic)
 	{
-		$service = MacroService::find($mac)->microservices()->find($mic);
+		$service = Auth::user()->macroservices()->find($mac)->microservices()->find($mic);
 		if($service) //is macrosrevice in database
 		{
 			return View::make('micro.create')
 							->with('mic',$service)
-							->with('mac',MacroService::find($mac))
+							->with('mac', Auth::user()->macroservices()->find($mac))
 							->with('rules',$this->rules);
 		}
 		
@@ -71,7 +71,7 @@ class MicroserviceController extends BaseController {
 
 	public function update($mac, $mic)
 	{
-		$micservice = MacroService::find($mac)->microservices()->find($mic);
+		$micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic);
 		if(!$micservice) //is macrosrevice not in database
 		{
 			return App::abort(404);
@@ -104,7 +104,7 @@ class MicroserviceController extends BaseController {
 
 	public function destroy($mac,$mic)
 	{
-		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
+		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active=-1;
 			$micservice->activefrom =Input::get('date');
@@ -119,7 +119,7 @@ class MicroserviceController extends BaseController {
 
 	public function getActivated($mac, $mic)
 	{
-		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
+		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active     =0;
 			$micservice->activefrom =Input::get('date');

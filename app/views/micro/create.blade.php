@@ -39,7 +39,8 @@
             $allDeactivated = [];
             $i = 1; 
             foreach ($microservice as $service){
-                if($service->active==0)
+                if($service->active==0&& $service->activefrom <= date("Y-m-d") || 
+                $service->active==-1 && $service->activefrom > date("Y-m-d"))
                 {
                     
                     $allActivated[]= [
@@ -51,7 +52,8 @@
                         'link'   => Html::link(
                                         URL::route('macro.micro.edit',
                                             [$mac->id, $service->id]), 'Edit'),
-                        'deactivate'  => deactivate($mac->id, $service->id)
+                        'deactivate'  => deactivate($mac->id, $service->id),
+
                      ];
                      $i++;
                 }
@@ -67,7 +69,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
+        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
 
@@ -75,7 +77,7 @@
             </br>
             <h2>Deactivated:</h2>
             {{ Table::hover_open(["class"=>'sortable']) }}
-            {{ Table::headers( 'Name', 'Description', '') }}
+            {{ Table::headers( 'Name', 'Description', '', '') }}
             {{ Table::body($allDeactivated) }}
             {{ Table::close() }}
         @endif
