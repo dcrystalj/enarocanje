@@ -12,7 +12,7 @@ Reservation
 @stop
 
 @section('content')
-@include('calendar_register');
+@include('calendar_register')
 
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
@@ -21,7 +21,7 @@ Reservation
 
 <script>
 @include('calendar_def')
-var defaultLength = 45;
+var defaultLength = '{{ MicroService::find($mic)->first()->length }}';
 fc_init({
 	disableResizing: true,
 	eventAfterRender: function(event, element, view) {
@@ -107,25 +107,48 @@ $(function() {
 		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){	
+		  		if(!'{{ Auth::check() }}'){
+			  		$('#event-dialog').modal({
+						backdrop: 'static',
+						keyboard: true,
+						show: true,
+					});
+					$('#event-dialog a.b_cancel').click(function() {
+						$('#event-dialog').modal('hide');
+					});
+					$('#event-dialog a.b_save').click(function() {
+						var submit =  {	start: getDate(allevents[0].start),
+										end: getDate(allevents[0].end),
+										title: allevents[0].title,
+										data:{	'name' : $('#name').val(),
+												'mail' : $('#mail').val()
+										}}
 
-		  		$('#event-dialog').modal({
-					backdrop: 'static',
-					keyboard: true,
-					show: true,
-				});
-				$('#event-dialog a.b_cancel').click(function() {
-					$('#event-dialog').modal('hide');
-				});
-				$('#event-dialog a.b_save').click(function() {
-					var submit =  {	start: getDate(allevents[0].start),
-									end: getDate(allevents[0].end),
-									title: allevents[0].title,
-									data:{	'name' : $('#name').val(),
-											'mail' : $('#mail').val()
-									}}
+						$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+							var js = JSON.parse(e);
+							$('#statusmessage').text(js.text).show();
 
-					$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+							if (js.success){
+
+								window.location.reload();
+							}
+							else{
+								$('#event-dialog').modal('hide');
+							}
+						});
+
+						
+					});
+					$('#event-dialog').on('hide', function() {
+						$('#event-dialog').off('click');
+					});		
+		  		}
+		  		else{
+		  			var submit = cal_event_data(allevents[0]);
+	  				$.post('{{ route("api_mic_reservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);
+						$('#statusmessage').text(js.text).show();
+
 						if (js.success){
 							window.location.reload();
 						}
@@ -133,12 +156,7 @@ $(function() {
 							$('#event-dialog').modal('hide');
 						}
 					});
-
-					
-				});
-				$('#event-dialog').on('hide', function() {
-					$('#event-dialog').off('click');
-				});		
+		  		}
 		  	}
 			return;
 		});			
