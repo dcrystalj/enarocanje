@@ -14,8 +14,8 @@ class MacroserviceController extends BaseController {
     );
 
 	public function __construct() {
-		$this->beforeFilter('auth',['only'=>['create','store','edit','update','destroy','getActivated']]);
-		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('auth',['except'=>['index','show']]);
+		$this->beforeFilter('provider',['except'=>['index','show']]);
 	}
 
 	public function index()
