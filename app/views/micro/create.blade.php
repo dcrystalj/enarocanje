@@ -15,6 +15,21 @@
         $duration[90]="1h 30 min";
         $duration[105]="1h 45 min";
         $duration[120]="2 h";
+
+        $services[0] = 'Manicure';
+        $services[1] = 'Pedicure';
+        $services[2] = 'Depilation';
+        $services[3] = 'Solarium';
+        $services[4] = 'Make-up';
+        $services[5] = 'Massage';
+        $services[6] = 'Hair services';
+        $services[7] = 'Solarium';
+        $services[8] = 'Skin treatments';
+
+        $sex[0] = 'M';
+        $sex[1] = 'W';
+        $sex[2] = 'unisex';
+
     ?>
     
     @if(isset($mac))
@@ -27,7 +42,7 @@
         @if (isset($service))
         <p> Add services to {{$service()->name }} </p>
         @endif
-        {{ Former::text('name','Name:')->autofocus() }}
+        {{ Former::select('name','Service:')->options($services)autofocus() }}
         {{ Former::select('length','Length:')->options($duration) }} 
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::Number('price','Price:') }}

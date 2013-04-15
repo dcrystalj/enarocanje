@@ -5,6 +5,15 @@
 @stop
 
 @section('content')
+<?php
+    $serviceCategories[0] = 'Nurse salon';
+    $serviceCategories[1] = 'Massage salon';
+    $serviceCategories[2] = 'Hair salon';
+    $serviceCategories[3] = 'Beauty salon';
+
+     $zipCode = zip_code::All();
+
+?>
     
      @if(isset($mac))
         {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
@@ -12,10 +21,10 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::text('name','Provider service name:')->autofocus() }}
+    {{ Former::select('name','Service:')->options($serviceCategories)autofocus() }}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::select('ZIPcode','ZIP code:')}}
+    {{ Former::select('ZIPcode','ZIP code:')->options($zip_code()->ZIP_code)}}
     {{ Former::text('email','Email:')}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
