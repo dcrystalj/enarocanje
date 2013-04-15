@@ -103,6 +103,7 @@ return array(
 		'Illuminate\Queue\QueueServiceProvider',
 		'Illuminate\Redis\RedisServiceProvider',
 		'Illuminate\Auth\Reminders\ReminderServiceProvider',
+		'Illuminate\Foundation\Providers\RouteListServiceProvider',
 		'Illuminate\Database\SeedServiceProvider',
 		'Illuminate\Foundation\Providers\ServerServiceProvider',
 		'Illuminate\Session\SessionServiceProvider',
@@ -202,7 +203,6 @@ return array(
 		'Typeahead'       	=> 'Bootstrapper\\Typeahead',
 		'Typography'      	=> 'Bootstrapper\\Typography',
 		'Former' 		  	=> 'Former\\Facades\\Illuminate',
-		'Uuid'           	=> 'J20\Uuid\Uuid',
 	),
 		
 );

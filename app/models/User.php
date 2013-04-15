@@ -19,6 +19,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
+
+	public function macroservices()
+    {
+        return $this->hasMany('MacroService', 'user_id');
+    }
+
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -55,9 +61,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 
-	public function isProvider()
+	public function scopeIsProvider($q)
 	{
-		return $this->status == 2;
+		return $q->where('status',2);
 	}
 
 

@@ -4,7 +4,6 @@
 		"way/generators": "dev-master",
 		"patricktalmadge/bootstrapper": "dev-develop",
 		"anahkiasen/former": "dev-agnostic",
-		"laravelbook/ardent": "dev-master",
 		"barryvdh/laravel-ide-helper": "dev-master"
 
 	},

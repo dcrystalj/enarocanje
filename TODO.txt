@@ -1,0 +1,4 @@
+breaks - zamenjaj eventom uro ko jih dragaš
+api za povezat z macroservisom
+pri prijavi preverit če je "confirmed"
+manage services aktiviranje in deaktiviranje

@@ -7,8 +7,9 @@
 @section('content')
 
     {{ Former::open('provider')->rules($rules) }}
-    {{ Former::text('name','Service Name:')->autofocus() }}
-    {{ Former::text('email','Email:') }}
+    {{ Former::text('email','Email:')->autofocus() }}
+    {{ Former::password('password','Password:') }}
+    {{ Former::password('password_confirmation','Re-type password:') }}
     {{ Former::actions()->submit('Register') }}
     {{ Former::close() }}   
 @stop

@@ -2,80 +2,181 @@
 
 class MicroserviceController extends BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
+	public $rules = array('name'      => 'required|max:20|alpha',
+	                      'description'  => 'alpha|max:250',     
+						  'price'        => 'numeric');
+
+	public function __construct() {
+		$this->beforeFilter('auth',['only'=>['index','create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
+	public function index($mac)
 	{
-		//
+		return View::make('micro.index')->with('mac',$mac);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+	public function create($mac)
 	{
-		//
+		return View::make('micro.create')					
+					->with('rules',$this->rules)
+					->with('mac',MacroService::find($mac))
+					->with('errors',Session::get('errors'))
+					->with('status',Session::get('status'))
+					->with('error',Session::get('error'))
+					->with('success',Session::get('success'));
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+	public function store($mac)
 	{
-		//
+		$validation = Validator::make(Input::all(),$this->rules);
+
+		if($validation->passes())
+		{
+			
+			$micservice                = new MicroService;
+			$micservice->name          = Input::get( 'name' );
+			$micservice->length        = Input::get( 'length' );
+			$micservice->description   = Input::get( 'description' );
+			$micservice->price         = Input::get( 'price' );
+			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
+			$micservice->macservice_id = $mac;
+			$micservice->save();
+
+			if($micservice)
+			{
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','successfully saved');
+			}
+		}
+		return Redirect::route('macro.micro.create',$mac)
+						->withErrors($validation);
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
+	public function edit($mac,$mic)
 	{
-		//
+		$service = MacroService::find($mac)->microservices()->find($mic);
+		if($service) //is macrosrevice in database
+		{
+			return View::make('micro.create')
+							->with('mic',$service)
+							->with('mac',MacroService::find($mac))
+							->with('rules',$this->rules);
+		}
+		
+		return Redirect::route('macro.micro.create',$mac)
+						->with('error','Wrong service');
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
+
+	public function update($mac, $mic)
 	{
-		//
+		$micservice = MacroService::find($mac)->microservices()->find($mic);
+		if(!$micservice) //is macrosrevice not in database
+		{
+			return App::abort(404);
+		}
+		
+		$validation = Validator::make(Input::all(),$this->rules);
+
+		if($validation->passes())
+		{
+			
+			$micservice->name          = Input::get( 'name' );
+			$micservice->length        = Input::get( 'length' );
+			$micservice->description   = Input::get( 'description' );
+			$micservice->price         = Input::get( 'price' );
+			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
+			$micservice->macservice_id = $mac;
+			$micservice->save();
+
+			if($micservice){
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Successfully edited');
+			}
+		}
+
+		return Redirect::route('macro.micro.create');
+
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
+
+
+	public function destroy($mac,$mic)
 	{
-		//
+		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
+		{
+			$micservice->active=-1;
+			$micservice->activefrom =Input::get('date');
+			$micservice->save();
+
+			return Redirect::route('macro.micro.create',$mac)
+							->with('status','Service ' . $micservice->name . ' was deactivated!');
+		}
+		
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not deactivated.\nPlease try again.");
 	}
 
+	public function getActivated($mac, $mic)
+	{
+		if (($micservice = MacroService::find($mac)->microservices()->find($mic)))
+		{
+			$micservice->active     =0;
+			$micservice->activefrom =Input::get('date');
+			$micservice->save();
+
+			return Redirect::route('macro.micro.create',$mac)
+							->with('success','Service ' . $micservice->name . ' was activated!');
+		}
+		
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not activated.\nPlease try again.");
+		
+	}
+
+	public function timetable($macro_id)
+	{
+		return View::make('Provider.TimeTable', array('id' => $macro_id));
+	}
+
+	public function breaks($macro_id) {
+		return View::make('Provider.Breaks', array('id' => $macro_id));
+	}
 	
+	public function submit_time($id) {
+		$events = Input::get('events');
+		$events = json_decode($events);
+		DB::table('working_hour')->where('macservice_id', $id)->delete();
+		foreach($events as $event) {
+			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
+			$start = date('G:i', strtotime($event->start));
+			$end = date('G:i', strtotime($event->end));
+			print "$day: $start ... $end\n";
+			DB::table('working_hour')->insert(array(
+												  'macservice_id' => $id,
+												  'day' => $day,
+												  'from' => $start,
+												  'to' => $end,
+											  ));
+		}
+	}
+
+	public function submit_breaks($id) {
+		$events = Input::get('events');
+		$events = json_decode($events);
+		DB::table('break')->where('macservice_id', $id)->delete();
+		foreach($events as $event) {
+			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
+			$start = date('G:i', strtotime($event->start));
+			$end = date('G:i', strtotime($event->end));
+			print "$day: $start ... $end\n";
+			DB::table('break')->insert(array(
+										   'm
+										   acservice_id' => $id,
+										   'day' => $day,
+										   'from' => $start,
+										   'to' => $end,
+									   ));
+		}
+	}
 
 }

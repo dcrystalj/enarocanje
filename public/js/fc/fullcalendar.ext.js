@@ -98,3 +98,47 @@ function getDate(t) {
 	if(d < 10) d = '0'+d;
 	return y+'-'+M+'-'+d+getHour(t);
 }
+
+
+
+
+
+
+
+
+//crystal.. =) ->
+//----------------
+function isOverlapping(start, end){
+		var array = calendar.fullCalendar('clientEvents');
+		for(i in array){
+			if(array[i].start != start && array[i].end != end){ 
+			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
+				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
+				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
+				start < array[i].start && start < array[i].end && end >= array[i].start && end >= array[i].end ){
+					return true;
+			}}
+		}
+		return false;
+	};
+
+	function fromTo(event){
+		return event.start.getDate()+"-"+(event.start.getMonth()+1)+"-"+(event.start.getYear()+1900) + " from " + time(event.start) +" to "+time(event.end);
+	}
+
+	function time(str){
+		var currentTime = str;
+		var hours = currentTime.getHours()
+		var minutes = currentTime.getMinutes()
+		if (minutes < 10){
+		minutes = "0" + minutes
+		}
+		return hours + ":" + minutes + " ";
+
+	};
+
+	function countClientEvents(){
+			return calendar.fullCalendar('clientEvents',function(e){
+				return !e.test && e.id!=-5;}).length;
+
+	};
