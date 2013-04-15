@@ -1,2 +1,4 @@
 pri prijavi preverit če je "confirmed"
 user registration, name ne pusti šumnikov
+street macroservice/create fix regex
+fix database macroservice to save all what we need

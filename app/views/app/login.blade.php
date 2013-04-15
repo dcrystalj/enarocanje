@@ -6,7 +6,7 @@
 
 @section('content')
 
-    {{ Former::open()->rules($rules) }}
+    {{ Former::open() }}
     {{ Former::text('email','Email:')->autofocus() }}
     {{ Former::password('password','Password:') }}
     {{ Former::actions()->submit('Login') }}
