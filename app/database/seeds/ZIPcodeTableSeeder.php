@@ -485,7 +485,7 @@ class ZipcodeTableSeeder extends Seeder {
 		);
 
 		// Uncomment the below to run the seeder
-		// DB::table('zipcode')->insert($zipcode);
+		 DB::table('zip_code')->insert($zipcode);
 	}
 
 }
