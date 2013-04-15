@@ -6,14 +6,14 @@
 
 @section('content')
 <?php
-    $serviceCategories[0] = 'Nurse salon';
-    $serviceCategories[1] = 'Massage salon';
-    $serviceCategories[2] = 'Hair salon';
-    $serviceCategories[3] = 'Beauty salon';
+    $serviceCategories['Nurse salon'] = 'Nurse salon';
+    $serviceCategories['Massage salon'] = 'Massage salon';
+    $serviceCategories['Hair salon'] = 'Hair salon';
+    $serviceCategories['Beauty salon'] = 'Beauty salon';
 
      $zipCode = ZIPcode::All();
      foreach ($zipCode as $z) {
-         $codes[$z->id] = $z->ZIP_code;
+         $codes[$z->ZIP_code] = $z->ZIP_code;
      }
 ?>
     
@@ -30,7 +30,7 @@
     {{ Former::text('email','Email:')}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
-    {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
+    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
     {{ Former::close() }}   
 
