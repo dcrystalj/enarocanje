@@ -7,8 +7,8 @@ class MicroserviceController extends BaseController {
 						  'price'        => 'numeric');
 
 	public function __construct() {
-		$this->beforeFilter('auth',['only'=>['create','store','edit','update','destroy','getActivated']]);
-		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('auth',['except'=>['index','show']]);
+		$this->beforeFilter('provider',['except'=>['index','show']]);
 	}
 
 	public function index($mac)
@@ -49,8 +49,9 @@ class MicroserviceController extends BaseController {
 								->with('success','successfully saved');
 			}
 		}
-		return Redirect::route('macro.micro.create',$mac)
-						->withErrors($validation);
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();;
 	}
 
 	public function edit($mac,$mic)
@@ -96,7 +97,9 @@ class MicroserviceController extends BaseController {
 			}
 		}
 
-		return Redirect::route('macro.micro.create');
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();;
 
 	}
 

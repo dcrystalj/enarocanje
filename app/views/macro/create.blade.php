@@ -44,8 +44,6 @@
             echo $service;
             if($service->active==0 )
             {
-                
-        
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 

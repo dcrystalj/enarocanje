@@ -63,7 +63,9 @@ class MacroserviceController extends BaseController {
 			}
 		}
 
-		return Redirect::route('macro.create')->withErrors($validation);
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();
 	}
 
 
@@ -113,7 +115,9 @@ class MacroserviceController extends BaseController {
 			}
 		}
 
-		return Redirect::route('macro.create');
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();
 	}
 
 
