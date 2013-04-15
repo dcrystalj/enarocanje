@@ -7,7 +7,7 @@ class MacroserviceController extends BaseController {
         'address'   => 'required|alpha',
         'street'    => 'regex:/[^a-zA-Z0-9 ]/',
         'ZIPcode'   => 'required|numeric',
-        'email' 	=> 'required|email|unique',
+        'email' 	=> 'required|email',
         'telN' 		=> 'regex:/[^0-9+()]/',
         'SiteUrl'   => 'active_url',
         'description' => 'max:1024'
@@ -44,8 +44,15 @@ class MacroserviceController extends BaseController {
 		{
 			
 			//save user and send mail with confirmation link
+			//$mac = MacroService::create(Input::all());
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
+			$mac->ZIP_code = Input::get( 'ZIPcode');
+			$mac->address = Input::get( 'address');
+			//$mac->street = Input::get( 'street');
+			//$mac->email = Input::get( 'email');
+			$mac->telephone_number = Input::get( 'telN');
+			//$mac-> = Input::get( 'SiteUrl');
 			$mac->description = Input::get('description');
 			$mac->user_id = Auth::user()->id;
 			$mac->save();
@@ -57,7 +64,7 @@ class MacroserviceController extends BaseController {
 			}
 		}
 
-		return Redirect::route('macro.create');
+		return Redirect::route('macro.create')->withErrors($validation);
 	}
 
 

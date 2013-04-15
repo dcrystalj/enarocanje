@@ -16,15 +16,15 @@
         $duration[105]="1h 45 min";
         $duration[120]="2 h";
 
-        $services[0] = 'Manicure';
-        $services[1] = 'Pedicure';
-        $services[2] = 'Depilation';
-        $services[3] = 'Solarium';
-        $services[4] = 'Make-up';
-        $services[5] = 'Massage';
-        $services[6] = 'Hair services';
-        $services[7] = 'Solarium';
-        $services[8] = 'Skin treatments';
+        $services['Manicure'] = 'Manicure';
+        $services['Pedicure'] = 'Pedicure';
+        $services['Depilation'] = 'Depilation';
+        $services['Solarium'] = 'Solarium';
+        $services['Make-up'] = 'Make-up';
+        $services['Massage'] = 'Massage';
+        $services['Hair services'] = 'Hair services';
+        $services['Solarium'] = 'Solarium';
+        $services['Skin treatments'] = 'Skin treatments';
 
         $sex[0] = 'M';
         $sex[1] = 'W';
