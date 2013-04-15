@@ -42,7 +42,7 @@
         @if (isset($service))
         <p> Add services to {{$service()->name }} </p>
         @endif
-        {{ Former::select('name','Service:')->options($services)autofocus() }}
+        {{ Former::select('name','Service:')->options($services)->autofocus() }}
         {{ Former::select('length','Length:')->options($duration) }} 
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::Number('price','Price:') }}

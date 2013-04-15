@@ -11,8 +11,10 @@
     $serviceCategories[2] = 'Hair salon';
     $serviceCategories[3] = 'Beauty salon';
 
-     $zipCode = zip_code::All();
-
+     $zipCode = ZIPcode::All();
+     foreach ($zipCode as $z) {
+         $codes[$z->id] = $z->ZIP_code;
+     }
 ?>
     
      @if(isset($mac))
@@ -21,10 +23,10 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::select('name','Service:')->options($serviceCategories)autofocus() }}
+    {{ Former::select('name','Service:')->options($serviceCategories)->autofocus() }}
+    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::select('ZIPcode','ZIP code:')->options($zip_code()->ZIP_code)}}
     {{ Former::text('email','Email:')}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}

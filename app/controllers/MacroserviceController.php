@@ -5,10 +5,10 @@ class MacroserviceController extends BaseController {
 	public $rules = array(
         'name'		=> 'required',
         'address'   => 'required|alpha',
-        'street'    => 'alpha|numeric',
+        'street'    => 'regex:/[^a-zA-Z0-9 ]/',
         'ZIPcode'   => 'required|numeric',
         'email' 	=> 'required|email|unique',
-        'telN' 		=> 'numeric|match:/+()/',
+        'telN' 		=> 'regex:/[^0-9+()]/',
         'SiteUrl'   => 'active_url',
         'description' => 'max:1024'
     );
