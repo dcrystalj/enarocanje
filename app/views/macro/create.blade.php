@@ -5,6 +5,17 @@
 @stop
 
 @section('content')
+<?php
+    $serviceCategories['Nurse salon'] = 'Nurse salon';
+    $serviceCategories['Massage salon'] = 'Massage salon';
+    $serviceCategories['Hair salon'] = 'Hair salon';
+    $serviceCategories['Beauty salon'] = 'Beauty salon';
+
+     $zipCode = ZIPcode::All();
+     foreach ($zipCode as $z) {
+         $codes[$z->ZIP_code] = $z->ZIP_code;
+     }
+?>
     
      @if(isset($mac))
         {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
@@ -12,14 +23,14 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::text('name','Provider service name:')->autofocus() }}
+    {{ Former::select('name','Service:')->options($serviceCategories)->autofocus() }}
+    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::select('ZIPcode','ZIP code:')}}
     {{ Former::text('email','Email:')}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
-    {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
+    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
     {{ Former::close() }}   
 
