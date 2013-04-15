@@ -59,7 +59,6 @@ class MacroserviceController extends BaseController {
 
 			if($mac){
 				return Redirect::route('macro.create')
-								->with('id',$mac->id)
 								->with('success','successfully saved');
 			}
 		}
