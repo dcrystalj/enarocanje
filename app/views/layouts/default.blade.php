@@ -26,17 +26,15 @@
 		<nav>
 			 {{ Navbar::create()
 			    ->with_brand('E-commerce', '#')
-			    ->with_menus( Auth::check() ?
+			    ->with_menus(
 			        Navigation::links([
-						['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
-						Auth::user()->status != 2 ?:
-						['ManageServices',URL::to('macro/create'),Request::is('macro/create')],
+						['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
+							false,null,'home'],
+	 					!Auth::check() ?: 
+	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
+	 						false,null,null,(Auth::user()->status == 2)],
 						['Services',URL::to('macro'),Request::is('macro')],
-					]) :
-					Navigation::links([
-						['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
-						['Services',URL::to('macro'),Request::is('macro')],
-					]))
+					])) 
 			    ->with_menus(
 			     	Navigation::links( Auth::check() ?
 			      		[
