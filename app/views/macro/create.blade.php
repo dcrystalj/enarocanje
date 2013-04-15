@@ -35,7 +35,7 @@
     {{ Former::close() }}   
 
     <?php 
-        $macroservice = User::find(Auth::user()->id)->macroservices;
+        $macroservice = Auth::user()->macroservices()->get();
 
         $allActivated = []; 
         $allDeactivated = [];
