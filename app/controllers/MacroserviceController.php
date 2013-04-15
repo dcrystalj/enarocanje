@@ -4,10 +4,17 @@ class MacroserviceController extends BaseController {
 
 	public $rules = array(
         'name'		=> 'required',
+        'address'   => 'required|alpha',
+        'street'    => 'alpha|numeric',
+        'ZIPcode'   => 'required|numeric',
+        'email' 	=> 'required|email|unique',
+        'telN' 		=> 'numeric|match:/+()/',
+        'SiteUrl'   => 'active_url',
+        'description' => 'max:1024'
     );
 
 	public function __construct() {
-		$this->beforeFilter('auth',['only'=>['index','create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('auth',['only'=>['create','store','edit','update','destroy','getActivated']]);
 		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
 	}
 
@@ -40,6 +47,7 @@ class MacroserviceController extends BaseController {
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
 			$mac->description = Input::get('description');
+			$mac->user_id = Auth::user()->id;
 			$mac->save();
 
 			if($mac){
@@ -63,7 +71,7 @@ class MacroserviceController extends BaseController {
 
 	public function edit($id)
 	{
-		$mac = MacroService::whereId($id)->first();
+		$mac = Auth::user()->macroservices()->find($id);
 		if($mac) //is macrosrevice in database
 		{
 			return View::make('macro.create')
@@ -78,7 +86,7 @@ class MacroserviceController extends BaseController {
 
 	public function update($id)
 	{
-		$mac = MacroService::find($id);
+		$mac = Auth::user()->macroservices()->find($id);
 		if(!$mac) //is macrosrevice not in database
 		{
 			return App::abort(404);
@@ -106,7 +114,7 @@ class MacroserviceController extends BaseController {
 	 
 	public function destroy($id)
 	{
-		if (($macservice = MacroService::find($id)))
+		if ($macservice = Auth::user()->macroservices()->find($id))
 		{
 			$macservice->active=-1;
 			$macservice->save();
@@ -121,7 +129,7 @@ class MacroserviceController extends BaseController {
 
 	public function getActivated($id)
 	{
-		if (($macservice = MacroService::find($id)))
+		if ($macservice = Auth::user()->macroservices()->find($id))
 		{
 			$macservice->active=0;
 			$macservice->save();

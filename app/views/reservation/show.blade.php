@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-TimeTable
+Reservation
 @stop
 
 @section('assets')
@@ -12,178 +12,184 @@ TimeTable
 @stop
 
 @section('content')
-{{ "macroservice : ".$mac }}
-{{ "microservice : ".$mic }}
+@include('calendar_register')
+
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
 
 <div id='calendar'></div>
-	<script>
 
-	
-	var calendar;
-	var defaultLength = 45;
-	$(document).ready(function() {
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
-		calendar = $('#calendar').fullCalendar({
-			minTime: 6,
-			maxTime: 21,
-			axisFormat: 'HH:mm',
-			columnFormat: {
-				week: 'ddd', // Mon 9/7
-			},
-			selectable: true,
-			unselectAuto: true,
-			selectHelper: true,
-			defaultView: 'agendaWeek',
-			disableResizing: true,
-			minTime: 6,
-			maxTime: 21,
-			firstDay: 1,
-			axisFormat: 'HH:mm',
-			eventAfterRender: function(event, element, view) {
-
-			  var width = $(element).width()+12;
-			  $(element).css('width', width + 'px')
-			  			.css('margin-left', '-2px')
-			  			.css('font-size',10)
-			  			.css('line-height',1)
-			  			.css('padding-top','2px');
-			},
-			eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
-			 	if (isOverlapping(event.start, event.end)) { revertFunc();	}
-			},
-
-			select: function(start, end, allDay) {
-				//cal_clear_day(calendar, start);
+<script>
+@include('calendar_def')
+var defaultLength = '{{ MicroService::find($mic)->first()->length }}';
+fc_init({
+	disableResizing: true,
+	eventAfterRender: function(event, element, view) {
+		var width = $(element).width()+12;
+		$(element).css('width', width + 'px')
+			.css('margin-left', '-2px')
+			.css('font-size',10)
+			.css('line-height',1)
+			.css('padding-top','2px');
+	},
+	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+		event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
+		if (isOverlapping(event.start, event.end)) { revertFunc();	}
+	},
+	select: function(start, end, allDay) {
+		//cal_clear_day(calendar, start);
 				
-				calendar.fullCalendar('unselect');
-				calendar.fullCalendar('removeEvents', -5);
-				// Helper
-				end = new Date(start);
-        		end.setMinutes(start.getMinutes() + defaultLength);
+		calendar.fullCalendar('unselect');
+		calendar.fullCalendar('removeEvents', -1);
+		// Helper
+		end =  new Date(start.getTime() + defaultLength*60000);
 
-				function insert(start, end)  {
-					calendar.fullCalendar('renderEvent',
-										  {
-										  	  id: '-5',
-											  title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
-											  start: start,
-											  end: end,
-											  allDay: false,
-											  editable: true
-											},
-										  true // make the event "stick"
-										 );
-					
-				};
-				if(!isOverlapping(start,end)){
-					insert(start, end);
-				}
-				
-			},
-			eventClick: function(event, jsEvent, view) {
-				calendar.fullCalendar('removeEvents', function(event){
-					return event.editable;
-				});
-			},
-			slotMinutes: 15,
-			eventSources: [
-				{
-					url: 'http://localhost:8000/microserviceapi/timetable/4',
-					type: 'GET',
-					error: function() {
-						alert('there was an error while fetching events!');
-					},
-					editable: false,
-					color: "rgba(192,192,192, 0.5)",
-					className: "termin"
-				},
-				{
-					url: 'http://localhost:8000/microserviceapi/breaks/1',
-					type: 'GET',
-					error: function() {
-						alert('there was an error while fetching events!');
-					},
-					editable: false,
-					color: "rgba(192,192,192, 0.5)",
-					className: "termin"
-				},
-				{
-					url: 'http://localhost:8000/microserviceapi/usertimetable/4',
-					type: 'GET',
-					editable: false,
-					//color: rgba(192,192,192, 0.6) // a non-ajax option
-					color: "red",
-					test: "test"
-				}
-
-		    ],
-		    //check if data has been fetched
-		    loading: function(bool) {
-		    	//if client hasnt already made reservation, then hide delete button
-				if(!bool && countClientEvents()==0)
-				{
-					$('#delete').hide();
-				}
-		    }, 
+		if(!isOverlapping(start,end)){
+			fc_insert(start, end, {
+				id: -1,
+				title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
+				eventType: 'reservation',
+			});
+		}
+	},
+	eventClick: function(event, jsEvent, view) {
+		calendar.fullCalendar('removeEvents', -1);
+	},
+	eventSources: [
+		{
+			url: '{{ route("api_mic_timetable", array($mac)) }}',
+			type: 'GET',
+			error: cal_error,
+			editable: false,
+			color: "rgba(192,192,192, 0.5)",
+			className: "termin"
+		},
+		{
+			url: '{{ route("api_mic_breaks", array($mac)) }}',
+			type: 'GET',
+			error: cal_error,
+			editable: false,
+			color: "rgba(192,192,192, 0.5)",
+			className: "termin"
+		},
+		{
+			@if(Auth::check())
 			
-		});
-	
+			url: '{{ route("api_mic_utimetable", array($mic)) }}',
+			error: 'cal_error',
+			type: 'GET',
+			editable: false,
+			color: "red"
+			
+			@endif
+		}
 		
-		// Buttons
-		$('#reserve').click(function(e) {
-			e.preventDefault();
-			var allevents = calendar.fullCalendar( 'clientEvents',-5);
+	],
+	//check if data has been fetched
+	loading: function(bool) {
+		//if client hasnt already made reservation, then hide delete button
+		if(!bool && countClientEvents()==0)
+		{
+			$('#delete').hide();
+		}
+	}, 
+	
+});
+	
+$(function() {		
+	// Buttons
+	$('#reserve').click(function(e) {
+		e.preventDefault();
+		var allevents = calendar.fullCalendar('clientEvents', -1);
 
-			if(countClientEvents()){
-				bootbox.alert("You have already made reservation. Please delete it first." + countClientEvents());
-				return;
-			}
+		if(countClientEvents()){
+			bootbox.alert("You have already made reservation. Please delete it first." + countClientEvents());
+			return;
+		}
 
-			bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
-		  	 	if(result){
-					var submit = cal_event_data(allevents[0]);
-					$.post('http://localhost:8000/microserviceapi/reservation/4', {'event': JSON.stringify(submit)}, function(){
+		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
+
+		  	if(result){	
+		  		if(!'{{ Auth::check() }}'){
+			  		$('#event-dialog').modal({
+						backdrop: 'static',
+						keyboard: true,
+						show: true,
+					});
+					$('#event-dialog a.b_cancel').click(function() {
+						$('#event-dialog').modal('hide');
+					});
+					$('#event-dialog a.b_save').click(function() {
+						var submit =  {	start: getDate(allevents[0].start),
+										end: getDate(allevents[0].end),
+										title: allevents[0].title,
+										data:{	'name' : $('#name').val(),
+												'mail' : $('#mail').val()
+										}}
+
+						$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+							var js = JSON.parse(e);
+							$('#statusmessage').text(js.text).show();
+
+							if (js.success){
+
+								window.location.reload();
+							}
+							else{
+								$('#event-dialog').modal('hide');
+							}
+						});
+
+						
+					});
+					$('#event-dialog').on('hide', function() {
+						$('#event-dialog').off('click');
+					});		
+		  		}
+		  		else{
+		  			var submit = cal_event_data(allevents[0]);
+	  				$.post('{{ route("api_mic_reservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+						var js = JSON.parse(e);
+						$('#statusmessage').text(js.text).show();
+
+						if (js.success){
 							window.location.reload();
 						}
-					);
+						else{
+							$('#event-dialog').modal('hide');
+						}
+					});
+		  		}
+		  	}
+			return;
+		});			
+	});
 
-		  	 	}
-				return;
-			});			
-			
+	$('#delete').click(function(e) {
+		e.preventDefault();
+		var allevents = calendar.fullCalendar('clientEvents', function(e){
+			return e.eventType=="reservation";
 		});
 
-		$('#delete').click(function(e) {
-			e.preventDefault();
-			var allevents = calendar.fullCalendar( 'clientEvents',function(e){
-				return !e.test;
-			});
-
-			bootbox.confirm(
-				"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
+		bootbox.confirm(
+			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('http://localhost:8000/microserviceapi/deletereservation/4', {'event': allevents[0].id}, function(e){
+					$.post('{{ route("api_mic_rm_reservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){
-							calendar.fullCalendar('removeEvents', allevents[0].id);
+							$('#delete').hide();
+							calendar.fullCalendar('removeEvents', function(e) {
+								return e.eventType == 'reservation';
+							});
 						}
 					});
 		  	 	}
 				return;
 			});			
-			
-		});
-
-
 	});
-	</script>
+});
+</script>
 
 <style>
 

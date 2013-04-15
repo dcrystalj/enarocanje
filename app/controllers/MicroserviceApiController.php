@@ -28,44 +28,18 @@ class MicroserviceApiController extends BaseController
 					$i++;
 				}
 
-				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day){
-
-					$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $workingHours[$i]->from,
-						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
-					);
-
+				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
+				{
+					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
 					$from = $workingHours[$i]->to;
 					$i++;
 				}
 
-
-				$timetable[] = array(
-						"id"       => "$j",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59",
-						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
-				);
+				$timetable[] = $this->timetableArray($i,$start,$from,"23:59:59");
 
 			}else{ //is day off
 
-				$timetable[] = array(
-					"id"       => "$j",
-					"title"    => "",
-					"start"    => date("Y-m-d", strtotime("$start")) . " " . "00:00:00" ,
-					"end"      => date("Y-m-d", strtotime("$start")) . " " . "23:59:59" ,
-					"allDay"   => false,
-					"editable" => false,
-					"test"     => "test"
-				);
+				$timetable[] = $this->timetableArray($i,$start,"00:00:00","23:59:59");
 
 			}
 			$start =  date("Y-m-d", strtotime("$start +1 day"));
@@ -77,16 +51,14 @@ class MicroserviceApiController extends BaseController
 
 	public function getUsertimetable($id)
 	{
-		$timetable =[];
+		$timetable = array();
 		//TODO
-		$micserviceid = 1;
-		$userid = 35;
+		$micserviceid = $id;
+		$userid = Auth::user()->id;
 
-
-		$r = Reservation::where('microservice',$micserviceid)
-						->where('user',$userid)
+		$r = Reservation::where('micservice_id',$micserviceid)
+						->where('user_id',$userid)
 						->get();
-		$j = 1000;
 		foreach ($r as $b) 
 		{
 			$date        = $b->date;
@@ -98,17 +70,16 @@ class MicroserviceApiController extends BaseController
 					"start"  => $date . " " . $b->from ,
 					"end"    => $date . " " . $b->to ,
 					"allDay" => false,
-					"editable"=> false
+					'eventType' => 'reservation',
 			);
-			$j++;
 		}
 
 		return Response::json($timetable);
 	}
 
 	public function postReservation($id){
-		$userid = 35;
-		$microservid = 1;
+		$userid = Auth::user()->id;
+		$microservid = $id;
 		$events = Input::get('event');
 		$event = json_decode($events);
 
@@ -119,9 +90,9 @@ class MicroserviceApiController extends BaseController
 		$r               = new Reservation;
 		$r->from         = $start;
 		$r->to           = $end;
-		$r->microservice = $microservid;
+		$r->micservice_id = $microservid;
 		$r->date          = $date;
-		$r->user 		 = $userid;
+		$r->user_id		 = $userid;
 		$r->save();
 
 		if($r){
@@ -130,12 +101,12 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function postDeletereservation($id){
-		$userid = 35;
-		$microservid = 1;
+		$userid = Auth::user()->id;
+		$microservid = $id;
 
- 		$r = Reservation::where('microservice',$microservid)
-					->where('id',Input::get('event'))
-					->where('user',$userid)
+ 		$r = Reservation::where('micservice_id',$microservid)
+			// ->where('id',Input::get('event')) FIXME : je to potrebno?
+					->where('user_id',$userid)
 					->delete();
 		if($r)			
 			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
@@ -146,19 +117,21 @@ class MicroserviceApiController extends BaseController
 
 	public function getWorkinghours($id)
 	{
+		$start = Input::get('start')+(24*3600); //get first day
+				
 		$workingHours = Whours::where('macservice_id',$id)->get();
-		$timetable = [];
+		$timetable = array();
 
 		foreach ($workingHours as $wh) 
 		{
-			$day = $this->dayToString($wh->day);
+			$date = $start+$wh->day*3600*24; // offset
 			$timetable[] = array(
 				"id"	 => $wh->id,
 				"title"  => "",
-				"start"  => date("Y-m-d", strtotime("$day this week")) . " " . $wh->from ,
-				"end"    => date("Y-m-d", strtotime("$day this week")) . " " . $wh->to ,
+				"start"  => date("Y-m-d", $date) . " " . $wh->from ,
+				"end"    => date("Y-m-d", $date) . " " . $wh->to ,
 				"allDay" => false,
-				"editable"=> true,
+				'eventType' => 'work',
 			);
 		}
 		return Response::json($timetable);
@@ -166,42 +139,61 @@ class MicroserviceApiController extends BaseController
 
 	public function getBreaks($id) {
 		
-		$break = Breakt::where('macservice_id',$id)->get();
-		$timetable = [];
+		$breaks = Breakt::where('macservice_id',$id)->get();
+		$timetable = array();
 
-		$start = date("Y-m-d", Input::get('start')); //get start day
-		$end   = date("Y-m-d", Input::get('end'));
-
-		while(strcmp($start,$end)<=0)
-		{
-
-			$day = $this->stringToDay(date("l",strtotime("$start"))); //get from 0 to 6 what day is it
-
-			//are there any breaks today?
-			if($this->isDayInArray($break, $day))
-			{
-				$i=0;
-				while($break[$i]->day != $day){
-					$i++;
-				}
-	
-				while(isset($break[$i]) && $break[$i]->day == $day)
-				{
-					$timetable[] = array(
-						"id"       => "1",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $break[$i]->to,
-						"allDay"   => false,
-						"editable" => false,
-						"test"     => "test"
-					);
-					$i++;
-				}
-			}
-			$start =  date("Y-m-d", strtotime("$start +1 day"));
+		$start = Input::get('start')+3600*24; //get start day
+		foreach($breaks as $break) {
+			$date = $start+$break->day*3600*24; // offset
+			$timetable[] = array(
+				"id"       => $break->id,
+				"title"    => "",
+				"start"    => date("Y-m-d", $date) . " " . $break->from, 
+				"end"      => date("Y-m-d", $date) . " " . $break->to,
+				"allDay"   => false,
+				'eventType' => 'break',
+			);
 		}
 		return Response::json($timetable);
+	}
+
+	public function postRegistration($id){
+		
+		$microservid = $id;
+		$events = Input::get('event');
+		$event = json_decode($events);
+
+		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start = date('G:i', strtotime($event->start));
+		$end = date('G:i', strtotime($event->end));
+		$mail = Input::get('name');
+		$name = Input::get('mail');
+
+		if(User::whereEmail($mail)){
+			$tempuser = new User;
+			$tempuser->email = $event->data->mail;
+			$tempuser->name = $event->data->name;
+			$tempuser->save();
+		}
+		if($tempuser){
+			Session::put('user',$tempuser);
+			Auth::login($tempuser);
+			
+
+			$r               = new Reservation;
+			$r->from         = $start;
+			$r->to           = $end;
+			$r->micservice_id = $microservid;
+			$r->date          = $date;
+			$r->user_id	 	= $tempuser->id;
+			$r->save();
+
+			if($r){
+				return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			}
+
+		}
+		return json_encode(array('success'=>false,'text'=>'Email is already taken, please login first'));
 	}
 
 
@@ -219,20 +211,14 @@ class MicroserviceApiController extends BaseController
 		return $day[$i];
 	}
 	protected function stringToDay($i){
-		$day[0]="Monday";
-		$day[1]="Tuesday";
-		$day[2]="Wednesday";
-		$day[3]="Thursday";
-		$day[4]="Friday";
-		$day[5]="Saturday";
-		$day[6]="Sunday";
-
-		foreach ($day as $key => $value) {
-			if (strcmp($value,$i)==0){
-				return $key;
-			}
-		}
-		return "";
+		$day['Monday'] = 0;
+		$day['Tuesday'] = 1;
+		$day['Wednesday'] = 2;
+		$day['Thursday'] = 3;
+		$day['Friday'] = 4;
+		$day['Saturday'] = 5;
+		$day['Sunday'] = 6;
+		return isset($day[$i])?$day[$i]:'';
 	}
 
 	protected function isDayInArray($workingHours,$day){
@@ -243,5 +229,17 @@ class MicroserviceApiController extends BaseController
 			}
 		} 
 		return false;
+	}
+
+	protected function timetableArray($id, $start, $from, $to){
+		$array =  array(
+						"id"       => "$id",
+						"title"    => "",
+						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
+						"end"      => date("Y-m-d", strtotime("$start")) . " " . $to,
+						"allDay"   => false,
+						'eventType' => 'free'
+					);
+		return $array;
 	}
 }

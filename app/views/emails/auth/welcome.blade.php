@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Set Password</h2>
+		<h2>Welcome to e-commerce</h2>
 
 		<div>
-			To set your new password, complete this form: {{ URL::to('provider/confirm', array($token)) }}.
+			To confirm your email, complete this form: {{ URL::to('provider/confirm', array($token)) }}.
 		</div>
 	</body>
 </html>
