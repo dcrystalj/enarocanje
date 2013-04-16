@@ -2,8 +2,9 @@
 
 class UserController extends BaseController {
     public $rules = array(
-          'name'     => 'required|max:20|alpha',
-          'surname'  => 'required|max:20|alpha',
+          //'name'     => 'required|max:20|alpha','match:/[a-z]+/'
+          'name'     => 'required|max:20|match:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+          'surname'  => 'required|max:20|match:/[a-zščžćđA-ZŠČŽĆĐ]+/',
           'email'    => 'required|email|unique:users',
           'password' => 'required|between:6,30',
           'repeat' => 'required|same:password|min:6|between:6,30',
@@ -65,7 +66,7 @@ class UserController extends BaseController {
             $user->email     = Input::get( 'email' );
             $user->password  = Hash::make(Input::get('password'));
             $user->time_zone = Input::get( 'timezone' );
-	    $user->language  = Input::get( 'language' )];
+	        $user->language  = Input::get( 'language' );
             $user->confirmed = 0;
             $user->save();
             Config::set('auth.reminder.email', 'emails.auth.userWelcome');
