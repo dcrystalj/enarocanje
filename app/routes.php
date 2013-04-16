@@ -26,7 +26,7 @@ Route::get('find', function()
 });
 Route::get('profile', function()
 {
-	return View::make('userProfile')->with('user',Auth::user());
+	return View::make('user.userProfile')->with('user',Auth::user());
 })->before('auth');
 
 Route::get('user/registerUser', function()

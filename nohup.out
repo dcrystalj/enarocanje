@@ -1,0 +1,37 @@
+Encoding: UTF-8
+Current Locale: en_US
+No LSB modules are available.
+Encoding: UTF-8
+Current Locale: en_US
+#####################################################
+#####################################################
+Distributor ID:	LinuxMint
+Description:	Linux Mint 14 Nadia
+Release:	14
+Codename:	nadia
+Version:	x86_64
+#####################################################
+
+Touchpad-Indicator version: 0.9.3.12
+#####################################################
+Traceback (most recent call last):
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 449, in <module>
+    tpi=TouchpadIndicator()
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 129, in __init__
+    self.on_mouse_plugged_change(self.on_mouse_plugged)
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 150, in on_mouse_plugged_change
+    self.launch_watchdog()
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 232, in launch_watchdog
+    self.set_touch_enabled(False)
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 175, in set_touch_enabled
+    self.show_notification('disabled')
+  File "/usr/share/touchpad-indicator/touchpad-indicator.py", line 192, in show_notification
+    self.notification.show()
+  File "/usr/lib/python2.7/dist-packages/gi/types.py", line 47, in function
+    return info.invoke(*args, **kwargs)
+gi._glib.GError: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+No LSB modules are available.
+Encoding: UTF-8
+Current Locale: en_US
+Encoding: UTF-8
+Current Locale: en_US
