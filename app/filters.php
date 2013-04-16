@@ -29,6 +29,8 @@ App::after(function($request, $response)
 	//
 });
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Filters
@@ -39,6 +41,14 @@ App::after(function($request, $response)
 | responsible for performing the opposite. Both provide redirects.
 |
 */
+
+Route::filter('provider',function()
+{
+	if (!Auth::user()->isProvider()) 
+	{
+		return Redirect::route('home')->with('error','You have no permissions.');
+	}
+});
 
 Route::filter('auth', function()
 {

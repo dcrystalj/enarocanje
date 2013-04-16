@@ -40,8 +40,8 @@
         $allActivated = []; 
         $allDeactivated = [];
         $i = 1; 
-        foreach ($macroservice as $service){
-            echo $service;
+        foreach ($macroservice as $service)
+        {
             if($service->active==0 )
             {
                 $allActivated[]= [
@@ -53,16 +53,14 @@
                     'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
                  ];
                  $i++;
-            }
-            else{
-                
-        
+            }else 
+            {
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'activate'       => activate($service->id),
                     'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
-                 ];
+                ];
             }
         }
     ?>
