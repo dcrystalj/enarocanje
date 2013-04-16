@@ -1,4 +1,6 @@
-breaks - zamenjaj eventom uro ko jih dragaš
-api za povezat z macroservisom
 pri prijavi preverit če je "confirmed"
-manage services aktiviranje in deaktiviranje
+user registration, name ne pusti šumnikov
+street macroservice/create fix regex
+fix database macroservice to save all what we need
+telefon številke in street ne delajo, city- šumniki ne delajo
+edit ne shrani v bazo macro

@@ -35,15 +35,15 @@
     {{ Former::close() }}   
 
     <?php 
-        $macroservice = Auth::user()->macroservices;
+        $macroservice = Auth::user()->macroservices()->get();
+
         $allActivated = []; 
         $allDeactivated = [];
         $i = 1; 
         foreach ($macroservice as $service){
+            echo $service;
             if($service->active==0 )
             {
-                
-        
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 
