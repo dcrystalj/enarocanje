@@ -1,12 +1,4 @@
 <?php
-Route::filter('provider',function()
-{
-	if (!Auth::user()->isProvider()) 
-	{
-		return Redirect::route('home')->with('error','You have no permissions.');
-	}
-});
-
 Route::get('/', function()
 {
 	return View::make('home');

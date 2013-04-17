@@ -15,8 +15,12 @@
     @if (isset($message))
         <p>{{ Alert::warning($message) }}</p>
     @endif
-  
-    {{ Former::open('provider/' . $user->id)->rules($rules)->method('PUT') }}
+    
+    <?php $user = Auth::user() ?>
+
+    {{ Former::open(URL::route('provider.update', $user->id))
+                ->rules($rules)
+                ->method('PUT') }}
     {{ Former::populate($user) }}
     {{ Former::text('name','Name:')->autofocus() }}
     {{ Former::text('surname','Last name:') }}
