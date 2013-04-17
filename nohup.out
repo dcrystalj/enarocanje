@@ -5,11 +5,11 @@ Encoding: UTF-8
 Current Locale: en_US
 #####################################################
 #####################################################
-Distributor ID:	LinuxMint
-Description:	Linux Mint 14 Nadia
-Release:	14
-Codename:	nadia
-Version:	x86_64
+Distributor ID: LinuxMint
+Description:  Linux Mint 14 Nadia
+Release:  14
+Codename: nadia
+Version:  x86_64
 #####################################################
 
 Touchpad-Indicator version: 0.9.3.12

@@ -40,6 +40,6 @@ $language = Auth::user()->language;
 {{Former::label('Timezone')}}
 {{Former::label($user->timezone)}}
 {{Former::label('Language')}}
-{{Former::label(Ulibrary::lang(0))}}
+{{Former::label(UserLibrary::lang($user->language))}}
 
 @stop

@@ -1,6 +1,6 @@
 <?php
 
-class Ulibrary {
+class UserLibrary {
 	private static $languageArray = array(
 		"english",
 		"slovenian",
