@@ -12,7 +12,7 @@ Breaks
 @stop
 
 @section('content')
-@include('calendar_dialog')
+@include('calendar.calendar_dialog')
 
 <p>
 {{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
@@ -24,7 +24,7 @@ Breaks
 
 <div id='calendar'></div>
 <script>
-@include('calendar_def')	
+@include('calendar.calendar_def')	
 fc_init({
 	eventAfterRender: function(event, element, view) {  
 		var width = $(element).width()+8;

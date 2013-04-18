@@ -30,7 +30,7 @@ class ManageServices extends BaseController {
 			$micservice->description    = Input::get( 'description' );
 			$micservice->price    = Input::get( 'price' );
 			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','New service added')->with('rules',$this->rules);
+			return Redirect::back()->with('status','New service added')->with('rules',$this->rules);
 		}
 	}
 
@@ -54,7 +54,7 @@ class ManageServices extends BaseController {
 		}
 		else
 		{
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
+			return Redirect::back()->with('status','Service ' . $micservice->name . "couldn't be deleted!");
 		}	
 	}
 
