@@ -43,13 +43,13 @@ fc_init({
 	eventClick: cal_show_dialog,
 	eventSources: [
 		{
-			url: '{{ route("api_mic_breaks", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getBreaks", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: true,
 		},
 		{
-			url: '{{ route("api_mic_timetable", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,

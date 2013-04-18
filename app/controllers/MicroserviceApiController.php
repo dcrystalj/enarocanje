@@ -4,12 +4,14 @@ class MicroserviceApiController extends BaseController
 {
 	public function getTimetable($id)
 	{
-		
-		$id=1;
-		$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
+
 		$timetable = [];
-		$lastday = 0;
-		$j=0;
+		$lastday   = 0;
+		$j         = 0;
+		$i         = 0;
+		
+		$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
+
 		$start = date("Y-m-d", Input::get('start')); //get start day
 		$end   = date("Y-m-d", Input::get('end'));
 
@@ -17,7 +19,6 @@ class MicroserviceApiController extends BaseController
 		{
 
 			$day = $this->stringToDay(date("l",strtotime("$start"))); //get from 0 to 6 what day is it
-
 			//is not day off?
 			if($this->isDayInArray($workingHours, $day))
 			{
@@ -27,15 +28,15 @@ class MicroserviceApiController extends BaseController
 				while($workingHours[$i]->day != $day){
 					$i++;
 				}
-
 				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
 				{
 					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
 					$from = $workingHours[$i]->to;
 					$i++;
+					$j++;
 				}
 
-				$timetable[] = $this->timetableArray($i,$start,$from,"23:59:59");
+				$timetable[] = $this->timetableArray($j,$start,$from,"23:59:59");
 
 			}else{ //is day off
 
@@ -43,6 +44,7 @@ class MicroserviceApiController extends BaseController
 
 			}
 			$start =  date("Y-m-d", strtotime("$start +1 day"));
+			$j++;
 
 		}
 
@@ -211,14 +213,14 @@ class MicroserviceApiController extends BaseController
 		return $day[$i];
 	}
 	protected function stringToDay($i){
-		$day['Monday'] = 0;
-		$day['Tuesday'] = 1;
+		$day['Monday']    = 0;
+		$day['Tuesday']   = 1;
 		$day['Wednesday'] = 2;
-		$day['Thursday'] = 3;
-		$day['Friday'] = 4;
-		$day['Saturday'] = 5;
-		$day['Sunday'] = 6;
-		return isset($day[$i])?$day[$i]:'';
+		$day['Thursday']  = 3;
+		$day['Friday']    = 4;
+		$day['Saturday']  = 5;
+		$day['Sunday']    = 6;
+		return isset($day[$i])?$day[$i]: '';
 	}
 
 	protected function isDayInArray($workingHours,$day){

@@ -6,10 +6,6 @@
 
 @section('content')
 <?php
-    $serviceCategories['Nurse salon'] = 'Nurse salon';
-    $serviceCategories['Massage salon'] = 'Massage salon';
-    $serviceCategories['Hair salon'] = 'Hair salon';
-    $serviceCategories['Beauty salon'] = 'Beauty salon';
 
      $zipCode = ZIPcode::All();
      foreach ($zipCode as $z) {
@@ -23,7 +19,7 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::select('name','Service:')->options($serviceCategories)->autofocus() }}
+    {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
     {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}

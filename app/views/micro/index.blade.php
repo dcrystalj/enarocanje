@@ -7,15 +7,8 @@
 @section('content')
 
     <?php 
-        $duration[15]="15 min";
-        $duration[30]="30 min";
-        $duration[45]="45 min";
-        $duration[60]="1 h";
-        $duration[75]="1 h 15 min";
-        $duration[90]="1h 30 min";
-        $duration[105]="1h 45 min";
-        $duration[120]="2 h";
-
+    
+        $duration = Service::duration();
         $mic = MacroService::find($mac)->microservices()->whereActive(0)->get();
     ?>
 

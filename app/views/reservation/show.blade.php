@@ -57,7 +57,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '{{ route("api_mic_timetable", array($mac)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -65,7 +65,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '{{ route("api_mic_breaks", array($mac)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getBreaks", array($id)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -75,7 +75,7 @@ fc_init({
 		{
 			@if(Auth::check())
 			
-			url: '{{ route("api_mic_utimetable", array($mic)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($id)) }}',
 			error: 'cal_error',
 			type: 'GET',
 			editable: false,
@@ -127,7 +127,7 @@ $(function() {
 												'mail' : $('#mail').val()
 										}}
 
-						$.post('{{ route("api_mic_registration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+						$.post('{{ URL::action("MicroserviceApiController@postRegistration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 							var js = JSON.parse(e);
 							$('#statusmessage').text(js.text).show();
 
@@ -148,7 +148,7 @@ $(function() {
 		  		}
 		  		else{
 		  			var submit = cal_event_data(allevents[0]);
-	  				$.post('{{ route("api_mic_reservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
+	  				$.post('{{ URL::action("MicroserviceApiController@postReservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);
 						$('#statusmessage').text(js.text).show();
 
@@ -174,7 +174,7 @@ $(function() {
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('{{ route("api_mic_rm_reservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
+					$.post('{{ URL::action("MicroserviceApiController@postDeleteReservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){

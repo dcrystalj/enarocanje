@@ -6,32 +6,6 @@
 
 @section('content')
     
-    <?php 
-        $duration[15]="15 min";
-        $duration[30]="30 min";
-        $duration[45]="45 min";
-        $duration[60]="1 h";
-        $duration[75]="1 h 15 min";
-        $duration[90]="1h 30 min";
-        $duration[105]="1h 45 min";
-        $duration[120]="2 h";
-
-        $services['Manicure'] = 'Manicure';
-        $services['Pedicure'] = 'Pedicure';
-        $services['Depilation'] = 'Depilation';
-        $services['Solarium'] = 'Solarium';
-        $services['Make-up'] = 'Make-up';
-        $services['Massage'] = 'Massage';
-        $services['Hair services'] = 'Hair services';
-        $services['Solarium'] = 'Solarium';
-        $services['Skin treatments'] = 'Skin treatments';
-
-        $sex[0] = 'M';
-        $sex[1] = 'W';
-        $sex[2] = 'unisex';
-
-    ?>
-    
     @if(isset($mac))
         @if(isset($mic))
             {{ Former::open(URL::route('macro.micro.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
@@ -39,11 +13,13 @@
         @else
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
+
         @if (isset($service))
-        <p> Add services to {{$service()->name }} </p>
+            <p> Add services to {{$service()->name }} </p>
         @endif
-        {{ Former::select('name','Service:')->options($services)->autofocus() }}
-        {{ Former::select('length','Length:')->options($duration) }} 
+
+        {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
+        {{ Former::select('length','Length:')->options(Service::duration()) }} 
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::Number('price','Price:') }}
         {{ Former::actions()->submit( isset($mic) ? 'Edit' : 'Add service' ) }}
@@ -124,15 +100,6 @@
 
     ?>
 
-    <div id="event-dialog" class="modal hide fade">
-        <!-- dialog contents -->
-        <div class="modal-body">
-          <span id="spanfrom">From:</span> <input type="date" value="{{ date('Y-m-d',strtotime('now')) }}" id="efrom" /><br />
-        </div>
-          <!-- dialog buttons -->
-        <div class="modal-footer">
-            <a href="#" class="b_cancel btn">Cancel</a>
-            <a href="#" class="b_save btn btn-success">Submit</a>
-        </div>
-    </div>
+    @include('micro.activatefrom')
+    
 @stop
