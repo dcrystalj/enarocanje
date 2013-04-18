@@ -27,7 +27,7 @@
     {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::text('email','Email:')}}
+    {{ Former::text('email','Email:')->value(Auth::user()->email)}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
     {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
@@ -48,9 +48,9 @@
                     'id'          => $i, 
                     'name'        => $service->name, 
                     'description' => $service->description, 
-                    'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
+                    'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
                     'deactivate'  => deactivate($service->id),
-                    'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
                  ];
                  $i++;
             }else 
