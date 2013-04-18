@@ -12,7 +12,7 @@ TimeTable
 @stop
 
 @section('content')
-@include('calendar_dialog');
+@include('calendar.calendar_dialog');
 
 <p>
 {{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
@@ -24,7 +24,7 @@ TimeTable
 
 <div id='calendar'></div>
 <script>
-@include('calendar_def')
+@include('calendar.calendar_def')
 
 fc_init({
 	// Remove existing event
