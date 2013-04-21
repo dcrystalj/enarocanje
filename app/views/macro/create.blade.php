@@ -15,7 +15,7 @@
     {{ Former::text('name','Provider service name:')->autofocus() }}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::select('ZIPcode','ZIP code:')}}
+    {{ Former::select('ZIPcode','ZIP code:')->options(array(1000 => '1000 Ljubljana'), 1) }}
     {{ Former::text('email','Email:')}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
