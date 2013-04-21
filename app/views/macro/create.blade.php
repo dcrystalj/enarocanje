@@ -5,6 +5,13 @@
 @stop
 
 @section('content')
+<?php
+
+     $zipCode = ZIPcode::All();
+     foreach ($zipCode as $z) {
+         $codes[$z->ZIP_code] = $z->ZIP_code;
+     }
+?>
     
      @if(isset($mac))
         {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
@@ -12,46 +19,44 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::text('name','Provider service name:')->autofocus() }}
+    {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
+    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('address', 'City:')}}
     {{ Former::text('street','Street:')}}
-    {{ Former::select('ZIPcode','ZIP code:')->options(array(1000 => '1000 Ljubljana'), 1) }}
-    {{ Former::text('email','Email:')}}
+    {{ Former::text('email','Email:')->value(Auth::user()->email)}}
     {{ Former::text('telN','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
-    {{ Former::textarea('description','Description')->rows(10)->columns(20) }}
+    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
     {{ Former::close() }}   
 
     <?php 
-        $macroservice = Auth::user()->macroservices;
+        $macroservice = Auth::user()->macroservices()->get();
+
         $allActivated = []; 
         $allDeactivated = [];
         $i = 1; 
-        foreach ($macroservice as $service){
+        foreach ($macroservice as $service)
+        {
             if($service->active==0 )
             {
-                
-        
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 
                     'description' => $service->description, 
-                    'link'        => Html::link(URL::route('macro.edit', $service->id),'Edit'),
+                    'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
                     'deactivate'  => deactivate($service->id),
-                    'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
                  ];
                  $i++;
-            }
-            else{
-                
-        
+            }else 
+            {
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'activate'       => activate($service->id),
                     'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
-                 ];
+                ];
             }
         }
     ?>

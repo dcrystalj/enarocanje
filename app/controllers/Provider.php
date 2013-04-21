@@ -4,16 +4,21 @@ class Provider extends BaseController {
 
 	//rules for registering
 	public $rules = array(
-        'email'		=> 'required|email|unique:users',
-        'password'		=> 'same:password_confirmation|between:4,20|confirmed',
-    	'password_confirmation'		=> 'required',
+		'email'                 => 'required|email|unique:users',
+		'password'              => 'same:password_confirmation|between:4,20|confirmed',
+		'password_confirmation' => 'required',
     );
 
     public $rules2 = array(
-    	'name'		=> 'required|max:20|alpha',
-    	'surname'		=> 'required|max:20|alpha',
-        'password'		=> 'same:password_confirmation|between:4,20|confirmed',
+		'name'     => 'required|max:20|alpha',
+		'surname'  => 'required|max:20|alpha',
+		'password' => 'same:password_confirmation|between:4,20|confirmed',
    	);
+
+	public function __construct() {
+		$this->beforeFilter('auth',		['only'=>['edit','update']]);
+		$this->beforeFilter('provider',	['only'=>['edit','update']]);
+	}
 
 	public function index()
 	{
@@ -76,7 +81,8 @@ class Provider extends BaseController {
 	public function edit($id)
 	{
 
-		return View::make('Provider.ProviderServiceSettings')->with('user',User::find($id))->with('rules',$this->rules2);
+		return View::make('Provider.ProviderServiceSettings')
+					->with('rules',$this->rules2);
 	}
 
 
@@ -84,29 +90,35 @@ class Provider extends BaseController {
 	{
 		$input = Input::all();
 		$validation = Validator::make($input,$this->rules2);
-		if($validation->fails())
+		
+		if( $validation->passes() )
 		{
-			return Redirect::to('provider/' . $id . '/edit')->withErrors($validation)->with('rules',$this->rules2)->with('user',User::find($id));
-		}		
-		else
-		{
-			$user = User::find($id);
-			if(isset($user))
+			if( $id==Auth::user()->id )
 			{
-		    	$user->name = $input['name'];	
-		    	$user->surname = $input['surname'];
-		    	$user->language = $input['language'];
-		    	if($input['password']){
+				$user           = Auth::user();
+				$user->name     = $input['name'];	
+				$user->surname  = $input['surname'];
+				$user->language = $input['language'];
+
+		    	if($input['password'])
+		    	{
 		    		$user->password = Hash::make($input['password']);	
 		    	}
-		    	$user->save();			
-		    	return Redirect::to('provider/' . $id . '/edit')->with('message','Settings saved.')->with('user',User::find($id));
+
+		    	$user->save();	
+
+		    	return Redirect::back()->with('success','Settings saved.');
 		    }
 		    else
 		    {
-		    	return Redirect::to('provider/' . $id . '/edit')->with('message','Failed to save settings.');
+		    	return Redirect::bakc()->with('error','Failed to save settings.');
 		    }
-		}
+			
+		}		
+		return Redirect::back()
+						->withErrors($validation)
+						->with('rules',$this->rules2);
+
 	}
 
 
@@ -131,28 +143,4 @@ class Provider extends BaseController {
 	    }
 	    App::abort(404, 'Page not found');
 	}
-
-	/*public function postConfirm($token)
-	{
-		//validation
-		$validation = Validator::make(Input::all(),$this->rules1);
-		if($validation->fails())
-		{
-			return Redirect::to('provider/confirm/' . $token)->withErrors($validation)->with('rules',$this->rules1);
-		}		
-		//save
-		$remind =  DB::table('password_reminders')->where('token', Input::get('token'))->first();
-		if($remind)	$user = User::where('email',$remind->email)->first();
-		if(isset($user)){
-		    $user->password = Hash::make(Input::get('password'));
-		    $user->confirmed = 1;
-		    $user->status = 2;
-		    $user->save();
-			return View::make('home')->with('message','Success');
-			//return Redirect::to('provider/' . $user->id . '/edit');
-	    }
-	    return Redirect::to('provider/confirm/' . $token)
-	    				->with('status','Wrong token')
-	    				->with('rules',$this->rules1);
-	}*/
 }

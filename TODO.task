@@ -1,0 +1,12 @@
+ ☐ user registration, name ne pusti šumnikov
+ ☐ street macroservice/create fix regex
+ ☐ fix database macroservice to save all what we need
+ ☐ telefon številke in street ne delajo, city- šumniki ne delajo
+ ☐ edit ne shrani v bazo macrotta
+ ☐ register form - regex napačen rule
+ ☐ edit Provider- language is wrong- controller + view
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ default email population @done (13-04-18 20:21)
+ ✔ pri prijavi preverit če je "confirmed" @done (13-04-17 18:14)

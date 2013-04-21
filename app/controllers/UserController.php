@@ -2,8 +2,9 @@
 
 class UserController extends BaseController {
     public $rules = array(
-          'name'     => 'required|max:20|alpha',
-          'surname'  => 'required|max:20|alpha',
+          //'name'     => 'required|max:20|alpha','match:/[a-z]+/'
+          'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+          'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
           'email'    => 'required|email|unique:users',
           'password' => 'required|between:6,30',
           'repeat' => 'required|same:password|min:6|between:6,30',
@@ -47,22 +48,26 @@ class UserController extends BaseController {
         if($validation->fails())
         {
             Input::flash(); //input data remains in form
+
+            Redirect::back()->with('rules',$this->rules)->withErrors($validation);
+
             return Redirect::to('user/create')
                             ->withErrors($validation);
+
 
             //return Redirect::to('user/create')->with_input();
         }
         else
         {
+            $languageArray = array("English","Slovenian", "Italian","German");
             $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
             $user->email     = Input::get( 'email' );
             $user->password  = Hash::make(Input::get('password'));
             $user->time_zone = Input::get( 'timezone' );
-            $user->language  = Input::get( 'language' );
+	        $user->language  = Input::get( 'language' );
             $user->confirmed = 0;
-
             $user->save();
             Config::set('auth.reminder.email', 'emails.auth.userWelcome');
             Password::remind(['email' => $user->email ], function($m)

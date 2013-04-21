@@ -24,22 +24,36 @@
 <body>
 	<header>
 		<nav>
-			<!-- using bootstrapper design -->
-			<!--	['Provider settings',URL::to('provider/' . $user->id . '/edit'),Request::is('provider/' . $user->id . '/edit')], -->
-			{{ Navigation::pills(
-				Navigation::links([
-					['Home', URL::to('home'), (Request::is('home') || Request::is('/'))],
-					['Find', URL::to('find'), Request::is('find')],	
-					['Provider registration',URL::to('provider/create'),Request::is('provider/create')],
-					['User registration',URL::to('user/create'),Request::is('user/create')],
-					['ManageServices',URL::to('macro/create'),Request::is('macro/create')],
-					['Services',URL::to('macro'),Request::is('macro')],
-					['Login',URL::to('app/login'),Request::is('app/login')],
-					['Logout',URL::to('app/logout'),Request::is('app/logout')],
-					['Profile',URL::to('profile'),Request::is('profile')],
-					['Working Hours',URL::to('service/1/time'),Request::is('service/1/time')],
-				])
-			)}}
+			 {{ Navbar::create()
+			    ->with_brand('E-commerce', '#')
+			    ->with_menus(
+			        Navigation::links([
+						['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
+							false,null,'home'],
+	 					!Auth::check() ?: 
+	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
+	 						false,null,null,(Auth::user()->status == 2)],
+						['Services',URL::to('macro'),Request::is('macro')],
+					])) 
+			    ->with_menus(
+			     	Navigation::links( Auth::check() ?
+			      		[
+							['Profile',URL::to('profile'),Request::is('profile')],
+							[Navigation::VERTICAL_DIVIDER],
+							['Logout',URL::to('app/logout'),Request::is('app/logout')],
+						] 
+						:
+			       		[
+			       	 		['Login',URL::to('app/login'),Request::is('app/login')],
+			       	 		[Navigation::VERTICAL_DIVIDER],
+			       	 		['Register','#',false,false,[		       	 		
+								['User registration',URL::to('user/create'),Request::is('user/create')],
+								['Provider registration',URL::to('provider/create'),Request::is('provider/create')],							
+							]]
+						]),
+			      	['class' => 'pull-right'] )
+		   		->collapsible()
+	   	 	}}
 		</nav>
 		<div>
 			

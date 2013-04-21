@@ -29,6 +29,8 @@ App::after(function($request, $response)
 	//
 });
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Filters
@@ -40,10 +42,23 @@ App::after(function($request, $response)
 |
 */
 
+Route::filter('provider',function()
+{
+	if (!Auth::user()->isProvider()) 
+	{
+		return Redirect::route('home')->with('error','You have no permissions.');
+	}
+});
+
 Route::filter('auth', function()
 {
 	 if(!Session::has('user')) return Redirect::route('home')->with('error','You have no permissions. Please login first');
 	//if (Auth::guest()) return Redirect::route('home');
+});
+
+Route::filter('auth1', function()
+{
+	if (Auth::check() == FALSE ) return Redirect::route('find');
 });
 
 
@@ -65,7 +80,7 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-	if (Session::getToken() != Input::get('_token'))
+	if (Session::token() != Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}

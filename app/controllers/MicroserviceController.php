@@ -2,13 +2,15 @@
 
 class MicroserviceController extends BaseController {
 
-	public $rules = array('name'      => 'required|max:20|alpha',
-	                      'description'  => 'alpha|max:250',     
-						  'price'        => 'numeric');
+	public $rules = array(
+		// 'name'      => 'required|max:20|',
+  //   	'description'  => 'max:1024',     
+  // 		'price'        => 'numeric'
+  	);
 
 	public function __construct() {
-		$this->beforeFilter('auth',['only'=>['create','store','edit','update','destroy','getActivated']]);
-		$this->beforeFilter('provider',['only'=>['create','store','edit','update','destroy','getActivated']]);
+		$this->beforeFilter('auth',['except'=>['index','show']]);
+		$this->beforeFilter('provider',['except'=>['index','show']]);
 	}
 
 	public function index($mac)
@@ -49,8 +51,9 @@ class MicroserviceController extends BaseController {
 								->with('success','successfully saved');
 			}
 		}
-		return Redirect::route('macro.micro.create',$mac)
-						->withErrors($validation);
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();;
 	}
 
 	public function edit($mac,$mic)
@@ -96,7 +99,9 @@ class MicroserviceController extends BaseController {
 			}
 		}
 
-		return Redirect::route('macro.micro.create');
+		return Redirect::back()
+						->withErrors($validation)
+						->withInput();;
 
 	}
 
@@ -106,8 +111,9 @@ class MicroserviceController extends BaseController {
 	{
 		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
-			$micservice->active=-1;
+			$micservice->active     =-1;
 			$micservice->activefrom =Input::get('date');
+		
 			$micservice->save();
 
 			return Redirect::route('macro.micro.create',$mac)

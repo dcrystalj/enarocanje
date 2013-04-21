@@ -6,72 +6,80 @@ class ManageServices extends BaseController {
 	                      'description'  => 'alpha|max:250',     
 						  'price'        => 'numeric');
 
-	public function index()
-	{
+	public function __construct() {
+		$this->beforeFilter('auth');
+		$this->beforeFilter('provider');
 	}
 
-	public function create()
-	{
-		return View::make('Provider.ManageServices')->with('rules',$this->rules);
-	}
+	// public function create()
+	// {
+	// 	return View::make('Provider.ManageServices')->with('rules',$this->rules);
+	// }
 
-	public function store()
-	{
-		$validation = Validator::make(Input::all(),$this->rules);
-		if($validation->fails())
-		{
-			return Redirect::to('ManageServices/create')->withErrors($validation)->with('rules',$this->rules);
-		}
-		else
-		{
-			$micservice = new MicroService;
-			$micservice->name 	= Input::get( 'name' );
-			$micservice->length    = Input::get( 'length' );
-			$micservice->description    = Input::get( 'description' );
-			$micservice->price    = Input::get( 'price' );
-			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','New service added')->with('rules',$this->rules);
-		}
-	}
+	// public function store()
+	// {
+	// 	$validation = Validator::make(Input::all(),$this->rules);
 
-	public function edit($id)
-	{
-		$service = MicroService::find($id);
-		return View::make('Provider.EditService')->with('rules',$this->rules)->with('service',$service);
-	}
+	// 	if($validation->passes())
+	// 	{
+	// 		$micservice              = new MicroService;
+	// 		$micservice->name        = Input::get( 'name' );
+	// 		$micservice->length      = Input::get( 'length' );
+	// 		$micservice->description = Input::get( 'description' );
+	// 		$micservice->price       = Input::get( 'price' );
+	// 		$micservice->save();
 
+	// 		return Redirect::back()->with('status','New service added')->with('rules',$this->rules);
+	// 	}
 
-	public function update($id)
-	{
-		if (($micservice = MicroService::find($id)))
-		{
-			$micservice->name 	= Input::get( 'name' );
-			$micservice->length    = Input::get( 'length' );
-			$micservice->description    = Input::get( 'description' );
-			$micservice->price    = Input::get( 'price' );
-			$micservice->save();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . 'updated.');
-		}
-		else
-		{
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
-		}	
-	}
+	// 	return Redirect::back()
+	// 					->withErrors($validation)
+	// 					->with('rules',$this->rules)
+	// 					->withInput();
+	// }
+
+	// public function edit($id)
+	// {
+	// 	$service = MicroService::find($id);
+		
+	// 	return View::make('Provider.EditService')
+	// 				->with('rules',$this->rules)
+	// 				->with('service',$service)
+	// 				->withInput();
+	// }
 
 
+	// public function update($id)
+	// {
+	// 	if (($micservice = MicroService::find($id)))
+	// 	{
+	// 		$micservice->name        = Input::get( 'name' );
+	// 		$micservice->length      = Input::get( 'length' );
+	// 		$micservice->description = Input::get( 'description' );
+	// 		$micservice->price       = Input::get( 'price' );
+	// 		$micservice->save();
+	// 		return Redirect::back()->with('status','Service ' . $micservice->name . 'updated.');
+	// 	}
+	// 	else
+	// 	{
+	// 		return Redirect::back()->with('status','Service ' . $micservice->name . "couldn't be updated!");
+	// 	}	
+	// }
 
-	public function destroy($id)
-	{
-		if (($micservice = MicroService::find($id)))
-		{
-			$micservice->delete();
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . ' deleted!');
-		}
-		else
-		{
-			return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
-		}
-	}
+
+
+	// public function destroy($id)
+	// {
+	// 	if (($micservice = MicroService::find($id)))
+	// 	{
+	// 		$micservice->delete();
+	// 		return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . ' deleted!');
+	// 	}
+	// 	else
+	// 	{
+	// 		return Redirect::to('ManageServices/create')->with('status','Service ' . $micservice->name . "couldn't be deleted!");
+	// 	}
+	// }
 
 
 	public function timetable($macro_id) {
@@ -85,7 +93,8 @@ class ManageServices extends BaseController {
 	public function submit_time($id) {
 		$events = Input::get('events');
 		$events = json_decode($events);
-		DB::table('working_hour')->where('macservice_id', $id)->delete();
+		Whours::where('macservice_id', $id)->delete();
+
 		foreach($events as $event) {
 			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));
@@ -101,9 +110,11 @@ class ManageServices extends BaseController {
 	}
 
 	public function submit_breaks($id) {
+
 		$events = Input::get('events');
 		$events = json_decode($events);
-		DB::table('break')->where('macservice_id', $id)->delete();
+		Breakt::where('macservice_id', $id)->delete();
+
 		foreach($events as $event) {
 			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));

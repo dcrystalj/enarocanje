@@ -17,21 +17,22 @@ class AppController extends BaseController
 	}
 
 	public function postLogin(){
-		
-		$validation = Validator::make(Input::all(),$this->rules);
+		$input = Input::all();
+		$validation = Validator::make($input, $this->rules);
 
 		if($validation->fails())
 		{
-			return  Redirect::back()->withErrors($validation);
+			return  Redirect::back()->withErrors($validation)->withInput();
 		}
 		else
 		{
-			if(Auth::attempt(Input::all(),true))
+			$input['confirmed'] = 1;
+
+			if(Auth::attempt($input,true))
 			{
 				Session::put('user',Auth::user());
 				Cookie::forever('user',Auth::user());
 				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
-			 
 			}
 			else
 			{
