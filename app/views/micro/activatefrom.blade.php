@@ -1,7 +1,14 @@
 <div id="event-dialog" class="modal hide fade">
         <!-- dialog contents -->
         <div class="modal-body">
-          <span id="spanfrom">From:</span> <input type="date" value="{{ date('Y-m-d',strtotime('now')) }}" id="efrom" /><br />
+          <span id="spanfrom">From:</span>
+          <input type="date"
+                value="{{ date('Y-m-d',strtotime('now')) }}" 
+                id="efrom" 
+                min="{{ date('Y-m-d',strtotime('now')) }}"
+          />
+
+         <br />
         </div>
           <!-- dialog buttons -->
         <div class="modal-footer">

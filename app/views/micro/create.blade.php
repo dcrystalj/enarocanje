@@ -26,13 +26,13 @@
         {{ Former::close() }}   
 
         <?php 
-            $microservice = $mac->microservices;
-            $allActivated = []; 
+            $microservice   = $mac->microservices;
+            $duration       = Service::duration();
+            $allActivated   = []; 
             $allDeactivated = [];
-            $i = 1; 
+            $i              = 1; 
             foreach ($microservice as $service){
-                if($service->active==0&& $service->activefrom <= date("Y-m-d") || 
-                $service->active==-1 && $service->activefrom > date("Y-m-d"))
+                if($service->isActive())
                 {
                     
                     $allActivated[]= [
@@ -44,7 +44,7 @@
                         'link'   => Html::link(
                                         URL::route('macro.micro.edit',
                                             [$mac->id, $service->id]), 'Edit'),
-                        'deactivate'  => deactivate($mac->id, $service->id),
+                        'deactivate'  => deactivate($mac->id, $service),
 
                      ];
                      $i++;
@@ -54,7 +54,7 @@
                     $allDeactivated[] = [
                         'name'        => $service->name, 
                         'description' => $service->description, 
-                        'link1'       => activate($mac->id, $service->id)
+                        'link1'       => activate($mac->id, $service)
                      ];
                 }
             }
@@ -77,24 +77,54 @@
     @endif
 
     <?php 
-    function deactivate($macId,$micId)
+    function deactivate($macId,$mic)
     {
-        $deactivate =    Form::open(array('method' => 'DELETE', 
-                                        'url' => URL::route('macro.micro.destroy',[$macId,$micId]),
-                                        'class'    => 'deactivate'));
+        $deactivate =   Form::open( array(
+            'method' => 'DELETE', 
+            'url' => URL::route(
+                'macro.micro.destroy',
+                [$macId,$mic->id]),
+                'class'    => 'deactivate'
+            )
+        );
         $deactivate .=    Form::hidden('date','',['id'=>'hiddendate']);
         $deactivate .=    Form::submit('Deactivate');
+
+        if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")) )
+        {
+            $deactivate .= Form::label(
+                'label',
+                'on: ' . date("d-m-Y",strtotime($mic->activefrom))
+            );
+        }
+
         $deactivate .=    Form::close();
+
         return $deactivate;
     }
-    function activate($macId,$micId)
+    function activate($macId,$mic)
     {
-        $activate = Form::open(array('method' => 'GET', 
-                                    'url'    => URL::route('microactivate',[$macId,$micId]),
-                                    'class'    => 'activate'));
+        $activate = Form::open( array(
+            'method' => 'GET', 
+            'url'    => URL::route(
+                'microactivate', 
+                [$macId,$mic->id]),
+                'class'    => 'activate'
+            )
+        );
         $activate .=    Form::hidden('date','',['id'=>'hiddendate']);
         $activate .=    Form::submit('Activate');
+
+        if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")))
+        {
+            $activate .= Form::label(
+                'label',
+                'on: ' . date("d-m-Y",strtotime($mic->activefrom))
+            );
+        }
+
         $activate .=    Form::close();
+
         return $activate;
     }
 
