@@ -1,16 +1,7 @@
 <?php
 
 class UserController extends BaseController {
-    public $rules = array(
-          //'name'     => 'required|max:20|alpha','match:/[a-z]+/'
-          'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-          'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
-          'email'    => 'required|email|unique:users',
-          'password' => 'required|between:6,30',
-          'repeat' => 'required|same:password|min:6|between:6,30',
-          'timezone' => 'min:1',
-          'language' => 'min:1',
-        );
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +19,7 @@ class UserController extends BaseController {
      */
     public function create()
     {
-        return View::make('user.registerUser')
+        return View::make('user.register')
                     ->with('rules', $this->rules)
                     ->with('status',Session::get('status'))
                     ->with('errors',Session::get('errors'))
@@ -55,11 +46,9 @@ class UserController extends BaseController {
                             ->withErrors($validation);
 
 
-            //return Redirect::to('user/create')->with_input();
         }
         else
         {
-            $languageArray = array("English","Slovenian", "Italian","German");
             $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
@@ -100,8 +89,56 @@ class UserController extends BaseController {
      */
     public function edit($id)
     {
-        //
     }
+
+    public function editUser()
+    {
+        return View::make('user.settings')
+                    ->with('rules', $this->rules)
+                    ->with('status',Session::get('status'))
+                    ->with('errors',Session::get('errors'))
+                    ->with('error',Session::get('error'))
+                    ->with('success',Session::get('success'))
+                    ->with('user',Auth::user());
+    }
+
+    public function storeUser()
+    {
+        $validation = Validator::make(Input::all(),$this->rules);
+        if($validation->fails())
+        {
+            Input::flash(); //input data remains in form
+
+            Redirect::back()->with('rules',$this->rules)->withErrors($validation);
+
+            return Redirect::to('user/create')
+                            ->withErrors($validation);
+
+
+        }
+        else
+        {
+            $user = new User;
+            $user->name      = Input::get( 'name' );
+            $user->surname   = Input::get( 'surname' );
+            $user->email     = Input::get( 'email' );
+            $user->password  = Hash::make(Input::get('password'));
+            $user->time_zone = Input::get( 'timezone' );
+            $user->language  = Input::get( 'language' );
+            $user->confirmed = 0;
+            $user->save();
+            Config::set('auth.reminder.email', 'emails.auth.userWelcome');
+            Password::remind(['email' => $user->email ], function($m)
+            {
+                $m->setCharset('UTF-8');
+            }) ;
+
+            return Redirect::home()->with('success','Your activation mail was sent on email');
+        }
+
+
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -112,6 +149,43 @@ class UserController extends BaseController {
     public function update($id)
     {
         //
+    }
+
+    public function updateuser($id)
+    {
+        $validation = Validator::make(Input::all(),$this->rules);
+        if($validation->fails())
+        {
+            Input::flash(); //input data remains in form
+
+            Redirect::back()->with('rules',$this->rules)->withErrors($validation);
+
+            return Redirect::to('user/create')
+                            ->withErrors($validation);
+
+
+        }
+        else
+        {
+            $user = new User;
+            $user->name      = Input::get( 'name' );
+            $user->surname   = Input::get( 'surname' );
+            $user->email     = Input::get( 'email' );
+            $user->password  = Hash::make(Input::get('password'));
+            $user->time_zone = Input::get( 'timezone' );
+          $user->language  = Input::get( 'language' );
+            $user->confirmed = 0;
+            $user->save();
+            Config::set('auth.reminder.email', 'emails.auth.userWelcome');
+            Password::remind(['email' => $user->email ], function($m)
+            {
+                $m->setCharset('UTF-8');
+            }) ;
+
+            return Redirect::home()->with('success','Your activation mail was sent on email');
+        }
+
+
     }
 
     /**

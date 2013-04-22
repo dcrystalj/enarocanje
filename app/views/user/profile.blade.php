@@ -11,11 +11,11 @@
 
 
 ?>
-
 {{Former::label('Name: '.$user->name)}}
 {{Former::label('Surname: '.$user->surname)}}
 {{Former::label('Email: '.$user->email)}}
-{{Former::label('Timezone: '.$user->timezone)}}
+{{Former::label('Timezone: '.$user->time_zone)}}
 {{Former::label('Language: '.UserLibrary::lang($user->language))}}
+{{Button::link('user/settings', 'Edit profile'); }}
 
 @stop
