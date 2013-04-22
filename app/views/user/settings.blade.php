@@ -15,7 +15,7 @@
     $language = array("English","Slovenian", "Italian","German");
 
 ?>
-{{Former::open('user')->rules($rules)}}
+{{Former::open('userSettings')->rules($rules)}}
 {{Former::populate( array(	'name' => $user->name,
 							'surname' => $user->surname,
 							'timezone' => $user->time_zone,

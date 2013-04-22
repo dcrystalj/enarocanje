@@ -16,6 +16,6 @@
 {{Former::label('Email: '.$user->email)}}
 {{Former::label('Timezone: '.$user->time_zone)}}
 {{Former::label('Language: '.UserLibrary::lang($user->language))}}
-{{Button::link('user/settings', 'Edit profile'); }}
+{{Button::link('userSettings', 'Edit profile'); }}
 
 @stop

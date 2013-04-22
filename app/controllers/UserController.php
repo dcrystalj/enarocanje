@@ -1,7 +1,15 @@
 <?php
 
 class UserController extends BaseController {
-
+    public $rules = array(
+          'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+          'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+          'email'    => 'required|email|unique:users',
+          'password' => 'required|between:6,30',
+          'repeat' => 'required|same:password|min:6|between:6,30',
+          'timezone' => 'min:1',
+          'language' => 'min:1',
+        );
     /**
      * Display a listing of the resource.
      *
