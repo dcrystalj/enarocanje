@@ -50,11 +50,11 @@ class MacroserviceController extends BaseController {
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
 			$mac->ZIP_code = Input::get( 'ZIPcode');
-			$mac->address = Input::get( 'address');
-			//$mac->street = Input::get( 'street');
-			//$mac->email = Input::get( 'email');
+			$mac->city = Input::get('city');
+			$mac->street = Input::get( 'street');
+			$mac->email = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telN');
-			//$mac-> = Input::get( 'SiteUrl');
+			$mac->site_url = Input::get( 'SiteUrl');
 			$mac->description = Input::get('description');
 			$mac->user_id = Auth::user()->id;
 			$mac->save();
@@ -106,9 +106,15 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			
 			$mac->name = Input::get( 'name' );
+			$mac->ZIP_code = Input::get( 'ZIPcode');
+			$mac->city = Input::get('city');
+			$mac->street = Input::get( 'street');
+			$mac->email = Input::get( 'email');
+			$mac->telephone_number = Input::get( 'telN');
+			$mac->site_url = Input::get( 'SiteUrl');
 			$mac->description = Input::get('description');
+			$mac->user_id = Auth::user()->id;
 			$mac->save();
 
 			if($mac){

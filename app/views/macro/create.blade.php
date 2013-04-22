@@ -21,7 +21,7 @@
     @endif
     {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
     {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
-    {{ Former::text('address', 'City:')}}
+    {{ Former::text('city', 'City:')}}
     {{ Former::text('street','Street:')}}
     {{ Former::text('email','Email:')->value(Auth::user()->email)}}
     {{ Former::text('telN','Telephone Number:')}}
