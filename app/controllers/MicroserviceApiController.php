@@ -159,6 +159,24 @@ class MicroserviceApiController extends BaseController
 		return Response::json($timetable);
 	}
 
+	public function getAbsences($id) {
+		$absences = Absence::where('macservice_id', $id)->get();
+									   // from >= input('from')
+									   // to <= input('to')
+		$table = array();
+		foreach($absences as $absence) {
+			$table[] = array(
+				"id"       => $absence->id,
+				"title"    => "Absence -title!-",
+				"start"    => $absence->from,
+				"end"      => $absence->to,
+				"allDay"   => false,
+				'eventType' => 'break',
+			);
+		}
+		return Response::json($table);
+	}
+
 	public function postRegistration($id){
 		
 		$microservid = $id;

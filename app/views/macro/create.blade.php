@@ -45,6 +45,7 @@
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
+					'timetable'   => Button::link(URL::route('timetable', $service->id), 'Timetable'),
                     'deactivate'  => deactivate($service->id),
                     'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
                  ];

@@ -31,7 +31,7 @@ Route::get('user/registerUser', function()
 Route::resource('ManageServices','ManageServices');
 Route::post('/service/{id}/time/submit', array('as' => 'timetable_submit', 'uses' => 'ManageServices@submit_time'));
 Route::post('/service/{id}/breaks/submit',array('as' => 'breaks_submit', 'uses' => 'ManageServices@submit_breaks'));
-Route::get('/service/{id}/time','ManageServices@timetable');
+Route::get('/service/{id}/time',array('as' => 'timetable', 'uses' => 'ManageServices@timetable'));
 Route::get('/service/{id}/breaks', array( 'as' => 'breaks', 'uses' => 'ManageServices@breaks'));
 
 
