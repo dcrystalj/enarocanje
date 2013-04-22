@@ -6,7 +6,12 @@ class MicroService extends Eloquent {
 
 	public function macroservice()
     {
-        return $this->belongsTo('MacroService');
+        return $this->belongsTo('MacroService','macservice_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany('Reservation', 'micservice_id');
     }
 
     /**
