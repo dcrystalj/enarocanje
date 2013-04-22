@@ -55,7 +55,7 @@
                     'name'        => $service->name, 
                     'description' => $service->description, 
                     'activate'       => activate($service->id),
-                    'micro' => Html::link( URL::route('macro.micro.create',$service->id), 'Add new actions')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
                 ];
             }
         }
