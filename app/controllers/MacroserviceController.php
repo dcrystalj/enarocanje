@@ -2,7 +2,8 @@
 
 class MacroserviceController extends BaseController {
 
-	public $rules = array(
+	public $rules = array();
+	/*
         'name'		=> 'required',
         'address'   => 'required|alpha',
         'street'    => 'regex:/[^a-zA-Z0-9 ]/',
@@ -12,6 +13,7 @@ class MacroserviceController extends BaseController {
         'SiteUrl'   => 'active_url',
         'description' => 'max:1024'
     );
+	*/
 
 	public function __construct() {
 		$this->beforeFilter('auth',['except'=>['index','show']]);
@@ -38,9 +40,9 @@ class MacroserviceController extends BaseController {
 	public function store()
 	{
 
-		$validation = Validator::make(Input::all(),$this->rules);
+		//$validation = Validator::make(Input::all(),$this->rules);
 
-		if($validation->passes())
+		if(true || $validation->passes())
 		{
 			
 			//save user and send mail with confirmation link
