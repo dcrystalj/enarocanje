@@ -12,7 +12,7 @@ Reservation
 @stop
 
 @section('content')
-@include('calendar_register')
+@include('calendar.calendar_register')
 
 <p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
@@ -20,7 +20,7 @@ Reservation
 <div id='calendar'></div>
 
 <script>
-@include('calendar_def')
+@include('calendar.calendar_def')
 var defaultLength = '{{ MicroService::find($mic)->first()->length }}';
 fc_init({
 	disableResizing: true,
@@ -33,8 +33,13 @@ fc_init({
 			.css('padding-top','2px');
 	},
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+
 		event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
-		if (isOverlapping(event.start, event.end)) { revertFunc();	}
+
+		if (isOverlapping(event.start, event.end)) { 
+			revertFunc();
+			event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
+		}
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
@@ -57,7 +62,7 @@ fc_init({
 	},
 	eventSources: [
 		{
-			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -65,7 +70,7 @@ fc_init({
 			className: "termin"
 		},
 		{
-			url: '{{ URL::action("MicroserviceApiController@getBreaks", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getBreaks", array($mac)) }}',
 			type: 'GET',
 			error: cal_error,
 			editable: false,
@@ -75,7 +80,7 @@ fc_init({
 		{
 			@if(Auth::check())
 			
-			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
 			error: 'cal_error',
 			type: 'GET',
 			editable: false,
@@ -174,7 +179,7 @@ $(function() {
 		bootbox.confirm(
 			"Are you sure you want to delete reservation on " + fromTo(allevents[0]) +" ?", function(result) {
 		  	 	if(result){
-					$.post('{{ URL::action("MicroserviceApiController@postDeleteReservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
+					$.post('{{ URL::action("MicroserviceApiController@postDeletereservation", array($mic)) }}', {'event': allevents[0].id}, function(e){
 						e = JSON.parse(e);
 						$('#statusmessage').text(e.text).show();
 						if(e.success){
@@ -193,7 +198,7 @@ $(function() {
 
 <style>
 
-.fc-agenda-allday, .fc-event-time{
+.fc-agenda-allday, .fc-event-time, .fc-agenda-gutter{
 	display: none;
 }
 

@@ -54,7 +54,6 @@ class MicroserviceApiController extends BaseController
 	public function getUsertimetable($id)
 	{
 		$timetable = array();
-		//TODO
 		$micserviceid = $id;
 		$userid = Auth::user()->id;
 
@@ -67,11 +66,11 @@ class MicroserviceApiController extends BaseController
 			$title       = "Your reservation: \nfrom  " . $b->from ." to " . $b->to;
 
 			$timetable[] = array(
-					"id"	 => $b->id,
-					"title"  => $title,
-					"start"  => $date . " " . $b->from ,
-					"end"    => $date . " " . $b->to ,
-					"allDay" => false,
+					"id"        => $b->id,
+					"title"     => $title,
+					"start"     => $date . " " . $b->from ,
+					"end"       => $date . " " . $b->to ,
+					"allDay"    => false,
 					'eventType' => 'reservation',
 			);
 		}
@@ -85,19 +84,52 @@ class MicroserviceApiController extends BaseController
 		$events = Input::get('event');
 		$event = json_decode($events);
 
-		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$date = date('Y-m-d', strtotime($event->start));
 		$start = date('G:i', strtotime($event->start));
 		$end = date('G:i', strtotime($event->end));
 
-		$r               = new Reservation;
-		$r->from         = $start;
-		$r->to           = $end;
+		//cant make reservation on yesterday =)
+		if(strtotime($date) < strtotime(date('Y-m-d')))
+		{
+			return json_encode(array(
+				'success' => false,
+				'text'    => 'Cannot make reservation on passed days')
+			);
+		}
+
+		$r                = new Reservation;
+		$r->from          = $start;
+		$r->to            = $end;
 		$r->micservice_id = $microservid;
 		$r->date          = $date;
-		$r->user_id		 = $userid;
+		$r->user_id       = $userid;
 		$r->save();
-
+		//return json_encode(['a'=> $r->microservice->name]);
 		if($r){
+
+			$data = array(
+				'user'        => Auth::user(),
+				'reservation' => $r
+			);
+
+			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
+			{
+			    $m->to(
+		    		$r->microservice->macroservice->user->email, 
+		    		$r->microservice->macroservice->user->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
+
+			Mail::send('emails.reservation.customer', $data, function($m)
+			{
+			    $m->to(
+		    		Auth::user()->email, 
+		    		Auth::user()->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
+
 			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
 		}
 	}
@@ -107,7 +139,7 @@ class MicroserviceApiController extends BaseController
 		$microservid = $id;
 
  		$r = Reservation::where('micservice_id',$microservid)
-			// ->where('id',Input::get('event')) FIXME : je to potrebno?
+					// ->where('id',Input::get('event')) //FIXME : je to potrebno?
 					->where('user_id',$userid)
 					->delete();
 		if($r)			
@@ -128,11 +160,11 @@ class MicroserviceApiController extends BaseController
 		{
 			$date = $start+$wh->day*3600*24; // offset
 			$timetable[] = array(
-				"id"	 => $wh->id,
-				"title"  => "",
-				"start"  => date("Y-m-d", $date) . " " . $wh->from ,
-				"end"    => date("Y-m-d", $date) . " " . $wh->to ,
-				"allDay" => false,
+				"id"        => $wh->id,
+				"title"     => "",
+				"start"     => date("Y-m-d", $date) . " " . $wh->from ,
+				"end"       => date("Y-m-d", $date) . " " . $wh->to ,
+				"allDay"    => false,
 				'eventType' => 'work',
 			);
 		}
@@ -148,11 +180,11 @@ class MicroserviceApiController extends BaseController
 		foreach($breaks as $break) {
 			$date = $start+$break->day*3600*24; // offset
 			$timetable[] = array(
-				"id"       => $break->id,
-				"title"    => "",
-				"start"    => date("Y-m-d", $date) . " " . $break->from, 
-				"end"      => date("Y-m-d", $date) . " " . $break->to,
-				"allDay"   => false,
+				"id"        => $break->id,
+				"title"     => "",
+				"start"     => date("Y-m-d", $date) . " " . $break->from, 
+				"end"       => date("Y-m-d", $date) . " " . $break->to,
+				"allDay"    => false,
 				'eventType' => 'break',
 			);
 		}
@@ -166,11 +198,11 @@ class MicroserviceApiController extends BaseController
 		$table = array();
 		foreach($absences as $absence) {
 			$table[] = array(
-				"id"       => $absence->id,
-				"title"    => "Absence -title!-",
-				"start"    => $absence->from,
-				"end"      => $absence->to,
-				"allDay"   => false,
+				"id"        => $absence->id,
+				"title"     => "Absence -title!-",
+				"start"     => $absence->from,
+				"end"       => $absence->to,
+				"allDay"    => false,
 				'eventType' => 'break',
 			);
 		}
@@ -200,12 +232,12 @@ class MicroserviceApiController extends BaseController
 			Auth::login($tempuser);
 			
 
-			$r               = new Reservation;
-			$r->from         = $start;
-			$r->to           = $end;
+			$r                = new Reservation;
+			$r->from          = $start;
+			$r->to            = $end;
 			$r->micservice_id = $microservid;
 			$r->date          = $date;
-			$r->user_id	 	= $tempuser->id;
+			$r->user_id       = $tempuser->id;
 			$r->save();
 
 			if($r){
@@ -221,13 +253,13 @@ class MicroserviceApiController extends BaseController
 	//helpers
 	//----------------------------------------
 	protected function dayToString($i){
-		$day[0]="Monday";
-		$day[1]="Tuesday";
-		$day[2]="Wednesday";
-		$day[3]="Thursday";
-		$day[4]="Friday";
-		$day[5]="Saturday";
-		$day[6]="Sunday";
+		$day[0] = "Monday";
+		$day[1] = "Tuesday";
+		$day[2] = "Wednesday";
+		$day[3] = "Thursday";
+		$day[4] = "Friday";
+		$day[5] = "Saturday";
+		$day[6] = "Sunday";
 		return $day[$i];
 	}
 	protected function stringToDay($i){
@@ -253,11 +285,11 @@ class MicroserviceApiController extends BaseController
 
 	protected function timetableArray($id, $start, $from, $to){
 		$array =  array(
-						"id"       => "$id",
-						"title"    => "",
-						"start"    => date("Y-m-d", strtotime("$start")) . " " . $from, 
-						"end"      => date("Y-m-d", strtotime("$start")) . " " . $to,
-						"allDay"   => false,
+						"id"        => "$id",
+						"title"     => "",
+						"start"     => date("Y-m-d", strtotime("$start")) . " " . $from, 
+						"end"       => date("Y-m-d", strtotime("$start")) . " " . $to,
+						"allDay"    => false,
 						'eventType' => 'free'
 					);
 		return $array;

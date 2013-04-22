@@ -18,13 +18,20 @@ Route::get('find', function()
 });
 Route::get('profile', function()
 {
-	return View::make('user.userProfile')->with('user',Auth::user());
+	return View::make('user.profile')->with('user',Auth::user());
 })->before('auth');
 
-Route::get('user/registerUser', function()
+Route::get('user/settings', function()
 {
-	return View::make('user/registerUser');
+	return View::make('user.settings')->with('user',Auth::user());
+})->before('auth');
+
+Route::get('user/register', function()
+{
+	return View::make('user/register');
 });
+
+
 
 
 
@@ -58,6 +65,9 @@ Route::post('provider/confirm/{token}','Provider@postConfirm');
 Route::resource('user','UserController');
 Route::get('user/confirm/{token}','UserController@getConfirm');
 Route::post('user/confirm/{token}','UserController@postConfirm');
+
+//userSettings
+Route::resource('userSettings','UserSettingsController');
 
 //calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');
