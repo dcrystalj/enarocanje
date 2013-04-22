@@ -56,7 +56,7 @@ fc_init({
 	// Load events
 	eventSources: [
 		{
-			url: '{{ route("api_mic_whours", array($id)) }}',
+			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
 			type: 'GET',
 			error: function() { alert('there was an error while fetching events!'); },
 			editable: true,

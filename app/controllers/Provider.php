@@ -4,15 +4,15 @@ class Provider extends BaseController {
 
 	//rules for registering
 	public $rules = array(
-        'email'		=> 'required|email|unique:users',
-        'password'		=> 'same:password_confirmation|between:4,20|confirmed',
-    	'password_confirmation'		=> 'required',
+		'email'                 => 'required|email|unique:users',
+		'password'              => 'same:password_confirmation|between:4,20|confirmed',
+		'password_confirmation' => 'required',
     );
 
     public $rules2 = array(
-    	'name'		=> 'required|max:20|alpha',
-    	'surname'		=> 'required|max:20|alpha',
-        'password'		=> 'same:password_confirmation|between:4,20|confirmed',
+		'name'     => 'required|max:20|alpha',
+		'surname'  => 'required|max:20|alpha',
+		'password' => 'same:password_confirmation|between:4,20|confirmed',
    	);
 
 	public function __construct() {
@@ -116,8 +116,8 @@ class Provider extends BaseController {
 			
 		}		
 		return Redirect::back()
-							->withErrors($validation)
-							->with('rules',$this->rules2);
+						->withErrors($validation)
+						->with('rules',$this->rules2);
 
 	}
 
