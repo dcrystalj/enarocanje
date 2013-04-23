@@ -9,7 +9,7 @@
 
      $zipCode = ZIPcode::All();
      foreach ($zipCode as $z) {
-         $codes[$z->ZIP_code] = $z->ZIP_code;
+         $codes[$z->ZIP_code] = $z->ZIP_code . ' ' . $z->city;
      }
 ?>
     
@@ -21,7 +21,6 @@
     @endif
     {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
     {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
-    {{ Former::text('city', 'City:')}}
     {{ Former::text('street','Street:')}}
     {{ Former::text('email','Email:')->value(Auth::user()->email)}}
     {{ Former::text('telN','Telephone Number:')}}

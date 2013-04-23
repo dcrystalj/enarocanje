@@ -2,10 +2,8 @@
 
 class MacroserviceController extends BaseController {
 
-	public $rules = array();
-	/*
+	public $rules = array(
         'name'		=> 'required',
-        'address'   => 'required|alpha',
         'street'    => 'regex:/[^a-zA-Z0-9 ]/',
         'ZIPcode'   => 'required|numeric',
         'email' 	=> 'required|email',
@@ -13,7 +11,6 @@ class MacroserviceController extends BaseController {
         'SiteUrl'   => 'active_url',
         'description' => 'max:1024'
     );
-	*/
 
 	public function __construct() {
 		$this->beforeFilter('auth',['except'=>['index','show']]);
@@ -44,13 +41,14 @@ class MacroserviceController extends BaseController {
 
 		if(true || $validation->passes())
 		{
-			
+			$zip = ZIPcode::where('ZIP_code', '=', Input::get('ZIPcode'))->first();
+
 			//save user and send mail with confirmation link
-			//$mac = MacroService::create(Input::all());
+				
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
 			$mac->ZIP_code = Input::get( 'ZIPcode');
-			$mac->city = Input::get('city');
+			$mac->city = $zip->city;
 			$mac->street = Input::get( 'street');
 			$mac->email = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telN');
@@ -106,9 +104,11 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
+			$zip = ZIPcode::where('ZIP_code', '=', Input::get('ZIPcode'));
+
 			$mac->name = Input::get( 'name' );
 			$mac->ZIP_code = Input::get( 'ZIPcode');
-			$mac->city = Input::get('city');
+			$mac->city = $zip->city;
 			$mac->street = Input::get( 'street');
 			$mac->email = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telN');
