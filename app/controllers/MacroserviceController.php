@@ -4,7 +4,7 @@ class MacroserviceController extends BaseController {
 
 	public $rules = array(
         'name'		=> 'required',
-        'street'    => 'regex:/[^a-zA-Z0-9 ]/',
+        'street'    => 'required|regex:/[^a-zA-ZŽžŠšČč0-9 ]/',
         'ZIPcode'   => 'required|numeric',
         'email' 	=> 'required|email',
         'telN' 		=> 'regex:/[^0-9+()]/',

@@ -3,9 +3,10 @@
 class MicroserviceController extends BaseController {
 
 	public $rules = array(
-		// 'name'      => 'required|max:20|',
-  //   	'description'  => 'max:1024',     
-  // 		'price'        => 'numeric'
+		'name'      => 'required',
+		'length' 	=> 'required',
+     	'description'  => 'max:1024',     
+   		'price'        => 'numeric'
   	);
 
 	public function __construct() {
