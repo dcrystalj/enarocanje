@@ -23,7 +23,7 @@
     {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
     {{ Former::text('street','Street:')}}
     {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-    {{ Former::text('telN','Telephone Number:')}}
+    {{ Former::text('telephone_number','Telephone Number:')}}
     {{ Former::text('SiteUrl','URL to your site:')}}
     {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? 'Save changes' : 'Add service' ) }}
