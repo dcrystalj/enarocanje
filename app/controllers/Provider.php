@@ -54,12 +54,19 @@ class Provider extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-			//send mail
 
-			Config::set('auth.reminder.email', 'emails.auth.welcome');
-			Password::remind(['email' => $user->email ], function($m)
+			$token = UserLibrary::generateUuid(); 
+
+			$passwordReminder = new Passreminder;
+			$passwordReminder->email = $user->email;
+			$passwordReminder->token = $token;
+			$passwordReminder->save();
+
+			Mail::send('emails.auth.welcome', compact('token'), function($m) use ($user)
 			{
-			    $m->setCharset('UTF-8');
+			    $m 	->to($user->email, $user->name)
+				    ->subject('Welcome!')
+				    ->setCharset('UTF-8');
 			});
 
 			return Redirect::home()->with('success','Your activation mail was sent on email');
@@ -122,25 +129,25 @@ class Provider extends BaseController {
 	}
 
 
-
-	public function destroy($id)
-	{
-		//
-	}
-
 	public function getConfirm($token)
 	{	
-		//save
-		$remind =  DB::table('password_reminders')->where('token', $token)->first();
-		if($remind)	$user = User::where('email',$remind->email)->first();
-		if(isset($user)){
-		    $user->confirmed = 1;
-		    $user->status = 2;
-		    $user->save();
-		    //Session::put('user',Auth::user());
-		    Session::put('user',$user);
-			return View::make('home')->with('success','Registration successfully completed.');
-	    }
-	    App::abort(404, 'Page not found');
+
+		if( $remind = Passreminder::where('token', $token)->first())
+		{
+			if( $user   = User::where('email',$remind->email)->first())
+			{
+				$user->confirmed = 1;
+				$user->status    = 2;
+			    $user->save();
+				$remind->delete();
+
+				Auth::loginUsingId($user->id);
+			    Session::put('user',$user);
+
+				return View::make('home')->with('success','Registration successfully completed.');
+			}
+		}
+		
+		App::abort(404,'Page not found');
 	}
 }
