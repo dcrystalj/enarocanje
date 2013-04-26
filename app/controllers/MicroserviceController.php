@@ -41,6 +41,7 @@ class MicroserviceController extends BaseController {
 			$micservice->name          = Input::get( 'name' );
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
+			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
 			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
 			$micservice->macservice_id = $mac;
@@ -89,6 +90,7 @@ class MicroserviceController extends BaseController {
 			$micservice->name          = Input::get( 'name' );
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
+			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
 			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
 			$micservice->macservice_id = $mac;

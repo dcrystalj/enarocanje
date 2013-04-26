@@ -17,6 +17,7 @@
 
         {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
+        {{ Former::select('gender','Gender:')->options(array('M' => 'Man','W' => 'Women','U' => 'Unisex')) }} 
         {{ Former::Number('price','Price:')->append('€') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::actions()->submit( isset($mic) ? 'Edit' : 'Add service' ) }}
@@ -35,7 +36,8 @@
                     $allActivated[]= [
                         'id'     => $i, 
                         'name'   => $service->name, 
-                        'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
+                        'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
+                        'gender' => $service->gender, 
                         'price'  => $service->price, 
                         'link'   => Html::link(
                                         URL::route('macro.micro.edit',
