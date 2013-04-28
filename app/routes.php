@@ -73,3 +73,8 @@ Route::resource('userSettings','UserSettingsController');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 Route::controller('app','AppController');
+
+// absence controller
+
+ Route::resource('macro.absence','AbsenceController');
+ 

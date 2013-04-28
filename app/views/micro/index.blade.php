@@ -15,7 +15,11 @@
     @if(count($mic)==0)
         {{ Typography::warning('No services avaliable yet') }}
     @else
-        <?php 
+
+        {{ Former::select('gender','Filter services by gender:')->options(array('U' => 'Unisex','M' => 'Man', 'W' => 'Women'))}}
+        <?php
+        
+        if ($mic){ 
         $tbody = []; 
         $i = 1; 
         foreach ($mic as $service){
@@ -28,6 +32,7 @@
                 'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
              ];
              $i++;
+        }
         }?>
 
         {{ Table::hover_open(["class"=>'sortable']) }}

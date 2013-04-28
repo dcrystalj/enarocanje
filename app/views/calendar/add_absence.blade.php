@@ -5,16 +5,43 @@
 @stop
 
 @section('content')
+    <?php
+        $abs = Absence::find($id);
+    ?>
+        @if(isset($abs))
+            {{ Former::open(URL::route('macro.absence.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
+            {{ Former::populate($abs) }}
+        @else
+            {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
+        @endif
     
-    {{ Former::open() }} 
-    {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
-    {{ Former::text('street','Street:')}}
-    {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-    {{ Former::text('telN','Telephone Number:')}}
-    {{ Former::text('SiteUrl','URL to your site:')}}
-    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-    {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
+    {{ Former::text('title','Title:')}}
+    {{ Former::select('abs_type','Absence type:')->options(array('holiday' => 'Holiday', 'absence' => 'Absence'))}}
+    {{ Former::checkbox('repetable','Repeatable every year:') }}
+    {{ Former::text('from','From date:')}}
+    {{ Former::text('to','To date:')}}
+    {{ Former::actions()->submit( isset($abs) ? 'Edit' : 'Add service' ) }}
     {{ Former::close() }}   
+
+        <?php 
+        $absences = Absence::All();
+        $tbody = []; 
+        $i = 1; 
+        foreach ($absences as $absence){    
+            $tbody[]= [
+                'id'     => $i, 
+                'title'   => $absence->title,
+                'from'   => $absence->from,
+                'to'   => $absence->to,
+                'edit'  => Button::link(URL::route('absence.edit', $absence->id),'Edit'),
+             ];
+             $i++;
+        }
+    ?>
+
+    {{ Table::hover_open(["class"=>'sortable']) }}
+    {{ Table::headers('#', 'Title','From','To', '') }}
+    {{ Table::body($tbody) }}
+    {{ Table::close() }}
 
 @stop
