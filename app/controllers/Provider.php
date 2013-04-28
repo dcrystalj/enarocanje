@@ -54,7 +54,6 @@ class Provider extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 
-
 			$token = UserLibrary::generateUuid(); 
 
 			$passwordReminder = new Passreminder;
@@ -147,7 +146,7 @@ class Provider extends BaseController {
 				return View::make('home')->with('success','Registration successfully completed.');
 			}
 		}
-		
+
 		App::abort(404,'Page not found');
 	}
 }

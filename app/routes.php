@@ -73,3 +73,7 @@ Route::resource('userSettings','UserSettingsController');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 Route::controller('app','AppController');
+
+Route::post('queue/push',function(){
+	return Queue::narshal();
+});

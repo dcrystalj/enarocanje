@@ -57,6 +57,8 @@ class UserController extends BaseController {
           }
           else
           {
+
+            
             $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
@@ -74,7 +76,8 @@ class UserController extends BaseController {
             $passwordReminder->token = $token;
             $passwordReminder->save();
 
-            Mail::send('emails.auth.userWelcome', compact('token'), function($m) use ($user)
+            Queue::getIron()->ssl_verifypeer = false;
+            Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
             {
                 $m  ->to($user->email, $user->name)
                     ->subject('Welcome!')
