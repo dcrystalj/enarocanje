@@ -12,19 +12,11 @@ Route::get('home',array('as' => 'home', function()
 				->with('success',Session::get('success'));
 }));
 
-Route::get('find', function()
-{
-	return View::make('find');
-});
 Route::get('profile', function()
 {
 	return View::make('user.profile')->with('user',Auth::user());
 })->before('auth');
 
-Route::get('user/settings', function()
-{
-	return View::make('user.settings')->with('user',Auth::user());
-})->before('auth');
 
 Route::get('user/register', function()
 {
@@ -66,8 +58,6 @@ Route::resource('user','UserController');
 Route::get('user/confirm/{token}','UserController@getConfirm');
 Route::post('user/confirm/{token}','UserController@postConfirm');
 
-//userSettings
-Route::resource('userSettings','UserSettingsController');
 
 //calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');

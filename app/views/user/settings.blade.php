@@ -7,23 +7,17 @@
 @section('content')
 
 <?php
-    for ($i=-11;$i<=12;$i++) {
-        if($i<0) $timezone[$i] = $i;
-        else if($i>0) $timezone[$i] = "+".$i;
-        else $timezone[$i] =  "UTC";
-    }
-    $language = array("English","Slovenian", "Italian","German");
 
 ?>
-{{Former::open('userSettings')->rules($rules)}}
+{{Former::open(URL::route('user.update',Auth::user()->id))->rules($rules)->method('PUT')}}
 {{Former::populate( array(	'name' => $user->name,
 							'surname' => $user->surname,
 							'timezone' => $user->time_zone,
 							'language' => $user->language))}}
 {{Former::text('name','Name')->autofocus()}}
 {{Former::text('surname','Surname')}}
-{{Former::select('timezone','Timezone')->options($timezone,"UTC",true)}}
-{{Former::select('language','Language')->options($language)}}
+{{Former::select('timezone','Timezone')->options(.UserLibrary::timezone,"UTC",true)}}
+{{Former::select('language','Language')->options(.UserLibrary::lang)}}
 {{Former::actions()->submit('Submit')}}
 {{Former::close()}}
 
