@@ -75,7 +75,7 @@ Route::controller('microserviceapi', 'MicroserviceApiController');
 Route::controller('app','AppController');
 
 //iron.io mail 
-// Route::post('queue/push', function(){
-// 	File::append(app_path().'/queue.txt', 'Dayle Rees'.PHP_EOL);
-// 	return Queue::marshal();
-// });
+Route::post('queue/push', function(){
+	File::append(app_path().'/queue.txt', 'Dayle Reesa'.PHP_EOL);
+	//return Queue::marshal();
+});
