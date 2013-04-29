@@ -77,5 +77,5 @@ Route::controller('app','AppController');
 //iron.io mail 
 Route::post('queue/push', function(){
 	File::append(app_path().'/queue.txt', 'Dayle Reesa'.PHP_EOL);
-	//return Queue::marshal();
+	return Queue::marshal();
 });
