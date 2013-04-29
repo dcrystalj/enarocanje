@@ -61,7 +61,7 @@ class Provider extends BaseController {
 			$passwordReminder->token = $token;
 			$passwordReminder->save();
 
-			Mail::send('emails.auth.welcome', compact('token'), function($m) use ($user)
+			Mail::queue('emails.auth.welcome', compact('token'), function($m) use ($user)
 			{
 			    $m 	->to($user->email, $user->name)
 				    ->subject('Welcome!')
