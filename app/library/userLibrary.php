@@ -14,8 +14,14 @@ class UserLibrary {
 	);
 
 
-	public static function lang($i) {
+	public static function languages() {
+		return self::$languageArray;
+	}
+	public static function language($i) {
 		return self::$languageArray[$i];
+	}
+	public static function timezones() {
+		return self::$timezoneArray	;
 	}
 	public static function timezone($i) {
 		return self::$timezoneArray[$i];

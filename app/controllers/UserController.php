@@ -1,21 +1,21 @@
 <?php
 
 class UserController extends BaseController {
-
-    public $rules = array(
-          'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-          'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
-          'repeat' => 'required|same:password|min:6|between:6,30',
-          'timezone' => 'min:1',
-          'language' => 'min:1',
-        );
     public $rulesSettings = array(
           'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
           'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
           'timezone' => 'min:1',
           'language' => 'min:1',
         );
-
+  public $rules = array(
+    'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+    'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+    'email'    => 'required|email|unique:users',
+    'password' => 'required|between:4,30',
+    'repeat'   => 'required|same:password|between:4,30',
+    'timezone' => 'min:1',
+    'language' => 'min:1',
+    );
     /**
      * Display a listing of the resource.
      *
@@ -142,35 +142,15 @@ class UserController extends BaseController {
         else
         {
             $user = Auth::user();
-
-          }
-          else
-          {
-            $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
             $user->time_zone = Input::get( 'timezone' );
             $user->language  = Input::get( 'language' );
-<<<<<<< HEAD
             $user->save();
             return Redirect::to('profile')->with('success','Your settings were successfully updated.');
         }
 
     }
-=======
-            $user->confirmed = 0;
-            $user->save();
-            Config::set('auth.reminder.email', 'emails.auth.userWelcome');
-            Password::remind(['email' => $user->email ], function($m)
-            {
-              $m->setCharset('UTF-8');
-            }) ;
-
-            return Redirect::home()->with('success','Your activation mail was sent on email');
-          }
-
-
-        }
 
   
     

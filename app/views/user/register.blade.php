@@ -14,8 +14,8 @@
 {{Former::text('email','Email')}}
 {{Former::password('password','Password')}}
 {{Former::password('repeat','Repeat password')}}
-{{Former::select('timezone','Timezone')->options(.UserLibrary::timezone,"UTC",true)}}
-{{Former::select('language','Language')->options(.UserLibrary::lang)}}
+{{Former::select('timezone','Timezone')->options(UserLibrary::timezones(),"UTC",true)}}
+{{Former::select('language','Language')->options(UserLibrary::languages())}}
 {{Former::actions()->submit('Submit')}}
 {{Former::close()}}
 

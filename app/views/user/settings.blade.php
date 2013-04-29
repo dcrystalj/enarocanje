@@ -17,7 +17,7 @@
 {{Former::text('name','Name')->autofocus()}}
 {{Former::text('surname','Surname')}}
 {{Former::select('timezone','Timezone')->options(.UserLibrary::timezone,"UTC",true)}}
-{{Former::select('language','Language')->options(.UserLibrary::lang)}}
+{{Former::select('language','Language')->options(.UserLibrary::language)}}
 {{Former::actions()->submit('Submit')}}
 {{Former::close()}}
 
