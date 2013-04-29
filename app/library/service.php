@@ -33,9 +33,9 @@ class Service {
 	);
 
 	private static $sex = array(
-        '0' => 'M',
-        '1' => 'W',
-        '2' => 'unisex',
+        'U' => 'Unisex',
+        'M' => 'M',
+        'W' => 'W',
     );
 
 	public static function categories() {

@@ -20,11 +20,11 @@
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
     {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
+    {{ Former::select('ZIP_code','ZIP code:')->options($codes)}}
     {{ Former::text('street','Street:')}}
     {{ Former::text('email','Email:')->value(Auth::user()->email)}}
     {{ Former::text('telephone_number','Telephone Number:')}}
-    {{ Former::text('SiteUrl','URL to your site:')}}
+    {{ Former::text('site_url','URL to your site:')}}
     {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? 'Save changes' : 'Add service' ) }}
     {{ Former::close() }}   

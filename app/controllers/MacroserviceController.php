@@ -5,10 +5,10 @@ class MacroserviceController extends BaseController {
 	public $rules = array(
         'name'		=> 'required',
         'street'    => 'required|between:4,50',
-        'ZIPcode'   => 'required|numeric',
+        'ZIP_code'   => 'required|numeric',
         'email' 	=> 'required|email',
-        'telN' 		=> 'between:9,15',
-        'SiteUrl'   => 'active_url',
+        'telephone_number' 		=> 'between:9,15',
+        'site_url'   => 'url',
         'description' => 'max:1024'
     );
 
@@ -41,18 +41,18 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			$zip = ZIPcode::where('ZIP_code', Input::get('ZIPcode'))->first();
+			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
 			//save user and send mail with confirmation link
 				
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
-			$mac->ZIP_code = Input::get( 'ZIPcode');
+			$mac->ZIP_code = Input::get( 'ZIP_code');
 			$mac->city = $zip->city;
 			$mac->street = Input::get( 'street');
 			$mac->email = Input::get( 'email');
-			$mac->telephone_number = Input::get( 'telN');
-			$mac->site_url = Input::get( 'SiteUrl');
+			$mac->telephone_number = Input::get( 'telephone_number');
+			$mac->site_url = Input::get( 'site_url');
 			$mac->description = Input::get('description');
 			$mac->user_id = Auth::user()->id;
 			$mac->save();
@@ -104,15 +104,15 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			$zip = ZIPcode::where('ZIP_code', Input::get('ZIPcode'));
+			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
 			$mac->name = Input::get( 'name' );
-			$mac->ZIP_code = Input::get( 'ZIPcode');
+			$mac->ZIP_code = Input::get( 'ZIP_code');
 			$mac->city = $zip->city;
 			$mac->street = Input::get( 'street');
 			$mac->email = Input::get( 'email');
-			$mac->telephone_number = Input::get( 'telN');
-			$mac->site_url = Input::get( 'SiteUrl');
+			$mac->telephone_number = Input::get( 'telephone_number');
+			$mac->site_url = Input::get('site_url');
 			$mac->description = Input::get('description');
 			$mac->user_id = Auth::user()->id;
 			$mac->save();

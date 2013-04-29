@@ -15,10 +15,18 @@
     @if(count($mic)==0)
         {{ Typography::warning('No services avaliable yet') }}
     @else
-
-        {{ Former::select('gender','Filter services by gender:')->options(array('U' => 'Unisex','M' => 'Man', 'W' => 'Women'))}}
+        {{ Former::open()->method('GET') }}
+        {{ Former::select('gender','Filter services by gender:')->options(Service::gender())}}
+        {{ Former::actions()->submit('Filter') }}
+        {{ Former::close() }}
         <?php
-        
+        if (in_array(Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
+        {
+            $mic = MacroService::find($mac)->microservices()->whereActive(0)->where('gender', Input::get('gender'))->get();    
+        }
+        else{
+            $mic = MacroService::find($mac)->microservices()->whereActive(0)->get();       
+        }
         if ($mic){ 
         $tbody = []; 
         $i = 1; 
@@ -26,7 +34,7 @@
             $tbody[]= [
                 'id'     => $i, 
                 'name'   => $service->name, 
-                'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
+                'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
                 'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')

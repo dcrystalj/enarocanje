@@ -17,7 +17,7 @@
 
         {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
-        {{ Former::select('gender','Gender:')->options(array('M' => 'Man','W' => 'Women','U' => 'Unisex')) }} 
+        {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
         {{ Former::Number('price','Price:')->append('€') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::actions()->submit( isset($mic) ? 'Edit' : 'Add service' ) }}
@@ -58,7 +58,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers('#', 'Name', 'Length', 'Price(€)', '', '') }}
+        {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
 
