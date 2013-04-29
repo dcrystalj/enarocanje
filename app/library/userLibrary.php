@@ -20,4 +20,19 @@ class UserLibrary {
 	public static function timezone($i) {
 		return self::$timezoneArray[$i];
 	}
+
+
+	public static function generateUuid()
+    {
+        // Generate Uuid
+        $uuid = Uuid::v4(false);
+        // Check that it is unique
+        $currentConfirmationCode = Passreminder::where('token', $uuid)->first();
+
+        if($currentConfirmationCode != NULL) {
+           $uuid =  $this->generateUuid($table, $field);
+        }
+
+        return $uuid;
+    }
 }

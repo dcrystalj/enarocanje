@@ -3,9 +3,10 @@
 class MicroserviceController extends BaseController {
 
 	public $rules = array(
-		// 'name'      => 'required|max:20|',
-  //   	'description'  => 'max:1024',     
-  // 		'price'        => 'numeric'
+		'name'      => 'required',
+		'length' 	=> 'required',
+     	'description'  => 'max:1024',     
+   		'price'        => 'numeric'
   	);
 
 	public function __construct() {
@@ -40,6 +41,7 @@ class MicroserviceController extends BaseController {
 			$micservice->name          = Input::get( 'name' );
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
+			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
 			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
 			$micservice->macservice_id = $mac;
@@ -88,6 +90,7 @@ class MicroserviceController extends BaseController {
 			$micservice->name          = Input::get( 'name' );
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
+			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
 			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
 			$micservice->macservice_id = $mac;

@@ -7,6 +7,7 @@
 @section('content')
     
     @if(isset($mac))
+        <h3> <?php echo $mac->name ?> </h3>
         @if(isset($mic))
             {{ Former::open(URL::route('macro.micro.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mic) }}
@@ -14,14 +15,11 @@
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
 
-        @if (isset($service))
-            <p> Add services to {{$service()->name }} </p>
-        @endif
-
         {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
+        {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
+        {{ Former::Number('price','Price:')->append('€') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-        {{ Former::Number('price','Price:') }}
         {{ Former::actions()->submit( isset($mic) ? 'Edit' : 'Add service' ) }}
         {{ Former::close() }}   
 
@@ -38,8 +36,8 @@
                     $allActivated[]= [
                         'id'     => $i, 
                         'name'   => $service->name, 
-                        'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  , 
-                        'desc'   => $service->description, 
+                        'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
+                        'gender' => $service->gender, 
                         'price'  => $service->price, 
                         'link'   => Html::link(
                                         URL::route('macro.micro.edit',
@@ -53,7 +51,6 @@
 
                     $allDeactivated[] = [
                         'name'        => $service->name, 
-                        'description' => $service->description, 
                         'link1'       => activate($mac->id, $service)
                      ];
                 }
@@ -61,7 +58,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '', '') }}
+        {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
 
@@ -69,7 +66,7 @@
             </br>
             <h2>Deactivated:</h2>
             {{ Table::hover_open(["class"=>'sortable']) }}
-            {{ Table::headers( 'Name', 'Description', '', '') }}
+            {{ Table::headers( 'Name', '', '') }}
             {{ Table::body($allDeactivated) }}
             {{ Table::close() }}
         @endif

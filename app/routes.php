@@ -63,3 +63,8 @@ Route::post('user/confirm/{token}','UserController@postConfirm');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 Route::controller('app','AppController');
+
+// absence controller
+
+ Route::resource('macro.absence','AbsenceController');
+ 

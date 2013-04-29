@@ -9,7 +9,7 @@
 
      $zipCode = ZIPcode::All();
      foreach ($zipCode as $z) {
-         $codes[$z->ZIP_code] = $z->ZIP_code;
+         $codes[$z->ZIP_code] = $z->ZIP_code . ' ' . $z->city;
      }
 ?>
     
@@ -20,14 +20,13 @@
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
     {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-    {{ Former::select('ZIPcode','ZIP code:')->options($codes)}}
-    {{ Former::text('address', 'City:')}}
+    {{ Former::select('ZIP_code','ZIP code:')->options($codes)}}
     {{ Former::text('street','Street:')}}
     {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-    {{ Former::text('telN','Telephone Number:')}}
-    {{ Former::text('SiteUrl','URL to your site:')}}
+    {{ Former::text('telephone_number','Telephone Number:')}}
+    {{ Former::text('site_url','URL to your site:')}}
     {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-    {{ Former::actions()->submit( isset($mac) ? 'Edit' : 'Add service' ) }}
+    {{ Former::actions()->submit( isset($mac) ? 'Save changes' : 'Add service' ) }}
     {{ Former::close() }}   
 
     <?php 
@@ -43,27 +42,25 @@
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 
-                    'description' => $service->description, 
                     'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
 					'timetable'   => Button::link(URL::route('timetable', $service->id), 'Timetable'),
                     'deactivate'  => deactivate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
                  ];
                  $i++;
             }else 
             {
                 $allDeactivated[] = [
                     'name'        => $service->name, 
-                    'description' => $service->description, 
                     'activate'       => activate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add new actions')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
                 ];
             }
         }
     ?>
 
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Name', 'Description', '') }}
+    {{ Table::headers('#', 'Name', '') }}
     {{ Table::body($allActivated) }}
     {{ Table::close() }}
 
@@ -71,7 +68,7 @@
     </br>
     <h2>Deactivated:</h2>
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers( 'Name', 'Description', '') }}
+    {{ Table::headers( 'Name', '') }}
     {{ Table::body($allDeactivated) }}
     {{ Table::close() }}
     @endif

@@ -5,7 +5,7 @@ class MicroserviceApiController extends BaseController
 	public function getTimetable($id)
 	{
 
-		$timetable = [];
+		$timetable = array();
 		$lastday   = 0;
 		$j         = 0;
 		$i         = 0;

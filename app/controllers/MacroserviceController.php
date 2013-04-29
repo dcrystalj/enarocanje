@@ -2,18 +2,15 @@
 
 class MacroserviceController extends BaseController {
 
-	public $rules = array();
-	/*
+	public $rules = array(
         'name'		=> 'required',
-        'address'   => 'required|alpha',
-        'street'    => 'regex:/[^a-zA-Z0-9 ]/',
-        'ZIPcode'   => 'required|numeric',
+        'street'    => 'required|between:4,50',
+        'ZIP_code'   => 'required|numeric',
         'email' 	=> 'required|email',
-        'telN' 		=> 'regex:/[^0-9+()]/',
-        'SiteUrl'   => 'active_url',
+        'telephone_number' 		=> 'between:9,15',
+        'site_url'   => 'url',
         'description' => 'max:1024'
     );
-	*/
 
 	public function __construct() {
 		$this->beforeFilter('auth',['except'=>['index','show']]);
@@ -40,21 +37,22 @@ class MacroserviceController extends BaseController {
 	public function store()
 	{
 
-		//$validation = Validator::make(Input::all(),$this->rules);
+		$validation = Validator::make(Input::all(),$this->rules);
 
-		if(true || $validation->passes())
+		if($validation->passes())
 		{
-			
+			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
+
 			//save user and send mail with confirmation link
-			//$mac = MacroService::create(Input::all());
+				
 			$mac = new MacroService;
 			$mac->name = Input::get( 'name' );
-			$mac->ZIP_code = Input::get( 'ZIPcode');
-			$mac->address = Input::get( 'address');
-			//$mac->street = Input::get( 'street');
-			//$mac->email = Input::get( 'email');
-			$mac->telephone_number = Input::get( 'telN');
-			//$mac-> = Input::get( 'SiteUrl');
+			$mac->ZIP_code = Input::get( 'ZIP_code');
+			$mac->city = $zip->city;
+			$mac->street = Input::get( 'street');
+			$mac->email = Input::get( 'email');
+			$mac->telephone_number = Input::get( 'telephone_number');
+			$mac->site_url = Input::get( 'site_url');
 			$mac->description = Input::get('description');
 			$mac->user_id = Auth::user()->id;
 			$mac->save();
@@ -106,9 +104,17 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			
+			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
+
 			$mac->name = Input::get( 'name' );
+			$mac->ZIP_code = Input::get( 'ZIP_code');
+			$mac->city = $zip->city;
+			$mac->street = Input::get( 'street');
+			$mac->email = Input::get( 'email');
+			$mac->telephone_number = Input::get( 'telephone_number');
+			$mac->site_url = Input::get('site_url');
 			$mac->description = Input::get('description');
+			$mac->user_id = Auth::user()->id;
 			$mac->save();
 
 			if($mac){
