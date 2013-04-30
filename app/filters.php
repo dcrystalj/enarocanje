@@ -53,7 +53,7 @@ Route::filter('provider',function()
 Route::filter('auth', function()
 {
 	 if(!Session::has('user')) return Redirect::route('home')->with('error','You have no permissions. Please login first');
-	//if (Auth::guest()) return Redirect::route('home');
+	//if (Auth::guest()) return Redirect::guest('home');
 });
 
 Route::filter('auth1', function()

@@ -8,7 +8,7 @@
 
 		<div>
 			<p>Thank you for your registration. Please click the following link to complete your registration.</p>
-			{{ URL::to('user/confirm', array($token)) }}.
+			{{ URL::to('user/confirm', array($token)) }}
 		</div>
 	</body>
 </html>
