@@ -34,7 +34,7 @@
 	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
 						['Services',URL::to('macro'),Request::is('macro')],
-					])) 
+					]))
 			    ->with_menus(
 			     	Navigation::links( Auth::check() ?
 			      		[
@@ -54,6 +54,13 @@
 			      	['class' => 'pull-right'] )
 		   		->collapsible()
 	   	 	}}
+		{{Former::radios('radio')
+  ->radios(array('label' => 'name', 'label1' => 'name1'))
+  ->stacked();}}
+			<div class="btn-group">
+			  <button class="btn">English</button>
+			  <button class="btn">Slovenian</button>
+			</div>
 		</nav>
 		<div>
 			

@@ -57,6 +57,8 @@ Route::post('provider/confirm/{token}','Provider@postConfirm');
 Route::resource('user','UserController');
 Route::get('user/confirm/{token}','UserController@getConfirm');
 Route::post('user/confirm/{token}','UserController@postConfirm');
+Route::resource('setEnglish','UserController@setEnglish');
+Route::resource('setSlovenian','UserController@setSlovenian');
 
 
 //calendar api
