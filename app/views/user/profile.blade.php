@@ -10,11 +10,11 @@
 
 ?>
 
-{{Former::label('Name: '.$user->name)}}
-{{Former::label('Surname: '.$user->surname)}}
-{{Former::label('Email: '.$user->email)}}
-{{Former::label('Timezone: '.$user->time_zone)}}
-{{Former::label('Language: '.UserLibrary::language($user->language))}}
-{{Button::link(URL::route('user.edit',Auth::user()->id), 'Edit profile'); }}
+{{Former::label(Lang::get('user.Name.').': '.$user->name)}}
+{{Former::label(Lang::get('user.Surname.').': '.$user->surname)}}
+{{Former::label(Lang::get('user.Email').': '.$user->email)}}
+{{Former::label(Lang::get('user.Timezone').': '.$user->time_zone)}}
+{{Former::label(Lang::get('user.language').': '.UserLibrary::language($user->language))}}
+{{Button::link(URL::route('user.edit',Auth::user()->id), Lang::get('user.editProfile').); }}
 
 @stop

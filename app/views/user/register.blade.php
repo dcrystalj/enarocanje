@@ -9,14 +9,14 @@
 
 ?>
 {{Former::open('user')->rules($rules)}}
-{{Former::text('name','Name')->autofocus()}}
-{{Former::text('surname','Surname')}}
-{{Former::text('email','Email')}}
-{{Former::password('password','Password')}}
-{{Former::password('repeat','Repeat password')}}
-{{Former::select('timezone','Timezone')->options(UserLibrary::timezones(),"UTC",true)}}
-{{Former::select('language','Language')->options(UserLibrary::languages())}}
-{{Former::actions()->submit('Submit')}}
+{{Former::text('name',Lang::get('user.Name'))->autofocus()}}
+{{Former::text('surname',Lang::get('user.Surname'))}}
+{{Former::text('email',Lang::get('user.Email'))}}
+{{Former::password('password',Lang::get('user.Password'))}}
+{{Former::password('repeat',Lang::get('user.RepeatPassword'))}}
+{{Former::select('timezone',Lang::get('user.Timezone'))->options(UserLibrary::timezones(),"UTC",true)}}
+{{Former::select('language',Lang::get('user.Language'))->options(UserLibrary::languages())}}
+{{Former::actions()->submit(Lang::get('user.Submit'))}}
 {{Former::close()}}
 
 @stop

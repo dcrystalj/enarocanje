@@ -14,11 +14,11 @@
 							'surname' => $user->surname,
 							'timezone' => $user->time_zone,
 							'language' => $user->language))}}
-{{Former::text('name','Name')->autofocus()}}
-{{Former::text('surname','Surname')}}
-{{Former::select('timezone','Timezone')->options(UserLibrary::timezones(),"UTC",true)}}
-{{Former::select('language','Language')->options(UserLibrary::languages())}}
-{{Former::actions()->submit('Submit')}}
+{{Former::text('name',Lang::get('user.Name'))->autofocus()}}
+{{Former::text('surname',Lang::get('user.Surname'))}}
+{{Former::select('timezone',Lang::get('user.Timezone'))->options(UserLibrary::timezones(),"UTC",true)}}
+{{Former::select('language',Lang::get('user.Language'))->options(UserLibrary::languages())}}
+{{Former::actions()->submit(Lang::get('user.Submit'))}}
 {{Former::close()}}
 
 @stop
