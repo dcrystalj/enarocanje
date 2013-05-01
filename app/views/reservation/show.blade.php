@@ -136,7 +136,8 @@ $(function() {
 							if (js.success){
 								calendar.fullCalendar('removeEvents', -1);
 								calendar.fullCalendar( 'refetchEvents' );
-								calendar.fullCalendar( 'rerenderEvents' );					
+								calendar.fullCalendar( 'rerenderEvents' );
+								$('#delete').show();					
 							}
 							$('#event-dialog').modal('hide');
 						});
@@ -154,8 +155,9 @@ $(function() {
 						$('#statusmessage').text(js.text).show();
 						if (js.success){
 							calendar.fullCalendar('removeEvents', -1);
-							calendar.fullCalendar( 'refetchEvents' )
-							calendar.fullCalendar( 'rerenderEvents' )
+							calendar.fullCalendar( 'refetchEvents' );
+							calendar.fullCalendar( 'rerenderEvents' );
+							$('#delete').show();
 						}
 						$('#event-dialog').modal('hide');					
 					});
