@@ -64,9 +64,18 @@ Route::resource('setSlovenian','UserController@setSlovenian');
 //calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
+//login logout ...
 Route::controller('app','AppController');
 
-// absence controller
 
- Route::resource('macro.absence','AbsenceController');
+// absence controller
+Route::resource('macro.absence','AbsenceController');
+
+
+
+
  
+//iron.io mail 
+Route::post('queue/push', function(){
+	return Queue::marshal();
+});

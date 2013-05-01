@@ -45,16 +45,16 @@ class MacroserviceController extends BaseController {
 
 			//save user and send mail with confirmation link
 				
-			$mac = new MacroService;
-			$mac->name = Input::get( 'name' );
-			$mac->ZIP_code = Input::get( 'ZIP_code');
-			$mac->city = $zip->city;
-			$mac->street = Input::get( 'street');
-			$mac->email = Input::get( 'email');
+			$mac                   = new MacroService;
+			$mac->name             = Input::get( 'name' );
+			$mac->ZIP_code         = Input::get( 'ZIP_code');
+			$mac->city             = $zip->city;
+			$mac->street           = Input::get( 'street');
+			$mac->email            = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telephone_number');
-			$mac->site_url = Input::get( 'site_url');
-			$mac->description = Input::get('description');
-			$mac->user_id = Auth::user()->id;
+			$mac->site_url         = Input::get( 'site_url');
+			$mac->description      = Input::get('description');
+			$mac->user_id          = Auth::user()->id;
 			$mac->save();
 
 			if($mac){
@@ -106,15 +106,15 @@ class MacroserviceController extends BaseController {
 		{
 			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
-			$mac->name = Input::get( 'name' );
-			$mac->ZIP_code = Input::get( 'ZIP_code');
-			$mac->city = $zip->city;
-			$mac->street = Input::get( 'street');
-			$mac->email = Input::get( 'email');
+			$mac->name             = Input::get( 'name' );
+			$mac->ZIP_code         = Input::get( 'ZIP_code');
+			$mac->city             = $zip->city;
+			$mac->street           = Input::get( 'street');
+			$mac->email            = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telephone_number');
-			$mac->site_url = Input::get('site_url');
-			$mac->description = Input::get('description');
-			$mac->user_id = Auth::user()->id;
+			$mac->site_url         = Input::get('site_url');
+			$mac->description      = Input::get('description');
+			$mac->user_id          = Auth::user()->id;
 			$mac->save();
 
 			if($mac){

@@ -35,8 +35,10 @@
 	 						false,null,null,(Auth::user()->status == 2)],
 						['Services',URL::to('macro'),Request::is('macro')],
 					]))
-			    ->with_menus(
-			     	Navigation::links( Auth::check() ?
+
+				->with_menus(
+					Navigation::links( 
+			     		Auth::check() ?
 			      		[
 							['Profile',URL::to('profile'),Request::is('profile')],
 							[Navigation::VERTICAL_DIVIDER],
@@ -44,14 +46,23 @@
 						] 
 						:
 			       		[
-			       	 		['Login',URL::to('app/login'),Request::is('app/login')],
-			       	 		[Navigation::VERTICAL_DIVIDER],
+			       	 		['Login',URL::to('app/login'),Request::is('app/login')],		     
 			       	 		['Register','#',false,false,[		       	 		
 								['User registration',URL::to('user/create'),Request::is('user/create')],
 								['Provider registration',URL::to('provider/create'),Request::is('provider/create')],							
 							]]
 						]),
 			      	['class' => 'pull-right'] )
+			    ->with_menus(
+			     	Navigation::links([
+		       			['Language','#',false,false,[		       	 		
+							['English', URL::to('lang/en')],
+							['Slovenian', URL::to('lang/si')],							
+						]],
+						
+						[Navigation::VERTICAL_DIVIDER],
+					]),
+					['class' => 'pull-right'] )
 		   		->collapsible()
 	   	 	}}
 		</nav>
