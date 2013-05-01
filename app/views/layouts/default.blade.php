@@ -34,7 +34,7 @@
 	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
 						['Services',URL::to('macro'),Request::is('macro')],
-					])) 
+					]))
 			    ->with_menus(
 			     	Navigation::links( Auth::check() ?
 			      		[

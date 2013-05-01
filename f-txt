@@ -1,7 +1,0 @@
-artisan
-.git
-.gitattributes
-.gitignore
-laravel4_codeintel_helper.php
-phpunit.xml
-public
