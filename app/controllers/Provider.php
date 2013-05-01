@@ -62,7 +62,7 @@ class Provider extends BaseController {
 			$passwordReminder->save();
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.auth.welcome', compact('token'), function($m) use ($user)
+			Mail::later(5, 'emails.auth.welcome', compact('token'), function($m) use ($user)
 			{
 			    $m 	->to($user->email, $user->name)
 				    ->subject('Welcome!');

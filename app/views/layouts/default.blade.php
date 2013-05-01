@@ -28,8 +28,8 @@
 			    ->with_brand('E-commerce', '#')
 			    ->with_menus(
 			        Navigation::links([
-						['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
-							false,null,'home'],
+						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
+						//	false,null,'home'],
 	 					!Auth::check() ?: 
 	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],

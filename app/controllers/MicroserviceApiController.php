@@ -122,7 +122,7 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
+			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->user->email, 
@@ -131,7 +131,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::later( 5, 'emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 
@@ -189,7 +189,7 @@ class MicroserviceApiController extends BaseController
 		{
 		    return Breakt::where('macservice_id',$id)->get();
 		});
-		
+
 		$timetable = array();
 
 		$start = Input::get('start')+3600*24; //get start day
@@ -260,7 +260,7 @@ class MicroserviceApiController extends BaseController
 				'reservation' => $r
 			);
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
+			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->user->email, 
@@ -269,7 +269,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::later( 5, 'emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 
