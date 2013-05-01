@@ -38,6 +38,7 @@ class UserController extends BaseController {
      */
     public function create()
     {
+      //App::setLocale('en');
       return View::make('user.register')
       ->with('rules', $this->rules)
       ->with('status',Session::get('status'))
@@ -106,7 +107,8 @@ class UserController extends BaseController {
      */
     public function show($id)
     {
-      return View::make('user.profile')->with('rules',$this->rulesSettings);
+      return View::make('user.profile')
+        ->with('user',Auth::user())->with('rules',$this->rulesSettings);
     }
 
     /**

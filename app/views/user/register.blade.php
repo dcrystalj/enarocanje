@@ -1,13 +1,10 @@
 @extends('layouts.default')
 
 @section('title')
-    User registration
+    {{Lang::get('user.userRegistraion')}}
 @stop
 
 @section('content')
-<?php
-
-?>
 {{Former::open('user')->rules($rules)}}
 {{Former::text('name',Lang::get('user.name'))->autofocus()}}
 {{Former::text('surname',Lang::get('user.surname'))}}

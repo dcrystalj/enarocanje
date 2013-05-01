@@ -16,7 +16,11 @@ return array(
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'registrationSuccess' => 'Registration successfully completed.',
 	'fourOfour' => 'Page not found',
-	'editProfile' => 'Edit profile'
+	'userProfile' => 'User profile',
+	'userSettings' => 'User settings',
+	'editSettings' => 'Edit settings',
+	'userRegistraion' => 'User registraion'
+
 	
 
 
