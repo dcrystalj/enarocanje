@@ -79,3 +79,9 @@ Route::resource('macro.absence','AbsenceController');
 Route::post('queue/push', function(){
 	return Queue::marshal();
 });
+
+//languages
+Route::get('lang/{lang}', function($lang){
+	App::setLocale($lang);
+	return Redirect::back();
+});
