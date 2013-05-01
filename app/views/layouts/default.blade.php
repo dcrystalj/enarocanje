@@ -54,13 +54,6 @@
 			      	['class' => 'pull-right'] )
 		   		->collapsible()
 	   	 	}}
-		{{Former::radios('radio')
-  ->radios(array('label' => 'name', 'label1' => 'name1'))
-  ->stacked();}}
-			<div class="btn-group">
-			  <button class="btn">English</button>
-			  <button class="btn">Slovenian</button>
-			</div>
 		</nav>
 		<div>
 			
