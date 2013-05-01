@@ -108,7 +108,7 @@ $(function() {
 		var allevents = calendar.fullCalendar('clientEvents', -1);
 
 		if(countClientEvents()){
-			bootbox.alert("You have already made reservation. Please delete it first." + countClientEvents());
+			bootbox.alert("You have already made reservation. Please delete it first.");
 			return;
 		}
 
@@ -135,9 +135,7 @@ $(function() {
 						$.post('{{ URL::action("MicroserviceApiController@postRegistration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 							var js = JSON.parse(e);
 							$('#statusmessage').text(js.text).show();
-
 							if (js.success){
-
 								window.location.reload();
 							}
 							else{

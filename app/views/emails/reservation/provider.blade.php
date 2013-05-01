@@ -8,8 +8,8 @@
 
 		<div>
 			User {{ $user->name }} ({{ $user->email }}) have just made reservation on 
-			{{ $reservation->start }} 
-			{{ $reservation->date }} for 
+			{{ $reservation->date }} at
+			{{ $reservation->from }} for 
 			{{ $reservation->microservice->name }}.
 		</div>
 	</body>

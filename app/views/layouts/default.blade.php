@@ -40,7 +40,7 @@
 					Navigation::links( 
 			     		Auth::check() ?
 			      		[	
-							['Profile',URL::to('user/show')],
+							['Profile',URL::action('UserController@show',[Auth::user()->id])],
 							[Navigation::VERTICAL_DIVIDER],
 							['Logout',URL::to('app/logout')],
 						] 

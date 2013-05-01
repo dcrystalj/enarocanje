@@ -62,8 +62,10 @@ class MicroserviceApiController extends BaseController
 						->get();
 		foreach ($r as $b) 
 		{
-			$date        = $b->date;
-			$title       = "Your reservation: \nfrom  " . $b->from ." to " . $b->to;
+			$date  = $b->date;
+			$title = "Your reservation: \nfrom  ";
+			$title .= date('G:i',strtotime($b->from)) ." to ";
+			$title .= date('G:i',strtotime($b->to));
 
 			$timetable[] = array(
 					"id"        => $b->id,
@@ -112,7 +114,8 @@ class MicroserviceApiController extends BaseController
 				'reservation' => $r
 			);
 
-			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
+			Queue::getIron()->ssl_verifypeer = false;
+			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->user->email, 
@@ -121,7 +124,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::send('emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 
@@ -212,26 +215,25 @@ class MicroserviceApiController extends BaseController
 	public function postRegistration($id){
 		
 		$microservid = $id;
-		$events = Input::get('event');
-		$event = json_decode($events);
+		$events      = Input::get('event');
+		$event       = json_decode($events);
+		
+		$date        = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start       = date('G:i', strtotime($event->start));
+		$end         = date('G:i', strtotime($event->end));
+		$name        = $event->data->name;
+		$mail        = $event->data->mail;
 
-		$date = date('Y-m-d', strtotime($event->start)); //Monday - day 0
-		$start = date('G:i', strtotime($event->start));
-		$end = date('G:i', strtotime($event->end));
-		$mail = Input::get('name');
-		$name = Input::get('mail');
-
-		if(User::whereEmail($mail)){
-			$tempuser = new User;
-			$tempuser->email = $event->data->mail;
-			$tempuser->name = $event->data->name;
+		if(is_null(User::whereEmail($mail)->first())){
+			$tempuser         = new User;
+			$tempuser->email  = $mail;
+			$tempuser->name   = $name;
+			$tempuser->status = -1;
 			$tempuser->save();
-		}
-		if($tempuser){
+		
 			Session::put('user',$tempuser);
 			Auth::login($tempuser);
 			
-
 			$r                = new Reservation;
 			$r->from          = $start;
 			$r->to            = $end;
@@ -240,9 +242,31 @@ class MicroserviceApiController extends BaseController
 			$r->user_id       = $tempuser->id;
 			$r->save();
 
-			if($r){
-				return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
-			}
+			$data = array(
+				'user'        => Auth::user(),
+				'reservation' => $r
+			);
+			Queue::getIron()->ssl_verifypeer = false;
+			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
+			{
+			    $m->to(
+		    		$r->microservice->macroservice->user->email, 
+		    		$r->microservice->macroservice->user->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
+
+			Mail::queue('emails.reservation.customer', $data, function($m)
+			{
+			    $m->to(
+		    		Auth::user()->email, 
+		    		Auth::user()->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
+
+
+			return json_encode(array('success'=>true,'text'=>'Sucessfully saved'));
 
 		}
 		return json_encode(array('success'=>false,'text'=>'Email is already taken, please login first'));
