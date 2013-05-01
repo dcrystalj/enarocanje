@@ -28,7 +28,7 @@ class UserController extends BaseController {
 
     public function index()
     {
-      return View::make('home')->with('success','Please confirm the registration trough email link, which should be delivered shortly');
+      return View::make('home')->with('success','Please confirm the registration through email link, which should be delivered shortly');
     }
 
     /**
@@ -92,7 +92,7 @@ class UserController extends BaseController {
                     ->setCharset('UTF-8');
             });
 
-            return Redirect::home()->with('success','Your activation mail was sent on email');
+            return Redirect::home()->with('success','The activation mail was sent to your email');
           }
 
 
