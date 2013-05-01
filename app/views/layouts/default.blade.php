@@ -33,23 +33,23 @@
 	 					!Auth::check() ?: 
 	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
-						['Services',URL::to('macro'),Request::is('macro')],
+						['Services',URL::to('macro')],
 					]))
 
 				->with_menus(
 					Navigation::links( 
 			     		Auth::check() ?
 			      		[	
-							['Profile',URL::to('user/show'),Request::is('user/show')],
+							['Profile',URL::to('user/show')],
 							[Navigation::VERTICAL_DIVIDER],
-							['Logout',URL::to('app/logout'),Request::is('app/logout')],
+							['Logout',URL::to('app/logout')],
 						] 
 						:
 			       		[
-			       	 		['Login',URL::to('app/login'),Request::is('app/login')],		     
+			       	 		['Login',URL::to('app/login')],		     
 			       	 		['Register','#',false,false,[		       	 		
-								['User registration',URL::to('user/create'),Request::is('user/create')],
-								['Provider registration',URL::to('provider/create'),Request::is('provider/create')],							
+								['User registration',URL::to('user/create')],
+								['Provider registration',URL::to('provider/create')],				
 							]]
 						]),
 			      	['class' => 'pull-right'] )
