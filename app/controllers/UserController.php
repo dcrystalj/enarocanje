@@ -178,16 +178,5 @@ class UserController extends BaseController {
 
     App::abort(404,Lang::get('user.fourOfour'));
   }
-  public function setSlovenian()
-  {
-    App::setLocale('si');
-    Redirect::home();
-  }
-  public function setEnglish()
-  {
-    App::setLocale('en');
-    return View::make('home');
-    Redirect::home();
-  }
 
 }

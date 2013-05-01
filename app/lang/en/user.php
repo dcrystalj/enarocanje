@@ -2,21 +2,21 @@
 
 return array(
 
-	'Name' => 'Name',
-	'Surname' => 'Surname',
-	'Email' => 'Email',
-	'Timezone' => 'Timezone',
-	'Language' => 'Language',
-	'Password' => 'Password',
-	'RepeatPassword' => 'Repeat password',
-	'Submit' => 'Submit'
+	'name' => 'Name',
+	'surname' => 'Surname',
+	'email' => 'Email',
+	'timezone' => 'Timezone',
+	'language' => 'Language',
+	'password' => 'Password',
+	'repeatPassword' => 'Repeat password',
+	'submit' => 'Submit',
 	'confirm' => 'Please confirm the registration through email link, which should be delivered shortly',
 	'welcome' => 'Welcome',
 	'mailSent' => 'The activation mail was sent to your email',
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'registrationSuccess' => 'Registration successfully completed.',
 	'fourOfour' => 'Page not found',
-	'editProfile' => 'Edit profile'
+	'editProfile' => 'Edit profile',
 	
 
 
