@@ -8,7 +8,7 @@ return array(
 	'timezone' => 'Časovni pas',
 	'language' => 'Jezik',
 	'password' => 'Geslo',
-	'repeat_password' => 'Ponovitev gesla',
+	'repeatPassword' => 'Ponovitev gesla',
 	'submit' => 'Pošlji',
 	'confirm' => 'Prosimo, potrdite registracijo preko povezave v e-poštnem sporočilu, katero bo dostavljeno kmalu.',
 	'welcome' => 'Dobrodošli',

@@ -9,7 +9,7 @@
 <?php
 
 ?>
-
+{{ App::setLocale(Session::get('lang'));}}
 {{Former::label(Lang::get('user.name').': '.$user->name)}}
 {{Former::label(Lang::get('user.surname').': '.$user->surname)}}
 {{Former::label(Lang::get('user.email').': '.$user->email)}}

@@ -38,6 +38,7 @@ class UserController extends BaseController {
      */
     public function create()
     {
+      //App::setLocale('en');
       return View::make('user.register')
       ->with('rules', $this->rules)
       ->with('status',Session::get('status'))
