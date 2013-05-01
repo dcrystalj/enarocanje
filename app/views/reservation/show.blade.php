@@ -77,16 +77,14 @@ fc_init({
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
 		},
-		{
-			@if(Auth::check())
-			
+		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
+			@if(Auth::check())
 			error: 'cal_error',
+			@endif
 			type: 'GET',
 			editable: false,
 			color: "red"
-			
-			@endif
 		}
 		
 	],
@@ -136,11 +134,11 @@ $(function() {
 							var js = JSON.parse(e);
 							$('#statusmessage').text(js.text).show();
 							if (js.success){
-								window.location.reload();
+								calendar.fullCalendar('removeEvents', -1);
+								calendar.fullCalendar( 'refetchEvents' );
+								calendar.fullCalendar( 'rerenderEvents' );					
 							}
-							else{
-								$('#event-dialog').modal('hide');
-							}
+							$('#event-dialog').modal('hide');
 						});
 
 						
@@ -154,13 +152,12 @@ $(function() {
 	  				$.post('{{ URL::action("MicroserviceApiController@postReservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);
 						$('#statusmessage').text(js.text).show();
-
 						if (js.success){
-							window.location.reload();
+							calendar.fullCalendar('removeEvents', -1);
+							calendar.fullCalendar( 'refetchEvents' )
+							calendar.fullCalendar( 'rerenderEvents' )
 						}
-						else{
-							$('#event-dialog').modal('hide');
-						}
+						$('#event-dialog').modal('hide');					
 					});
 		  		}
 		  	}

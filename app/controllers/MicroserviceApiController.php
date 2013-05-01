@@ -10,7 +10,10 @@ class MicroserviceApiController extends BaseController
 		$j         = 0;
 		$i         = 0;
 		
-		$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
+		$workingHours = Cache::remember('timetable'.$id, 10, function() use ($id)
+		{
+		    return Whours::where('macservice_id',$id)->orderBy('day')->get();
+		});
 
 		$start = date("Y-m-d", Input::get('start')); //get start day
 		$end   = date("Y-m-d", Input::get('end'));
@@ -53,6 +56,10 @@ class MicroserviceApiController extends BaseController
 
 	public function getUsertimetable($id)
 	{
+		if(Auth::guest())
+		{
+			return [];
+		}
 		$timetable = array();
 		$micserviceid = $id;
 		$userid = Auth::user()->id;
@@ -81,14 +88,14 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function postReservation($id){
-		$userid = Auth::user()->id;
+		$userid      = Auth::user()->id;
 		$microservid = $id;
-		$events = Input::get('event');
-		$event = json_decode($events);
-
-		$date = date('Y-m-d', strtotime($event->start));
-		$start = date('G:i', strtotime($event->start));
-		$end = date('G:i', strtotime($event->end));
+		$events      = Input::get('event');
+		$event       = json_decode($events);
+		
+		$date        = date('Y-m-d', strtotime($event->start));
+		$start       = date('G:i', strtotime($event->start));
+		$end         = date('G:i', strtotime($event->end));
 
 		//cant make reservation on yesterday =)
 		if(strtotime($date) < strtotime(date('Y-m-d')))
@@ -133,8 +140,10 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
-			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			return json_encode(array('success'=>true,'text'=>'Sucessfull reservation'));
 		}
+		return json_encode(array('success'=>false,'text'=>'Unucessfully created reservation'));
+
 	}
 
 	public function postDeletereservation($id){
@@ -176,7 +185,11 @@ class MicroserviceApiController extends BaseController
 
 	public function getBreaks($id) {
 		
-		$breaks = Breakt::where('macservice_id',$id)->get();
+		$breaks = Cache::remember('breaks'.$id, 10, function() use ($id)
+		{
+		    return Breakt::where('macservice_id',$id)->get();
+		});
+		
 		$timetable = array();
 
 		$start = Input::get('start')+3600*24; //get start day
