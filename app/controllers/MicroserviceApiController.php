@@ -279,7 +279,7 @@ class MicroserviceApiController extends BaseController
 			});
 
 
-			return json_encode(array('success'=>true,'text'=>'Sucessfully' .Auth::user()->email.' saved' .$r->microservice->macroservice->user->email .    		$r->microservice->macroservice->user->name) ) ;
+			return json_encode(array('success'=>true,'text'=>'Sucessfully saved'));
 		}
 		return json_encode(array('success'=>false,'text'=>'Email is already taken, please login first'));
 	}
