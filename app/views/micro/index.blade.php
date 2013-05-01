@@ -15,10 +15,11 @@
     @if(count($mic)==0)
         {{ Typography::warning('No services avaliable yet') }}
     @else
-        {{ Former::open()->method('GET') }}
-        {{ Former::select('gender','Filter services by gender:')->options(Service::gender())}}
-        {{ Former::actions()->submit('Filter') }}
-        {{ Former::close() }}
+        {{ Form::open(['method'=>'GET']) }}
+        {{ Form::label('gender', 'Filter services by gender:') }}
+        {{ Form::select('gender', Service::gender()) }}
+        {{ Form::submit('Filter') }}
+        {{ Form::close() }}
         <?php
         if (in_array(Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {

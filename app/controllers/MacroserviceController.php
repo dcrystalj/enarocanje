@@ -3,13 +3,13 @@
 class MacroserviceController extends BaseController {
 
 	public $rules = array(
-        'name'		=> 'required',
-        'street'    => 'required|between:4,50',
-        'ZIP_code'   => 'required|numeric',
-        'email' 	=> 'required|email',
-        'telephone_number' 		=> 'between:9,15',
-        'site_url'   => 'url',
-        'description' => 'max:1024'
+		'name'             => 'required',
+		'street'           => 'required|between:4,50',
+		'ZIP_code'         => 'required|numeric',
+		'email'            => 'required|email',
+		'telephone_number' => 'between:9,15',
+		'site_url'         => 'between:4,35',
+		'description'      => 'max:1024'
     );
 
 	public function __construct() {
