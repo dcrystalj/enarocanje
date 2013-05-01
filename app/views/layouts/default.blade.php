@@ -53,7 +53,16 @@
 							]]
 						]),
 			      	['class' => 'pull-right'] )
-			    ->with_menus(
+				->with_menus(
+			     	Navigation::links([
+		       				       	 		
+							['English', URL::to('lang/en')],
+							['Slovenian', URL::to('lang/si')],		
+						[Navigation::VERTICAL_DIVIDER],
+					]),
+					['class' => 'pull-right'] 
+				)
+			    /*->with_menus(
 			     	Navigation::links([
 		       			['Language','#',false,false,[		       	 		
 							['English', URL::to('lang/en')],
@@ -62,7 +71,7 @@
 						
 						[Navigation::VERTICAL_DIVIDER],
 					]),
-					['class' => 'pull-right'] )
+					['class' => 'pull-right'] )*/
 		   		->collapsible()
 	   	 	}}
 		</nav>

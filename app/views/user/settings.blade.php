@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    User settings
+    {{Lang::get('user.userSettings')}}
 @stop
 
 @section('content')
