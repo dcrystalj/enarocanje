@@ -12,6 +12,7 @@
 */
 App::before(function($request)
 {
+	//login hack
 	if (Session::has('user')) {
 		Auth::login(Session::get('user'));
 	}
@@ -21,6 +22,22 @@ App::before(function($request)
 			Auth::login(Cookie::get('user'));
 		}
 	}
+
+	//language hack
+	if( !Session::has('language') ) 
+	{
+		$accepted_languages = array('en', 'si');
+		$user_language = 'en';
+
+	    Session::put('language', $user_language);
+
+	} else 
+	{
+		$user_language = Session::get('language');
+	}
+
+	App::setLocale($user_language);
+
 });
 
 
