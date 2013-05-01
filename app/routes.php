@@ -12,16 +12,6 @@ Route::get('home',array('as' => 'home', function()
 				->with('success',Session::get('success'));
 }));
 
-Route::get('profile', function()
-{
-	return View::make('user.profile')->with('user',Auth::user());
-})->before('auth');
-
-
-Route::get('user/register', function()
-{
-	return View::make('user/register');
-});
 
 
 

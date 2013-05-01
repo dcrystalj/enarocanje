@@ -39,8 +39,8 @@
 				->with_menus(
 					Navigation::links( 
 			     		Auth::check() ?
-			      		[
-							['Profile',URL::to('profile'),Request::is('profile')],
+			      		[	
+							['Profile',URL::to('user/show'),Request::is('user/show')],
 							[Navigation::VERTICAL_DIVIDER],
 							['Logout',URL::to('app/logout'),Request::is('app/logout')],
 						] 

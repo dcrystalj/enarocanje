@@ -2,6 +2,7 @@
 
 return array(
 
+<<<<<<< HEAD
 	'name' => 'Name',
 	'surname' => 'Surname',
 	'email' => 'Email',
@@ -10,13 +11,23 @@ return array(
 	'password' => 'Password',
 	'repeatPassword' => 'Repeat password',
 	'submit' => 'Submit',
+=======
+	'Name' => 'Name',
+	'Surname' => 'Surname',
+	'Email' => 'Email',
+	'Timezone' => 'Timezone',
+	'Language' => 'Language',
+	'Password' => 'Password',
+	'RepeatPassword' => 'Repeat password',
+	'Submit' => 'Submit',
+>>>>>>> 665af55c587ba46b4ccf659cb8c125002713b6d8
 	'confirm' => 'Please confirm the registration through email link, which should be delivered shortly',
 	'welcome' => 'Welcome',
 	'mailSent' => 'The activation mail was sent to your email',
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'registrationSuccess' => 'Registration successfully completed.',
 	'fourOfour' => 'Page not found',
-	'editProfile' => 'Edit profile'
+	'editProfile' => 'Edit profile',
 	
 
 
