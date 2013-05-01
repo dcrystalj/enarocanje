@@ -5,8 +5,7 @@
 		"patricktalmadge/bootstrapper": "dev-develop",
 		"anahkiasen/former": "dev-agnostic",
 		"barryvdh/laravel-ide-helper": "dev-master",
-		"j20/php-uuid": "*",
-		"iron-io/iron_mq": "dev-master"
+		"j20/php-uuid": "*"
 	},
 	"autoload": {
 		"classmap": [
