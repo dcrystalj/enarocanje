@@ -55,7 +55,7 @@ class MicroserviceController extends BaseController {
 		}
 		return Redirect::back()
 						->withErrors($validation)
-						->withInput();;
+						->withInput();
 	}
 
 	public function edit($mac,$mic)
