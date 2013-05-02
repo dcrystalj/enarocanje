@@ -63,3 +63,9 @@ Route::post('user/confirm/{token}','UserController@postConfirm');
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
 Route::controller('app','AppController');
+
+// Google
+Route::get('google/auth', array('as' => 'gauth', 'uses' => 'GCal@auth'));
+Route::get('google/export', 'GCal@exportReservations');
+Route::get('google/import/absences', 'GCal@importAbsences');
+Route::get('google/import/holidays', 'GCal@importHolidays');
