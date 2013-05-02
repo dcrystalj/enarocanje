@@ -12,16 +12,6 @@ Route::get('home',array('as' => 'home', function()
 				->with('success',Session::get('success'));
 }));
 
-Route::get('profile', function()
-{
-	return View::make('user.profile')->with('user',Auth::user());
-})->before('auth');
-
-
-Route::get('user/register', function()
-{
-	return View::make('user/register');
-});
 
 
 
@@ -62,9 +52,31 @@ Route::post('user/confirm/{token}','UserController@postConfirm');
 //calendar api
 Route::controller('microserviceapi', 'MicroserviceApiController');
 
+//login logout ...
 Route::controller('app','AppController');
 
-// absence controller
 
- Route::resource('macro.absence','AbsenceController');
+// absence controller
+Route::resource('macro.absence','AbsenceController');
+
+
+
+
  
+//iron.io mail 
+Route::post('queue/push', function(){
+	return Queue::marshal();
+});
+
+//languages
+Route::get('lang/{lang}', function($lang){
+	App::setLocale($lang);
+	Session::set('language',$lang);
+	return Redirect::back();
+});
+
+// Google
+Route::get('google/auth', array('as' => 'gauth', 'uses' => 'GCal@auth'));
+Route::get('google/export', 'GCal@exportReservations');
+Route::get('google/import/absences', 'GCal@importAbsences');
+Route::get('google/import/holidays', 'GCal@importHolidays');

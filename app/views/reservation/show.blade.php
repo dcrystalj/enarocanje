@@ -77,16 +77,14 @@ fc_init({
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
 		},
-		{
-			@if(Auth::check())
-			
+		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
+			@if(Auth::check())
 			error: 'cal_error',
+			@endif
 			type: 'GET',
 			editable: false,
 			color: "red"
-			
-			@endif
 		}
 		
 	],
@@ -108,7 +106,7 @@ $(function() {
 		var allevents = calendar.fullCalendar('clientEvents', -1);
 
 		if(countClientEvents()){
-			bootbox.alert("You have already made reservation. Please delete it first." + countClientEvents());
+			bootbox.alert("You have already made reservation. Please delete it first.");
 			return;
 		}
 
@@ -135,14 +133,13 @@ $(function() {
 						$.post('{{ URL::action("MicroserviceApiController@postRegistration", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 							var js = JSON.parse(e);
 							$('#statusmessage').text(js.text).show();
-
 							if (js.success){
-
-								window.location.reload();
+								calendar.fullCalendar('removeEvents', -1);
+								calendar.fullCalendar( 'refetchEvents' );
+								calendar.fullCalendar( 'rerenderEvents' );
+								$('#delete').show();					
 							}
-							else{
-								$('#event-dialog').modal('hide');
-							}
+							$('#event-dialog').modal('hide');
 						});
 
 						
@@ -156,13 +153,13 @@ $(function() {
 	  				$.post('{{ URL::action("MicroserviceApiController@postReservation", array($mic)) }}' ,{'event': JSON.stringify(submit)} ,function(e){
 						var js = JSON.parse(e);
 						$('#statusmessage').text(js.text).show();
-
 						if (js.success){
-							window.location.reload();
+							calendar.fullCalendar('removeEvents', -1);
+							calendar.fullCalendar( 'refetchEvents' );
+							calendar.fullCalendar( 'rerenderEvents' );
+							$('#delete').show();
 						}
-						else{
-							$('#event-dialog').modal('hide');
-						}
+						$('#event-dialog').modal('hide');					
 					});
 		  		}
 		  	}

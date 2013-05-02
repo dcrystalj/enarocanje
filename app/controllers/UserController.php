@@ -28,7 +28,7 @@ class UserController extends BaseController {
 
     public function index()
     {
-      return View::make('home')->with('success','Please confirm the registration trough email link, which should be delivered shortly');
+      return View::make('home')->with('success',Lang::get('user.confirm'));
     }
 
     /**
@@ -38,6 +38,7 @@ class UserController extends BaseController {
      */
     public function create()
     {
+      //App::setLocale('en');
       return View::make('user.register')
       ->with('rules', $this->rules)
       ->with('status',Session::get('status'))
@@ -85,14 +86,14 @@ class UserController extends BaseController {
             $passwordReminder->token = $token;
             $passwordReminder->save();
 
-            Mail::send('emails.auth.userWelcome', compact('token'), function($m) use ($user)
+            Queue::getIron()->ssl_verifypeer = false;
+            Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
             {
                 $m  ->to($user->email, $user->name)
-                    ->subject('Welcome!')
-                    ->setCharset('UTF-8');
+                    ->subject(Lang::get('user.welcome'));
             });
 
-            return Redirect::home()->with('success','Your activation mail was sent on email');
+            return Redirect::home()->with('success',Lang::get('user.mailSent'));
           }
 
 
@@ -106,7 +107,8 @@ class UserController extends BaseController {
      */
     public function show($id)
     {
-        //
+      return View::make('user.profile')
+        ->with('user',Auth::user())->with('rules',$this->rulesSettings);
     }
 
     /**
@@ -147,7 +149,7 @@ class UserController extends BaseController {
             $user->time_zone = Input::get( 'timezone' );
             $user->language  = Input::get( 'language' );
             $user->save();
-            return Redirect::to('profile')->with('success','Your settings were successfully updated.');
+            return Redirect::to('profile')->with('success',Lang::get('user.settingsSuccess'));
         }
 
     }
@@ -169,11 +171,11 @@ class UserController extends BaseController {
         Auth::loginUsingId($user->id);
         Session::put('user',$user);
 
-        return View::make('home')->with('success','Registration successfully completed.');
+        return View::make('home')->with('success',Lang::get('user.registrationSuccess'));
       }
     }
 
-    App::abort(404,'Page not found');
+    App::abort(404,Lang::get('user.fourOfour'));
   }
 
 }

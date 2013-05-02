@@ -28,30 +28,50 @@
 			    ->with_brand('E-commerce', '#')
 			    ->with_menus(
 			        Navigation::links([
-						['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
-							false,null,'home'],
+						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
+						//	false,null,'home'],
 	 					!Auth::check() ?: 
 	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
-						['Services',URL::to('macro'),Request::is('macro')],
-					])) 
-			    ->with_menus(
-			     	Navigation::links( Auth::check() ?
-			      		[
-							['Profile',URL::to('profile'),Request::is('profile')],
+						['Services',URL::to('macro')],
+					]))
+
+				->with_menus(
+					Navigation::links( 
+			     		Auth::check() ?
+			      		[	
+							['Profile',URL::action('UserController@show',[Auth::user()->id])],
 							[Navigation::VERTICAL_DIVIDER],
-							['Logout',URL::to('app/logout'),Request::is('app/logout')],
+							['Logout',URL::to('app/logout')],
 						] 
 						:
 			       		[
-			       	 		['Login',URL::to('app/login'),Request::is('app/login')],
-			       	 		[Navigation::VERTICAL_DIVIDER],
+			       	 		['Login',URL::to('app/login')],		     
 			       	 		['Register','#',false,false,[		       	 		
-								['User registration',URL::to('user/create'),Request::is('user/create')],
-								['Provider registration',URL::to('provider/create'),Request::is('provider/create')],							
+								['User registration',URL::to('user/create')],
+								['Provider registration',URL::to('provider/create')],				
 							]]
 						]),
 			      	['class' => 'pull-right'] )
+				->with_menus(
+			     	Navigation::links([
+		       				       	 		
+							['English', URL::to('lang/en')],
+							['Slovenian', URL::to('lang/si')],		
+						[Navigation::VERTICAL_DIVIDER],
+					]),
+					['class' => 'pull-right'] 
+				)
+			    /*->with_menus(
+			     	Navigation::links([
+		       			['Language','#',false,false,[		       	 		
+							['English', URL::to('lang/en')],
+							['Slovenian', URL::to('lang/si')],							
+						]],
+						
+						[Navigation::VERTICAL_DIVIDER],
+					]),
+					['class' => 'pull-right'] )*/
 		   		->collapsible()
 	   	 	}}
 		</nav>

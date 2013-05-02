@@ -185,7 +185,7 @@ function isOverlapping(start, end){
 	};
 
 	function fromTo(event){
-		return event.start.getDate()+"-"+(event.start.getMonth()+1)+"-"+(event.start.getYear()+1900) + " from " + time(event.start) +" to "+time(event.end);
+		return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
 	}
 
 	function time(str){

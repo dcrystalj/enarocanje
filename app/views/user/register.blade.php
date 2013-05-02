@@ -1,22 +1,19 @@
 @extends('layouts.default')
 
 @section('title')
-    User registration
+    {{Lang::get('user.userRegistraion')}}
 @stop
 
 @section('content')
-<?php
-
-?>
 {{Former::open('user')->rules($rules)}}
-{{Former::text('name','Name')->autofocus()}}
-{{Former::text('surname','Surname')}}
-{{Former::text('email','Email')}}
-{{Former::password('password','Password')}}
-{{Former::password('repeat','Repeat password')}}
-{{Former::select('timezone','Timezone')->options(UserLibrary::timezones(),"UTC",true)}}
-{{Former::select('language','Language')->options(UserLibrary::languages())}}
-{{Former::actions()->submit('Submit')}}
+{{Former::text('name',Lang::get('user.name'))->autofocus()}}
+{{Former::text('surname',Lang::get('user.surname'))}}
+{{Former::text('email',Lang::get('user.email'))}}
+{{Former::password('password',Lang::get('user.password'))}}
+{{Former::password('repeat',Lang::get('user.repeatPassword'))}}
+{{Former::select('timezone',Lang::get('user.timezone'))->options(UserLibrary::timezones(),"UTC",true)}}
+{{Former::select('language',Lang::get('user.language'))->options(UserLibrary::languages())}}
+{{Former::actions()->submit(Lang::get('user.submit'))}}
 {{Former::close()}}
 
 @stop

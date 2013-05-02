@@ -1,0 +1,37 @@
+<?php 
+
+return array(
+
+<<<<<<< HEAD:app/lang/si/user.php
+	'name' => 'Ime',
+	'surname' => 'Priimek',
+	'email' => 'Email',
+	'timezone' => 'Časovni pas',
+	'language' => 'Jezik',
+	'password' => 'Geslo',
+	'repeat_password' => 'Ponovitev gesla',
+	'submit' => 'Pošlji',
+=======
+	'Name' => 'Ime',
+	'Surname' => 'Priimek',
+	'Email' => 'Email',
+	'Timezone' => 'Časovni pas',
+	'Language' => 'Jezik',
+	'Password' => 'Geslo',
+	'Repeat_password' => 'Ponovitev gesla',
+	'Submit' => 'Pošlji',
+>>>>>>> 665af55c587ba46b4ccf659cb8c125002713b6d8:app/lang/sl/user.php
+	'confirm' => 'Prosimo, potrdite registracijo preko povezave v e-poštnem sporočilu, katero bo dostavljeno kmalu.',
+	'welcome' => 'Dobrodošli',
+	'mailSent' => 'Aktivacijsko sporočilo je bilo poslano.',
+	'settingsSuccess' => 'Spremembe so bile shranjene.',
+	'registrationSuccess' => 'Registracija je uspela.',
+	'fourOfour' => 'Stran ne obstaja.',
+<<<<<<< HEAD:app/lang/si/user.php
+	'editProfile' => 'Uredi profil',
+
+
+
+=======
+>>>>>>> 665af55c587ba46b4ccf659cb8c125002713b6d8:app/lang/sl/user.php
+);

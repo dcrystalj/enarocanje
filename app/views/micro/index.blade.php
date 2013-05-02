@@ -7,9 +7,8 @@
 @section('content')
 
     <?php 
-    
         $duration = Service::duration();
-        $mic = MacroService::find($mac)->microservices()->whereActive(0)->get();
+        $mic = MacroService::find($mac)->microservices()->get();
     ?>
 
     @if(count($mic)==0)
@@ -17,37 +16,44 @@
     @else
         {{ Form::open(['method'=>'GET']) }}
         {{ Form::label('gender', 'Filter services by gender:') }}
-        {{ Form::select('gender', Service::gender()) }}
+        {{ Form::select('gender', Service::gender(),Input::get('gender')) }}
         {{ Form::submit('Filter') }}
         {{ Form::close() }}
         <?php
-        if (in_array(Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
+        if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {
-            $mic = MacroService::find($mac)->microservices()->whereActive(0)->where('gender', Input::get('gender'))->get();    
+            $mic = MacroService::find($mac)->microservices()->where('gender', Input::get('gender'))->get();    
         }
         else{
-            $mic = MacroService::find($mac)->microservices()->whereActive(0)->get();       
+            $mic = MacroService::find($mac)->microservices()->get();       
         }
         if ($mic){ 
         $tbody = []; 
         $i = 1; 
         foreach ($mic as $service){
-            $tbody[]= [
+            if($service->isActive())
+            {
+                $tbody[] = [
                 'id'     => $i, 
                 'name'   => $service->name, 
                 'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
                 'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
-             ];
-             $i++;
+                ];
+                $i++;
+            }
         }
         }?>
 
+        @if(count($tbody)>0)
         {{ Table::hover_open(["class"=>'sortable']) }}
         {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
+        @else
+        {{ Typography::warning('No services avaliable yet for this filter') }}
+        @endif
     @endif
    
 @stop

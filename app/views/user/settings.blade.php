@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    User settings
+    {{Lang::get('user.userSettings')}}
 @stop
 
 @section('content')
@@ -14,11 +14,11 @@
 							'surname' => $user->surname,
 							'timezone' => $user->time_zone,
 							'language' => $user->language))}}
-{{Former::text('name','Name')->autofocus()}}
-{{Former::text('surname','Surname')}}
-{{Former::select('timezone','Timezone')->options(UserLibrary::timezones(),"UTC",true)}}
-{{Former::select('language','Language')->options(UserLibrary::languages())}}
-{{Former::actions()->submit('Submit')}}
+{{Former::text('name',Lang::get('user.name'))->autofocus()}}
+{{Former::text('surname',Lang::get('user.surname'))}}
+{{Former::select('timezone',Lang::get('user.timezone'))->options(UserLibrary::timezones(),"UTC",true)}}
+{{Former::select('language',Lang::get('user.language'))->options(UserLibrary::languages())}}
+{{Former::actions()->submit(Lang::get('user.submit'))}}
 {{Former::close()}}
 
 @stop
