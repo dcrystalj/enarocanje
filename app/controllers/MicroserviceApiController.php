@@ -127,20 +127,20 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
-			{
-			    $m->to(
-		    		$r->microservice->macroservice->user->email, 
-		    		$r->microservice->macroservice->user->name
-		    	)
-		    	->subject('Successful reservation!');
-			});
-
 			Mail::queue('emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 
 		    		Auth::user()->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
+
+			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
+			{
+			    $m->to(
+		    		$r->microservice->macroservice->email, 
+		    		$r->microservice->macroservice->user->name
 		    	)
 		    	->subject('Successful reservation!');
 			});
@@ -269,17 +269,9 @@ class MicroserviceApiController extends BaseController
 				'user'        => Auth::user(),
 				'reservation' => $r
 			);
-			Queue::getIron()->ssl_verifypeer = false;
-			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
-			{
-			    $m->to(
-		    		$r->microservice->macroservice->user->email, 
-		    		$r->microservice->macroservice->user->name
-		    	)
-		    	->subject('Successful reservation!');
-			});
 
-			Mail::later( 5, 'emails.reservation.customer', $data, function($m)
+			Queue::getIron()->ssl_verifypeer = false;
+			Mail::queue('emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 
@@ -288,6 +280,14 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
+			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
+			{
+			    $m->to(
+		    		$r->microservice->macroservice->email, 
+		    		$r->microservice->macroservice->name
+		    	)
+		    	->subject('Successful reservation!');
+			});
 
 			return json_encode(array('success'=>true,'text'=>'Sucessfully saved'));
 		}
