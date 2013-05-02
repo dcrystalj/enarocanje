@@ -131,7 +131,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::later( 5, 'emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m)
 			{
 			    $m->to(
 		    		Auth::user()->email, 

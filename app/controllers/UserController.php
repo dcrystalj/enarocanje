@@ -87,7 +87,7 @@ class UserController extends BaseController {
             $passwordReminder->save();
 
             Queue::getIron()->ssl_verifypeer = false;
-            Mail::later(5, 'emails.auth.userWelcome', compact('token'), function($m) use ($user)
+            Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
             {
                 $m  ->to($user->email, $user->name)
                     ->subject(Lang::get('user.welcome'));
