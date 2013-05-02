@@ -152,7 +152,7 @@ class UserController extends BaseController {
             $user->time_zone = Input::get( 'timezone' );
             $user->language  = Input::get( 'language' );
             $user->save();
-            return Redirect::to('profile')->with('success',Lang::get('user.settingsSuccess'));
+            return Redirect::to('user/show')->with('success',Lang::get('user.settingsSuccess'));
         }
 
     }

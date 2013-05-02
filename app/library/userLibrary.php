@@ -2,10 +2,14 @@
 
 class UserLibrary {
 	private static $languageArray = array(
-		"english",
-		"slovenian",
-		"italian",
-		"german"
+		// Lang::get('user.english'),
+		// Lang::get('user.slovenian'),
+		// Lang::get('user.italian'),
+		// Lang::get('user.german'),
+		'english',	
+		'slovenian',	
+		'italian',	
+		'german',	
 	);
 	private static $timezoneArray = array(
 		"-11","-10","-9","-8","-7","-6","-5","-4",

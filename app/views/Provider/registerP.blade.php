@@ -9,7 +9,7 @@
     {{ Former::open('provider')->rules($rules) }}
     {{ Former::text('email','Email:')->autofocus() }}
     {{ Former::password('password','Password:') }}
-    {{ Former::password('password_confirmation','Re-type password:') }}
+    {{ Former::password('password_confirmation','Retype password:') }}
     {{ Former::actions()->submit('Register') }}
-    {{ Former::close() }}   
+    {{ Former::close() }}
 @stop
