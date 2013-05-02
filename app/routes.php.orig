@@ -70,13 +70,11 @@ Route::post('queue/push', function(){
 
 //languages
 Route::get('lang/{lang}', function($lang){
+<<<<<<< HEAD
+	//Session::put('lang', $lang);
 	App::setLocale($lang);
+=======
 	Session::set('language',$lang);
+>>>>>>> c6bcb0710e01612ad134b773ff48920078e64680
 	return Redirect::back();
 });
-
-// Google
-Route::get('google/auth', array('as' => 'gauth', 'uses' => 'GCal@auth'));
-Route::get('google/export', 'GCal@exportReservations');
-Route::get('google/import/absences', 'GCal@importAbsences');
-Route::get('google/import/holidays', 'GCal@importHolidays');

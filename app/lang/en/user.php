@@ -19,8 +19,11 @@ return array(
 	'userProfile' => 'User profile',
 	'userSettings' => 'User settings',
 	'editSettings' => 'Edit settings',
-	'userRegistraion' => 'User registraion'
-
+	'userRegistraion' => 'User registraion',
+	'english' => 'english',
+	'slovenian' => 'slovenian',
+	'italian' => 'italian',
+	'german' => 'german',
 	
 
 

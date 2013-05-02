@@ -43,6 +43,7 @@ class Provider extends BaseController {
 
 		if($validation->fails())
 		{
+			return "asd";
 			Input::flash(); //input data remains in form
 			return Redirect::to('provider/create')->withErrors($validation);
 		}
@@ -67,7 +68,7 @@ class Provider extends BaseController {
 			    $m 	->to($user->email, $user->name)
 				    ->subject('Welcome!');
 			});
-
+			return Redirect::to('user/create');
 			return Redirect::home()->with('success','Your activation mail was sent on email');
 		}
 	}

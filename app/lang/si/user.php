@@ -22,8 +22,11 @@ return array(
 	'userProfile' => 'Profil uporabnika',
 	'userSettings' => 'Nastavitve uporabnika',
 	'editSettings' => 'Uredi nastavitve',
-	'userRegistraion' => 'Registracija uporabnika'
-
+	'userRegistraion' => 'Registracija uporabnika',
+	'english' => 'angleščina',
+	'slovenian' => 'slovenščina',
+	'italian' => 'italijanščina',
+	'german' => 'nemščina',
 
 
 );
