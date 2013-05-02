@@ -10,10 +10,15 @@ class MicroserviceApiController extends BaseController
 		$j         = 0;
 		$i         = 0;
 		
-		$workingHours = Cache::remember('timetable'.$id, 10, function() use ($id)
+		if(Auth::user() && !Auth::user()->isProvider())
 		{
-		    return Whours::where('macservice_id',$id)->orderBy('day')->get();
-		});
+			$workingHours = Cache::remember('timetable'.$id, 10, function() use ($id)
+			{
+			    return Whours::where('macservice_id',$id)->orderBy('day')->get();
+			});
+		}
+		else
+			$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
 
 		$start = date("Y-m-d", Input::get('start')); //get start day
 		$end   = date("Y-m-d", Input::get('end'));
@@ -184,11 +189,16 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function getBreaks($id) {
-		
-		$breaks = Cache::remember('breaks'.$id, 10, function() use ($id)
+
+		if(Auth::user() && !Auth::user()->isProvider())
 		{
-		    return Breakt::where('macservice_id',$id)->get();
-		});
+			$breaks = Cache::remember('breaks'.$id, 10, function() use ($id)
+			{
+			    return Breakt::where('macservice_id',$id)->get();
+			});
+		}
+		else
+			Breakt::where('macservice_id',$id)->get();
 
 		$timetable = array();
 
