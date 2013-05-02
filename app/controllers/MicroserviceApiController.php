@@ -198,7 +198,7 @@ class MicroserviceApiController extends BaseController
 			});
 		}
 		else
-			Breakt::where('macservice_id',$id)->get();
+			$breaks = Breakt::where('macservice_id',$id)->get();
 
 		$timetable = array();
 
