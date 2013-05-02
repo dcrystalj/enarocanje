@@ -74,3 +74,9 @@ Route::get('lang/{lang}', function($lang){
 	Session::set('language',$lang);
 	return Redirect::back();
 });
+
+// Google
+Route::get('google/auth', array('as' => 'gauth', 'uses' => 'GCal@auth'));
+Route::get('google/export', 'GCal@exportReservations');
+Route::get('google/import/absences', 'GCal@importAbsences');
+Route::get('google/import/holidays', 'GCal@importHolidays');

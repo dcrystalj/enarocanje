@@ -26,7 +26,7 @@ class AbsenceController extends BaseController {
      */
     public function create($mac)
     {
-        return View::make('absence.add_absence')                   
+        return View::make('absence.create')                   
                     ->with('rules',$this->rules)
                     ->with('mac', Auth::user()->macroservices()->find($mac))
                     ->with('errors',Session::get('errors'))
@@ -59,7 +59,7 @@ class AbsenceController extends BaseController {
 
             if($absence)
             {
-                return Redirect::route('macro.absence.add_absence',$mac)
+                return Redirect::route('macro.absence.create',$mac)
                                 ->with('success','successfully saved');
             }
         }
@@ -74,13 +74,13 @@ class AbsenceController extends BaseController {
         $absence = Auth::user()->macroservices()->find($mac)->absence()->find($abs);
         if($absence) //is macrosrevice in database
         {
-            return View::make('absence.add_absence')
+            return View::make('absence.create')
                             ->with('abs',$absence)
                             ->with('mac', Auth::user()->macroservices()->find($mac))
                             ->with('rules',$this->rules);
         }
         
-        return Redirect::route('macro.absence.add_absence',$mac)
+        return Redirect::route('macro.absence.create',$mac)
                         ->with('error','Wrong absence');
     }
 
@@ -113,7 +113,7 @@ class AbsenceController extends BaseController {
             $absence->save();
 
             if($micservice){
-                return Redirect::route('macro.absence.add_absence',$mac)
+                return Redirect::route('macro.absence.create',$mac)
                                 ->with('success','Successfully edited');
             }
         }

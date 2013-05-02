@@ -62,11 +62,11 @@ class Provider extends BaseController {
 			$passwordReminder->token = $token;
 			$passwordReminder->save();
 
+			Queue::getIron()->ssl_verifypeer = false;
 			Mail::queue('emails.auth.welcome', compact('token'), function($m) use ($user)
 			{
 			    $m 	->to($user->email, $user->name)
-				    ->subject('Welcome!')
-				    ->setCharset('UTF-8');
+				    ->subject('Welcome!');
 			});
 			return Redirect::to('user/create');
 			return Redirect::home()->with('success','Your activation mail was sent on email');

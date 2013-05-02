@@ -37,7 +37,7 @@
                         'id'     => $i, 
                         'name'   => $service->name, 
                         'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
-                        'gender' => $service->gender, 
+                        'gender' => Service::gender()[$service->gender], 
                         'price'  => $service->price, 
                         'link'   => Html::link(
                                         URL::route('macro.micro.edit',

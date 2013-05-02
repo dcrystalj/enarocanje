@@ -44,7 +44,7 @@
                     'name'        => $service->name, 
                     'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
 					'timetable'   => Button::link(URL::route('timetable', $service->id), 'Timetable'),
-                    'timetable'   => Button::link(URL::route('macro.absence.create', $service->id), 'Add absences'),
+                    'absence'     => Button::link(URL::route('macro.absence.create', $service->id), 'Add absences'),
                     'deactivate'  => deactivate($service->id),
                     'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
                  ];

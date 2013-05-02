@@ -69,8 +69,6 @@ class UserController extends BaseController {
           }
           else
           {
-
-            
             $user = new User;
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
@@ -92,8 +90,7 @@ class UserController extends BaseController {
             Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
             {
                 $m  ->to($user->email, $user->name)
-                    ->subject(Lang::get('user.welcome'))
-                    ->setCharset('UTF-8');
+                    ->subject(Lang::get('user.welcome'));
             });
 
             return Redirect::home()->with('success',Lang::get('user.mailSent'));
