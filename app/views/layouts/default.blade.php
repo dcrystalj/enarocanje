@@ -109,6 +109,7 @@
 	{{ Html::script("bootstrap/js/bootstrap.min.js") }}
 	{{ Html::script('js/bootbox.min.js') }}
 	{{ Html::script('js/sorttable.js') }}
+	{{ Html::script('js/passStrength.js') }}
 	
 </body>
 </Html>
