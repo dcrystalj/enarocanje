@@ -119,12 +119,13 @@
 	@if(!Session::has('language'))
 		<script type="text/javascript">
 
-			function getLocation()
-			{
-			   if (navigator.geolocation)
-			   {
-			      navigator.geolocation.getCurrentPosition(showPosition);
-			   }
+			if (navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+			} 
+			//Get latitude and longitude;
+			function successFunction(position) {
+		     	$('#latitude').text(position.coords.latitude);
+			    $('#longitude').text(position.coords.longitude); 
 			}
 
 			function showPosition(position)
