@@ -137,7 +137,7 @@
 			getLocation();
 			if($('#longitude').text()>0 && $('#latitude').text()>0){
 				'{{App::setLocale("si")}}'
-				'{{Session::set('language',"si")}}'
+				'{{Session::set("language","si")}}'
 			}
 		</script>
 	@endif
