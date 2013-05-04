@@ -105,11 +105,41 @@
 
 	</div>
 
+
 	{{ Html::script("js/main.js") }}
 	{{ Html::script("bootstrap/js/bootstrap.min.js") }}
 	{{ Html::script('js/bootbox.min.js') }}
 	{{ Html::script('js/sorttable.js') }}
 	{{ Html::script('js/passStrength.js') }}
 	
+	<div style="">
+		<span id="longitude"></span>
+		<span id="latitude"></span>
+	</div>
+	@if(!Session::has('language'))
+		<script type="text/javascript">
+
+			function getLocation()
+			{
+			   if (navigator.geolocation)
+			   {
+			      navigator.geolocation.getCurrentPosition(showPosition);
+			   }
+			}
+
+			function showPosition(position)
+			{
+			   $('#latitude').text(position.coords.latitude);
+			   $('#longitude').text(position.coords.longitude); 
+			}
+
+			getLocation();
+			if($('#longitude').text()>0 && $('#latitude').text()>0){
+				'{{App::setLocale("si")}}'
+				'{{Session::set('language',"si")}}'
+			}
+		</script>
+	@endif
+
 </body>
 </Html>

@@ -51,4 +51,22 @@ $(document).ready(function() {
 
    //password hint
    $('#password').pstrength();
+
+
+   
+   
 });
+//set geolocation
+function getLocation()
+{
+   if (navigator.geolocation)
+   {
+      navigator.geolocation.getCurrentPosition(showPosition);
+   }
+}
+
+function showPosition(position)
+{
+   $('#latitude').text(position.coords.latitude);
+   $('#longitude').text(position.coords.longitude); 
+}

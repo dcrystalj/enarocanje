@@ -43,11 +43,12 @@ class Provider extends BaseController {
 
 		if($validation->fails())
 		{
+			//if is taken redirect to login
 			foreach ($validation->messages()->get('email') as $message)
 			{
 			    if($message == "The email has already been taken.")
 			    return View::make('app.login')
-							->with('status', $message . 'Please login.')
+							->with('status', $message . ' ' . 'Please login.')
 							->with('email', Input::get('email'));
 			}
 
