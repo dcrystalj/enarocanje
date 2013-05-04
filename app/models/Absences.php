@@ -1,5 +1,5 @@
 <?php
-class Absence extends Eloquent {
+class Absences extends Eloquent {
 	protected $table = 'absence';
     protected $guarded = array();
 
