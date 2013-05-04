@@ -130,11 +130,11 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
-		    		Auth::user()->email, 
-		    		Auth::user()->name
+		    		$data->useremail, 
+		    		$data->username
 		    	)
 		    	->subject('Successful reservation!');
 			});
@@ -290,11 +290,11 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
-			    $m->to(
-		    		Auth::user()->email, 
-		    		Auth::user()->name
+			    $m->to(		    		
+		    		$data->useremail, 
+		    		$data->username
 		    	)
 		    	->subject('Successful reservation!');
 			});
