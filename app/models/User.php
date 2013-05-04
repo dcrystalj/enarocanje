@@ -70,7 +70,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->status == 2;
 	}
 
-	public function isCostumer()
+	public function isCostomer()
 	{
 		return $this->status == 1;
 	}
