@@ -22,7 +22,8 @@ class UserController extends BaseController {
      * @return Response
      */
     public function __construct() {
-        $this->beforeFilter('auth',['except'=>['create','store','getConfirm']]);
+        $this->beforeFilter('auth',   ['except' =>['create','store','getConfirm']]);
+        $this->beforeFilter('tmpuser',['only'   =>['show']]);
         //
       }
 

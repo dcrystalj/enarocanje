@@ -73,6 +73,17 @@ Route::filter('auth', function()
 	//if (Auth::guest()) return Redirect::guest('home');
 });
 
+
+Route::filter('tmpuser', function()
+{
+	 if(!Session::has('user') || Session::has('user') && Auth::user()->isTmpuser() ) 
+	 	return Redirect::route('home')->with('error','You have no permissions. Please login first');
+});
+
+
+
+
+
 Route::filter('auth1', function()
 {
 	if (Auth::check() == FALSE ) return Redirect::route('find');
