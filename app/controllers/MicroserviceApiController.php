@@ -122,8 +122,8 @@ class MicroserviceApiController extends BaseController
 		if($r){
 
 			$data = array(
-				'username'  => $tempuser->name,
-				'useremail' => $tempuser->email,
+				'username'  => Auth::user()->name,
+				'useremail' => Auth::user()->email,
 				'date'      => $r->date,
 				'from'      => $r->from,
 				'name'      => $r->microservice->name,
