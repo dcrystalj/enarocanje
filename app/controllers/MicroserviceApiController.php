@@ -133,8 +133,8 @@ class MicroserviceApiController extends BaseController
 			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
-		    		$data->useremail, 
-		    		$data->username
+		    		$data['useremail'], 
+		    		$data['username']
 		    	)
 		    	->subject('Successful reservation!');
 			});
@@ -293,8 +293,8 @@ class MicroserviceApiController extends BaseController
 			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(		    		
-		    		$data->useremail, 
-		    		$data->username
+		    		$data['useremail'], 
+		    		$data['username']
 		    	)
 		    	->subject('Successful reservation!');
 			});
