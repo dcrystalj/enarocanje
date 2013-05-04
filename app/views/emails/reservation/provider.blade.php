@@ -7,10 +7,10 @@
 		<h2>Reservation information</h2>
 
 		<div>
-			User {{ $user->name }} ({{ $user->email }}) have just made reservation on 
-			{{ $reservation->date }} at
-			{{ $reservation->from }} for 
-			{{ $reservation->microservice->name }}.
+			User {{ $username }} ({{ $useremail }}) have just made reservation on 
+			{{ $date }} at
+			{{ $from }} for 
+			{{ $name }}.
 		</div>
 	</body>
 </html>

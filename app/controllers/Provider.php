@@ -5,14 +5,14 @@ class Provider extends BaseController {
 	//rules for registering
 	public $rules = array(
 		'email'                 => 'required|email|unique:users',
-		'password'              => 'same:password_confirmation|between:4,20|confirmed',
+		'password'              => 'same:password_confirmation|confirmed',
 		'password_confirmation' => 'required',
     );
 
     public $rules2 = array(
 		'name'     => 'required|max:20|alpha',
 		'surname'  => 'required|max:20|alpha',
-		'password' => 'same:password_confirmation|between:4,20|confirmed',
+		'password' => 'same:password_confirmation|confirmed',
    	);
 
 	public function __construct() {
@@ -43,6 +43,14 @@ class Provider extends BaseController {
 
 		if($validation->fails())
 		{
+			foreach ($validation->messages()->get('email') as $message)
+			{
+			    if($message == "The email has already been taken.")
+			    return View::make('app.login')
+							->with('status', $message . 'Please login.')
+							->with('email', Input::get('email'));
+			}
+
 			return Redirect::route('provider.create')
 							->withErrors($validation)
 							->withInput();

@@ -1,5 +1,6 @@
-//add javascript here
+
 $(document).ready(function() {
+   //calendar
 	$('.activate').click(function(e) {
 		e.preventDefault();
       var click = $(this);
@@ -47,4 +48,7 @@ $(document).ready(function() {
          $('#event-dialog').off('click');
       });                     
    });
+
+   //password hint
+   $('#password').pstrength();
 });

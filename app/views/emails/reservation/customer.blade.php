@@ -8,9 +8,9 @@
 
 		<div>
 			You have just made reservation on 
-			{{ $reservation->date }} at
-			{{ $reservation->from }} for 
-			{{ $reservation->microservice->name }}.
+			{{ $date }} at
+			{{ $from }} for 
+			{{ $name }}.
 		</div>
 	</body>
 </html>

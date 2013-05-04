@@ -122,25 +122,28 @@ class MicroserviceApiController extends BaseController
 		if($r){
 
 			$data = array(
-				'user'        => Auth::user(),
-				'reservation' => $r
+				'username'  => Auth::user()->name,
+				'useremail' => Auth::user()->email,
+				'date'      => $r->date,
+				'from'      => $r->from,
+				'name'      => $r->microservice->name,
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
-		    		Auth::user()->email, 
-		    		Auth::user()->name
+		    		$data['useremail'], 
+		    		$data['username']
 		    	)
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
+			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->email, 
-		    		$r->microservice->macroservice->user->name
+		    		$r->microservice->macroservice->name
 		    	)
 		    	->subject('Successful reservation!');
 			});
@@ -235,9 +238,8 @@ class MicroserviceApiController extends BaseController
 		return Response::json($table);
 	}
 
-	public function postRegistration($id){
+	public function postRegistration($microservid){
 		
-		$microservid = $id;
 		$events      = Input::get('event');
 		$event       = json_decode($events);
 		
@@ -247,8 +249,22 @@ class MicroserviceApiController extends BaseController
 		$name        = $event->data->name;
 		$mail        = $event->data->mail;
 
-		if(is_null(User::whereEmail($mail)->first())){
-			$tempuser         = new User;
+		if(	is_null(User::whereEmail($mail)->first()) ||
+			!is_null(User::whereEmail($mail)->first()) &&
+			User::whereEmail($mail)->first()->isTmpuser())
+		{	
+			if(!is_null(User::whereEmail($mail)->first()) && 
+				User::whereEmail($mail)->first()->isTmpuser())
+			{
+				$tempuser = User::whereEmail($mail)->first();
+				Reservation::where('user_id',$tempuser->id)
+							->where('micservice_id',$microservid)
+							->delete();
+			}
+			else
+			{
+				$tempuser     = new User;
+			}
 			$tempuser->email  = $mail;
 			$tempuser->name   = $name;
 			$tempuser->status = -1;
@@ -266,21 +282,24 @@ class MicroserviceApiController extends BaseController
 			$r->save();
 
 			$data = array(
-				'user'        => Auth::user(),
-				'reservation' => $r
+				'username'  => $tempuser->name,
+				'useremail' => $tempuser->email,
+				'date'      => $r->date,
+				'from'      => $r->from,
+				'name'      => $r->microservice->name,
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m)
+			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
 			{
-			    $m->to(
-		    		Auth::user()->email, 
-		    		Auth::user()->name
+			    $m->to(		    		
+		    		$data['useremail'], 
+		    		$data['username']
 		    	)
 		    	->subject('Successful reservation!');
 			});
 
-			Mail::later( 5, 'emails.reservation.provider', $data, function($m) use ($r)
+			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->email, 

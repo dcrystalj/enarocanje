@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => "jure@jurebajt.com", 'name' => "jure bajt"),
+	'from' => array('address' => "tt3710@student.uni-lj.si", 'name' => "tt3710"),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => "989c3af6-edf0-4d59-a8ec-31510ee4204e",
+	'username' => "51971860-2b02-42d6-8a9f-7d4ccda70ee0",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,6 +93,6 @@ return array(
 	|
 	*/
 
-	'password' => "989c3af6-edf0-4d59-a8ec-31510ee4204e",
+	'password' => "51971860-2b02-42d6-8a9f-7d4ccda70ee0",
 
 );
