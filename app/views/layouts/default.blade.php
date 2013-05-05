@@ -17,6 +17,7 @@
 	{{ Html::style('bootstrap/css/bootstrap.min.css') }}
 	{{ Html::style('bootstrap/css/bootstrap-responsive.min.css') }}
 	{{ Html::style('css/style.css') }}
+	{{ Html::style('css/bootstrap-datetimepicker.min.css') }}
 
     @yield('assets')
 	
@@ -107,6 +108,7 @@
 
 	{{ Html::script("js/main.js") }}
 	{{ Html::script("bootstrap/js/bootstrap.min.js") }}
+	{{ Html::script("js/bootstrap-datetimepicker.min.js") }}
 	{{ Html::script('js/bootbox.min.js') }}
 	{{ Html::script('js/sorttable.js') }}
 	{{ Html::script('js/passStrength.js') }}

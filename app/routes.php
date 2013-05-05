@@ -60,7 +60,8 @@ Route::controller('app','AppController');
 Route::resource('macro.absence','AbsenceController');
 
 
-
+// referral controller
+Route::resource('referral','ReferralController');
 
  
 //iron.io mail 
