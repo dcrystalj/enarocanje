@@ -71,6 +71,7 @@ class MicroserviceApiController extends BaseController
 
 		$r = Reservation::where('micservice_id',$micserviceid)
 						->where('user_id',$userid)
+						->where('date','>=',Input::get('start'))
 						->get();
 		foreach ($r as $b) 
 		{
@@ -84,6 +85,34 @@ class MicroserviceApiController extends BaseController
 					"title"     => $title,
 					"start"     => $date . " " . $b->from ,
 					"end"       => $date . " " . $b->to ,
+					"allDay"    => false,
+					'eventType' => 'reservation',
+			);
+		}
+
+		return Response::json($timetable);
+	}
+
+	public function getAllreservation($id){
+		if(Auth::guest())
+		{
+			return [];
+		}
+		$timetable = array();
+		$micserviceid = $id;
+		$userid = Auth::user()->id;
+
+		$r = Reservation::where('micservice_id',$micserviceid)
+						//->where('user_id',$userid)
+						//->where('date','>=',Input::get('start'))
+						->get();
+		foreach ($r as $b) 
+		{
+			$timetable[] = array(
+					"id"        => $b->id,
+					"title"     => User::find($b->user_id) ? User::find($b->user_id)->email : 'x',
+					"start"     => $b->date . " " . $b->from ,
+					"end"       => $b->date . " " . $b->to ,
 					"allDay"    => false,
 					'eventType' => 'reservation',
 			);
