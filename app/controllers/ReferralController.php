@@ -47,8 +47,7 @@ class ReferralController extends BaseController {
             $token = 0;
             if($user->referral_code == 0)
             {
-                return $token;
-                $token = UserLibrary::generateUuid(); 
+                $token = UserLibrary::generateUuid();  
                 $user->referral_code = $token;
                 $user->save();
             }
