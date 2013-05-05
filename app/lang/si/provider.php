@@ -10,7 +10,7 @@ return array(
 	'reset' => 'Reset',
 	'break' => 'Break',
 	'save' => 'Save',
-	'' => '',
+	'back' => 'Back',
 	'' => '',
 	'' => '',
 	'' => '',
