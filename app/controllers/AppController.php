@@ -17,6 +17,7 @@ class AppController extends BaseController
 	}
 
 	public function postLogin(){
+
 		$input = Input::all();
 		$validation = Validator::make($input, $this->rules);
 
@@ -27,11 +28,12 @@ class AppController extends BaseController
 		else
 		{
 			$input['confirmed'] = 1;
-
 			if(Auth::attempt($input,true))
 			{
 				Session::put('user',Auth::user());
 				Cookie::forever('user',Auth::user());
+				$currentUser = Auth::user();
+				Session::set('language','en');
 				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
 			}
 			else

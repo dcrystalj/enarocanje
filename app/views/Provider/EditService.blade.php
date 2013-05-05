@@ -19,11 +19,11 @@
 
     {{ Former::open('ManageServices/' . $service->id)->rules($rules)->method('PUT') }}
     {{ Former::populate($service) }}
-    {{ Former::text('name','Name:')->autofocus() }}
-    {{ Former::select('length','Length:')->options($duration) }} 
-    {{ Former::text('description','Description:') }}
-    {{ Former::Number('price','Price:') }}
-    {{ Former::actions()->submit('Save changes') }}
+    {{ Former::text('name',Lang::get('provider.name').': ')->autofocus() }}
+    {{ Former::select('length',Lang::get('provider.duration').': ')->options($duration) }} 
+    {{ Former::text('description',Lang::get('provider.description').': ') }}
+    {{ Former::Number('price',Lang::get('provider.price')': ') }}
+    {{ Former::actions()->submit(Lang::get('provider.saveChanges')) }}
     {{ Former::close() }} 
 
 @stop

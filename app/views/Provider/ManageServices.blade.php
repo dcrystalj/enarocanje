@@ -20,11 +20,11 @@
     ?>  
 
     {{ Former::open('ManageServices')->rules($rules) }}
-    {{ Former::text('name','Name:')->autofocus() }}
-    {{ Former::select('length','Duration:')->options($duration) }} 
-    {{ Former::Number('price','Price:') }}
-    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-    {{ Former::actions()->submit('Add service') }}
+    {{ Former::text('name',Lang::get('provider.name').': ')->autofocus() }}
+    {{ Former::select('length',Lang::get('provider.duration').': ')->options($duration) }} 
+    {{ Former::Number('price',Lang::get('provider.price').': ') }}
+    {{ Former::textarea('description',Lang::get('provider.description').': ')->rows(10)->columns(20) }}
+    {{ Former::actions()->submit(Lang::get('provider.addService')) }}
     {{ Former::close() }}   
 
     <?php 
@@ -32,7 +32,7 @@
     $i = 1; 
     foreach ($MicroService as $service){
         $link1  =    Form::open(array('method' => 'DELETE', 'url' => 'ManageServices/' . $service->id));
-        $link1 .=    Form::submit('Delete');
+        $link1 .=    Form::submit(Lang::get('provider.delete'));
         $link1 .=    Form::close();
 
         $tbody[]= [
