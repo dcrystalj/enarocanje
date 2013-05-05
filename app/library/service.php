@@ -38,6 +38,11 @@ class Service {
         'W' => 'Woman',
     );
 
+    private static $absences = array(
+    	'holiday' => 'Holiday', 
+    	'absence' => 'Absence',
+    );
+
 	public static function categories() {
 		return self::$serviceCategories;
 	}
@@ -52,6 +57,10 @@ class Service {
 
 	public static function gender() {
 		return self::$sex;
+	}
+
+	public static function absence() {
+		return self::$absences;
 	}
 
 }

@@ -12,5 +12,6 @@
 {{Former::label(Lang::get('user.timezone').': '.$user->time_zone)}}
 {{Former::label(Lang::get('user.language').': '.$user->language) }}
 {{Button::link(URL::route('user.edit', Auth::user()->id), Lang::get('user.editSettings')) }}
+{{Button::link(URL::route('referral.create'), 'Refer a friend') }}
 
 @stop

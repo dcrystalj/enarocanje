@@ -47,4 +47,8 @@ $(document).ready(function() {
          $('#event-dialog').off('click');
       });                     
    });
+
+    $('#datetimepicker').datetimepicker({
+      language: 'pt-BR'
+    });
 });
