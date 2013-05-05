@@ -38,20 +38,20 @@ class ReferralController extends BaseController {
      */
     public function store()
     {
-     /*    $validation = Validator::make(Input::all(),$this->rules);
+        $validation = Validator::make(Input::all(),$this->rules);
 
         if($validation->passes())
         {
             $input = Input::all();
-            $user  = User::find($id);
-
-            if($user->referral_code == '')
+            $user  = Auth::user();
+            $token = 0;
+            if($user->referral_code == 0)
             {
+                return $token;
                 $token = UserLibrary::generateUuid(); 
                 $user->referral_code = $token;
                 $user->save();
             }
-
             $token = $user->refferal_code;
             Queue::getIron()->ssl_verifypeer = false;
             Mail::queue('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
@@ -65,7 +65,7 @@ class ReferralController extends BaseController {
         }
         return Redirect::back()
                         ->withErrors($validation)
-                        ->withInput();;*/
+                        ->withInput();;
     }
 
     /**
