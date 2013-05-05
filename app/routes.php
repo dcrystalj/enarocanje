@@ -70,7 +70,6 @@ Route::post('queue/push', function(){
 
 //languages
 Route::get('lang/{lang}', function($lang){
-	App::setLocale($lang);
 	Session::set('language',$lang);
 	return Redirect::back();
 });

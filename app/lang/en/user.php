@@ -24,7 +24,11 @@ return array(
 	'slovenian' => 'slovenian',
 	'italian' => 'italian',
 	'german' => 'german',
-	
-
+	'languages' => array(
+		'english',	
+		'slovenian',	
+		'italian',	
+		'german',	
+	)
 
 );
