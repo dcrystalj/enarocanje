@@ -23,7 +23,6 @@ class ReferralController extends BaseController {
      */
     public function create()
     {
-        return "fdaf";
         return View::make('referral.create')                   
                     ->with('rules',$this->rules)
                     ->with('errors',Session::get('errors'))
@@ -37,9 +36,9 @@ class ReferralController extends BaseController {
      *
      * @return Response
      */
-    public function store($id)
+    public function store()
     {
-         $validation = Validator::make(Input::all(),$this->rules);
+     /*    $validation = Validator::make(Input::all(),$this->rules);
 
         if($validation->passes())
         {
@@ -63,7 +62,7 @@ class ReferralController extends BaseController {
         }
         return Redirect::back()
                         ->withErrors($validation)
-                        ->withInput();;
+                        ->withInput();;*/
     }
 
     /**
