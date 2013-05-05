@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Breaks
+{{Lang::get('provider.breaks')}}
 @stop
 
 @section('assets')
@@ -15,11 +15,11 @@ Breaks
 @include('calendar.calendar_dialog')
 
 <p>
-{{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
+{{ Button::danger_link('#',Lang::get('provider.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link("/service/$id/time", 'Back') }}
+{{ Button::link("/service/$id/time", Lang::get('provider.back')) }}
 &nbsp;&nbsp;
-{{ Button::success_link("#",'Save',array('id' => 'save')) }}
+{{ Button::success_link("#",Lang::get('provider.save'),array('id' => 'save')) }}
 </p>
 
 <div id='calendar'></div>

@@ -13,22 +13,21 @@ class UserLibrary {
 	);
 	private static $timezoneArray = array(
 		"UTC-11","UTC-10","UTC-9","UTC-8","UTC-7","UTC-6",
-		"UTC-5","UTC-4",
-		"UTC-3","UTC-2","UTC-1","UTC (United Kingdom)",
+		"UTC-5","UTC-4","UTC-3","UTC-2","UTC-1",
+		"UTC (United Kingdom)",
 		"UTC+1 (Slovenia, Spain, Germany, Poland)",
-		"UTC+2 (Ukraine)","UTC+3","UTC+4",
-		"UTC+5","UTC+6","UTC+7","UTC+8","UTC+9","UTC+10","UTC+11","UTC+12"
+		"UTC+2 (Ukraine)","UTC+3","UTC+4","UTC+5","UTC+6",
+		"UTC+7","UTC+8","UTC+9","UTC+10","UTC+11","UTC+12"
 	);
 
 
+	//returns translated languages array
 	public static function languages() {
-		//return array("asd","ooo");
 		return Lang::get('user.languages');
-		//return self::$languageArray;
 	}
+	//returns translated language
 	public static function language($i) {
-		//return "asd";
-		return Lang::get('languages')[$i];
+		return Lang::get('user.languages')[$i]; 
 	}
 	public static function timezones() {
 		return self::$timezoneArray	;

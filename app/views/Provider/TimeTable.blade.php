@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-TimeTable
+{{Lang::get('provider.timetable')}}
 @stop
 
 @section('assets')
@@ -12,14 +12,14 @@ TimeTable
 @stop
 
 @section('content')
-@include('calendar.calendar_dialog');
+@include('calendar.calendar_dialog')
 
 <p>
-{{ Button::danger_link('#','Reset',array('id' => 'reset')) }}
+{{ Button::danger_link('#',Lang::get('provider.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link("/service/$id/breaks", 'Breaks', array('id' => 'breaks')) }}
+{{ Button::link("/service/$id/breaks", Lang::get('provider.breaks'), array('id' => 'breaks')) }}
 &nbsp;&nbsp;
-{{ Button::success_link("#", 'Save', array('id' => 'save')) }}
+{{ Button::success_link("#", Lang::get('provider.save'), array('id' => 'save')) }}
 </p>
 
 <div id='calendar'></div>
@@ -58,7 +58,7 @@ fc_init({
 		{
 			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
 			type: 'GET',
-			error: function() { alert('there was an error while fetching events!'); },
+			error: function() { alert(Lang::get('provider.fetchingError')); },
 			editable: true,
 		}
 	],

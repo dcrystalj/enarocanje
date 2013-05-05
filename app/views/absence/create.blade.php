@@ -28,7 +28,7 @@
     {{ Former::close() }}   
 
     <?php 
-        $absences = Absence::all();
+        $absences = Absences::all();
         $tbody = []; 
         $i = 1; 
         foreach ($absences as $absence){    

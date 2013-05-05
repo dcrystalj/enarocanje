@@ -5,8 +5,8 @@ class AbsenceController extends BaseController {
 
     public $rules = array(
         'title'      => 'required',
-        'fromD'  => 'required',     
-        'toD'        => 'required',
+    //    'fromD'  => 'required',     
+    //    'toD'        => 'required',
     );
 
     /**
@@ -46,8 +46,7 @@ class AbsenceController extends BaseController {
 
         if($validation->passes())
         {
-
-            $absence                = new Absence;
+            $absence                = new Absences;
             $absence->title         = Input::get( 'title' );
             $absence->abs_type      = Input::get( 'abs_type' );
             $absence->repetable     = Input::get( 'repetable' );

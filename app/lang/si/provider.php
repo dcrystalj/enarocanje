@@ -7,7 +7,19 @@ return array(
 	'retypePassword' => 'Retype password',
 	'registration' => 'registration',
 	'register' => 'register',
-	
+	'reset' => 'Reset',
+	'break' => 'Break',
+	'save' => 'Save',
+	'back' => 'Back',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+
 	
 
 
