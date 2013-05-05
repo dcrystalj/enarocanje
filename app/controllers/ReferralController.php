@@ -13,7 +13,7 @@ class ReferralController extends BaseController {
      */
     public function index()
     {
-        //
+        return "referral";
     }
 
     /**
@@ -23,7 +23,6 @@ class ReferralController extends BaseController {
      */
     public function create()
     {
-        return "fdaf";
         return View::make('referral.create')                   
                     ->with('rules',$this->rules)
                     ->with('errors',Session::get('errors'))
@@ -44,12 +43,15 @@ class ReferralController extends BaseController {
         if($validation->passes())
         {
             $input = Input::all();
-            $user = User::find($id);
-            if($user->referral_code == ''){
+            $user  = User::find($id);
+
+            if($user->referral_code == '')
+            {
                 $token = UserLibrary::generateUuid(); 
                 $user->referral_code = $token;
                 $user->save();
             }
+
             $token = $user->refferal_code;
             Queue::getIron()->ssl_verifypeer = false;
             Mail::queue('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
@@ -57,9 +59,9 @@ class ReferralController extends BaseController {
                 $m  ->to($input['to'])
                     ->subject($input['content']);
             });               
-                return Redirect::route('referral.create')
+            return Redirect::route('referral.create')
                                 ->with('success','Referral successfully send');
-            }
+            
         }
         return Redirect::back()
                         ->withErrors($validation)

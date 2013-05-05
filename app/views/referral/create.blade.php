@@ -6,7 +6,7 @@
 
 @section('content')
 
-    {{ Former::open(URL::route('referral.store',Auth::user()->id))->rules($rules) }}
+    {{ Former::open(URL::route('referral.store'))->rules($rules) }}
     {{ Former::text('to','To:')}}
     {{ Former::textarea('content','Content:') }}
     {{ Former::actions()->submit('Send referral' ) }}
