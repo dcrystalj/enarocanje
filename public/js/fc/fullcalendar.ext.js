@@ -82,7 +82,7 @@ function cal_repair_event(cal, event) {
 }
 
 function cal_show_dialog(event) {
-	if(!event.source.editable) return;
+	if(typeof event.source.editable != 'undefined' && !event.source.editable) return;
 	$('#efrom').val(getHour(event.start));
 	$('#eto').val(getHour(event.end));
 	$('#event-dialog').modal({

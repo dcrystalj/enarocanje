@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-   Google Login
+Select calendar
 @stop
 
 @section('content')
