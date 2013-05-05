@@ -5,8 +5,8 @@ class AbsenceController extends BaseController {
 
     public $rules = array(
         'title'      => 'required',
-        'from'  => 'required',     
-        'to'        => 'required'
+        'fromD'  => 'required',     
+        'toD'        => 'required',
     );
 
     /**
@@ -16,7 +16,7 @@ class AbsenceController extends BaseController {
      */
     public function index($mac)
     {
-        //return View::make('absence.add_absence')->with('mac',$mac);
+
     }
 
     /**
@@ -46,13 +46,13 @@ class AbsenceController extends BaseController {
 
         if($validation->passes())
         {
-            
-            $absence                = new MicroService;
+
+            $absence                = new Absence;
             $absence->title         = Input::get( 'title' );
             $absence->abs_type      = Input::get( 'abs_type' );
             $absence->repetable     = Input::get( 'repetable' );
-            $absence->from          = Input::get( 'from' );
-            $absence->to            = Input::get( 'to' );
+          //  $absence->from          = date('Y-m-d', strtotime(Input::get('from')));
+           // $absence->to            = date('Y-m-d', strtotime(Input::get('to')));
             //$absence->google_id     =
             $absence->macservice_id = $mac;
             $absence->save();
@@ -71,7 +71,7 @@ class AbsenceController extends BaseController {
 
     public function edit($mac,$abs)
     {
-        $absence = Auth::user()->macroservices()->find($mac)->absence()->find($abs);
+        $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
         if($absence) //is macrosrevice in database
         {
             return View::make('absence.create')
@@ -79,7 +79,6 @@ class AbsenceController extends BaseController {
                             ->with('mac', Auth::user()->macroservices()->find($mac))
                             ->with('rules',$this->rules);
         }
-        
         return Redirect::route('macro.absence.create',$mac)
                         ->with('error','Wrong absence');
     }
@@ -92,7 +91,7 @@ class AbsenceController extends BaseController {
      */
     public function update($mac,$abs)
     {
-        $absence = Auth::user()->macroservices()->find($mac)->absence()->find($abs);
+        $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
         if(!$absence) //is macrosrevice not in database
         {
             return App::abort(404);
@@ -106,13 +105,13 @@ class AbsenceController extends BaseController {
             $absence->title          = Input::get( 'title' );
             $absence->abs_type       = Input::get( 'abs_type' );
             $absence->repetable      = Input::get( 'repetable' );
-            $absence->from           = Input::get( 'from' );
-            $absence->to             = Input::get( 'to' );
+            //$absence->from           = date('Y-m-d', strtotime(Input::get('from')));
+            //$absence->to             = date('Y-m-d', strtotime(Input::get('to')));
             //$absence->google_id      
             $absence->macservice_id  = $mac;
             $absence->save();
 
-            if($micservice){
+            if($absence){
                 return Redirect::route('macro.absence.create',$mac)
                                 ->with('success','Successfully edited');
             }
@@ -129,9 +128,18 @@ class AbsenceController extends BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($mac,$abs)
     {
-        //
+        return Auth::user()->email;
+        $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
+        if($absence)
+        {
+            $absence->delete();
+                return Redirect::route('macro.absence.create',$mac)
+                                ->with('success','Successfully deleted!');
+        }
+        return Redirect::route('macro.absence.create',$mac)
+                                ->with('error','Absence not found');    
     }
 
 }

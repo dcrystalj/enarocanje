@@ -9,6 +9,11 @@ class MacroService extends Eloquent {
         return $this->hasMany('MicroService', 'macservice_id');
     }
 
+   	public function absences()
+    {
+        return $this->hasMany('Absence', 'macservice_id');
+    }
+
 	public function user()
     {
         return $this->belongsTo('User','user_id');

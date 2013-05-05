@@ -51,4 +51,8 @@ $(document).ready(function() {
 
    //password hint
    $('#password').pstrength();
+   //datepicker
+   $('#datetimepicker').datetimepicker({
+      language: 'pt-BR'
+   });
 });

@@ -5,26 +5,30 @@
 @stop
 
 @section('content')
-    <?php
-        $abs = Absence::find($id);
-    ?>
+
         @if(isset($abs))
-            {{ Former::open(URL::route('macro.absence.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
+            {{ Former::open(URL::route('macro.absence.update', [$mac->id, $abs->id] ))->method('PUT')->rules($rules) }}
             {{ Former::populate($abs) }}
         @else
-            {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
+            {{ Former::open(URL::route('macro.absence.store',$mac->id))->rules($rules) }}
         @endif
     
     {{ Former::text('title','Title:')}}
-    {{ Former::select('abs_type','Absence type:')->options(array('holiday' => 'Holiday', 'absence' => 'Absence'))}}
+    {{ Former::select('abs_type','Absence type:')->options(Service::absence())}}
     {{ Former::checkbox('repetable','Repeatable every year:') }}
-    {{ Former::text('from','From date:')}}
-    {{ Former::text('to','To date:')}}
-    {{ Former::actions()->submit( isset($abs) ? 'Edit' : 'Add service' ) }}
+    <div id="datetimepicker" class="input-append date">
+    <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+  </div>
+    
+    {{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add service' ) }}
     {{ Former::close() }}   
 
-        <?php 
-        $absences = Absence::All();
+    <?php 
+        $absences = Absence::all();
         $tbody = []; 
         $i = 1; 
         foreach ($absences as $absence){    
@@ -33,7 +37,8 @@
                 'title'   => $absence->title,
                 'from'   => $absence->from,
                 'to'   => $absence->to,
-                'edit'  => Button::link(URL::route('absence.edit', $absence->id),'Edit'),
+                'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+                'delete'  => Button::link(URL::route('macro.absence.destroy', array($mac->id, $absence->id)),'Delete'),
              ];
              $i++;
         }
