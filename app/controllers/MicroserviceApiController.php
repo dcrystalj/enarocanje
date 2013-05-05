@@ -209,7 +209,7 @@ class MicroserviceApiController extends BaseController
 		foreach($breaks as $break) {
 			$date = $start+$break->day*3600*24; // offset
 			$timetable[] = array(
-				"id"        => $break->id,
+				"id"        => 'brk'.$break->id,
 				"title"     => "",
 				"start"     => date("Y-m-d", $date) . " " . $break->from, 
 				"end"       => date("Y-m-d", $date) . " " . $break->to,
@@ -221,14 +221,24 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function getAbsences($id) {
-		$absences = Absence::where('macservice_id', $id)->get();
-									   // from >= input('from')
-									   // to <= input('to')
+		
+		$absences = Absences::where('macservice_id', $id)					
+					->where(function($q){
+						$q->where(function($query){
+						 		$query	->where('from', '<=', Input::get('from'))
+										->where('to', '>', Input::get('from'));
+							})
+							->orWhere(function($query){
+						 		$query	->where('from', '>=', Input::get('from'))
+										->where('from', '<', Input::get('to'));
+							});
+					})->get();
+									 
 		$table = array();
 		foreach($absences as $absence) {
 			$table[] = array(
-				"id"        => $absence->id,
-				"title"     => "Absence -title!-",
+				"id"        => 'abs'.$absence->id,
+				"title"     => "",
 				"start"     => $absence->from,
 				"end"       => $absence->to,
 				"allDay"    => false,
@@ -350,7 +360,7 @@ class MicroserviceApiController extends BaseController
 
 	protected function timetableArray($id, $start, $from, $to){
 		$array =  array(
-						"id"        => "$id",
+						"id"        => "tt$id",
 						"title"     => "",
 						"start"     => date("Y-m-d", strtotime("$start")) . " " . $from, 
 						"end"       => date("Y-m-d", strtotime("$start")) . " " . $to,
