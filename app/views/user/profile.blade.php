@@ -13,5 +13,6 @@
 <?php if($user->language != null) Former::label(Lang::get('user.language').': '.UserLibrary::language($user->language))
 ?>
 {{Button::link(URL::route('user.edit', Auth::user()->id), Lang::get('user.editSettings')) }}
+{{Button::link(URL::to('/google/export/reservations'), Lang::get('user.exportReservations')) }}
 {{Button::link(URL::route('referral.create'), Lang::get('user.refer'))}}
 @stop

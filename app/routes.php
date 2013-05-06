@@ -77,9 +77,9 @@ Route::get('lang/{lang}', function($lang){
 
 // Google
 Route::get('google/auth', array('as' => 'gauth', 'uses' => 'GCal@auth'));
+Route::get('google/export', 'GCal@exportAbsences');
+Route::get('google/import', 'GCal@importAbsences');
 Route::get('google/export/reservations', 'GCal@exportUserReservations');
 Route::get('google/export/service_reservation', 'GCal@exportServiceReservations');
-Route::get('google/export/', 'GCal@exportAbsences');
-Route::get('google/import', 'GCal@importAbsences');
 //Route::get('google/export', 'GCal@exportReservations');
 //Route::get('google/import/holidays', 'GCal@importHolidays');
