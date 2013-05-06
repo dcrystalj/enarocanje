@@ -19,6 +19,7 @@ return array(
 	'germanCapital' => 'Nemščina',
 	'userReg' => 'Registracija uporabnika',
 	'providerReg' => 'Registracija ponudnika',
+	'successfullySaved' => 'Shranjeno uspešno',
 	'' => '',
 	'' => '',
 	'' => '',

@@ -19,7 +19,7 @@ return array(
 	'germanCapital' => 'German',
 	'userReg' => 'User registration',
 	'providerReg' => 'Provider registration',
-	'' => '',
+	'successfullySaved' => 'Successfully saved',
 	'' => '',
 	'' => '',
 	'' => '',

@@ -63,7 +63,7 @@ class AbsenceController extends BaseController {
             if($absence)
             {
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success','successfully saved');
+                                ->with('success',Lang::get('messages.successfullySaves'));
             }
         }
         return Redirect::back()
@@ -83,7 +83,7 @@ class AbsenceController extends BaseController {
                             ->with('rules',$this->rules);
         }
         return Redirect::route('macro.absence.create',$mac)
-                        ->with('error','Wrong absence');
+                        ->with('error',Lang::get('messages.wrongAbsence'));
     }
 
     /**
@@ -117,7 +117,7 @@ class AbsenceController extends BaseController {
 
             if($absence){
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success','Successfully edited');
+                                ->with('success',Lang::get('messages.successfullyEdited'));
             }
         }
 
@@ -134,16 +134,16 @@ class AbsenceController extends BaseController {
      */
     public function destroy($mac,$abs)
     {
-        return "ansdal";
+        return "whatisthisamIobsolete";
         $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
         if($absence)
         {
             $absence->delete();
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success','Successfully deleted!');
+                                ->with('success',Lang::get('messages.successfullyDeleted'), $language););
         }
         return Redirect::route('macro.absence.create',$mac)
-                                ->with('error','Absence not found');    
+                                ->with('error',Lang::get('messages.absenceNotFound'));    
     }
 
 }
