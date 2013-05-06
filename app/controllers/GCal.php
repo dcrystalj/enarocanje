@@ -33,7 +33,13 @@ class GCal extends BaseController {
 			   	'model' => $absence,
 			);
 
-		$this->exportToGcal($user->gcalendar, $events, 'E-narocanje');
+
+		try {
+			$this->exportToGcal($user->gcalendar, $events, 'E-narocanje');
+		} catch(Exception $e) {
+			return Redirect::to("/macro/$mac/absence/create")->with('error', $e->getMessage());
+		}
+
 		return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully exported.');
 	}
 
@@ -61,7 +67,7 @@ class GCal extends BaseController {
 			$calendar_id = $cid;
 		}
 		if(!$calendar_id)
-			die("Nothing to import.");
+			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
 
 		$events = $gcal->listEvents($calendar_id);
 		Absences::where('abs_type', 'absence')
@@ -118,7 +124,11 @@ class GCal extends BaseController {
 				);
 			}
 		}
-		$r = $this->exportToGcal('select', $reservations);
+		try {
+			$r = $this->exportToGcal('select', $reservations);
+		} catch(Exception $e) {
+			return Redirect::to('/macro/create')->with('error', $e->getMessage());
+		}
 		if($r !== true)
 			return $r;
 		return Redirect::to('/macro/create')->with('success', 'Reservations sucessfully exported.');
@@ -178,7 +188,7 @@ class GCal extends BaseController {
 			$user->gcalendar = $calendarId = $cal['id'];
 			$user->save();
 		}
-		
+
 		$gcal->add_or_update($calendarId, $events);
 		return true;
 	}
