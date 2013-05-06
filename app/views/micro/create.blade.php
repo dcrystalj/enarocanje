@@ -24,41 +24,47 @@
         {{ Former::close() }}   
 
         <?php 
-            $microservice   = $mac->microservices;
-            $duration       = Service::duration();
-            $allActivated   = []; 
-            $allDeactivated = [];
-            $i              = 1; 
-            foreach ($microservice as $service){
-                if($service->isActive())
-                {
-                    
-                    $allActivated[]= [
-                        'id'     => $i, 
-                        'name'   => $service->name, 
-                        'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
-                        'gender' => Service::gender()[$service->gender], 
-                        'price'  => $service->price, 
-                        'link'   => Html::link(
-                                        URL::route('macro.micro.edit',
-                                            [$mac->id, $service->id]), 'Edit'),
-                        'deactivate'  => deactivate($mac->id, $service),
+        $microservice   = $mac->microservices;
+        $duration       = Service::duration();
+        $allActivated   = []; 
+        $allDeactivated = [];
+        $i              = 1; 
 
-                     ];
-                     $i++;
-                }
-                else{
+        foreach ($microservice as $service){
+            if($service->isActive())
+            {
+                
+                $allActivated[]= [
+                    'id'     => $i, 
+                    'name'   => $service->name, 
+                    'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
+                    'gender' => Service::gender()[$service->gender], 
+                    'price'  => $service->price, 
 
-                    $allDeactivated[] = [
-                        'name'        => $service->name, 
-                        'link1'       => activate($mac->id, $service)
-                     ];
-                }
+                    'link'   => Button::link(
+                                    URL::route('macro.micro.edit',
+                                        [$mac->id, $service->id]), 'Edit'),
+
+                    'showReserv'  => Button::link(
+                                    URL::route('macro.micro.reservation.show',
+                                        [$mac->id, $service->id, 0]), 'Show reservations'),
+
+                    'deactivate'  => deactivate($mac->id, $service),
+
+                 ];
+                 $i++;
             }
+            else{
+                $allDeactivated[] = [
+                    'name'        => $service->name, 
+                    'link1'       => activate($mac->id, $service)
+                 ];
+            }
+        }
         ?>
 
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '') }}
+        {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
 
@@ -78,7 +84,7 @@
     {
         $deactivate =   Form::open( array(
             'method' => 'DELETE', 
-            'url' => URL::route(
+            'url'    => URL::route(
                 'macro.micro.destroy',
                 [$macId,$mic->id]),
                 'class'    => 'deactivate'

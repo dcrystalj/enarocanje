@@ -279,14 +279,14 @@ class MicroserviceApiController extends BaseController
 
 	public function postRegistration($microservid){
 		
-		$events      = Input::get('event');
-		$event       = json_decode($events);
+		$events = Input::get('event');
+		$event  = json_decode($events);
 		
-		$date        = date('Y-m-d', strtotime($event->start)); //Monday - day 0
-		$start       = date('G:i', strtotime($event->start));
-		$end         = date('G:i', strtotime($event->end));
-		$name        = $event->data->name;
-		$mail        = $event->data->mail;
+		$date   = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start  = date('G:i', strtotime($event->start));
+		$end    = date('G:i', strtotime($event->end));
+		$name   = $event->data->name;
+		$mail   = $event->data->mail;
 
 		if(	is_null(User::whereEmail($mail)->first()) ||
 			!is_null(User::whereEmail($mail)->first()) &&
