@@ -61,7 +61,7 @@ class GCal extends BaseController {
 			$calendar_id = $cid;
 		}
 		if(!$calendar_id)
-			die("Nothing to import.");
+			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
 
 		$events = $gcal->listEvents($calendar_id);
 		Absences::where('abs_type', 'absence')
