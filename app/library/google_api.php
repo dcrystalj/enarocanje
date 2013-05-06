@@ -76,7 +76,8 @@ class GoogleApi {
 		$end->setDateTime((new DateTime($e['to']))->format('c'));
 		$end->setTimeZone($timezone);
 		$event->setEnd($end);
-		//$event->setRecurrence(array('RRULE:FREQ=WEEKLY;UNTIL=20110701T100000-07:00'));
+		if(isset($e['repetable']) && $e['repetable'])
+			$event->setRecurrence(array('RRULE:FREQ=YEARLY'));//';UNTIL=20110701T100000-07:00'));
 		return $event;
 	}
 	public function add_or_update($cId, $events) {
@@ -87,11 +88,13 @@ class GoogleApi {
 		foreach($events as $event) {
 			$model = isset($event['model'])?$event['model']:null;
 			if($model && isset($existings[$model->google_id])) { // Update
+				print "Update<br />";
 				$gid = $model->google_id;
 				$ev = $this->getEvent($event);
 				$e = $this->cal->events->update($cId, $gid, $ev);
 				unset($existings[$gid]);
 			} else { // Insert
+				print "Insert<br />";
 				$ev = $this->getEvent($event);
 				$e = $this->cal->events->insert($cId, $ev);
 				if($model) {
@@ -100,6 +103,7 @@ class GoogleApi {
 				}
 			}
 		}
+
 		foreach($existings as $id=>$item)
 			$this->cal->events->delete($cId, $id);
 	}

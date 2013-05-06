@@ -23,19 +23,21 @@ class GCal extends BaseController {
 		$calendar_id = $user->gcalendar;
 		$absences = Absences::where('macservice_id', $mac)
 			->where('abs_type', 'absence')->get();
-		
+
 		$events = array();
 		foreach($absences as $absence)
 			$events[] = array(
 				'from' => $absence->from,
 				'to' => $absence->to,
 				'title' => $absence->title,
+				'repetable' => $absence->repetable,
 			   	'model' => $absence,
 			);
 
-
 		try {
-			$this->exportToGcal($user->gcalendar, $events, 'E-narocanje');
+			$r = $this->exportToGcal($user->gcalendar, $events, 'E-narocanje');
+			if($r !== true)
+				return $r;
 		} catch(Exception $e) {
 			return Redirect::to("/macro/$mac/absence/create")->with('error', $e->getMessage());
 		}
@@ -70,15 +72,27 @@ class GCal extends BaseController {
 			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
 
 		$events = $gcal->listEvents($calendar_id);
+
 		Absences::where('abs_type', 'absence')
 			->where('macservice_id', $mac)->delete();
+
 		foreach($events as $event) {
+			$yearly = false;
+			if(isset($event['recurrence'])) {
+				foreach($event['recurrence'] as $rec) {
+					if($rec == 'RRULE:FREQ=YEARLY') {
+						$yearly = true;
+						break;
+					}
+				}
+			}
+
 			DB::table('absence')->insert(array(
 											 'macservice_id' => $mac,
 											 'from' => $event['start'],
 											 'to' => $event['stop'],
 											 'title' => $event['summary'],
-											 'repetable' => false, // TODO
+											 'repetable' => $yearly?1:0,
 											 'google_id' => $event['id'],
 											 'abs_type' => 'absence',
 										 ));
