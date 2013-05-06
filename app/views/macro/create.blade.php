@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{Lang::get('services.manageService')}}
 @stop
 
 @section('content')
@@ -24,15 +24,16 @@
             {{ Former::open(URL::route('macro.store'))->rules($rules) }}
         @endif
 
-        {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-        {{ Former::select('ZIP_code','ZIP code:')->options(Service::zip())}}
-        {{ Former::text('street','Street:')}}
-        {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-        {{ Former::text('telephone_number','Telephone Number:')}}
-        {{ Former::text('site_url','URL to your site:')}}
-        {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-        {{ Former::actions()->large_submit( isset($mac) ? 'Edit' : 'Save' ) }}
+        {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
+        {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options(Service::zip())}}
+        {{ Former::text('street',Lang::get('services.').': ')}}
+        {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
+        {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
+        {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
+        {{ Former::textarea('description',Lang::get('services.description').': ')->rows(10)->columns(20) }}
+        {{ Former::actions()->large_submit( isset($mac) ? Lang::get('services.saveChanges') : Lang::get('services.addService')) }}
         {{ Former::close() }}   
+
     </div>
     <div class="span1">
         @if($mac->active==0 )
@@ -42,6 +43,16 @@
         @endif
         </div>  
     </div>
+    
+
+
+    
+     @if(isset($mac))
+        {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
+        {{ Former::populate($mac) }}
+    @else
+        {{ Former::open(URL::route('macro.store'))->rules($rules) }}
+    @endif
     
 
 @stop

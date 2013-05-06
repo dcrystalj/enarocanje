@@ -32,33 +32,33 @@
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
 						//	false,null,'home'],
 	 					!Auth::check() ?: 
-	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
+	 					[Lang::get('services.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
-						['Services',URL::to('macro')],
+						[Lang::get('general.services'),URL::to('macro')],
 					]))
 
 				->with_menus(
 					Navigation::links( 
 			     		Auth::check() ?
 			      		[	
-							['Profile',URL::action('UserController@show',[Auth::user()->id])],
+							[Lang::get('general.profile'),URL::action('UserController@show',[Auth::user()->id])],
 							[Navigation::VERTICAL_DIVIDER],
-							['Logout',URL::to('app/logout')],
+							[Lang::get('general.logout'),URL::to('app/logout')],
 						] 
 						:
 			       		[
-			       	 		['Login',URL::to('app/login')],		     
-			       	 		['Register','#',false,false,[		       	 		
-								['User registration',URL::to('user/create')],
-								['Provider registration',URL::to('provider/create')],				
+			       	 		[Lang::get('general.login'),URL::to('app/login')],		     
+			       	 		[Lang::get('general.register'),'#',false,false,[		       	 		
+								[Lang::get('general.userReg'),URL::to('user/create')],
+								[Lang::get('general.providerReg'),URL::to('provider/create')],				
 							]]
 						]),
 			      	['class' => 'pull-right'] )
 				->with_menus(
 			     	Navigation::links([
 		       				       	 		
-							['English', URL::to('lang/en')],
-							['Slovenian', URL::to('lang/si')],		
+							[Lang::get('general.englishCapital'), URL::to('lang/en')],
+							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],		
 						[Navigation::VERTICAL_DIVIDER],
 					]),
 					['class' => 'pull-right'] 

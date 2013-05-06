@@ -29,9 +29,10 @@ return array(
 	'german' => 'nemščina',
 	'languages' => array(
 		'angleščina',	
-		'slovenšina',	
+		'slovenščina',	
 		'italijanščina',	
 		'nemščina',	
-	)
+	),
+	'refer' => 'Povabi prijatelja',
 
 );

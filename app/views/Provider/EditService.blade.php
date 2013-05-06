@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Edit service    
+    {{Lang::get('provider.editService')}}
 @stop
 
 @section('content')
