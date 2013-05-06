@@ -33,5 +33,6 @@ return array(
 	'retypePassword' => 'Re-type password',
 	'editService' => 'Edit service',
 	'registration' => 'Registration',
+	'absences' => 'Absences',
 
 );

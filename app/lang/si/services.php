@@ -23,6 +23,7 @@ return array(
 	'city' => 'Mesto',
 	'edit' => 'Edit',
 	'providers' => 'Ponudniki',
+	'services' => 'Storitve',
 	'' => '',
 	'' => '',
 	'' => '',

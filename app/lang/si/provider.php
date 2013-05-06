@@ -17,7 +17,7 @@ return array(
 	'description' => 'Opis',
 	'price' => 'Price',
 	'saveChanges' => 'Shrani spremembe',
-	'timetable' => 'Urnik',
+	'timetable' => 'Delovni čas',
 	'duration' => 'Trajanje',
 	'addService' => 'Dodaj storitev',
 	'delete' => 'Zbriši',
@@ -32,5 +32,6 @@ return array(
 	'retypePassword' => 'Ponovno vpiši geslo',
 	'editService' => 'Uredi storitev',
 	'registration' => 'Registracija',
+	'absences' => 'Odsotnosti',
 
 );

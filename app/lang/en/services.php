@@ -22,7 +22,7 @@ return array(
 	'name' => 'Name',
 	'city' => 'City',
 	'email' => 'Email',
-	'' => '',
+	'services' => 'Services',
 	'' => '',
 	'' => '',
 
