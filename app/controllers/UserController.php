@@ -32,11 +32,11 @@ class UserController extends BaseController {
     public function create()
     {
       return View::make('user.register')
-      ->with('rules', $this->rules)
-      ->with('status',Session::get('status'))
-      ->with('errors',Session::get('errors'))
-      ->with('error',Session::get('error'))
-      ->with('success',Session::get('success'));
+                ->with('rules', $this->rules)
+                ->with('status',Session::get('status'))
+                ->with('errors',Session::get('errors'))
+                ->with('error',Session::get('error'))
+                ->with('success',Session::get('success'));
 
     }
 

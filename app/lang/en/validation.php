@@ -59,8 +59,9 @@ return array(
 		"file"       => "The :attribute must be :size kilobytes.",
 		"string"     => "The :attribute must be :size characters.",
 	),
-	"unique"          => "The :attribute has already been taken.",
-	"url"             => "The :attribute format is invalid.",
+	"unique"      		=> "The :attribute has already been taken.",
+	"url"         		=> "The :attribute format is invalid.",
+	'before_date' 		=> ":attribute must be before",
 
 	/*
 	|--------------------------------------------------------------------------

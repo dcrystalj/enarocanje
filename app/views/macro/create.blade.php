@@ -8,7 +8,7 @@
     <style>
         .btn-large{
             margin-bottom: 10px;
-            width: 100px;
+            width: 200px;
         }
         .form-actions{
             background-color: white !important;
@@ -26,7 +26,7 @@
 
         {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
         {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options(Service::zip())}}
-        {{ Former::text('street',Lang::get('services.').': ')}}
+        {{ Former::text('street',Lang::get('services.street').': ')}}
         {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
         {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
         {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
@@ -35,8 +35,8 @@
         {{ Former::close() }}   
 
     </div>
-    <div class="span1">
-        @if($mac->active==0 )
+    <div class="span2">
+        @if( isset($mac) && $mac->active==0 )
         	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('provider.timetable'))}}
             {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('provider.absences'))}}
             {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('services.services'))}}

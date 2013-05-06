@@ -4,9 +4,9 @@ class AbsenceController extends BaseController {
 
 
     public $rules = array(
-        'title'      => 'required',
-    //    'fromD'  => 'required',     
-    //    'toD'        => 'required',
+        'title' => 'required',
+        'from' => 'required',     
+        'to'   => 'required',
     );
 
     /**
