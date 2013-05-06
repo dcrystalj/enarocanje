@@ -53,9 +53,11 @@ $(document).ready(function() {
    $('#password').pstrength();
    //datepicker
    $('#datetimepicker').datetimepicker({
-      language: 'pt-BR'
+      language: 'pt-BR',
+      pickSeconds: false,
    });
       $('#datetimepicker1').datetimepicker({
-      language: 'pt-BR'
+      language: 'pt-BR',
+      pickSeconds: false,
    });
 });
