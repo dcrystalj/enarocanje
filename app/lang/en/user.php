@@ -29,6 +29,7 @@ return array(
 		'slovenian',	
 		'italian',	
 		'german',	
-	)
+	),
+	'refer' => 'Referr a friend',
 
 );
