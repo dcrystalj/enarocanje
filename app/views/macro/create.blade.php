@@ -40,6 +40,7 @@
         	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('provider.timetable'))}}
             {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('provider.absences'))}}
             {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('services.services'))}}
+            {{Button::large_link( URL::to('google/export/service_reservation'), 'Export Reservaions')}}
         @endif
         </div>  
     </div>

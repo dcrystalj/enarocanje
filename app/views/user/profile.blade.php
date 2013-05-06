@@ -21,4 +21,6 @@
 
 {{Button::link(URL::route('referral.create'), 
 		Lang::get('user.refer'))}}
+
+{{Button::link(URL::to('/google/export/reservations'), Lang::get('user.exportReservations')) }}
 @stop

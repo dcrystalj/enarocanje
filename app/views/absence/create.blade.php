@@ -45,11 +45,13 @@
                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
         </div>
-        </div>
-    </div>
+		</div>
+	</div>
 
-    {{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
-    {{ Former::close() }}   
+	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
+    {{ Former::close() }}
+	{{ Button::link("/google/export", Lang::get('provider.export'))}}
+	{{ Button::link("/google/import", Lang::get('provider.import'))}}
 
     <?php 
         $absences = Absences::where('macservice_id',$mac->id)->get();
