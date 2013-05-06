@@ -13,7 +13,7 @@ class ReferralController extends BaseController {
      */
     public function index()
     {
-        return "referral";
+        return View::make('referral.index') ;
     }
 
     /**

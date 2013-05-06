@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Refer a friend
+    Referrals
 @stop
 
 @section('content')
@@ -17,8 +17,8 @@
 
             $tbody[]= [
                 'id'     => $i, 
-                'emailR'   => $user1->email,
-                'emailN'   => $user2->email,
+                'emailR'   => $user1['email'],
+                'emailN'   => $user2['email'],
              ];
              $i++;
         }
