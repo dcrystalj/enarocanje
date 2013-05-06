@@ -16,15 +16,25 @@
     {{ Former::text('title','Title:')}}
     {{ Former::select('abs_type','Absence type:')->options(Service::absence())}}
     {{ Former::checkbox('repetable','Repeatable every year:') }}
+    {{ Former::label('from','From:') }}
+
     <div id="datetimepicker" class="input-append date">
-    <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
+        <input data-format="dd/MM/yyyy hh:mm" type="text" name="from" value="<?php if (isset($abs)) echo $abs->from ?>" ></input>
+        <span class="add-on">
+           <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+        </span>
+    </div>
     
-    {{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add service' ) }}
+    {{ Former::label('to','To:') }}
+
+    <div id="datetimepicker1" class="input-append date">
+        <input data-format="dd/MM/yyyy hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo $abs->to ?>" ></input>
+        <span class="add-on">
+           <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+        </span>
+    </div>
+
+    {{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
     {{ Former::close() }}   
 
     <?php 
@@ -38,7 +48,7 @@
                 'from'   => $absence->from,
                 'to'   => $absence->to,
                 'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                'delete'  => Button::link(URL::route('macro.absence.destroy', array($mac->id, $absence->id)),'Delete'),
+                'delete'  => Button::link(URL::route('macro.absence.destroy', array($mac->id,$absence->id) ),'Delete'),
              ];
              $i++;
         }

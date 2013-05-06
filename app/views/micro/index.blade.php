@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Micro Services
+    Services
 @stop
 
 @section('content')

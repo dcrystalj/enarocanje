@@ -10,6 +10,8 @@
     {{ Former::text('email','Email:')->autofocus() }}
     {{ Former::password('password',Lang::get('provider.password'.': ')) }}
     {{ Former::password('password_confirmation','provider.retypePassword'.': ') }}
+    {{ Former::hidden('code',Input::get('code')) }}
     {{ Former::actions()->submit(Lang::get('provider.register')) }}
+
     {{ Former::close() }}
 @stop

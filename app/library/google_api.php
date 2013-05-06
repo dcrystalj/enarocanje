@@ -5,6 +5,7 @@ require_once 'google_lib/contrib/Google_CalendarService.php';
 class GoogleApi {
 	private $client;
 	private $cal;
+	private $ret = null;
 
 	public function __construct() {
 		$this->client = new Google_Client();
@@ -84,30 +85,47 @@ class GoogleApi {
 			$existings[$e['id']] = $e;
 
 		foreach($events as $event) {
-			if($event->google_id && isset($existings[$event->google_id])) { // Update
+			$model = isset($event['model'])?$event['model']:null;
+			if($model && isset($existings[$model->google_id])) { // Update
+				$gid = $model->google_id;
 				$ev = $this->getEvent($event);
-				$e = $this->cal->events->update($cId, $event->google_id, $ev);
-				/* $event->google_id = $e['id']; // remove */
-				/* $event->save(); // remove */
-				unset($existings[$event->google_id]);
+				$e = $this->cal->events->update($cId, $gid, $ev);
+				unset($existings[$gid]);
 			} else { // Insert
 				$ev = $this->getEvent($event);
 				$e = $this->cal->events->insert($cId, $ev);
-				$event->google_id = $e['id'];
-				$event->save();
+				if($model) {
+					$model->google_id = $e['id'];
+					$model->save();
+				}
 			}
 		}
 		foreach($existings as $id=>$item)
 			$this->cal->events->delete($cId, $id);
 	}
-	public function addEvents($cId, $events) {
-		
+
+	/* Helper */
+	public  function r($r=null) {
+		if($r === null)
+			$this->ret = $r;
+		else
+			return $this->ret;
 	}
-/* try { */
-/* 	$from = '2013-04-29T10:00:00.000-07:00'; */
-/* 	$to = '2013-04-29T11:00:00.000-07:00'; */
-/* 	print "Event: ".addEvent('matijja24@gmail.com', 'Testni event', $from, $to); */
-/* } catch(Google_ServiceException $e) { */
-/* 	print $e->getMessage(); */
-/*   } */
+
+	/* --- */
+	function selectCalendar() {
+		if($id = Input::get('calendar_id'))
+			return $id;
+		$list = $this->cal->calendarList->listCalendarList();
+		$this->r(View::Make('gcal.select')->with('calendars', $list));
+	}
+
+	/* +++ */
+	function exportToGcal($calendarId, $events) {
+		if($calendarId == 'select') {
+			$calendarId = $this->selectCalendar();
+			if(!$calendarId)
+				return;
+		}
+	}
 }

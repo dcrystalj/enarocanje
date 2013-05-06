@@ -11,7 +11,7 @@ class MacroService extends Eloquent {
 
    	public function absences()
     {
-        return $this->hasMany('Absence', 'macservice_id');
+        return $this->hasMany('Absences', 'macservice_id');
     }
 
 	public function user()

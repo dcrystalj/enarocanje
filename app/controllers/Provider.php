@@ -58,10 +58,21 @@ class Provider extends BaseController {
 		else
 		{	
 			//save user and send mail with confirmation link
+			$code = Input::get('code');
+			$referralU = User::where('referral_code', $code)->first();
 			$user = new User;
 			$user->email    = Input::get( 'email' );
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
+		
+			if ($referralU)
+			{
+				$referrals = new Referrals;
+				$referrals->referral_id = $referralU->id;
+				$referrals->new_user_id = $user->id;
+				$referrals->save(); 
+			}
+
 			$token = UserLibrary::generateUuid(); 
 			$passwordReminder = new Passreminder;
 			$passwordReminder->email = $user->email;
