@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    Providers
 @stop
 
 @section('content')
