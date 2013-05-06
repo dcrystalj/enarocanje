@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{Lang::get('services.manageService')}}
 @stop
 
 @section('content')
@@ -17,14 +17,14 @@
                 'name'   => $service->name,
                 'City'   => $service->city . '<br>' . $service->street, 
                 'Email'  => $service->email,
-                'link'   => Html::link(URL::route('macro.micro.index', $service->id),'Choose')
+                'link'   => Html::link(URL::route('macro.micro.index', $service->id),Lang::get('services.choose'))
              ];
              $i++;
         }
     ?>
 
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Name', 'City', 'Email', '') }}
+    {{ Table::headers('#', Lang::get('services.name'),Lang::get('services.city'), Lang::get('services.email'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    
