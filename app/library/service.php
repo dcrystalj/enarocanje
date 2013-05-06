@@ -62,5 +62,13 @@ class Service {
 	public static function absence() {
 		return self::$absences;
 	}
+	
+	public static function zip() {
+    	$zipCode = ZIPcode::All();
+	    foreach ($zipCode as $z) {
+	         $codes[$z->ZIP_code] = $z->ZIP_code . ' ' . $z->city;
+	    }
+     	return $codes;
+	}
 
 }

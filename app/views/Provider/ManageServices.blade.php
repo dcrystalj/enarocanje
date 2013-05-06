@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{Lang::get('provider.manageServices')}}
 @stop
 
 @section('content')

@@ -58,7 +58,7 @@ fc_init({
 		{
 			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
 			type: 'GET',
-			error: function() { alert(Lang::get('provider.fetchingError')); },
+			error: function() { alert("{{Lang::get('provider.fetchingError')}}") },
 			editable: true,
 		}
 	],

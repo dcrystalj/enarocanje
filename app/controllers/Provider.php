@@ -167,4 +167,5 @@ class Provider extends BaseController {
 
 		App::abort(404,'Page not found');
 	}
+
 }

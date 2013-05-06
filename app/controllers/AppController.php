@@ -32,8 +32,15 @@ class AppController extends BaseController
 			{
 				Session::put('user',Auth::user());
 				Cookie::forever('user',Auth::user());
-				$currentUser = Auth::user();
-				Session::set('language','en');
+				if(Auth::user()->language == null)
+				{
+					Session::set('language','en');
+				}
+				else
+				{
+					Session::set('language',
+					UserLibrary::languageAbbrs(Auth::user()->language));
+				}
 				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
 			}
 			else

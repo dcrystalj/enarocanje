@@ -78,6 +78,14 @@ fc_init({
 			className: "termin"
 		},
 		{			
+			url: '{{ URL::action("MicroserviceApiController@getAbsences", array($mac)) }}',
+			type: 'GET',
+			error: cal_error,
+			editable: false,
+			color: "rgba(192,192,192, 0.5)",
+			className: "termin"
+		},
+		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
 			@if(Auth::check())
 			error: 'cal_error',
@@ -91,9 +99,10 @@ fc_init({
 	//check if data has been fetched
 	loading: function(bool) {
 		//if client hasnt already made reservation, then hide delete button
-		if(!bool && countClientEvents()==0)
+		if(!bool )
 		{
-			$('#delete').hide();
+			if(countClientEvents()==0) $('#delete').hide();
+			mergeOverlapping();
 		}
 	}, 
 	

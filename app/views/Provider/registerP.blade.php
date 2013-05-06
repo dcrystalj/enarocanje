@@ -8,9 +8,10 @@
 
     {{ Former::open('provider')->rules($rules) }}
     {{ Former::text('email','Email:')->autofocus() }}
-    {{ Former::password('password','Password:') }}
-    {{ Former::password('password_confirmation','Retype password:') }}
+    {{ Former::password('password',Lang::get('provider.password'.': ')) }}
+    {{ Former::password('password_confirmation','provider.retypePassword'.': ') }}
     {{ Former::hidden('code',Input::get('code')) }}
-    {{ Former::actions()->submit('Register') }}
+    {{ Former::actions()->submit(Lang::get('provider.register')) }}
+
     {{ Former::close() }}
 @stop

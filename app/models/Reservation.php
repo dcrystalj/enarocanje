@@ -8,4 +8,5 @@ class Reservation extends Eloquent {
     {
         return $this->belongsTo('MicroService','micservice_id');
     }
+
 }

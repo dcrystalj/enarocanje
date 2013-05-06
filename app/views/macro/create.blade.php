@@ -1,17 +1,51 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{Lang::get('services.manageService')}}
 @stop
 
 @section('content')
-<?php
+    <style>
+        .btn-large{
+            margin-bottom: 10px;
+            width: 100px;
+        }
+        .form-actions{
+            background-color: white !important;
+        }
+    </style>
+    <?php $mac = Auth::user()->macroservices()->first(); ?>
+    <div class="row-fluid">
+      <div class="span5">
+        @if(isset($mac))
+            {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
+            {{ Former::populate($mac) }}
+        @else
+            {{ Former::open(URL::route('macro.store'))->rules($rules) }}
+        @endif
 
-     $zipCode = ZIPcode::All();
-     foreach ($zipCode as $z) {
-         $codes[$z->ZIP_code] = $z->ZIP_code . ' ' . $z->city;
-     }
-?>
+        {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
+        {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options(Service::zip())}}
+        {{ Former::text('street',Lang::get('services.').': ')}}
+        {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
+        {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
+        {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
+        {{ Former::textarea('description',Lang::get('services.description').': ')->rows(10)->columns(20) }}
+        {{ Former::actions()->large_submit( isset($mac) ? Lang::get('services.saveChanges') : Lang::get('services.addService')) }}
+        {{ Former::close() }}   
+
+    </div>
+    <div class="span1">
+        @if($mac->active==0 )
+        	{{Button::large_link(URL::route('timetable', $mac->id), 'Timetable')}}
+            {{Button::large_link(URL::route('macro.absence.create', $mac->id), 'Absences')}}
+            {{Button::large_link( URL::route('macro.micro.create',$mac->id), 'Services')}}
+        @endif
+        </div>  
+    </div>
+    
+
+
     
      @if(isset($mac))
         {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
@@ -19,78 +53,6 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-    {{ Former::select('ZIP_code','ZIP code:')->options($codes)}}
-    {{ Former::text('street','Street:')}}
-    {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-    {{ Former::text('telephone_number','Telephone Number:')}}
-    {{ Former::text('site_url','URL to your site:')}}
-    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-    {{ Former::actions()->submit( isset($mac) ? 'Save changes' : 'Add service' ) }}
-    {{ Former::close() }}   
-
-    <?php 
-        $macroservice = Auth::user()->macroservices()->get();
-
-        $allActivated = []; 
-        $allDeactivated = [];
-        $i = 1; 
-        foreach ($macroservice as $service)
-        {
-            if($service->active==0 )
-            {
-                $allActivated[]= [
-                    'id'          => $i, 
-                    'name'        => $service->name, 
-                    'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
-					'timetable'   => Button::link(URL::route('timetable', $service->id), 'Timetable'),
-                    'absence'     => Button::link(URL::route('macro.absence.create', $service->id), 'Add absences'),
-                    'deactivate'  => deactivate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
-                 ];
-                 $i++;
-            }else 
-            {
-                $allDeactivated[] = [
-                    'name'        => $service->name, 
-                    'activate'       => activate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
-                ];
-            }
-        }
-    ?>
-
-    {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Name', '') }}
-    {{ Table::body($allActivated) }}
-    {{ Table::close() }}
-
-    @if(count($allDeactivated)>0)
-    </br>
-    <h2>Deactivated:</h2>
-    {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers( 'Name', '') }}
-    {{ Table::body($allDeactivated) }}
-    {{ Table::close() }}
-    @endif
-
-    <?php 
-    function deactivate($serviceId)
-    {
-        $deactivate =    Form::open(array('method' => 'DELETE', 
-                                            'url' => URL::route('macro.destroy',$serviceId)));
-        $deactivate .=    Form::submit('Deactivate');
-        $deactivate .=    Form::close();
-        return $deactivate;
-    }
     
-    function activate($serviceId)
-    {
-        $activate = Form::open(array('method' => 'GET', 
-                                        'url' => URL::route('macroactivate',$serviceId)));
-        $activate .= Form::submit('Activate');
-        $activate .= Form::close();
-        return $activate;
-    } 
-    ?>
+
 @stop

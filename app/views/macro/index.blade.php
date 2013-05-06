@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+<<<<<<< HEAD
+    Providers
+=======
+    {{Lang::get('services.manageService')}}
+>>>>>>> 0343bb12944f600209cab0cab92fad9d15d8a4cb
 @stop
 
 @section('content')
@@ -17,14 +21,14 @@
                 'name'   => $service->name,
                 'City'   => $service->city . '<br>' . $service->street, 
                 'Email'  => $service->email,
-                'link'   => Html::link(URL::route('macro.micro.index', $service->id),'Choose')
+                'link'   => Html::link(URL::route('macro.micro.index', $service->id),Lang::get('services.choose'))
              ];
              $i++;
         }
     ?>
 
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Name', 'City', 'Email', '') }}
+    {{ Table::headers('#', Lang::get('services.name'),Lang::get('services.city'), Lang::get('services.email'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

@@ -141,6 +141,8 @@ class UserController extends BaseController {
             $user->time_zone = Input::get( 'timezone' );
             $user->language  = Input::get( 'language' );
             $user->save();
+            Session::set('language',
+          UserLibrary::languageAbbrs(Auth::user()->language));
             return Redirect::to('user/show')->with('success',Lang::get('user.settingsSuccess'));
         }
 
