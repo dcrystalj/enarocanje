@@ -8,7 +8,7 @@
 
     {{ Former::open(URL::route('referral.store'))->rules($rules) }}
     {{ Former::text('to','To:')}}
-    {{ Former::textarea('content','Content:') }}
+    {{ Former::text('content','Subject:') }}
     {{ Former::actions()->submit('Send referral' ) }}
     {{ Former::close() }}   
 

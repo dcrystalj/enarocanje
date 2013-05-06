@@ -44,15 +44,13 @@ class ReferralController extends BaseController {
         {
             $input = Input::all();
             $user  = Auth::user();
-            $token = 0;
             if($user->referral_code == 0)
             {
                 $token = UserLibrary::generateUuid();  
                 $user->referral_code = $token;
                 $user->save();
             }
-            $token = $user->refferal_code;
-            //Queue::getIron()->ssl_verifypeer = false;
+            $token = $user->referral_code;
             Mail::send('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
             {
                 $m  ->to($input['to'])
