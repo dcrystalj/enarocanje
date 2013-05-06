@@ -108,7 +108,6 @@ class AbsenceController extends BaseController {
             $absence->title          = Input::get( 'title' );
             $absence->abs_type       = Input::get( 'abs_type' );
             $absence->repetable      = Input::get( 'repetable' );
-            //return Input::get('from');
             $absence->from           = date('Y/m/d H:i', strtotime(Input::get('from')));
             $absence->to             = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id      
@@ -134,13 +133,12 @@ class AbsenceController extends BaseController {
      */
     public function destroy($mac,$abs)
     {
-        return "whatisthisamIobsolete";
         $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
         if($absence)
         {
             $absence->delete();
-                return Redirect::route('macro.absence.create',$mac)
-                                ->with('success',Lang::get('messages.successfullyDeleted'), $language););
+            return Redirect::route('macro.absence.create',$mac)
+                            ->with('success',Lang::get('messages.successfullyDeleted'));
         }
         return Redirect::route('macro.absence.create',$mac)
                                 ->with('error',Lang::get('messages.absenceNotFound'));    

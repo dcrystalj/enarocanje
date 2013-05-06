@@ -23,7 +23,7 @@
         {{ Former::label('from','From:')->class('control-label')->for('datetimepicker')}}
         <div class="controls">
         <div id="datetimepicker" class="input-append date">
-            <input data-format="dd.MM.yyyy hh:mm" type="text" name="from" value="<?php if (isset($abs)) echo $abs->from ?>" ></input>
+            <input data-format="yyyy-MM-dd hh:mm" type="text" name="from" value="<?php if (isset($abs)) echo substr($abs->from,0,-3) ?>" ></input>
             <span class="add-on">
                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
@@ -40,7 +40,7 @@
         {{ Former::label('to','To:')->class('control-label')->for('datetimepicker1')}}
         <div class="controls">
         <div id="datetimepicker1" class="input-append date">
-            <input data-format="dd.MM.yyyy hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo $abs->to ?>" ></input>
+            <input data-format="yyyy-MM-dd hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo substr($abs->to,0,-3) ?>" ></input>
             <span class="add-on">
                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
@@ -52,17 +52,17 @@
     {{ Former::close() }}   
 
     <?php 
-        $absences = Absences::all();
+        $absences = Absences::where('macservice_id',$mac->id)->get();
         $tbody = []; 
         $i = 1; 
         foreach ($absences as $absence){    
             $tbody[]= [
                 'id'     => $i, 
                 'title'   => $absence->title,
-                'from'   => $absence->from,
-                'to'   => $absence->to,
+                'from'   => substr($absence->from,0,-3),
+                'to'   => substr($absence->to,0,-3),
                 'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                'delete'  => Button::link(URL::route('macro.absence.destroy', array($mac->id,$absence->id) ),'Delete'),
+                'delete'  => delete($mac->id,$absence->id),
              ];
              $i++;
         }
@@ -72,5 +72,21 @@
     {{ Table::headers('#', 'Title','From','To', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
+
+
+    <?php 
+        function delete($macId,$absId){
+            $delete =   Form::open( array(
+                                    'method' => 'DELETE', 
+                                    'url'    => URL::route(
+                                    'macro.absence.destroy',
+                                    [$macId,$absId]),
+                                    )
+                        );
+            $delete .= Form::submit('Delete');
+            $delete .= Form::close();
+            return $delete;
+        }
+    ?>
 
 @stop
