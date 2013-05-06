@@ -1,4 +1,5 @@
 var calendar;
+var removed = [];
 function fc_init(opts, id) {
 	if(typeof id == 'undefined')
 		id='#calendar';
@@ -171,36 +172,93 @@ function getDate(t) {
 //----------------
 
 function isOverlapping(start, end){
-		var array = calendar.fullCalendar('clientEvents');
-		for(i in array){
-			if(array[i].start != start && array[i].end != end){ 
-			if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
-				start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
-				start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
-				start < array[i].start && start < array[i].end && end >= array[i].start && end >= array[i].end ){
-					return true;
-			}}
-		}
-		return false;
-	};
+	var array = calendar.fullCalendar('clientEvents');
+	for(i in array){
+		if(array[i].start != start && array[i].end != end){ 
+		if(	start >= array[i].start && start < array[i].end && end > array[i].start && end <= array[i].end ||
+			start >= array[i].start && start < array[i].end && end > array[i].start && end >= array[i].end ||
+			start < array[i].start && start < array[i].end && end > array[i].start && end < array[i].end ||
+			start < array[i].start && start < array[i].end && end >= array[i].start && end >= array[i].end ){
+				return true;
+		}}
+	}
+	return false;
+};
 
-	function fromTo(event){
-		return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
+function getOverlapping(event){
+	var array = allWithoutRemoved();
+	for(i in array){
+		if( array[i] != event ){ 
+		if(	event.start >= array[i].start && event.start < array[i].end && event.end > array[i].start && event.end <= array[i].end ||
+			event.start >= array[i].start && event.start < array[i].end && event.end > array[i].start && event.end >= array[i].end ||
+			event.start < array[i].start && event.start< array[i].end && event.end > array[i].start && event.end < array[i].end ||
+			event.start < array[i].start && event.start< array[i].end && event.end >= array[i].start && event.end >= array[i].end ){
+				return event;
+		}}
+	}
+	return false;
+};
+
+function mergeOverlapping(){
+	while(areConflicts()){
+		var all = allWithoutRemoved();
+		for(i in all){
+			var conflict = getOverlapping(all[i]);
+			if(conflict){
+				if(conflict.start < all[i].start){
+					if(conflict.end < all[i].end){
+						conflict.end = all[i].end;					
+					}
+					remove(all[i]);
+				}else{
+					if(all[i].end < conflict.end){
+						all[i].end = conflict.end;
+					}
+					remove(conflict);
+				}
+				break;
+			}
+		}
 	}
 
-	function time(str){
-		var currentTime = str;
-		var hours = currentTime.getHours()
-		var minutes = currentTime.getMinutes()
-		if (minutes < 10){
-		minutes = "0" + minutes
+}
+
+function remove(event){
+	calendar.fullCalendar('removeEvents',event.id);
+	removed.push(event.id);
+}
+function allWithoutRemoved(){
+	return calendar.fullCalendar('clientEvents',function(e){
+		return removed.indexOf(e) == -1;
+	});
+}
+function areConflicts(){
+	var all = allWithoutRemoved();
+	for(i in all){
+		if(getOverlapping(all[i])){
+			return true;
 		}
-		return hours + ":" + minutes + " ";
+	}
+	return false;
+}
+///////
+function fromTo(event){
+	return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
+}
 
-	};
+function time(str){
+	var currentTime = str;
+	var hours = currentTime.getHours()
+	var minutes = currentTime.getMinutes()
+	if (minutes < 10){
+	minutes = "0" + minutes
+	}
+	return hours + ":" + minutes + " ";
 
-	function countClientEvents(){
-			return calendar.fullCalendar('clientEvents',function(e){
-				return (e.eventType=='reservation' && e.id != -1);}).length;
+};
 
-	};
+function countClientEvents(){
+		return calendar.fullCalendar('clientEvents',function(e){
+			return (e.eventType=='reservation' && e.id != -1);}).length;
+
+};

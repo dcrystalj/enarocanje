@@ -61,6 +61,7 @@ App::after(function($request, $response)
 
 Route::filter('provider',function()
 {
+
 	if (!Auth::user()->isProvider()) 
 	{
 		return Redirect::route('home')->with('error','You have no permissions.');

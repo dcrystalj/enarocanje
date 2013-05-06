@@ -52,8 +52,8 @@ class ReferralController extends BaseController {
                 $user->save();
             }
             $token = $user->refferal_code;
-            Queue::getIron()->ssl_verifypeer = false;
-            Mail::queue('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
+            //Queue::getIron()->ssl_verifypeer = false;
+            Mail::send('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
             {
                 $m  ->to($input['to'])
                     ->subject($input['content']);
