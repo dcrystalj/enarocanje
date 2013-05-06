@@ -46,12 +46,16 @@ class AbsenceController extends BaseController {
 
         if($validation->passes())
         {
+            $checkbox = Input::get( 'repetable' );
+            if($checkbox == null){
+                $checkbox = 0;
+            }
             $absence                = new Absences;
             $absence->title         = Input::get( 'title' );
             $absence->abs_type      = Input::get( 'abs_type' );
-            $absence->repetable     = Input::get( 'repetable' );
-          //  $absence->from          = date('Y-m-d', strtotime(Input::get('from')));
-           // $absence->to            = date('Y-m-d', strtotime(Input::get('to')));
+            $absence->repetable     = $checkbox;
+            $absence->from          = date('Y/m/d H:i', strtotime(Input::get('from')));
+            $absence->to            = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id     =
             $absence->macservice_id = $mac;
             $absence->save();
@@ -70,7 +74,7 @@ class AbsenceController extends BaseController {
 
     public function edit($mac,$abs)
     {
-        $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
+        $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs); 
         if($absence) //is macrosrevice in database
         {
             return View::make('absence.create')
@@ -104,8 +108,9 @@ class AbsenceController extends BaseController {
             $absence->title          = Input::get( 'title' );
             $absence->abs_type       = Input::get( 'abs_type' );
             $absence->repetable      = Input::get( 'repetable' );
-            //$absence->from           = date('Y-m-d', strtotime(Input::get('from')));
-            //$absence->to             = date('Y-m-d', strtotime(Input::get('to')));
+            //return Input::get('from');
+            $absence->from           = date('Y/m/d H:i', strtotime(Input::get('from')));
+            $absence->to             = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id      
             $absence->macservice_id  = $mac;
             $absence->save();
@@ -129,7 +134,7 @@ class AbsenceController extends BaseController {
      */
     public function destroy($mac,$abs)
     {
-        return Auth::user()->email;
+        return "ansdal";
         $absence = Auth::user()->macroservices()->find($mac)->absences()->find($abs);
         if($absence)
         {

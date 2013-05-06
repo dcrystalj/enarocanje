@@ -55,4 +55,7 @@ $(document).ready(function() {
    $('#datetimepicker').datetimepicker({
       language: 'pt-BR'
    });
+      $('#datetimepicker1').datetimepicker({
+      language: 'pt-BR'
+   });
 });
