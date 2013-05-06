@@ -22,7 +22,7 @@ return array(
 	'choose' => 'Izberi',
 	'city' => 'Mesto',
 	'edit' => 'Edit',
-	'' => '',
+	'providers' => 'Ponudniki',
 	'' => '',
 	'' => '',
 	'' => '',

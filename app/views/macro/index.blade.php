@@ -1,11 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-<<<<<<< HEAD
-    Providers
-=======
-    {{Lang::get('services.manageService')}}
->>>>>>> 0343bb12944f600209cab0cab92fad9d15d8a4cb
+    {{Lang::get('services.providers')}}
 @stop
 
 @section('content')
