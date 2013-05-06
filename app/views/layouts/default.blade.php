@@ -35,8 +35,9 @@
 	 					[Lang::get('services.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
 						[Lang::get('general.services'),URL::to('macro')],
-						Auth::check() && !Auth::user()->isAdmin() ?:
-						[Lang::get('Referrals'),URL::route('referral.index')],
+						!Auth::check() ?:
+						[Lang::get('Referrals'),URL::route('referral.index'),Request::is('referral.index'),
+	 						false,null,null,(Auth::user()->isAdmin())],
 					]))
 
 				->with_menus(
