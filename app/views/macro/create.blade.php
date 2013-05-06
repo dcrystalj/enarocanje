@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{Lang::get('services.manageService')}}
 @stop
 
 @section('content')
@@ -19,14 +19,14 @@
     @else
         {{ Former::open(URL::route('macro.store'))->rules($rules) }}
     @endif
-    {{ Former::select('name','Service:')->options(Service::categories())->autofocus() }}
-    {{ Former::select('ZIP_code','ZIP code:')->options($codes)}}
-    {{ Former::text('street','Street:')}}
-    {{ Former::text('email','Email:')->value(Auth::user()->email)}}
-    {{ Former::text('telephone_number','Telephone Number:')}}
-    {{ Former::text('site_url','URL to your site:')}}
-    {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-    {{ Former::actions()->submit( isset($mac) ? 'Save changes' : 'Add service' ) }}
+    {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
+    {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options($codes)}}
+    {{ Former::text('street',Lang::get('services.').': ')}}
+    {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
+    {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
+    {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
+    {{ Former::textarea('description',Lang::get('services.description').': ')->rows(10)->columns(20) }}
+    {{ Former::actions()->submit( isset($mac) ? Lang::get('services.saveChanges') : Lang::get('services.addService')) }}
     {{ Former::close() }}   
 
     <?php 
@@ -42,11 +42,11 @@
                 $allActivated[]= [
                     'id'          => $i, 
                     'name'        => $service->name, 
-                    'edit'        => Button::link(URL::route('macro.edit', $service->id),'Edit'),
-					'timetable'   => Button::link(URL::route('timetable', $service->id), 'Timetable'),
-                    'absence'     => Button::link(URL::route('macro.absence.create', $service->id), 'Add absences'),
+                    'edit'        => Button::link(URL::route('macro.edit', $service->id),Lang::get('services.edit')),
+					'timetable'   => Button::link(URL::route('timetable', $service->id), Lang::get('services.timetable')),
+                    'absence'     => Button::link(URL::route('macro.absence.create', $service->id), Lang::get('services.addAbsences')),
                     'deactivate'  => deactivate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), Lang::get('services.addEdit'))
                  ];
                  $i++;
             }else 
@@ -54,7 +54,7 @@
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'activate'       => activate($service->id),
-                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), 'Add, edit subservices')
+                    'micro' => Button::info_link( URL::route('macro.micro.create',$service->id), Lang::get('services.addEdit'))
                 ];
             }
         }
@@ -79,7 +79,7 @@
     {
         $deactivate =    Form::open(array('method' => 'DELETE', 
                                             'url' => URL::route('macro.destroy',$serviceId)));
-        $deactivate .=    Form::submit('Deactivate');
+        $deactivate .=    Form::submit(Lang::get('services.deactivate'));
         $deactivate .=    Form::close();
         return $deactivate;
     }
@@ -88,7 +88,7 @@
     {
         $activate = Form::open(array('method' => 'GET', 
                                         'url' => URL::route('macroactivate',$serviceId)));
-        $activate .= Form::submit('Activate');
+        $activate .= Form::submit(Lang::get('services.activate'));
         $activate .= Form::close();
         return $activate;
     } 

@@ -7,7 +7,7 @@ return array(
 	'notLoggedIn' => 'Niste prijavljeni',
 	'home' => 'Domov',
 	'email' => 'Email',
-	'password' => 'GregorianToJD(month, day, year)eslo',
+	'password' => 'Geslo',
 	'login' => 'Prijava',
 	'profile' => 'Profil',
 	'services' => 'Storitve',

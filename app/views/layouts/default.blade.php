@@ -32,7 +32,7 @@
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
 						//	false,null,'home'],
 	 					!Auth::check() ?: 
-	 					['ManageServices',URL::to('macro/create'), Request::is('macro/create'),
+	 					[lang::get('services.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
 						[Lang::get('general.services'),URL::to('macro')],
 					]))
