@@ -13,6 +13,11 @@ class BaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 		}
+
+        Validator::extend('before_date', function($attribute, $value, $parameters)
+        {
+            return ( strtotime( $value ) < strtotime( Input::get($parameters[0]) ) );
+        });
 	}
 
 }

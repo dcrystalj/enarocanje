@@ -5,10 +5,14 @@ class AbsenceController extends BaseController {
 
     public $rules = array(
         'title' => 'required',
-        'from' => 'required',     
+        'from' => 'required|before_date:to',     
         'to'   => 'required',
     );
 
+    public function __construct() {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('provider');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,6 +46,7 @@ class AbsenceController extends BaseController {
      */
     public function store($mac)
     {
+         
         $validation = Validator::make(Input::all(),$this->rules);
 
         if($validation->passes())
@@ -68,7 +73,7 @@ class AbsenceController extends BaseController {
         }
         return Redirect::back()
                         ->withErrors($validation)
-                        ->withInput();;
+                        ->withInput();
     }
 
 

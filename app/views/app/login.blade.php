@@ -1,7 +1,6 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.login')}}
 @stop
 
 @section('content')

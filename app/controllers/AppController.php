@@ -4,7 +4,7 @@ class AppController extends BaseController
 {
 	private $rules = array(
 		'email'    => 'required|email',
-		'password' => 'required|between:4,20'
+		'password' => 'required'
 	);
 
 	public function getLogin(){	

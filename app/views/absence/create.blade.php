@@ -6,19 +6,23 @@
 
 @section('content')
 
-        @if(isset($abs))
-            {{ Former::open(URL::route('macro.absence.update', [$mac->id, $abs->id] ))->method('PUT')->rules($rules) }}
-            {{ Former::populate($abs) }}
-        @else
-            {{ Former::open(URL::route('macro.absence.store',$mac->id))->rules($rules) }}
-        @endif
+    @if(isset($abs))
+        {{ Former::open(URL::route('macro.absence.update', [$mac->id, $abs->id] ))->method('PUT')->rules($rules) }}
+        {{ Former::populate($abs) }}
+    @else
+        {{ Former::open(URL::route('macro.absence.store',$mac->id))->rules($rules) }}
+    @endif
     
     {{ Former::text('title','Title:')}}
     {{ Former::select('abs_type','Absence type:')->options(Service::absence())}}
     {{ Former::checkbox('repetable','Repeatable every year:') }}
     
 
-    <div class="control-group">
+    @if($errors && $errors->has('from'))
+        <div class="control-group error">
+    @else
+        <div class="control-group required">
+    @endif
 
         {{ Former::label('from','From:')->class('control-label')->for('datetimepicker')}}
         <div class="controls">
@@ -28,26 +32,39 @@
                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
         </div>
+        @if($errors && $errors->has('from'))
+            <span class="help-inline"> {{$errors->first('from')}}</span>
+        @endif
         </div>
     </div>
 
+    @if($errors && $errors->has('to'))
+        <div class="control-group error">
+    @else
+        <div class="control-group required">
+    @endif
 
-
-
-
-    <div class="control-group">
-
-        {{ Former::label('to','To:')->class('control-label')->for('datetimepicker1')}}
+        {{ Former::label('to','To:*')->class('control-label')->for('datetimepicker1')}}
         <div class="controls">
         <div id="datetimepicker1" class="input-append date">
-            <input data-format="yyyy-MM-dd hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo substr($abs->to,0,-3) ?>" ></input>
+            <input data-format="yyyy-MM-dd hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo substr($abs->to,0,-3) ?>" >
+            </input>
+
+
+
             <span class="add-on">
                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
             </span>
+
         </div>
+        @if($errors && $errors->has('to'))
+            <span class="help-inline"> {{$errors->first('to')}}</span>
+        @endif
 		</div>
 	</div>
 
+    
+    
 	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
     {{ Former::close() }}
 	{{ Button::link("/google/export", Lang::get('provider.export'))}}

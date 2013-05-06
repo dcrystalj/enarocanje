@@ -61,7 +61,7 @@ return array(
 	),
 	"unique"      		=> "The :attribute has already been taken.",
 	"url"         		=> "The :attribute format is invalid.",
-	'before_date' 		=> ":attribute must be before",
+	"before_date" 		=> "The :attribute must be before to.",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -74,7 +74,9 @@ return array(
 	|
 	*/
 
-	'custom' => array(),
+	'custom' => array(
+		
+	),
 
 	/*
 	|--------------------------------------------------------------------------

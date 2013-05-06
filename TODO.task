@@ -1,10 +1,6 @@
- ☐ user registration, name ne pusti šumnikov
- ☐ street macroservice/create fix regex
- ☐ fix database macroservice to save all what we need
- ☐ telefon številke in street ne delajo, city- šumniki ne delajo
- ☐ edit ne shrani v bazo macrotta
- ☐ register form - regex napačen rule
- ☐ edit Provider- language is wrong- controller + view
+ ☐ user registration, name ne dela validator, sesuje se vse skp 
+ ☐ nardit nov validator
+ 
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

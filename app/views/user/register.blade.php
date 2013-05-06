@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-{{Former::open('user')->rules($rules)}}
+{{Former::open(URL::route('user.store'))->rules($rules)}}
 {{Former::text('name',Lang::get('user.name'))->autofocus()}}
 {{Former::text('surname',Lang::get('user.surname'))}}
 {{Former::text('email',Lang::get('user.email'))}}
