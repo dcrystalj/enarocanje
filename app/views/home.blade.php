@@ -1,15 +1,15 @@
 @extends('layouts.default')
 
 @section('title')
-    Home
+	{{Lang::get('general.home')}}
 @stop
 
 @section('content')
 
 	@if (Auth::check())
-	<p> Welcome {{ Auth::user()->name }} </p>
+	<p>{{Lang::get('general.welcome'); Auth::user()->name }} </p>
 	@else
-	<p> You are not logged in </p>
+	<p>{{Lang::get('general.notLoggedIn')}}</p>
 	@endif
 
 @stop
