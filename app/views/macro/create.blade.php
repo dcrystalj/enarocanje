@@ -21,13 +21,13 @@
     @endif
     {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
     {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options($codes)}}
-    {{ Former::text('street',Lang::get('services.').': ')}}
+    {{ Former::text('street',Lang::get('services.service').': ')}}
     {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
     {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
     {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
     {{ Former::textarea('description',Lang::get('services.description').': ')->rows(10)->columns(20) }}
     {{ Former::actions()->submit( isset($mac) ? Lang::get('services.saveChanges') : Lang::get('services.addService')) }}
-    {{ Former::close() }}   
+    {{ Former::close() }}
 
 
    
