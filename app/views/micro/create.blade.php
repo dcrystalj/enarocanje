@@ -36,7 +36,7 @@
                 
                 $allActivated[]= [
                     'id'     => $i, 
-                    'name'   => $service->name, 
+                    'name'   => Service::services()[$category][$service->name], 
                     'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
                     'gender' => Service::gender()[$service->gender], 
                     'price'  => $service->price, 
