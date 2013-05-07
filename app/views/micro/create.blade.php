@@ -7,7 +7,7 @@
 @section('content')
     
     @if(isset($mac))
-        <h3> <?php echo $mac->name ?> </h3>
+        <h3> {{ $mac->name }} </h3>
         @if(isset($mic))
             {{ Former::open(URL::route('macro.micro.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mic) }}
@@ -15,7 +15,7 @@
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
 
-        {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
+        {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
         {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
         {{ Former::number('price','Price:')->append('€') }}
@@ -29,14 +29,14 @@
         $allActivated   = []; 
         $allDeactivated = [];
         $i              = 1; 
-
+        $category = Service::categoryId($mac->name);
         foreach ($microservice as $service){
-            if($service->isActive())
+            if($service->isActive() && $service->category == $category)
             {
                 
                 $allActivated[]= [
                     'id'     => $i, 
-                    'name'   => $service->name, 
+                    'name'   => Service::services()[$category][$service->name], 
                     'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
                     'gender' => Service::gender()[$service->gender], 
                     'price'  => $service->price, 
@@ -54,7 +54,7 @@
                  ];
                  $i++;
             }
-            else{
+            else if(!$service->isActive()){
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'link1'       => activate($mac->id, $service)

@@ -36,13 +36,16 @@ class MicroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			
+			$macName  = MacroService::find($mac)->name;
+			$category = Service::categoryId($macName);
+
 			$micservice                = new MicroService;
-			$micservice->name          = Input::get( 'name' );
+			$micservice->name          = Input::get('name');
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
+			$micservice->category 	   = $category;
 			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
 			$micservice->macservice_id = $mac;
 			$micservice->save();
@@ -87,11 +90,15 @@ class MicroserviceController extends BaseController {
 		if($validation->passes())
 		{
 			
+		    $macName  = MacroService::find($mac)->name;
+			$category = Service::categoryId($macName);
+
 			$micservice->name          = Input::get( 'name' );
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = Input::get( 'price' );
+			$micservice->category 	   = $category;
 			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
 			$micservice->macservice_id = $mac;
 			$micservice->save();

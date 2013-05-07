@@ -6,7 +6,7 @@ class Service {
 		'Nurse salon'   => 'Nurse salon',
 		'Massage salon' => 'Massage salon',
 		'Hair salon'    => 'Hair salon',
-		'Beauty salon'  => 'Beauty salon'
+		'Beauty salon'  => 'Beauty salon',
 	);
 
 	private static $duration = array(
@@ -21,15 +21,14 @@ class Service {
     );
 
 	private static $services = array(
-		'Manicure'        => 'Manicure',
-		'Pedicure'        => 'Pedicure',
-		'Depilation'      => 'Depilation',
-		'Solarium'        => 'Solarium',
-		'Make-up'         => 'Make-up',
-		'Massage'         => 'Massage',
-		'Hair services'   => 'Hair services',
-		'Solarium'        => 'Solarium',
-		'Skin treatments' => 'Skin treatments',
+		'3' => array('Manicure', 
+					 'Pedicure',
+					 'Depilation',
+					 'Solarium',
+					 'Make-up',),
+		'1' => array('Massage'),       
+		'2' => array('Hair services'),
+		'0' => array('Skin treatments'),
 	);
 
 	private static $sex = array(
@@ -47,12 +46,26 @@ class Service {
 		return self::$serviceCategories;
 	}
 
+	public static function categoryId($serviceName) {
+		$i=0;
+		foreach (self::$serviceCategories as $category)
+		{
+			if($category == $serviceName){
+				return $i;
+			}
+			$i++;
+		}
+		return -1;
+	}
+
 	public static function duration() {
 		return self::$duration;
 	}	
 
-	public static function micro() {
-		return self::$services;
+	public static function micro($serviceName) {
+		$category = self::categoryId($serviceName);
+		$i=0;
+		return self::$services[$category];
 	}	
 
 	public static function gender() {
@@ -62,6 +75,11 @@ class Service {
 	public static function absence() {
 		return self::$absences;
 	}
+
+
+	public static function services(){
+		return self::$services;
+	}	
 	
 	public static function zip() {
     	$zipCode = ZIPcode::All();
