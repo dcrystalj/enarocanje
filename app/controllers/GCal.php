@@ -105,8 +105,8 @@ class GCal extends BaseController {
 		$reservations = array();
 		foreach(Reservation::where('user_id', $user->id)->get() as $reservation)
 			$reservations[] = array(
-				'from' => $reservation->from,
-				'to' => $reservation->to,
+				'from' => $reservation->date.' '.$reservation->from,
+				'to' => $reservation->date.' '.$reservation->to,
 				'title' => 'Reservation: '.$reservation->microservice->name,
 			);
 
@@ -131,8 +131,8 @@ class GCal extends BaseController {
 					$name = $u->email;
 				}
 				$reservations[] = array(
-					'from' => $reservation->from,
-					'to' => $reservation->to,
+					'from' => $reservation->date.' '.$reservation->from,
+					'to' => $reservation->date.' '.$reservation->to,
 					'title' => 'Reservation: '.$name,
 					/* 'model' => $reservation, */
 				);
