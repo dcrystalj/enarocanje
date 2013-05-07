@@ -59,6 +59,8 @@
 			      	['class' => 'pull-right'] )
 			    ->with_menus(
 			     	Navigation::links([
+			     		
+			     		Auth::check() ?:
 		       			['Language','#',false,false,[		       	 		
 							[Lang::get('general.englishCapital'), URL::to('lang/en')],
 							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],							
