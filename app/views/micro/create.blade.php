@@ -7,7 +7,7 @@
 @section('content')
     
     @if(isset($mac))
-        <h3> <?php echo $mac->name ?> </h3>
+        <h3> {{ $mac->name }} </h3>
         @if(isset($mic))
             {{ Former::open(URL::route('macro.micro.update', [$mac->id, $mic->id] ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mic) }}

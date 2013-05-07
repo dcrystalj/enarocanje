@@ -26,7 +26,7 @@
 	<header>
 		<nav>
 			 {{ Navbar::create()
-			    ->with_brand('E-commerce', '#')
+			    ->with_brand('E-commerce', URL::to('home'))
 			    ->with_menus(
 			        Navigation::links([
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
@@ -57,25 +57,16 @@
 							]]
 						]),
 			      	['class' => 'pull-right'] )
-				->with_menus(
-			     	Navigation::links([
-		       				       	 		
-							[Lang::get('general.englishCapital'), URL::to('lang/en')],
-							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],		
-						[Navigation::VERTICAL_DIVIDER],
-					]),
-					['class' => 'pull-right'] 
-				)
-			    /*->with_menus(
+			    ->with_menus(
 			     	Navigation::links([
 		       			['Language','#',false,false,[		       	 		
-							['English', URL::to('lang/en')],
-							['Slovenian', URL::to('lang/si')],							
+							[Lang::get('general.englishCapital'), URL::to('lang/en')],
+							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],							
 						]],
 						
 						[Navigation::VERTICAL_DIVIDER],
 					]),
-					['class' => 'pull-right'] )*/
+					['class' => 'pull-right'] )
 		   		->collapsible()
 	   	 	}}
 		</nav>
