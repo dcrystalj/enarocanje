@@ -26,7 +26,7 @@
 	<header>
 		<nav>
 			 {{ Navbar::create()
-			    ->with_brand('E-commerce', '#')
+			    ->with_brand('E-commerce', URL::to('home'))
 			    ->with_menus(
 			        Navigation::links([
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
