@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('services.manageService')}}
+    {{Lang::get('general.manageService')}}
 @stop
 
 @section('content')
@@ -23,27 +23,27 @@
         @if(isset($mac))
             {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mac) }}
-            {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus()->disabled() }}
+            {{ Former::select('name',Lang::get('general.name').': ')->options(Service::categories())->autofocus()->disabled() }}
         @else
             {{ Former::open(URL::route('macro.store'))->rules($rules) }}
-            {{ Former::select('name',Lang::get('services.name').': ')->options(Service::categories())->autofocus() }}
+            {{ Former::select('name',Lang::get('general.name').': ')->options(Service::categories())->autofocus() }}
         @endif
 
-        {{ Former::select('ZIP_code',Lang::get('services.zipCode').':')->options(Service::zip())}}
-        {{ Former::text('street',Lang::get('services.street').': ')}}
-        {{ Former::text('email',Lang::get('services.email').': ')->value(Auth::user()->email)}}
-        {{ Former::text('telephone_number',Lang::get('services.telephoneNumber').': ')}}
-        {{ Former::text('site_url',Lang::get('services.urlToYourSite').': ')}}
-        {{ Former::textarea('description',Lang::get('services.description').': ')->rows(10)->columns(20) }}
-        {{ Former::actions()->large_submit( isset($mac) ? Lang::get('services.saveChanges') : Lang::get('services.addService')) }}
+        {{ Former::select('ZIP_code',Lang::get('general.zipCode').':')->options(Service::zip())}}
+        {{ Former::text('street',Lang::get('general.street').': ')}}
+        {{ Former::text('email',Lang::get('general.email').': ')->value(Auth::user()->email)}}
+        {{ Former::text('telephone_number',Lang::get('general.telephoneNumber').': ')}}
+        {{ Former::text('site_url',Lang::get('general.urlToYourSite').': ')}}
+        {{ Former::textarea('description',Lang::get('general.description').': ')->rows(10)->columns(20) }}
+        {{ Former::actions()->large_submit( isset($mac) ? Lang::get('general.saveChanges') : Lang::get('general.addService')) }}
         {{ Former::close() }}   
 
     </div>
     <div class="span2">
         @if( isset($mac) && $mac->active==0 )
-        	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('provider.timetable'))}}
-            {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('provider.absences'))}}
-            {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('services.services'))}}
+        	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('general.timetable'))}}
+            {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('general.absences'))}}
+            {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('general.services'))}}
             {{Button::large_link( URL::to('google/export/service_reservation'), 'Export Reservations')}}
             {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),'Delete',array('id' => 'delete'))}}
 
