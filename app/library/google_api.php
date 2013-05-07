@@ -55,6 +55,8 @@ class GoogleApi {
 			$end = $event['end'];
 			$end = isset($end['date'])?$end['date']:$end['dateTime'];
 			$f = 'Y-m-d H:i:s';
+			$start = substr($start, 0, -6);
+			$end = substr($end, 0, -6);
 			$event['start'] = date($f, strtotime($start));
 			$event['stop'] = date($f, strtotime($end));
 			$r[] = $event;
@@ -65,19 +67,21 @@ class GoogleApi {
 	private function getEvent($e, &$event=null) {
 
 		$timezone = 'Europe/Ljubljana';
+		$t = new DateTimeZone('Europe/Ljubljana');
+		$timezone = 'UTC';
 		if($event === null)
 			$event = new Google_Event();
 		$event->setSummary($e['title']);
 		$start = new Google_EventDateTime();
-		$start->setDateTime((new DateTime($e['from']))->format('c'));
+		$start->setDateTime((new DateTime($e['from'], $t))->format('c'));
 		$start->setTimeZone($timezone);
 		$event->setStart($start);
 		$end = new Google_EventDateTime();
-		$end->setDateTime((new DateTime($e['to']))->format('c'));
+		$end->setDateTime((new DateTime($e['to'], $t))->format('c'));
 		$end->setTimeZone($timezone);
 		$event->setEnd($end);
 		if(isset($e['repetable']) && $e['repetable'])
-			$event->setRecurrence(array('RRULE:FREQ=YEARLY'));//';UNTIL=20110701T100000-07:00'));
+			$event->setRecurrence(array('RRULE:FREQ=YEARLY'));
 		return $event;
 	}
 	public function add_or_update($cId, $events) {
@@ -87,14 +91,12 @@ class GoogleApi {
 
 		foreach($events as $event) {
 			$model = isset($event['model'])?$event['model']:null;
-			if($model && isset($existings[$model->google_id])) { // Update
-				print "Update<br />";
+			if(false && $model && isset($existings[$model->google_id])) { // Update
 				$gid = $model->google_id;
 				$ev = $this->getEvent($event);
 				$e = $this->cal->events->update($cId, $gid, $ev);
 				unset($existings[$gid]);
 			} else { // Insert
-				print "Insert<br />";
 				$ev = $this->getEvent($event);
 				$e = $this->cal->events->insert($cId, $ev);
 				if($model) {
