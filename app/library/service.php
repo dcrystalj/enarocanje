@@ -21,14 +21,14 @@ class Service {
     );
 
 	private static $services = array(
-		'3' => 'Manicure'       ,
-		'3' => 'Pedicure'       ,
-		'3' => 'Depilation'     ,
-		'3' => 'Solarium'       ,
-		'3' => 'Make-up'        ,
-		'1' => 'Massage'        ,
-		'2' => 'Hair services'  ,
-		'0' => 'Skin treatments',
+		'3' => array('Manicure', 
+					 'Pedicure',
+					 'Depilation',
+					 'Solarium',
+					 'Make-up',),
+		'1' => array('Massage'),       
+		'2' => array('Hair services'),
+		'0' => array('Skin treatments'),
 	);
 
 	private static $sex = array(
@@ -64,13 +64,8 @@ class Service {
 
 	public static function micro($serviceName) {
 		$category = self::categoryId($serviceName);
-		foreach (self::$services as $key => $value) {
-			if($key == $category)
-			{
-				$services[$key] = $value;
-			}
-		}
-		return $services;
+		$i=0;
+		return self::$services[$category];
 	}	
 
 	public static function gender() {
@@ -80,6 +75,11 @@ class Service {
 	public static function absence() {
 		return self::$absences;
 	}
+
+
+	public static function services(){
+		return self::$services;
+	}	
 	
 	public static function zip() {
     	$zipCode = ZIPcode::All();
