@@ -40,7 +40,7 @@ class MicroserviceController extends BaseController {
 			$category = Service::categoryId($macName);
 
 			$micservice                = new MicroService;
-			$micservice->name          = Service::services()[$category][Input::get('name')];
+			$micservice->name          = Input::get('name');
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
