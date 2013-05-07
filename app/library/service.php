@@ -6,7 +6,7 @@ class Service {
 		'Nurse salon'   => 'Nurse salon',
 		'Massage salon' => 'Massage salon',
 		'Hair salon'    => 'Hair salon',
-		'Beauty salon'  => 'Beauty salon'
+		'Beauty salon'  => 'Beauty salon',
 	);
 
 	private static $duration = array(
@@ -21,15 +21,14 @@ class Service {
     );
 
 	private static $services = array(
-		'Manicure'        => 'Manicure',
-		'Pedicure'        => 'Pedicure',
-		'Depilation'      => 'Depilation',
-		'Solarium'        => 'Solarium',
-		'Make-up'         => 'Make-up',
-		'Massage'         => 'Massage',
-		'Hair services'   => 'Hair services',
-		'Solarium'        => 'Solarium',
-		'Skin treatments' => 'Skin treatments',
+		'3' => 'Manicure'       ,
+		'3' => 'Pedicure'       ,
+		'3' => 'Depilation'     ,
+		'3' => 'Solarium'       ,
+		'3' => 'Make-up'        ,
+		'1' => 'Massage'        ,
+		'2' => 'Hair services'  ,
+		'0' => 'Skin treatments',
 	);
 
 	private static $sex = array(
@@ -47,12 +46,31 @@ class Service {
 		return self::$serviceCategories;
 	}
 
+	public static function categoryId($serviceName) {
+		$i=0;
+		foreach (self::$serviceCategories as $category)
+		{
+			if($category == $serviceName){
+				return $i;
+			}
+			$i++;
+		}
+		return -1;
+	}
+
 	public static function duration() {
 		return self::$duration;
 	}	
 
-	public static function micro() {
-		return self::$services;
+	public static function micro($serviceName) {
+		$category = self::categoryId($serviceName);
+		foreach (self::$services as $key => $value) {
+			if($key == $category)
+			{
+				$services[$key] = $value;
+			}
+		}
+		return $services;
 	}	
 
 	public static function gender() {

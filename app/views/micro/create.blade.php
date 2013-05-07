@@ -15,7 +15,7 @@
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
 
-        {{ Former::select('name','Service:')->options(Service::micro())->autofocus() }}
+        {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
         {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
         {{ Former::number('price','Price:')->append('€') }}
@@ -29,9 +29,9 @@
         $allActivated   = []; 
         $allDeactivated = [];
         $i              = 1; 
-
+        $category = Service::categoryId($mac->name);
         foreach ($microservice as $service){
-            if($service->isActive())
+            if($service->isActive() && $service->category == $category)
             {
                 
                 $allActivated[]= [
@@ -54,7 +54,7 @@
                  ];
                  $i++;
             }
-            else{
+            else if(!$service->isActive()){
                 $allDeactivated[] = [
                     'name'        => $service->name, 
                     'link1'       => activate($mac->id, $service)
