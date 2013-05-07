@@ -134,14 +134,21 @@ class MacroserviceController extends BaseController {
 	{
 		if ($macservice = Auth::user()->macroservices()->find($id))
 		{
-			$macservice->active=-1;
-			$macservice->save();
+			foreach ($macservice->microservices()->get() as $micro)
+			{
+				Reservation::where('micservice_id', $micro->id)->delete();
+			}
+			$macservice->microservices()->delete();
+			$macservice->absences()->delete();
+			Whours::where('macservice_id',$macservice->id)->delete();
+			Breakt::where('macservice_id',$macservice->id)->delete();
+			$macservice->delete();
 
 			return Redirect::route('macro.create')
-							->with('status','Service ' . $macservice->name . ' was deactivated!');
+							->with('status','Services were successfully deleted.');
 		}
 		
-		return Redirect::rotue('macro.create')->with('error','Service ' . $macservice->name . " was not deactivated.\nPlease try again.");
+		return Redirect::route('macro.create')->with('error','Services could not be deleted. ');
 		
 	}
 
@@ -158,4 +165,6 @@ class MacroserviceController extends BaseController {
 		return Redirect::rotue('macro.create')->with('error','Service ' . $macservice->name . " was not activated.\nPlease try again.");
 		
 	}
+
+
 }

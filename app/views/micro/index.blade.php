@@ -30,12 +30,15 @@
         if ($mic){ 
         $tbody = []; 
         $i = 1; 
+        $macroName = MacroService::find($mac)->name;
+        $category = Service::categoryId($macroName);
         foreach ($mic as $service){
+            echo $service->name;
             if($service->isActive())
             {
                 $tbody[] = [
                 'id'     => $i, 
-                'name'   => $service->name, 
+                'name'   => Service::services()[$category][$service->name], 
                 'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
