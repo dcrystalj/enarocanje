@@ -32,11 +32,11 @@
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
 						//	false,null,'home'],
 	 					!Auth::check() ?: 
-	 					[Lang::get('services.manageService'),URL::to('macro/create'), Request::is('macro/create'),
+	 					[Lang::get('general.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
 						[Lang::get('general.services'),URL::to('macro')],
 						!Auth::check() ?:
-						[Lang::get('Referrals'),URL::route('referral.index'),Request::is('referral.index'),
+						[Lang::get('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
 	 						false,null,null,(Auth::user()->isAdmin())],
 					]))
 
@@ -52,19 +52,19 @@
 			       		[
 			       	 		[Lang::get('general.login'),URL::to('app/login')],		     
 			       	 		[Lang::get('general.register'),'#',false,false,[		       	 		
-								[Lang::get('general.userReg'),URL::to('user/create')],
-								[Lang::get('general.providerReg'),URL::to('provider/create')],				
+								[Lang::get('general.userRegistration'),URL::to('user/create')],
+								[Lang::get('general.providerRegistration'),URL::to('provider/create')],				
 							]]
 						]),
 			      	['class' => 'pull-right'] )
 			    ->with_menus(
 			     	Navigation::links([
 			     		
-			     		Auth::check() ?:
-		       			['Language','#',false,false,[		       	 		
+			     		//Auth::check() ?:
+		       			//[Trans('general.language'),'#',false,false,[		       	 		
 							[Lang::get('general.englishCapital'), URL::to('lang/en')],
 							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],							
-						]],
+						//]],
 						
 						[Navigation::VERTICAL_DIVIDER],
 					]),

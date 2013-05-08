@@ -9,7 +9,7 @@
 	@if (Auth::check())
 	<p>{{Lang::get('general.welcome'); Auth::user()->name }} </p>
 	@else
-	<p>{{Lang::get('general.notLoggedIn')}}</p>
+	<p>{{Lang::get('messages.notLoggedIn')}}</p>
 	@endif
 
 @stop

@@ -2,10 +2,6 @@
 
 class UserLibrary {
 	private static $languageArray = array(
-		// Lang::get('user.english'),
-		// Lang::get('user.slovenian'),
-		// Lang::get('user.italian'),
-		// Lang::get('user.german'),
 		'english',	
 		'slovenian',	
 		'italian',	
@@ -30,14 +26,17 @@ class UserLibrary {
 
 	//returns translated languages array
 	public static function languages() {
-		return Lang::get('user.languages');
+		return Lang::get('general.languages');
 	}
 	//returns translated language
 	public static function language($i) {
-		return Lang::get('user.languages')[$i]; 
+		return Lang::get('general.languages')[$i]; 
 	}
 	public static function languageAbbrs($i) {
 		return self::$languageAbbrsArray[$i];
+	}
+	public static function getTimezoneIndex($i) {
+		return array_search($i,self::$timezoneArray);
 	}
 	public static function timezones() {
 		return self::$timezoneArray	;

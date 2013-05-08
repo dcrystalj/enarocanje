@@ -67,8 +67,8 @@
     
 	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
     {{ Former::close() }}
-	{{ Button::link("/google/export", Lang::get('provider.export'))}}
-	{{ Button::link("/google/import", Lang::get('provider.import'))}}
+	{{ Button::link("/google/export", Lang::get('general.export'))}}
+	{{ Button::link("/google/import", Lang::get('general.import'))}}
 
     <?php 
         $absences = Absences::where('macservice_id',$mac->id)->get();

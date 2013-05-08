@@ -68,7 +68,7 @@ class AbsenceController extends BaseController {
             if($absence)
             {
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success',Lang::get('messages.successfullySaves'));
+                                ->with('success',Lang::get('messages.successfullySaved'));
             }
         }
         return Redirect::back()

@@ -45,7 +45,7 @@ class Provider extends BaseController {
 		{
 			foreach ($validation->messages()->get('email') as $message)
 			{
-			    if($message == Lang::get('validation.unique',array('attribute'=>'email')))
+			    if($message == Lang::get('messages.unique',array('attribute'=>'email')))
 			    return View::make('app.login')
 							->with('status', $message . 'Please login.')
 							->with('email', Input::get('email'));

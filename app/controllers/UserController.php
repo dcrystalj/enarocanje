@@ -26,7 +26,7 @@ class UserController extends BaseController {
 
     public function index()
     {
-      return View::make('home')->with('success',Lang::get('user.confirm'));
+      return View::make('home')->with('success',Lang::get('messages.confirm'));
     }
 
     public function create()
@@ -48,7 +48,7 @@ class UserController extends BaseController {
         //if is taken redirect to login
         foreach ($validation->messages()->get('email') as $message)
         {
-            if($message == Lang::get('validation.unique',array('attribute'=>'email')))
+            if($message == Lang::get('messages.unique',array('attribute'=>'email')))
               return View::make('app.login')
                 ->with('status', $message . ' Please login.')
                 ->with('email', Input::get('email'));
@@ -66,7 +66,7 @@ class UserController extends BaseController {
         $user->surname   = Input::get( 'surname' );
         $user->email     = Input::get( 'email' );
         $user->password  = Hash::make(Input::get('password'));
-        $user->time_zone = Input::get( 'timezone' );
+        $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
         $user->language  = Input::get( 'language' );
         $user->confirmed = 0;
         $user->save();
@@ -82,10 +82,10 @@ class UserController extends BaseController {
         Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
         {
             $m  ->to($user->email, $user->name)
-                ->subject(Lang::get('user.welcome'));
+                ->subject(Lang::get('general.welcome'));
         });
 
-        return Redirect::home()->with('success',Lang::get('user.mailSent'));
+        return Redirect::home()->with('success',Lang::get('messages.mailSent'));
       }
 
 
@@ -138,12 +138,12 @@ class UserController extends BaseController {
             $user = Auth::user();
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
-            $user->time_zone = Input::get( 'timezone' );
+            $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
             $user->language  = Input::get( 'language' );
             $user->save();
             Session::set('language',
           UserLibrary::languageAbbrs(Auth::user()->language));
-            return Redirect::to('user/show')->with('success',Lang::get('user.settingsSuccess'));
+            return Redirect::to('user/show')->with('success',Lang::get('messages.settingsSuccess'));
         }
 
     }
@@ -165,11 +165,11 @@ class UserController extends BaseController {
         Auth::loginUsingId($user->id);
         Session::put('user',$user);
 
-        return View::make('home')->with('success',Lang::get('user.registrationSuccess'));
+        return View::make('home')->with('success',Lang::get('messages.registrationSuccess'));
       }
     }
 
-    App::abort(404,Lang::get('user.fourOfour'));
+    App::abort(404,Lang::get('messages.fourOfour'));
   }
 
 }
