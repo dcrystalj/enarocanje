@@ -15,12 +15,30 @@ class UserLibrary {
 	);
 
 	private static $timezoneArray = array(
-		"UTC-11","UTC-10","UTC-9","UTC-8","UTC-7","UTC-6",
-		"UTC-5","UTC-4","UTC-3","UTC-2","UTC-1",
-		"UTC (United Kingdom)",
-		"UTC+1 (Slovenia, Spain, Germany, Poland)",
-		"UTC+2 (Ukraine)","UTC+3","UTC+4","UTC+5","UTC+6",
-		"UTC+7","UTC+8","UTC+9","UTC+10","UTC+11","UTC+12"
+		-11 => "UTC-11",
+		-10 => "UTC-10",
+		-9  => "UTC-9",
+		-8  => "UTC-8",
+		-7  => "UTC-7",
+		-6  => "UTC-6",
+		-5  => 	"UTC-5",
+		-4  => "UTC-4",
+		-3  => "UTC-3",
+		-2  => "UTC-2",
+		-1  => "UTC-1",
+		0   => 	"UTC (United Kingdom)",
+		1   => 	"UTC+1 (Slovenia, Spain, Germany, Poland)",
+		2   =>  "UTC+2 (Ukraine)",
+		3   => "UTC+3",
+		4   => "UTC+4",
+		5   => "UTC+5",
+		6   => "UTC+6",
+		7   => "UTC+7",
+		8   => "UTC+8",
+		9   => "UTC+9",
+		10  => "UTC+10",
+		11  => "UTC+11",
+		12  => "UTC+12"
 	);
 
 

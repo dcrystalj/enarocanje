@@ -66,7 +66,7 @@ class UserController extends BaseController {
         $user->surname   = Input::get( 'surname' );
         $user->email     = Input::get( 'email' );
         $user->password  = Hash::make(Input::get('password'));
-        $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
+        $user->time_zone = Input::get( 'timezone' );
         $user->language  = Input::get( 'language' );
         $user->confirmed = 0;
         $user->save();
@@ -138,7 +138,7 @@ class UserController extends BaseController {
             $user = Auth::user();
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
-            $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
+            $user->time_zone = Input::get( 'timezone' );
             $user->language  = Input::get( 'language' );
             $user->save();
             Session::set('language',
