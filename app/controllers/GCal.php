@@ -10,68 +10,68 @@ class GCal extends BaseController {
 	public function exportReservations($mic) {
 		$gcal = new GoogleApi();
 		if(!$gcal->isLoggedIn())
-	/* 		return Redirect::to($gcal->getUrl()); */
+			return Redirect::to($gcal->getUrl());
 		
-	/* } */
+	}
 
-	/* // Sync: Absences -> google calendar */
-	/* public function exportAbsences() { */
-	/* 	$user = Auth::user(); */
-	/* 	if(!$user || !$user->isProvider()) */
-	/* 		return; */
-	/* 	$mac = $user->macroservices()->first()->id; */
-	/* 	$calendar_id = $user->gcalendar; */
-	/* 	$absences = Absences::where('macservice_id', $mac) */
-	/* 		->where('abs_type', 'absence')->get(); */
+	// Sync: Absences -> google calendar
+	public function exportAbsences() {
+		$user = Auth::user();
+		if(!$user || !$user->isProvider())
+			return;
+		$mac = $user->macroservices()->first()->id;
+		$calendar_id = $user->gcalendar;
+		$absences = Absences::where('macservice_id', $mac)
+			->where('abs_type', 'absence')->get();
 
-	/* 	$events = array(); */
-	/* 	foreach($absences as $absence) */
-	/* 		$events[] = array( */
-	/* 			'from' => $absence->from, */
-	/* 			'to' => $absence->to, */
-	/* 			'title' => $absence->title, */
-	/* 			'repetable' => $absence->repetable, */
-	/* 		   	'model' => $absence, */
-	/* 		); */
+		$events = array();
+		foreach($absences as $absence)
+			$events[] = array(
+				'from' => $absence->from,
+				'to' => $absence->to,
+				'title' => $absence->title,
+				'repetable' => $absence->repetable,
+			   	'model' => $absence,
+			);
 
-	/* 	try { */
-	/* 		$r = $this->exportToGcal($user->gcalendar, $events, 'E-narocanje'); */
-	/* 		if($r !== true) */
-	/* 			return $r; */
-	/* 	} catch(Exception $e) { */
-	/* 		return Redirect::to("/macro/$mac/absence/create")->with('error', $e->getMessage()); */
-	/* 	} */
+		try {
+			$r = $this->exportToGcal($user->gcalendar, $events, 'E-narocanje');
+			if($r !== true)
+				return $r;
+		} catch(Exception $e) {
+			return Redirect::to("/macro/$mac/absence/create")->with('error', $e->getMessage());
+		}
 
-	/* 	return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully exported.'); */
-	/* } */
+		return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully exported.');
+	}
 
 
-	/* // Sync: Google calendar -> absences */
-	/* public function importAbsences() { */
-	/* 	$user = Auth::user(); */
-	/* 	if(!$user || !$user->isProvider()) */
-	/* 		return; */
-	/* 	$mac = $user->macroservices()->first()->id; */
+	// Sync: Google calendar -> absences
+	public function importAbsences() {
+		$user = Auth::user();
+		if(!$user || !$user->isProvider())
+			return;
+		$mac = $user->macroservices()->first()->id;
 
-	/* 	$gcal = new GoogleApi(); */
-	/* 	if(!$gcal->isLoggedIn()) */
-	/* 		return Redirect::to($gcal->getUrl()); */
+		$gcal = new GoogleApi();
+		if(!$gcal->isLoggedIn())
+			return Redirect::to($gcal->getUrl());
 
-	/* 	$calendar_id = $user->gcalendar; */
-	/* 	if($calendar_id) { */
-	/* 		$cid = null; */
-	/* 		foreach($gcal->listCalendars() as $id=>$item) { */
-	/* 			if($id == $calendar_id) { */
-	/* 				$cid = $id; */
-	/* 				break; */
-	/* 			} */
-	/* 		} */
-	/* 		$calendar_id = $cid; */
-	/* 	} */
-	/* 	if(!$calendar_id) */
-	/* 		return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.'); */
+		$calendar_id = $user->gcalendar;
+		if($calendar_id) {
+			$cid = null;
+			foreach($gcal->listCalendars() as $id=>$item) {
+				if($id == $calendar_id) {
+					$cid = $id;
+					break;
+				}
+			}
+			$calendar_id = $cid;
+		}
+		if(!$calendar_id)
+			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
 
-	/* 	$events = $gcal->listEvents($calendar_id); */
+		$events = $gcal->listEvents($calendar_id);
 
 		Absences::where('abs_type', 'absence')
 			->where('macservice_id', $mac)->delete();
