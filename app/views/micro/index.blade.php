@@ -36,6 +36,9 @@
             echo $service->name;
             if($service->isActive())
             {
+                if($service->price == 0){
+                    $service->price = '/';
+                }
                 $tbody[] = [
                 'id'     => $i, 
                 'name'   => Service::services()[$category][$service->name], 
