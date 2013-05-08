@@ -14,8 +14,9 @@ Reservation
 @section('content')
 @include('calendar.calendar_register')
 
-<p>{{ Button::success_link('/service/123/breaks','Reserve',array('id' => 'reserve')) }}</p>
-<p>{{ Button::danger_link('/service/123/breaks','Delete reservation',array('id' => 'delete')) }}</p>
+<p>{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}</p>
+<p>{{ Button::danger_link('#','Delete reservation',array('id' => 'delete')) }}</p>
+<p>{{ Button::link(URL::current().'?gcal=1','Show google events') }}</p>
 
 <div id='calendar'></div>
 
@@ -93,8 +94,17 @@ fc_init({
 			type: 'GET',
 			editable: false,
 			color: "red"
-		}
-		
+				},
+		@if($calendar_id)
+		{	
+		  url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
+				type: 'GET',
+				error: cal_error,
+				editable: false,
+				color: "rgba(192,192,192, 0.5)",
+				className: "termin"
+				},
+		@endif
 	],
 	//check if data has been fetched
 	loading: function(bool) {

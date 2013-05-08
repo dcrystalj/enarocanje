@@ -1,8 +1,34 @@
- ☐ user registration, name ne dela validator, sesuje se vse skp 
- ☐ nardit nov validator
+
+ ☐ javascript pri geslu zamenjaj to-short z weak
+
+ ☐ reservacije za 15min substring
+ ☐ prikaz vseh rezervacij tudi
  
+ ☐ na email microservice je samo index namest ime
+ ☐ google calendar isto
+ 
+ ☐ google calendar wrong url (api) ko je na serverju !!!
+ 
+ ☐ conflict za več absencov
+ ☐ repeatable absence?? pokaži v menuju
+ ☐ 
+ ☐ (maybe)vpis absence če že prijavljene??? jim poslat mail 
+<<<<<<< HEAD
+
+ ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje)
+ 
+=======
+>>>>>>> d9b179444bab7a151fbb50ea6c408494db33843d
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ če je price 0.00 pokaži samo / pri micro (provider + user view) @done (13-05-08 13:20)
+ ✔ deactivated ime je narobe @done (13-05-08 13:20)
+ ✔ deactivate on je napačen format @done (13-05-08 13:20)
+ ✔ activate napačen info na vrhu (ime je sam index) @done (13-05-08 13:20)
+ ✔ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže? @done (13-05-08 13:20)
+ ✔ neka številka se izpiše čudna? @done (13-05-08 13:20)
+ ✔ microservice cena gre lahko pod 0 - add rule @done (13-05-08 13:20)
+ ✔ edit macroservice save ne dela ker je disabled name (odstrani rule)
  ✔ default email population @done (13-04-18 20:21)
  ✔ pri prijavi preverit če je "confirmed" @done (13-04-17 18:14)
