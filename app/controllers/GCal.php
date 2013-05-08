@@ -207,4 +207,20 @@ class GCal extends BaseController {
 		return true;
 	}
 
+	public function getEvents($calendar_id) {
+		$gcal = new GoogleApi();
+		$events = $gcal->listEvents($calendar_id);
+		$r = array();
+		foreach($events as $event) {
+			$r[] = array(
+				'id' => $event['id'],
+				'title' => $event['summary'],
+				'start' => $event['start'],
+				'end' => $event['stop'],
+				'allDay' => false,
+				'eventType' => 'break',
+			);
+		}
+		return Response::json($r);
+	}
 }

@@ -122,8 +122,8 @@ class GoogleApi {
 	function selectCalendar() {
 		if($id = Input::get('calendar_id'))
 			return $id;
-		$list = $this->cal->calendarList->listCalendarList();
-		$this->r(View::Make('gcal.select')->with('calendars', $list));
+		$list = $this->listCalendars();
+		return View::Make('gcal.select')->with('calendars', $list);
 	}
 
 	/* +++ */
