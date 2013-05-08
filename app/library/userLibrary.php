@@ -15,7 +15,6 @@ class UserLibrary {
 	);
 
 	private static $timezoneArray = array(
-		-11 => "UTC-11",
 		-10 => "UTC-10",
 		-9  => "UTC-9",
 		-8  => "UTC-8",
@@ -37,8 +36,6 @@ class UserLibrary {
 		8   => "UTC+8",
 		9   => "UTC+9",
 		10  => "UTC+10",
-		11  => "UTC+11",
-		12  => "UTC+12"
 	);
 
 
