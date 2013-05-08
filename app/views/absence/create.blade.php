@@ -72,25 +72,52 @@
 
     <?php 
         $absences = Absences::where('macservice_id',$mac->id)->get();
-        $tbody = []; 
+        $absencesT = []; 
+        $holidayT = [];
         $i = 1; 
-        foreach ($absences as $absence){    
-            $tbody[]= [
-                'id'     => $i, 
-                'title'   => $absence->title,
-                'from'   => substr($absence->from,0,-3),
-                'to'   => substr($absence->to,0,-3),
-                'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                'delete'  => delete($mac->id,$absence->id),
-             ];
+        foreach ($absences as $absence){ 
+            if($absence->abs_type == 'absence'){   
+                $absencesT[]= [
+                    'id'     => $i, 
+                    'title'   => $absence->title,
+                    'from'   => substr($absence->from,0,-3),
+                    'to'   => substr($absence->to,0,-3),
+                    'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+                    'delete'  => delete($mac->id,$absence->id),
+                ];
+            }
+            else
+            {
+                $holidayT[]= [
+                    'id'     => $i, 
+                    'title'   => $absence->title,
+                    'from'   => substr($absence->from,0,-3),
+                    'to'   => substr($absence->to,0,-3),
+                    'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+                    'delete'  => delete($mac->id,$absence->id),
+                ];                
+            }
              $i++;
         }
     ?>
-
+    @if(count($absencesT)>0)
+        </br>
+        <h2>Absences:</h2>
     {{ Table::hover_open(["class"=>'sortable']) }}
     {{ Table::headers('#', 'Title','From','To', '') }}
-    {{ Table::body($tbody) }}
+    {{ Table::body($absencesT) }}
     {{ Table::close() }}
+
+    @endif
+
+    @if(count($holidayT)>0)
+        </br>
+        <h2>Holidays:</h2>
+        {{ Table::hover_open(["class"=>'sortable']) }}
+        {{ Table::headers( '#', 'Title','From','To', '') }}
+        {{ Table::body($holidayT) }}
+        {{ Table::close() }}
+    @endif
 
 
     <?php 
