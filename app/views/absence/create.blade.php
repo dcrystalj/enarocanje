@@ -75,36 +75,47 @@
         $absencesT = []; 
         $holidayT = [];
         $i = 1; 
-        foreach ($absences as $absence){ 
+        $j = 1;
+        foreach ($absences as $absence){
+            if($absence->repetable == 1){
+                $repeat = 'Yes';
+            } 
+            else
+            {
+                $repeat = 'No';
+            }
             if($absence->abs_type == 'absence'){   
                 $absencesT[]= [
                     'id'     => $i, 
                     'title'   => $absence->title,
                     'from'   => substr($absence->from,0,-3),
                     'to'   => substr($absence->to,0,-3),
+                    'repeatable' => $repeat,
                     'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
                     'delete'  => delete($mac->id,$absence->id),
                 ];
+                $i++;
             }
             else
             {
                 $holidayT[]= [
-                    'id'     => $i, 
+                    'id'     => $j, 
                     'title'   => $absence->title,
                     'from'   => substr($absence->from,0,-3),
                     'to'   => substr($absence->to,0,-3),
+                    'repeatable' => $repeat,
                     'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
                     'delete'  => delete($mac->id,$absence->id),
-                ];                
+                ];
+                $j++;                
             }
-             $i++;
         }
     ?>
     @if(count($absencesT)>0)
         </br>
         <h2>Absences:</h2>
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Title','From','To', '') }}
+    {{ Table::headers('#', 'Title','From','To','repeatable', '') }}
     {{ Table::body($absencesT) }}
     {{ Table::close() }}
 
@@ -114,7 +125,7 @@
         </br>
         <h2>Holidays:</h2>
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers( '#', 'Title','From','To', '') }}
+        {{ Table::headers( '#', 'Title','From','To','repeatable', '') }}
         {{ Table::body($holidayT) }}
         {{ Table::close() }}
     @endif
