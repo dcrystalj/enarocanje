@@ -6,7 +6,7 @@ class MicroserviceController extends BaseController {
 		'name'        => 'required',
 		'length'      => 'required',
 		'description' => 'max:1024',     
-		'price'       => 'numeric'
+		'price'       => 'numeric|min:0',
   	);
 
 	public function __construct() {
@@ -119,6 +119,9 @@ class MicroserviceController extends BaseController {
 
 	public function destroy($mac,$mic)
 	{
+		$macName = MacroService::find($mac)->name;
+		$category = Service::categoryId($macName);
+
 		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active     =-1;
@@ -126,26 +129,42 @@ class MicroserviceController extends BaseController {
 		
 			$micservice->save();
 
-			return Redirect::route('macro.micro.create',$mac)
-							->with('status','Service ' . $micservice->name . ' was deactivated!');
+			if(strtotime(Input::get('date')) <= strtotime(date('Y-m-d'))){
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Service ' . Service::services()[$category][$micservice->name] . ' was deactivated!');
+			}
+			else
+			{
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Service ' . Service::services()[$category][$micservice->name] . ' will be  deactivated.');
+			}
 		}
 		
-		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not deactivated.\nPlease try again.");
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . Service::services()[$category][$micservice->name] . " was not deactivated.\nPlease try again.");
 	}
 
 	public function getActivated($mac, $mic)
 	{
+		$macName = MacroService::find($mac)->name;
+		$category = Service::categoryId($macName);
+
 		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active     =0;
 			$micservice->activefrom =Input::get('date');
 			$micservice->save();
-
-			return Redirect::route('macro.micro.create',$mac)
-							->with('success','Service ' . $micservice->name . ' was activated!');
+			if(strtotime(Input::get('date')) <= strtotime(date('Y-m-d'))){
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Service ' . Service::services()[$category][$micservice->name] . ' was activated!');
+			}
+			else
+			{
+				return Redirect::route('macro.micro.create',$mac)
+								->with('success','Service ' . Service::services()[$category][$micservice->name] . ' will be  activated.');
+			}
 		}
 		
-		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . $micservice->name . " was not activated.\nPlease try again.");
+		return Redirect::rotue('macro.micro.create',$mac)->with('error','Service ' . Service::services()[$category][$micservice->name] . " was not activated.\nPlease try again.");
 		
 	}
 

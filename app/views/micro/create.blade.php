@@ -33,7 +33,9 @@
         foreach ($microservice as $service){
             if($service->isActive() && $service->category == $category)
             {
-                
+                if($service->price == 0){
+                    $service->price = '/';
+                }
                 $allActivated[]= [
                     'id'     => $i, 
                     'name'   => Service::services()[$category][$service->name], 
@@ -56,7 +58,7 @@
             }
             else if(!$service->isActive()){
                 $allDeactivated[] = [
-                    'name'        => $service->name, 
+                    'name'        => Service::services()[$category][$service->name], 
                     'link1'       => activate($mac->id, $service)
                  ];
             }
@@ -97,7 +99,7 @@
         {
             $deactivate .= Form::label(
                 'label',
-                'on: ' . date("d-m-Y",strtotime($mic->activefrom))
+                'on: ' . date("Y-m-d",strtotime($mic->activefrom))
             );
         }
 
@@ -122,7 +124,7 @@
         {
             $activate .= Form::label(
                 'label',
-                'on: ' . date("d-m-Y",strtotime($mic->activefrom))
+                'on: ' . date("Y-m-d",strtotime($mic->activefrom))
             );
         }
 

@@ -19,10 +19,14 @@
         {{ Form::select('gender', Service::gender(),Input::get('gender')) }}
         {{ Form::submit('Filter') }}
         {{ Form::close() }}
+
         <?php
         if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {
-            $mic = MacroService::find($mac)->microservices()->where('gender', Input::get('gender'))->get();    
+            $mic = MacroService::find($mac)->microservices()->where(function($query){
+                $query->where('gender', Input::get('gender'))
+                      ->orWhere('gender','U');   
+            })->get();    
         }
         else{
             $mic = MacroService::find($mac)->microservices()->get();       
@@ -33,9 +37,11 @@
         $macroName = MacroService::find($mac)->name;
         $category = Service::categoryId($macroName);
         foreach ($mic as $service){
-            echo $service->name;
             if($service->isActive())
             {
+                if($service->price == 0){
+                    $service->price = '/';
+                }
                 $tbody[] = [
                 'id'     => $i, 
                 'name'   => Service::services()[$category][$service->name], 
@@ -51,7 +57,7 @@
 
         @if(count($tbody)>0)
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price', '') }}
+        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
         @else

@@ -3,7 +3,6 @@
 class MacroserviceController extends BaseController {
 
 	public $rules = array(
-		'name'             => 'required',
 		'street'           => 'required|between:4,50',
 		'ZIP_code'         => 'required|numeric',
 		'email'            => 'required|email',
@@ -106,7 +105,6 @@ class MacroserviceController extends BaseController {
 		{
 			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
-			$mac->name             = Input::get( 'name' );
 			$mac->ZIP_code         = Input::get( 'ZIP_code');
 			$mac->city             = $zip->city;
 			$mac->street           = Input::get( 'street');
