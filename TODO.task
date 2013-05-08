@@ -6,8 +6,6 @@
  ☐ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže?
  ☐ neka številka se izpiše čudna?
 
- ☐ edit macroservice save ne dela ker je disabled name (odstrani rule)
-
  ☐ javascript pri geslu zamenjaj to-short z weak
 
  ☐ reservacije za 15min substring
@@ -28,5 +26,6 @@
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ edit macroservice save ne dela ker je disabled name (odstrani rule)
  ✔ default email population @done (13-04-18 20:21)
  ✔ pri prijavi preverit če je "confirmed" @done (13-04-17 18:14)
