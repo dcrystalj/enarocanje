@@ -1,10 +1,3 @@
- ☐ če je price 0.00 pokaži samo / pri micro (provider + user view)
- ☐ deactivated ime je narobe
- ☐ deactivate on je napačen format
- ☐ activate napačen info na vrhu (ime je sam index) 
-
- ☐ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže?
- ☐ neka številka se izpiše čudna?
 
  ☐ javascript pri geslu zamenjaj to-short z weak
 
@@ -22,11 +15,16 @@
  ☐ repeatable absence?? pokaži v menuju
  ☐ 
  ☐ (maybe)vpis absence če že prijavljene??? jim poslat mail 
- 
- ☐ microservice cena gre lahko pod 0 - add rule
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ če je price 0.00 pokaži samo / pri micro (provider + user view) @done (13-05-08 13:20)
+ ✔ deactivated ime je narobe @done (13-05-08 13:20)
+ ✔ deactivate on je napačen format @done (13-05-08 13:20)
+ ✔ activate napačen info na vrhu (ime je sam index) @done (13-05-08 13:20)
+ ✔ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže? @done (13-05-08 13:20)
+ ✔ neka številka se izpiše čudna? @done (13-05-08 13:20)
+ ✔ microservice cena gre lahko pod 0 - add rule @done (13-05-08 13:20)
  ✔ edit macroservice save ne dela ker je disabled name (odstrani rule)
  ✔ default email population @done (13-04-18 20:21)
  ✔ pri prijavi preverit če je "confirmed" @done (13-04-17 18:14)
