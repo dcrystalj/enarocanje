@@ -25,6 +25,7 @@ return array(
 	'email' => 'Email',
 	'englishCapital' => 'English',
 	'english' => 'english',
+	'exportReservations' => 'Export reservations',
 	'germanCapital' => 'German',
 	'german' => 'german',
 	'home' => 'Home',
@@ -48,6 +49,7 @@ return array(
 	'register' => 'Register',
 	'registration' => 'Registration',
 	'repeatPassword' => 'Repeat password',
+	'reservation' => 'Reservation',
 	'reset' => 'Reset',
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
@@ -64,9 +66,10 @@ return array(
 	'timezone' => 'Timezone',
 	'urlToYourSite' => 'URL to your site',
 	'userProfile' => 'User profile',
-	'userRegistration' => 'User registraion',
+	'userRegistration' => 'User registration',
 	'userSettings' => 'User settings',
 	'welcome' => 'Welcome',
+	'yourChoice' => 'Your choice: \nfrom :from to :to',
 	'zipCode' => 'ZIP code',
 
 );

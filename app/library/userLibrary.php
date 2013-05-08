@@ -35,6 +35,9 @@ class UserLibrary {
 	public static function languageAbbrs($i) {
 		return self::$languageAbbrsArray[$i];
 	}
+	public static function getTimezoneIndex($i) {
+		return array_search($i,self::$timezoneArray);
+	}
 	public static function timezones() {
 		return self::$timezoneArray	;
 	}

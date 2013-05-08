@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.userRegistraion')}}
+    {{Lang::get('general.userRegistration')}}
 @stop
 
 @section('content')

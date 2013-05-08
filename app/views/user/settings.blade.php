@@ -9,7 +9,7 @@
 <?php
 
 ?>
-{{Former::open(URL::route('general.update',Auth::user()->id))->rules($rules)->method('PUT')}}
+{{Former::open(URL::route('user.update',Auth::user()->id))->rules($rules)->method('PUT')}}
 {{Former::populate( array(	'name' => $user->name,
 							'surname' => $user->surname,
 							'timezone' => $user->time_zone,

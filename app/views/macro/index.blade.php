@@ -24,7 +24,7 @@
     ?>
 
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', Lang::get('general.name'),Lang::get('services.city'), Lang::get('general.email'), '') }}
+    {{ Table::headers('#', Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

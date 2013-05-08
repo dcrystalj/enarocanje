@@ -66,7 +66,7 @@ class UserController extends BaseController {
         $user->surname   = Input::get( 'surname' );
         $user->email     = Input::get( 'email' );
         $user->password  = Hash::make(Input::get('password'));
-        $user->time_zone = Input::get( 'timezone' );
+        $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
         $user->language  = Input::get( 'language' );
         $user->confirmed = 0;
         $user->save();
@@ -82,7 +82,7 @@ class UserController extends BaseController {
         Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
         {
             $m  ->to($user->email, $user->name)
-                ->subject(Lang::get('general.weaalcome'));
+                ->subject(Lang::get('general.welcome'));
         });
 
         return Redirect::home()->with('success',Lang::get('messages.mailSent'));
@@ -138,7 +138,7 @@ class UserController extends BaseController {
             $user = Auth::user();
             $user->name      = Input::get( 'name' );
             $user->surname   = Input::get( 'surname' );
-            $user->time_zone = Input::get( 'timezone' );
+            $user->time_zone = UserLibrary::getTimezoneIndex(Input::get( 'timezone' ));
             $user->language  = Input::get( 'language' );
             $user->save();
             Session::set('language',

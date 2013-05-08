@@ -5,12 +5,16 @@
 @stop
 
 @section('content')
-
+@if(!empty($user->name)) 
 {{Former::label(Lang::get('general.name').': '.$user->name)}}
+@endif
+@if(!empty($user->surname)) 
 {{Former::label(Lang::get('general.surname').': '.$user->surname)}}
+@endif
 {{Former::label(Lang::get('general.email').': '.$user->email)}}
-{{Former::label(Lang::get('general.timezone').': '.$user->time_zone)}}
-
+@if(is_int($user->timezone)) 
+{{Former::label(Lang::get('general.timezone').': '.UserLibrary::timezone($user->time_zone))}}
+@endif
 @if(is_int($user->language)) 
 {{ Former::label(Lang::get('general.language').': '.
 	UserLibrary::language($user->language)) }}

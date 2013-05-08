@@ -25,6 +25,7 @@ return array(
 	'email' => 'Email',
 	'english' => 'angleščina',
 	'englishCapital' => 'Angleščina',
+	'exportReservations' => 'Izvozi rezervacije',
 	'germanCapital' => 'Nemščina',
 	'german' => 'nemščina',
 	'home' => 'Domov',
@@ -48,6 +49,7 @@ return array(
 	'register' => 'Registracija',
 	'registration' => 'Registracija',
 	'repeatPassword' => 'Ponovitev gesla',
+	'reservation' => 'Rezervacija',
 	'reset' => 'Reset',
 	'retypePassword' => 'Ponovno vpiši geslo',
 	'saveChanges' => 'Shrani spremembe',
@@ -67,6 +69,7 @@ return array(
 	'userRegistration' => 'Registracija uporabnika',
 	'userSettings' => 'Nastavitve uporabnika',
 	'welcome' => 'Dobrodošli',
+	'yourChoice' => 'Vaša izbira: \nod :from do :to',
 	'zipCode' => 'Poštna številka',
 
 );
