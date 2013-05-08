@@ -1,8 +1,10 @@
  ☐ če je price 0.00 pokaži samo / pri micro (provider + user view)
  ☐ deactivated ime je narobe
  ☐ deactivate on je napačen format
+ ☐ activate napačen info na vrhu (ime je sam index) 
 
- ☐ edit macroservice save ne dela ker je disabled name (odstrani rule)
+ ☐ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže?
+ ☐ neka številka se izpiše čudna?
 
  ☐ javascript pri geslu zamenjaj to-short z weak
 
@@ -12,6 +14,8 @@
  ☐ na email microservice je samo index namest ime
  ☐ google calendar isto
  
+ ☐ google calendar wrong url (api) ko je na serverju
+ 
  ☐ disable selectiona čez cel koledar (odstrani modro barvo..)
 
  ☐ conflict za več absencov
@@ -19,8 +23,10 @@
  ☐ 
  ☐ (maybe)vpis absence če že prijavljene??? jim poslat mail 
  
+ ☐ microservice cena gre lahko pod 0 - add rule
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ edit macroservice save ne dela ker je disabled name (odstrani rule)
  ✔ default email population @done (13-04-18 20:21)
  ✔ pri prijavi preverit če je "confirmed" @done (13-04-17 18:14)
