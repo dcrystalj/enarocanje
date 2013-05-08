@@ -1,6 +1,10 @@
  ☐ če je price 0.00 pokaži samo / pri micro (provider + user view)
  ☐ deactivated ime je narobe
  ☐ deactivate on je napačen format
+ ☐ activate napačen info na vrhu (ime je sam index) 
+
+ ☐ micro reservacija filter za spol ne dela, če je unisex in hočem moška striženja mi unisex ne prikaže?
+ ☐ neka številka se izpiše čudna?
 
  ☐ edit macroservice save ne dela ker je disabled name (odstrani rule)
 
@@ -11,6 +15,8 @@
  
  ☐ na email microservice je samo index namest ime
  ☐ google calendar isto
+ 
+ ☐ google calendar wrong url (api) ko je na serverju
  
  ☐ disable selectiona čez cel koledar (odstrani modro barvo..)
 
