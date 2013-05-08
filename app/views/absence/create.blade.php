@@ -78,11 +78,11 @@
         $j = 1;
         foreach ($absences as $absence){
             if($absence->repetable == 1){
-                $repeat = 'Yes';
+                $repeat = '✔';
             } 
             else
             {
-                $repeat = 'No';
+                $repeat = '✘';
             }
             if($absence->abs_type == 'absence'){   
                 $absencesT[]= [
@@ -115,7 +115,7 @@
         </br>
         <h2>Absences:</h2>
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Title','From','To','repeatable', '') }}
+    {{ Table::headers('#', 'Title','From','To','Repeatable', '') }}
     {{ Table::body($absencesT) }}
     {{ Table::close() }}
 
@@ -125,7 +125,7 @@
         </br>
         <h2>Holidays:</h2>
         {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers( '#', 'Title','From','To','repeatable', '') }}
+        {{ Table::headers( '#', 'Title','From','To','Repeatable', '') }}
         {{ Table::body($holidayT) }}
         {{ Table::close() }}
     @endif

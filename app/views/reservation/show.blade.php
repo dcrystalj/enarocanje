@@ -20,9 +20,11 @@ Reservation
 
 <div id='calendar'></div>
 
+<?php $leng =  MicroService::find($mic)->first()->length ?>
+
 <script>
 @include('calendar.calendar_def')
-var defaultLength = '{{ MicroService::find($mic)->first()->length }}';
+var defaultLength = '{{$leng}}';
 fc_init({
 	disableResizing: true,
 	eventAfterRender: function(event, element, view) {
@@ -32,6 +34,11 @@ fc_init({
 			.css('font-size',10)
 			.css('line-height',1)
 			.css('padding-top','2px');
+
+		//button show red
+		if(event.type == 'reservation'){
+			$('#delete').show();
+		}
 	},
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 
@@ -53,7 +60,7 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
+				title: '{{ ($leng>15) ? "Your choice: \\n" : ""}} from'+time(start)+' to '+time(end),
 				eventType: 'reservation',
 			});
 		}
@@ -225,6 +232,11 @@ $(function() {
 	margin-left: -3px;
 	width: 118px !important;
 }
+
+#delete{
+	display: none;
+}
+
 .busy div {
 	display: none;
 }

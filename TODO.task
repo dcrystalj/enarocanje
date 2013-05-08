@@ -1,6 +1,4 @@
 
- ☐ javascript pri geslu zamenjaj to-short z weak
-
  ☐ reservacije za 15min substring
  ☐ prikaz vseh rezervacij tudi
  
@@ -20,6 +18,7 @@
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ javascript pri geslu zamenjaj to-short z weak @done (13-05-08 16:31)
  ✔ če je price 0.00 pokaži samo / pri micro (provider + user view) @done (13-05-08 13:20)
  ✔ deactivated ime je narobe @done (13-05-08 13:20)
  ✔ deactivate on je napačen format @done (13-05-08 13:20)
