@@ -1,5 +1,23 @@
- ☐ user registration, name ne dela validator, sesuje se vse skp 
- ☐ nardit nov validator
+ ☐ če je price 0.00 pokaži samo / pri micro (provider + user view)
+ ☐ deactivated ime je narobe
+ ☐ deactivate on je napačen format
+
+ ☐ edit macroservice save ne dela ker je disabled name (odstrani rule)
+
+ ☐ javascript pri geslu zamenjaj to-short z weak
+
+ ☐ reservacije za 15min substring
+ ☐ prikaz vseh rezervacij tudi
+ 
+ ☐ na email microservice je samo index namest ime
+ ☐ google calendar isto
+ 
+ ☐ disable selectiona čez cel koledar (odstrani modro barvo..)
+
+ ☐ conflict za več absencov
+ ☐ repeatable absence?? pokaži v menuju
+ ☐ 
+ ☐ (maybe)vpis absence če že prijavljene??? jim poslat mail 
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
