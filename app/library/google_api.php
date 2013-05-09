@@ -13,6 +13,7 @@ class GoogleApi {
 		$this->cal = new Google_CalendarService($this->client);
 		if($token = Session::get('gtoken'))
 			$this->client->setAccessToken($token);
+		$this->client->setRedirectUri(URL::to('google/auth'));
 	}
 
 	public function isLoggedIn() {
@@ -120,8 +121,6 @@ class GoogleApi {
 
 	/* --- */
 	function selectCalendar() {
-		if($id = Input::get('calendar_id'))
-			return $id;
 		$list = $this->listCalendars();
 		return View::Make('gcal.select')->with('calendars', $list);
 	}

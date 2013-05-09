@@ -30,13 +30,16 @@ class AbsenceController extends BaseController {
      */
     public function create($mac)
     {
+        $mac = Auth::user()->macroservices()->find($mac);
+	$absences = Absences::where('macservice_id',$mac->id)->get();
         return View::make('absence.create')                   
                     ->with('rules',$this->rules)
-                    ->with('mac', Auth::user()->macroservices()->find($mac))
+		    ->with('mac', $mac)
                     ->with('errors',Session::get('errors'))
                     ->with('status',Session::get('status'))
                     ->with('error',Session::get('error'))
-                    ->with('success',Session::get('success'));
+                    ->with('success',Session::get('success'))
+		    ->with('absences', $absences);
     }
 
     /**

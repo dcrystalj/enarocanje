@@ -57,19 +57,9 @@ class GCal extends BaseController {
 		if(!$gcal->isLoggedIn())
 			return Redirect::to($gcal->getUrl());
 
-		$calendar_id = $user->gcalendar;
-		if($calendar_id) {
-			$cid = null;
-			foreach($gcal->listCalendars() as $id=>$item) {
-				if($id == $calendar_id) {
-					$cid = $id;
-					break;
-				}
-			}
-			$calendar_id = $cid;
-		}
+		$calendar_id = Input::get('calendar_id');
 		if(!$calendar_id)
-			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
+			return $gcal->selectCalendar();
 
 		$events = $gcal->listEvents($calendar_id);
 

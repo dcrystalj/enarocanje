@@ -27,7 +27,6 @@ $apiConfig = array(
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '692185416393.apps.googleusercontent.com',
     'oauth2_client_secret' => 'lfBFmYAPF69W_B3rRw0x8LLV',
-    'oauth2_redirect_uri' => 'http://ltpo2.fri1.uni-lj.si/vaje2013/TPO14/en3/en/public/google/auth',
 
     // The developer key, you get this at https://code.google.com/apis/console
     'developer_key' => 'AIzaSyCsIUaNKZSUOtLH2j5t9Hm8jvLRj66BCWU',
