@@ -1,16 +1,15 @@
  
  ☐ conflict za več absencov?
  ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy
-<<<<<<< HEAD
- ☐ holidays delete
  ☐ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani.
-=======
- ✔ holidays delete @done (13-05-09 20:58)
->>>>>>> d5599272c4d0cff48c12001e94c80b6067476a27
+ ☐ Ce kliknemo [Reserve] preden izberemo termin se ne prikaze nobeno obvestilo
+ ☐ Remove users.gcalendar column.
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Show warning when exporting reservations @done (13-05-09 22:32)
+ ✔ holidays delete @done (13-05-09 20:58)
  ✔ absence export delete @done (13-05-09 11:50)
  ✔ custom validator for decimal @done (13-05-09 11:44)
  ✔ reservacije za 15min substring @done (13-05-08 20:33)

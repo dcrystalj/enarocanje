@@ -120,15 +120,15 @@ class GoogleApi {
 	}
 
 	/* --- */
-	function selectCalendar() {
+	function selectCalendar($warn=false) {
 		$list = $this->listCalendars();
-		return View::Make('gcal.select')->with('calendars', $list);
+		return View::Make('gcal.select')->with('calendars', $list)->with('status', $warn?'Warning: All events in selected calendar will be removed!':null);
 	}
 
 	/* +++ */
-	function exportToGcal($calendarId, $events) {
+	function exportToGcal($calendarId, $events, $warn=false) {
 		if($calendarId == 'select') {
-			$calendarId = $this->selectCalendar();
+			$calendarId = $this->selectCalendar($warn);
 			if(!$calendarId)
 				return;
 		}

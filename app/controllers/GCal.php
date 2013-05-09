@@ -7,13 +7,6 @@ class GCal extends BaseController {
 		return Redirect::to($state->redirect);
 	}
 
-	public function exportReservations($mic) {
-		$gcal = new GoogleApi();
-		if(!$gcal->isLoggedIn())
-			return Redirect::to($gcal->getUrl());
-		
-	}
-
 	// Sync: Absences -> google calendar
 	public function exportAbsences() {
 		$user = Auth::user();
@@ -105,7 +98,7 @@ class GCal extends BaseController {
 			);
 		}
 
-		$r = $this->exportToGcal('select', $reservations);
+		$r = $this->exportToGcal('select', $reservations, true);
 		if($r !== true)
 			return $r;
 		return Redirect::to('/user/'.$user->id)->with('success', 'Reservations sucessfully exported.');
@@ -134,7 +127,7 @@ class GCal extends BaseController {
 			}
 		}
 		try {
-			$r = $this->exportToGcal('select', $reservations);
+			$r = $this->exportToGcal('select', $reservations, true);
 		} catch(Exception $e) {
 			return Redirect::to('/macro/create')->with('error', $e->getMessage());
 		}
@@ -183,8 +176,7 @@ class GCal extends BaseController {
 			if($id = Input::get('calendar_id')) {
 				$calendarId = $id;
 			} else {
-				$list = $gcal->listCalendars();
-				return View::Make('gcal.select')->with('calendars', $list);
+				return $gcal->selectCalendar(true);
 			}
 		}
 
