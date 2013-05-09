@@ -14,6 +14,7 @@
     @endif
     
     {{ Former::text('title','Title:')}}
+    {{ Former::checkbox('repetable','Repeatable:')}}
 
     @if($errors && $errors->has('from'))
         <div class="control-group error">
@@ -72,11 +73,19 @@
         $absencesT = []; 
         $i = 1; 
         foreach ($absences as $absence){
+            if($absence->repetable == 1){
+                $repeat = '✔';
+            } 
+            else
+            {
+                $repeat = '✘';
+            }   
             $absencesT[]= [
                 'id'     => $i, 
                 'title'   => $absence->title,
                 'from'   => substr($absence->from,0,-3),
                 'to'   => substr($absence->to,0,-3),
+                'repeatable' => $repeat,
                 'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
                 'delete'  => delete($mac->id,$absence->id),
             ];
