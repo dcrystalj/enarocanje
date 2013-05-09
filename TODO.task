@@ -1,8 +1,12 @@
  
  ☐ conflict za več absencov?
  ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy
+<<<<<<< HEAD
  ☐ holidays delete
  ☐ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani.
+=======
+ ✔ holidays delete @done (13-05-09 20:58)
+>>>>>>> d5599272c4d0cff48c12001e94c80b6067476a27
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
