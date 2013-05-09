@@ -12,7 +12,7 @@
 {{Former::password('password',Lang::get('general.password'))}}
 {{Former::password('repeat',Lang::get('general.repeatPassword'))}}
 {{Former::select('timezone',Lang::get('general.timezone'))
-		->options(UserLibrary::timezones(),	Auth::user() ? Auth::user()->time_zone : '12')}}
+		->options(UserLibrary::timezones(),	Auth::getTimeZone('12'))}}
 {{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
 {{Former::actions()->submit(Lang::get('general.submit'))}}
 {{Former::close()}}
