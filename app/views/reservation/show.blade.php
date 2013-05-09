@@ -118,7 +118,7 @@ fc_init({
 		//if client hasnt already made reservation, then hide delete button
 		if(!bool )
 		{
-			if(countClientEvents()==0) $('#delete').hide();
+			if(countClientEvents()>0) $('#delete').show();
 			mergeOverlapping();
 		}
 	}, 
