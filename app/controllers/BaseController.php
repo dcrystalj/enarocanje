@@ -18,6 +18,13 @@ class BaseController extends Controller {
         {
             return ( strtotime( $value ) < strtotime( Input::get($parameters[0]) ) );
         });
+
+        Validator::extend('numeric_comma', function($attribute, $value, $parameters)
+        {
+        	$value = str_replace(',', '.', $value);
+        	//$value = floatval($value);
+        	return is_numeric($value);
+        });
 	}
 
 }

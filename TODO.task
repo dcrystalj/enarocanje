@@ -2,12 +2,12 @@
  ☐ conflict za več absencov?
  ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy
  ☐ holidays delete
- ☐ absence export delete
- ☐ custom validator for decimal
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ absence export delete @done (13-05-09 11:50)
+ ✔ custom validator for decimal @done (13-05-09 11:44)
  ✔ reservacije za 15min substring @done (13-05-08 20:33)
  ✔ prikaz vseh rezervacij tudi @done (13-05-08 20:33)
  ✔ na email microservice je samo index namest ime @done (13-05-08 20:32)
