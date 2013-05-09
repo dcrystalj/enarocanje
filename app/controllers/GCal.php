@@ -7,13 +7,6 @@ class GCal extends BaseController {
 		return Redirect::to($state->redirect);
 	}
 
-	public function exportReservations($mic) {
-		$gcal = new GoogleApi();
-		if(!$gcal->isLoggedIn())
-			return Redirect::to($gcal->getUrl());
-		
-	}
-
 	// Sync: Absences -> google calendar
 	public function exportAbsences() {
 		$user = Auth::user();
@@ -57,19 +50,9 @@ class GCal extends BaseController {
 		if(!$gcal->isLoggedIn())
 			return Redirect::to($gcal->getUrl());
 
-		$calendar_id = $user->gcalendar;
-		if($calendar_id) {
-			$cid = null;
-			foreach($gcal->listCalendars() as $id=>$item) {
-				if($id == $calendar_id) {
-					$cid = $id;
-					break;
-				}
-			}
-			$calendar_id = $cid;
-		}
+		$calendar_id = Input::get('calendar_id');
 		if(!$calendar_id)
-			return Redirect::to("/macro/$mac/absence/create")->with('status', 'Nothing to import.');
+			return $gcal->selectCalendar();
 
 		$events = $gcal->listEvents($calendar_id);
 
@@ -103,14 +86,19 @@ class GCal extends BaseController {
 	public function exportUserReservations() {
 		if(!($user = Auth::user())) return;
 		$reservations = array();
-		foreach(Reservation::where('user_id', $user->id)->get() as $reservation)
+		foreach(Reservation::where('user_id', $user->id)->get() as $reservation) {
+			$mic = $reservation->microservice;
+			$category = $mic->category;
+			$name = Service::services()[$category][$mic->name];
+			
 			$reservations[] = array(
 				'from' => $reservation->date.' '.$reservation->from,
 				'to' => $reservation->date.' '.$reservation->to,
-				'title' => 'Reservation: '.$reservation->microservice->name,
+				'title' => 'Reservation: '.$name,
 			);
+		}
 
-		$r = $this->exportToGcal('select', $reservations);
+		$r = $this->exportToGcal('select', $reservations, true);
 		if($r !== true)
 			return $r;
 		return Redirect::to('/user/'.$user->id)->with('success', 'Reservations sucessfully exported.');
@@ -139,7 +127,7 @@ class GCal extends BaseController {
 			}
 		}
 		try {
-			$r = $this->exportToGcal('select', $reservations);
+			$r = $this->exportToGcal('select', $reservations, true);
 		} catch(Exception $e) {
 			return Redirect::to('/macro/create')->with('error', $e->getMessage());
 		}
@@ -188,8 +176,7 @@ class GCal extends BaseController {
 			if($id = Input::get('calendar_id')) {
 				$calendarId = $id;
 			} else {
-				$list = $gcal->listCalendars();
-				return View::Make('gcal.select')->with('calendars', $list);
+				return $gcal->selectCalendar(true);
 			}
 		}
 

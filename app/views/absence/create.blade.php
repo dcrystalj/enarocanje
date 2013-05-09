@@ -14,9 +14,7 @@
     @endif
     
     {{ Former::text('title','Title:')}}
-    {{ Former::select('abs_type','Absence type:')->options(Service::absence())}}
-    {{ Former::checkbox('repetable','Repeatable every year:') }}
-    
+    {{ Former::checkbox('repetable','Repeatable:')}}
 
     @if($errors && $errors->has('from'))
         <div class="control-group error">
@@ -67,67 +65,51 @@
     
 	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
     {{ Former::close() }}
-	{{ Button::link("/google/export", Lang::get('general.export'))}}
-	{{ Button::link("/google/import", Lang::get('general.import'))}}
-
-    <?php 
-        $absences = Absences::where('macservice_id',$mac->id)->get();
-        $absencesT = []; 
-        $holidayT = [];
+	{{-- Button::link("/google/export", Lang::get('general.export')) --}}
+    {{ Button::link("/google/import", Lang::get('general.gimport'), array('id' => 'google_import')) }}
+@if(sizeof($absences))
+<script>
+	$('#google_import').click(function(e) {
+		e.preventDefault();
+		var button = this;
+		bootbox.confirm("All old absences will be deleted.<br />Do you want to continue?", function(r) {
+			if(r)
+				window.location = button.href;
+		});
+	});
+</script>
+@endif
+<?php
+       $absencesT = []; 
         $i = 1; 
-        $j = 1;
         foreach ($absences as $absence){
             if($absence->repetable == 1){
-                $repeat = 'Yes';
+                $repeat = '✔';
             } 
             else
             {
-                $repeat = 'No';
-            }
-            if($absence->abs_type == 'absence'){   
-                $absencesT[]= [
-                    'id'     => $i, 
-                    'title'   => $absence->title,
-                    'from'   => substr($absence->from,0,-3),
-                    'to'   => substr($absence->to,0,-3),
-                    'repeatable' => $repeat,
-                    'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                    'delete'  => delete($mac->id,$absence->id),
-                ];
-                $i++;
-            }
-            else
-            {
-                $holidayT[]= [
-                    'id'     => $j, 
-                    'title'   => $absence->title,
-                    'from'   => substr($absence->from,0,-3),
-                    'to'   => substr($absence->to,0,-3),
-                    'repeatable' => $repeat,
-                    'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                    'delete'  => delete($mac->id,$absence->id),
-                ];
-                $j++;                
-            }
+                $repeat = '✘';
+            }   
+            $absencesT[]= [
+                'id'     => $i, 
+                'title'   => $absence->title,
+                'from'   => substr($absence->from,0,-3),
+                'to'   => substr($absence->to,0,-3),
+                'repeatable' => $repeat,
+                'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+                'delete'  => delete($mac->id,$absence->id),
+            ];
+            $i++;
         }
     ?>
     @if(count($absencesT)>0)
         </br>
         <h2>Absences:</h2>
     {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Title','From','To','repeatable', '') }}
+    {{ Table::headers('#', 'Title','From','To', '') }}
     {{ Table::body($absencesT) }}
     {{ Table::close() }}
 
-    @endif
-
-    @if(count($holidayT)>0)
-        </br>
-        <h2>Holidays:</h2>
-        {{ Table::hover_open(["class"=>'sortable']) }}
-        {{ Table::headers( '#', 'Title','From','To','repeatable', '') }}
-        {{ Table::body($holidayT) }}
-        {{ Table::close() }}
     @endif
 
 

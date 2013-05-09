@@ -149,13 +149,16 @@ class MicroserviceApiController extends BaseController
 		$r->save();
 		//return json_encode(['a'=> $r->microservice->name]);
 		if($r){
+			$mic = MicroService::find($id);
+    		$category = $mic->category;
+		    $name = Service::services()[$category][$mic->name];
 
 			$data = array(
 				'username'  => Auth::user()->name,
 				'useremail' => Auth::user()->email,
 				'date'      => $r->date,
 				'from'      => $r->from,
-				'name'      => $r->microservice->name,
+				'name'      => $name,
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
@@ -320,12 +323,16 @@ class MicroserviceApiController extends BaseController
 			$r->user_id       = $tempuser->id;
 			$r->save();
 
+			$mic      = MicroService::find($microservid);
+			$category = $mic->category;
+			$name     = Service::services()[$category][$mic->name];
+
 			$data = array(
 				'username'  => $tempuser->name,
 				'useremail' => $tempuser->email,
 				'date'      => $r->date,
 				'from'      => $r->from,
-				'name'      => $r->microservice->name,
+				'name'      => $name,
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;

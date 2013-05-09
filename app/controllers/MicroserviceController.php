@@ -6,7 +6,7 @@ class MicroserviceController extends BaseController {
 		'name'        => 'required',
 		'length'      => 'required',
 		'description' => 'max:1024',     
-		'price'       => 'numeric|min:0',
+		'price'       => 'numeric_comma|min:0',
   	);
 
 	public function __construct() {
@@ -32,6 +32,7 @@ class MicroserviceController extends BaseController {
 
 	public function store($mac)
 	{
+
 		$validation = Validator::make(Input::all(),$this->rules);
 
 		if($validation->passes())
@@ -44,7 +45,7 @@ class MicroserviceController extends BaseController {
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
-			$micservice->price         = Input::get( 'price' );
+			$micservice->price         = floatval(str_replace(',', '.', Input::get( 'price' )));
 			$micservice->category 	   = $category;
 			$micservice->activefrom    = date("Y-m-d",strtotime("now"));
 			$micservice->macservice_id = $mac;
@@ -97,7 +98,7 @@ class MicroserviceController extends BaseController {
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
-			$micservice->price         = Input::get( 'price' );
+			$micservice->price         = floatval(str_replace(',', '.', Input::get( 'price' )));
 			$micservice->category 	   = $category;
 			$micservice->activefrom    = date('Y-m-d',strtotime('now'));
 			$micservice->macservice_id = $mac;

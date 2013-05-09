@@ -13,6 +13,7 @@ class GoogleApi {
 		$this->cal = new Google_CalendarService($this->client);
 		if($token = Session::get('gtoken'))
 			$this->client->setAccessToken($token);
+		$this->client->setRedirectUri(URL::to('google/auth'));
 	}
 
 	public function isLoggedIn() {
@@ -119,17 +120,15 @@ class GoogleApi {
 	}
 
 	/* --- */
-	function selectCalendar() {
-		if($id = Input::get('calendar_id'))
-			return $id;
+	function selectCalendar($warn=false) {
 		$list = $this->listCalendars();
-		return View::Make('gcal.select')->with('calendars', $list);
+		return View::Make('gcal.select')->with('calendars', $list)->with('status', $warn?'Warning: All events in selected calendar will be removed!':null);
 	}
 
 	/* +++ */
-	function exportToGcal($calendarId, $events) {
+	function exportToGcal($calendarId, $events, $warn=false) {
 		if($calendarId == 'select') {
-			$calendarId = $this->selectCalendar();
+			$calendarId = $this->selectCalendar($warn);
 			if(!$calendarId)
 				return;
 		}

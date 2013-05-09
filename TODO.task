@@ -1,25 +1,25 @@
-
- ☐ javascript pri geslu zamenjaj to-short z weak
-
- ☐ reservacije za 15min substring
- ☐ prikaz vseh rezervacij tudi
  
- ☐ na email microservice je samo index namest ime
- ☐ google calendar isto
- 
- ☐ google calendar wrong url (api) ko je na serverju !!!
- 
- ☐ conflict za več absencov
- ☐ repeatable absence?? pokaži v menuju
- ☐ 
- ☐ (maybe)vpis absence če že prijavljene??? jim poslat mail 
-
-
- ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje)
+ ☐ conflict za več absencov?
+ ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy
+ ☐ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani.
+ ☐ Ce kliknemo [Reserve] preden izberemo termin se ne prikaze nobeno obvestilo
+ ☐ Remove users.gcalendar column.
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Show warning when exporting reservations @done (13-05-09 22:32)
+ ✔ holidays delete @done (13-05-09 20:58)
+ ✔ absence export delete @done (13-05-09 11:50)
+ ✔ custom validator for decimal @done (13-05-09 11:44)
+ ✔ reservacije za 15min substring @done (13-05-08 20:33)
+ ✔ prikaz vseh rezervacij tudi @done (13-05-08 20:33)
+ ✔ na email microservice je samo index namest ime @done (13-05-08 20:32)
+ ✔ google calendar isto @done (13-05-08 20:32)
+ ✔ google calendar wrong url (api) ko je na serverju !!! @done (13-05-08 20:32)
+ ✔ repeatable absence?? pokaži v menuju @done (13-05-08 17:00)
+ ✘ (maybe)vpis absence če že prijavljene??? jim poslat mail @cancelled (13-05-08 16:58)
+ ✔ javascript pri geslu zamenjaj to-short z weak @done (13-05-08 16:31)
  ✔ če je price 0.00 pokaži samo / pri micro (provider + user view) @done (13-05-08 13:20)
  ✔ deactivated ime je narobe @done (13-05-08 13:20)
  ✔ deactivate on je napačen format @done (13-05-08 13:20)

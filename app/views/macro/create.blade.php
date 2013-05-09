@@ -39,7 +39,7 @@
         {{ Former::close() }}   
 
     </div>
-    <div class="span2">
+    <div class="span5 offset2">
         @if( isset($mac) && $mac->active==0 )
         	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('general.timetable'))}}
             {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('general.absences'))}}

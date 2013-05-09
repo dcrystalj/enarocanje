@@ -30,13 +30,16 @@ class AbsenceController extends BaseController {
      */
     public function create($mac)
     {
+        $mac = Auth::user()->macroservices()->find($mac);
+	$absences = Absences::where('macservice_id',$mac->id)->get();
         return View::make('absence.create')                   
                     ->with('rules',$this->rules)
-                    ->with('mac', Auth::user()->macroservices()->find($mac))
+		    ->with('mac', $mac)
                     ->with('errors',Session::get('errors'))
                     ->with('status',Session::get('status'))
                     ->with('error',Session::get('error'))
-                    ->with('success',Session::get('success'));
+                    ->with('success',Session::get('success'))
+		    ->with('absences', $absences);
     }
 
     /**
@@ -57,8 +60,8 @@ class AbsenceController extends BaseController {
             }
             $absence                = new Absences;
             $absence->title         = Input::get( 'title' );
-            $absence->abs_type      = Input::get( 'abs_type' );
-            $absence->repetable     = $checkbox;
+            $absence->abs_type      = 'absence';
+            $absence->repetable     = Input::get('repetable');
             $absence->from          = date('Y/m/d H:i', strtotime(Input::get('from')));
             $absence->to            = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id     =
@@ -111,7 +114,7 @@ class AbsenceController extends BaseController {
         {
             
             $absence->title          = Input::get( 'title' );
-            $absence->abs_type       = Input::get( 'abs_type' );
+            $absence->abs_type       = 'absence';
             $absence->repetable      = Input::get( 'repetable' );
             $absence->from           = date('Y/m/d H:i', strtotime(Input::get('from')));
             $absence->to             = date('Y/m/d H:i', strtotime(Input::get('to')));
