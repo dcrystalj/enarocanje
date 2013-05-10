@@ -81,6 +81,14 @@ class Service {
 		return self::$services;
 	}	
 	
+	public static function serviceName($micid){
+		$mic      = MicroService::find($micid);
+		$category = $mic->category;
+		$name     = Service::services()[$category][$mic->name];
+		return $name;
+	}	
+
+
 	public static function zip() {
     	$zipCode = ZIPcode::All();
 	    foreach ($zipCode as $z) {
