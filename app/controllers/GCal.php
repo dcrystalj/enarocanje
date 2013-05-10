@@ -71,14 +71,14 @@ class GCal extends BaseController {
 			}
 
 			DB::table('absence')->insert(array(
-											 'macservice_id' => $mac,
-											 'from' => $event['start'],
-											 'to' => $event['stop'],
-											 'title' => $event['summary'],
-											 'repetable' => $yearly?1:0,
-											 'google_id' => $event['id'],
-											 'abs_type' => 'absence',
-										 ));
+				 'macservice_id' => $mac,
+				 'from' => $event['start'],
+				 'to' => $event['stop'],
+				 'title' => isset($event['summary']) ? $event['summary']:trans('general.undef'),
+				 'repetable' => $yearly?1:0,
+				 'google_id' => $event['id'],
+				 'abs_type' => 'absence',
+			 ));
 		}
 		return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully imported.');
 	}

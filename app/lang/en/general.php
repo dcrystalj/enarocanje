@@ -71,6 +71,7 @@ return array(
 	'welcome' => 'Welcome',
 	'yourChoice' => 'Your choice: \nfrom :from to :to',
 	'zipCode' => 'ZIP code',
-	'gimport' => 'Import from google'
+	'gimport' => 'Import from google',
+	'undef' => 'Undefined',
 
 );
