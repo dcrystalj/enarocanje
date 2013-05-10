@@ -67,18 +67,7 @@
     {{ Former::close() }}
 	{{-- Button::link("/google/export", Lang::get('general.export')) --}}
     {{ Button::link("/google/import", Lang::get('general.gimport'), array('id' => 'google_import')) }}
-@if(sizeof($absences))
-<script>
-	$('#google_import').click(function(e) {
-		e.preventDefault();
-		var button = this;
-		bootbox.confirm("All old absences will be deleted.<br />Do you want to continue?", function(r) {
-			if(r)
-				window.location = button.href;
-		});
-	});
-</script>
-@endif
+
 <?php
        $absencesT = []; 
         $i = 1; 
