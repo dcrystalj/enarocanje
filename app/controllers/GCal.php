@@ -56,9 +56,6 @@ class GCal extends BaseController {
 
 		$events = $gcal->listEvents($calendar_id);
 
-		Absences::where('abs_type', 'absence')
-			->where('macservice_id', $mac)->delete();
-
 		foreach($events as $event) {
 			$yearly = false;
 			if(isset($event['recurrence'])) {
