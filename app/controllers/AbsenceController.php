@@ -61,7 +61,7 @@ class AbsenceController extends BaseController {
             $absence                = new Absences;
             $absence->title         = Input::get( 'title' );
             $absence->abs_type      = 'absence';
-            $absence->repetable     = Input::get('repetable');
+            $absence->repetable     = $checkbox;
             $absence->from          = date('Y/m/d H:i', strtotime(Input::get('from')));
             $absence->to            = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id     =
@@ -112,10 +112,14 @@ class AbsenceController extends BaseController {
 
         if($validation->passes())
         {
+            $checkbox = Input::get('repetable');
+            if($checkbox == null){
+                $checkbox = 0;
+            }
             
             $absence->title          = Input::get( 'title' );
             $absence->abs_type       = 'absence';
-            $absence->repetable      = Input::get( 'repetable' );
+            $absence->repetable      = $checkbox;
             $absence->from           = date('Y/m/d H:i', strtotime(Input::get('from')));
             $absence->to             = date('Y/m/d H:i', strtotime(Input::get('to')));
             //$absence->google_id      
