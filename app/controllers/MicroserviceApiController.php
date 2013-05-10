@@ -109,7 +109,7 @@ class MicroserviceApiController extends BaseController
 		foreach ($r as $b) 
 		{
 			$timetable[] = array(
-					"id"        => $b->id,
+					"id"        => "r".$b->id,
 					"title"     => User::find($b->user_id) ? User::find($b->user_id)->email : 'x',
 					"start"     => $b->date . " " . $b->from ,
 					"end"       => $b->date . " " . $b->to ,
@@ -254,7 +254,8 @@ class MicroserviceApiController extends BaseController
 
 		$absences = Absences::where('macservice_id', $id)					
 					->where(function($q) use($start, $end) {
-						$q->where(function($q1) use($start, $end){
+						$q  ->where('repetable',0)
+							->where(function($q1) use($start, $end){
 								$q1->where(function($query) use($start, $end){
 							 		$query	->where('from', '<=', $start)
 											->where('to', '>', $start);
@@ -273,15 +274,18 @@ class MicroserviceApiController extends BaseController
 			$datet = (new ExpressiveDate($start));
 			$from = (new ExpressiveDate($absence->from))->setYear($datef->getYear())->getDateTime();
 			$to   = (new ExpressiveDate($absence->to))->setYear($datet->getYear())->getDateTime();
+			$f = strtotime($from);
+			$t = strtotime($to);
 			//set things to current year
 			if($absence->repetable == 1)
 			{
-				$f = strtotime($from);
-				$t = strtotime($to);
-				if(($f <= $start && $t > $start ||
+
+				if(!($f <= $start && $t > $start ||
 					$f >= $start && $f < $start))
 					continue;
 			}
+
+			if($f == $t) continue;
 
 			$table[] = array(
 				"id"        => 'abs'.$absence->id,

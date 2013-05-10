@@ -49,7 +49,7 @@ return array(
 	'register' => 'Register',
 	'registration' => 'Registration',
 	'repeatPassword' => 'Repeat password',
-	'reservation' => 'Reservation',
+	'reservation' => 'Reservations',
 	'reset' => 'Reset',
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
