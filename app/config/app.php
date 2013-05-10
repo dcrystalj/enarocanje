@@ -129,6 +129,7 @@ return array(
 		'Bootstrapper\BootstrapperServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'ExpressiveDateServiceProvider',
 	),
 
 	/*

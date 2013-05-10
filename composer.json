@@ -6,7 +6,8 @@
 		"anahkiasen/former": "dev-agnostic",
 		"barryvdh/laravel-ide-helper": "dev-master",
 		"j20/php-uuid": "*",
-		"iron-io/iron_mq": "dev-master"
+		"iron-io/iron_mq": "dev-master",
+		"jasonlewis/expressive-date": "1.0.*"
 	},
 	"autoload": {
 		"classmap": [
