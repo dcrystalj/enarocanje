@@ -20,7 +20,7 @@
         {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
         {{ Former::text('price','Price:')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-        {{ Former::actions()->submit( isset($mic) ? 'Edit' : 'Add service' ) }}
+        {{ Former::actions()->submit( isset($mic) ? 'Save changes' : 'Add service' ) }}
         {{ Former::close() }}   
 
         <?php 
