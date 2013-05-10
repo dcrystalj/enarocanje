@@ -5,9 +5,7 @@
 @stop
 <script type="text/javascript">
 	function validateEmail(email) { 
-	    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\
-	".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA
-	-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    var re = /\S+@\S+\.\S+/;
 	    return re.test(email);
 	} 
 	function check(email) {
@@ -20,22 +18,25 @@
 		}
 	}
 	function check2(){
+		var emailElement = document.getElementById("email");
+		var email = emailElement.value;
 
-		alert("actionsd");
+		alert(email);
+		if(validateEmail(email)){
+			alert("tr00"));
+		}
+		else {
+			alert("false, dude");
+		}
 	}
 
 
 </script>
 @section('content')
-{{Former::open(URL::route('user.store'))->rules($rules)->onsubmit("return this.check2();")}}
-{{Former::text('name',Lang::get('general.name'))->autofocus()}}
-{{Former::text('surname',Lang::get('general.surname'))}}
+{{Former::open(URL::route('user.store'))->onsubmit("check2()")}}
+
 {{Former::text('email',Lang::get('general.email'))}}
-{{Former::password('password',Lang::get('general.password'))}}
-{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
-{{Former::select('timezone',Lang::get('general.timezone'))
-		->options(UserLibrary::timezones(),	'12') }}
-{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
+
 {{Former::actions()->submit(Lang::get('general.submit'))}}
 {{Former::close()}}
 
