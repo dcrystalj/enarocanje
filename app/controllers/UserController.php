@@ -100,7 +100,12 @@ class UserController extends BaseController {
     public function show($id)
     {
       return View::make('user.profile')
-        ->with('user',Auth::user())->with('rules',$this->rulesSettings);
+        ->with('user',Auth::user())
+        ->with('rules',$this->rulesSettings)
+        ->with('status',Session::get('status'))
+        ->with('errors',Session::get('errors'))
+        ->with('error',Session::get('error'))
+        ->with('success',Session::get('success'));
     }
 
     /**

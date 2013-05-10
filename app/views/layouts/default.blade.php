@@ -59,12 +59,12 @@
 			      	['class' => 'pull-right'] )
 			    ->with_menus(
 			     	Navigation::links([
-			     		
-			     		Auth::check() ?:
-		       			[Trans('general.language'),'#',false,false,[		       	 		
+			     		//Za namene razvoja
+			     		//Auth::check() ?:   
+		       			//[Trans('general.language'),'#',false,false,[		       	 		
 							[Lang::get('general.englishCapital'), URL::to('lang/en')],
 							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],							
-						]],
+						//]],
 						
 						[Navigation::VERTICAL_DIVIDER],
 					]),

@@ -83,21 +83,19 @@ class GCal extends BaseController {
 	public function exportUserReservations() {
 		if(!($user = Auth::user())) return;
 		$reservations = array();
-		foreach(Reservation::where('user_id', $user->id)->get() as $reservation) {
-			$mic = $reservation->microservice;
-			$category = $mic->category;
-			$name = Service::services()[$category][$mic->name];
-			
+		foreach(Reservation::where('user_id', $user->id)->get() as $reservation) 
+		{
+			$serviceName = Service::serviceName($reservation->microservice->id);
+
 			$reservations[] = array(
 				'from' => $reservation->date.' '.$reservation->from,
 				'to' => $reservation->date.' '.$reservation->to,
-				'title' => 'Reservation: '.$name,
+				'title' => 'Reservation: '.$serviceName,
 			);
 		}
 
 		$r = $this->exportToGcal('select', $reservations, true);
-		if($r !== true)
-			return $r;
+		if($r !== true)	return $r;
 		return Redirect::to('/user/'.$user->id)->with('success', 'Reservations sucessfully exported.');
 	}
 
@@ -107,18 +105,23 @@ class GCal extends BaseController {
 		$reservations = array();
 		$services = $user->macroservices->first()->microservices;
 		foreach($services as $service) {
-			foreach($service->reservations as $reservation) {
+			foreach($service->reservations as $reservation) 
+			{
 				$u = User::find($reservation->user_id);
-				$name = '';
-				if($u->name) {
+				$serviceName = Service::serviceName($service->id);
+				
+				if($u->name) 
+				{
 					$name = $u->name.' '.$u->surname;
-				} else {
+				} else 
+				{
 					$name = $u->email;
 				}
+
 				$reservations[] = array(
 					'from' => $reservation->date.' '.$reservation->from,
 					'to' => $reservation->date.' '.$reservation->to,
-					'title' => 'Reservation: '.$name,
+					'title' => 'Reservation: '.$name.' for '.$serviceName
 					/* 'model' => $reservation, */
 				);
 			}
