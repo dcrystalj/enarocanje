@@ -224,7 +224,6 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function getBreaks($id) {
-
 		if(Auth::user() && !Auth::user()->isProvider())
 		{
 			$breaks = Cache::remember('breaks'.$id, 10, function() use ($id)
@@ -253,26 +252,45 @@ class MicroserviceApiController extends BaseController
 	}
 
 	public function getAbsences($id) {
-		
+		$start =  date('Y-m-d H:i:s', Input::get('start'));
+		$end =  date('Y-m-d H:i:s', Input::get('end'));
+
 		$absences = Absences::where('macservice_id', $id)					
-					->where(function($q){
-						$q->where(function($query){
-						 		$query	->where('from', '<=', Input::get('from'))
-										->where('to', '>', Input::get('from'));
-							})
-							->orWhere(function($query){
-						 		$query	->where('from', '>=', Input::get('from'))
-										->where('from', '<', Input::get('to'));
-							});
+					->where(function($q) use($start, $end) {
+						$q->where(function($q1) use($start, $end){
+								$q1->where(function($query) use($start, $end){
+							 		$query	->where('from', '<=', $start)
+											->where('to', '>', $start);
+								})
+								->orWhere(function($query) use($start, $end){
+							 		$query	->where('from', '>=', $start)
+											->where('from', '<', $end);
+								});
+							})//for repeatable
+							->orWhere('repetable',1);
 					})->get();
-									 
+
 		$table = array();
 		foreach($absences as $absence) {
+			$datef = (new ExpressiveDate($start));
+			$datet = (new ExpressiveDate($start));
+			$from = (new ExpressiveDate($absence->from))->setYear($datef->getYear())->getDateTime();
+			$to   = (new ExpressiveDate($absence->to))->setYear($datet->getYear())->getDateTime();
+			//set things to current year
+			if($absence->repetable == 1)
+			{
+				$f = strtotime($from);
+				$t = strtotime($to);
+				if(($f <= $start && $t > $start ||
+					$f >= $start && $f < $start))
+					continue;
+			}
+
 			$table[] = array(
 				"id"        => 'abs'.$absence->id,
 				"title"     => "",
-				"start"     => $absence->from,
-				"end"       => $absence->to,
+				"start"     => $from,
+				"end"       => $to,
 				"allDay"    => false,
 				'eventType' => 'break',
 			);

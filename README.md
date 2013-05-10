@@ -19,17 +19,15 @@ Bundles documentations:
 ```
 https://github.com/JeffreyWay/Laravel-4-Generators (console generator to speed up work)
 https://github.com/patricktalmadge/bootstrapper/tree/develop (design)
--> examples http://bootstrapper.aws.af.cm/basecss
+http://bootstrapper.aws.af.cm/basecss (DESIGN)
 https://github.com/Anahkiasen/former (form creation)
-https://github.com/laravelbook/ardent (model validation)
-https://github.com/laravelbook/laravel4-powerpack
-
+https://github.com/jasonlewis/expressive-date
 https://github.com/swt83/laravel-googlecalendar (should port to L4)
 
 https://github.com/codenitive/laravel-oneauth/issues/38 (twiter and fb avtentication only on final release)
 ```
 
-FullCalendar for views
+FullCalendar
 ```
 http://arshaw.com/fullcalendar/docs/
 ```
