@@ -26,10 +26,12 @@ class RenameUserToUserIdFromReservationTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('reservation', function($table) {
 			$table->integer('user');
 			$table->integer('microservice');
 			$table->dropColumn('user_id');
 			$table->dropColumn('micservice_id');
+		});
 	}
 
 }
