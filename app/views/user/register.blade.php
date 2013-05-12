@@ -121,6 +121,13 @@
 	  for (s2_idx = 1; s2_idx <= s2_len; s2_idx++) {
 	    v1[0] = s2_idx;
 	    char_s2 = s2[s2_idx - 1];
+=======
+
+@section('content')
+
+{{Former::actions()->submit(Lang::get('general.submit'))}}
+{{Former::close()}}
+>>>>>>> 231026f31825e58e9826f5f3bae8cfb254d294ba
 
 	    for (s1_idx = 0; s1_idx < s1_len; s1_idx++) {
 	      char_s1 = s1[s1_idx];

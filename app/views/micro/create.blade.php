@@ -17,7 +17,7 @@
 
         {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
         {{ Former::select('length','Length:')->options(Service::duration()) }} 
-        {{ Former::select('gender','Gender:')->options(Service::gender()) }} 
+        {{ Former::select('gender','For:')->options(Service::gender()) }} 
         {{ Former::text('price','Price:')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::actions()->submit( isset($mic) ? 'Save changes' : 'Add service' ) }}

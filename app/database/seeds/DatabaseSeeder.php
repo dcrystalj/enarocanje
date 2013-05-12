@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 		// $this->call('WorkinghourTableSeeder');
 
 		$this->call('ZipcodeTableSeeder');
+		//$this->call('UsersTableSeeder');
 	}
 
 }

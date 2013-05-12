@@ -1,8 +1,8 @@
 @extends('layouts.default')
 
 @section('title')
-{{Trans('general.reservation')}
-stop}@four
+ {{ trans('general.reservation') }}
+@stop
 
 @section('assets')
 {{ Html::style('css/fc/fullcalendar.css') }}
@@ -32,11 +32,11 @@ fc_init({
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 
 		
-		event.title = {{Trans('general.yourChoice',array('from'=>time(event.start),'to' => time(event.end)))}};
+		event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
 
 		if (isOverlapping(event.start, event.end)) { 
 			revertFunc();
-			event.title = {{Trans('general.yourChoice',array('from'=>time(event.start),'to' => time(event.end)))}};
+			event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
 		}
 	},
 	select: function(start, end, allDay) {

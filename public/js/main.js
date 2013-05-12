@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
    //calendar
 	$('.activate').click(function(e) {
 		e.preventDefault();

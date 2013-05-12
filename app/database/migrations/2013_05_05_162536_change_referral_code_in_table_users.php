@@ -28,12 +28,12 @@ class ChangeReferralCodeInTableUsers extends Migration {
      */
     public function down()
     {
-         Schema::table('users', function(Blueprint $table) {
-            $table->integer('referral_code');
-        });
-
         Schema::table('users', function(Blueprint $table) {
             $table->dropColumn('referral_code');
+        });
+
+         Schema::table('users', function(Blueprint $table) {
+            $table->integer('referral_code');
         });
     }
 

@@ -72,5 +72,6 @@ return array(
 	'yourChoice' => 'Vaša izbira: \nod :from do :to',
 	'zipCode' => 'Poštna številka',
 	'gimport' => 'Uvoz iz googla',
-
+	'undef'=> 'Nemenovan',
 );
+

@@ -23,7 +23,9 @@ class RemovedToken extends Migration {
 	 */
 	public function down()
 	{
-		$t->string('confirmation_code');
+		Schema::table('users', function($t){
+			$t->string('confirmation_code');
+		});
 	}
 
 }

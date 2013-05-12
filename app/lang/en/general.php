@@ -49,7 +49,7 @@ return array(
 	'register' => 'Register',
 	'registration' => 'Registration',
 	'repeatPassword' => 'Repeat password',
-	'reservation' => 'Reservation',
+	'reservation' => 'Reservations',
 	'reset' => 'Reset',
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
@@ -71,6 +71,7 @@ return array(
 	'welcome' => 'Welcome',
 	'yourChoice' => 'Your choice: \nfrom :from to :to',
 	'zipCode' => 'ZIP code',
-	'gimport' => 'Import from google'
+	'gimport' => 'Import from google',
+	'undef' => 'Undefined',
 
 );

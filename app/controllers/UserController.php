@@ -54,7 +54,7 @@ class UserController extends BaseController {
                 ->with('email', Input::get('email'));
         }
 
-        Redirect::back()->with('rules',$this->rules)
+        return Redirect::back()->with('rules',$this->rules)
                 ->withErrors($validation)
                 ->withInput();
 

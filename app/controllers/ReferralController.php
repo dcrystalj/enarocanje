@@ -11,6 +11,13 @@ class ReferralController extends BaseController {
      *
      * @return Response
      */
+
+
+    public function __construct() {
+        $this->beforeFilter('auth',     ['only'=>['index']]);
+        $this->beforeFilter('admin',    ['only'=>['index']]);
+    }
+
     public function index()
     {
         return View::make('referral.index') ;

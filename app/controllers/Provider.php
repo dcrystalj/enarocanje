@@ -18,6 +18,7 @@ class Provider extends BaseController {
 	public function __construct() {
 		$this->beforeFilter('auth',		['only'=>['edit','update']]);
 		$this->beforeFilter('provider',	['only'=>['edit','update']]);
+		$this->beforeFilter('admin',	['only'=>['edit','update']]);
 	}
 
 	public function index()
@@ -65,7 +66,7 @@ class Provider extends BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->save();
 		
-			if ($referralU)
+			if ($code && $referralU)
 			{
 				$referrals = new Referrals;
 				$referrals->referral_id = $referralU->id;

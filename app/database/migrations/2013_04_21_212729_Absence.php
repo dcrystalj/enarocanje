@@ -11,8 +11,7 @@ class Absence extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('absence',
-  	    function($table) {
+		Schema::create('absence', function($table) {
 		   $table->engine = 'InnoDB';
 		   $table->increments('id');
 		   $table->integer('macservice_id')->unsigned();
@@ -31,7 +30,9 @@ class Absence extends Migration {
 	 */
 	public function down()
 	{
-		$table->drop_foreign('absence_macservice_id_foreign');
+		Schema::table('absence', function($table) {
+			$table->dropForeign('absence_macservice_id_foreign');
+		});
 		Schema::drop('absence');
 	}
 
