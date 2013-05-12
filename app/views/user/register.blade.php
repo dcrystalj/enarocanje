@@ -48,6 +48,10 @@
 		var temp = 0;
 		var index = -1;
 		for (var i=0; i<domains.length;i++){
+			if(domain.valueOf() == domains[i].valueOf()){
+				index=-1;
+				break;
+			}
 			temp = levenshtein(domain,domains[i]);
 			if(temp<min && temp<4) {
 				min = temp;
