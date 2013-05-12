@@ -18,6 +18,7 @@ class Provider extends BaseController {
 	public function __construct() {
 		$this->beforeFilter('auth',		['only'=>['edit','update']]);
 		$this->beforeFilter('provider',	['only'=>['edit','update']]);
+		$this->beforeFilter('admin',	['only'=>['edit','update']]);
 	}
 
 	public function index()

@@ -68,6 +68,15 @@ Route::filter('provider',function()
 	}
 });
 
+Route::filter('admin',function()
+{
+
+	if (!Auth::user()->isAdmin()) 
+	{
+		return Redirect::route('home')->with('error','You have no permissions.');
+	}
+});
+
 Route::filter('auth', function()
 {
 	 if(!Session::has('user')) return Redirect::route('home')->with('error','You have no permissions. Please login first');
