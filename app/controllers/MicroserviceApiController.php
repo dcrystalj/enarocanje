@@ -76,7 +76,7 @@ class MicroserviceApiController extends BaseController
 		foreach ($r as $b) 
 		{
 			$date  = $b->date;
-			$title = "Your reservation: \nfrom  ";
+			$title = "Your reservation: from  ";
 			$title .= date('G:i',strtotime($b->from)) ." to ";
 			$title .= date('G:i',strtotime($b->to));
 
