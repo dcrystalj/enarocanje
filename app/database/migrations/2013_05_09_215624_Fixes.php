@@ -11,18 +11,15 @@ class Fixes extends Migration {
 	 */
 	public function up()
 	{
-//		Schema::table('users', function($table) {
-//			$table->dropColumn('gcalendar');
-//		});
-		/*
+		Schema::table('users', function($table) {
+			$table->dropColumn('gcalendar');
+		});
 		Schema::table('reservation', function($table) {
 			$table->index('user_id');
-			$table->foreign('user_id')
-				->references('id')
-				->on('users')
-				->on_delete('cascade'); 
 		});
-		 */
+		Schema::table('reservation', function($table) {
+			$table->foreign('user_id')->references('id')->on('users')->on_delete('cascade');
+		});
 	}
 
 	/**
@@ -32,15 +29,13 @@ class Fixes extends Migration {
 	 */
 	public function down()
 	{
-		/*
 		Schema::table('reservation', function($table) {
-			$table->drop_foreign('reservation_user_id_foreign');  
-			$table->drop_index('user_id');
+			$table->dropForeign('reservation_user_id_foreign');  
+			$table->dropIndex('user_id');
 		});
 		Schema::table('users', function($table) {
 			$table->string('gcalendar');
 		});
-		 */
 	}
 
 }

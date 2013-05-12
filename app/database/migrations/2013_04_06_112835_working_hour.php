@@ -11,8 +11,7 @@ class WorkingHour extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('working_hour',
-  	    function($table) {
+		Schema::create('working_hour', function($table) {
 		   $table->engine = 'InnoDB';
 		   $table->increments('id');
 		   $table->integer('macservice_id')->unsigned();
@@ -32,7 +31,9 @@ class WorkingHour extends Migration {
 	 */
 	public function down()
 	{
-		$table->drop_foreign('working_hour_macservice_id_foreign');
+		Schema::table('working_hour', function($table) {
+			$table->dropForeign('working_hour_macservice_id_foreign');
+		});
 		Schema::drop('working_hour');
 	}
 

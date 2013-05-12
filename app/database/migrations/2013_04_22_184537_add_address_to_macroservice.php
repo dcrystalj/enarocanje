@@ -35,16 +35,16 @@ class AddAddressToMacroservice extends Migration {
     public function down()
     {
         Schema::table('macservice', function(Blueprint $table) {
-            $table->integer('telephone_number');
-            $table->string('address');
-            $table->string('location');
-        });
-        Schema::table('macservice', function(Blueprint $table) {
             $table->dropColumn('telephone_number');
             $table->dropColumn('street');
             $table->dropColumn('site_url');
             $table->dropColumn('email');
             $table->dropColumn('city');
+        });
+        Schema::table('macservice', function(Blueprint $table) {
+            $table->integer('telephone_number');
+            $table->string('address');
+            $table->string('location');
         });
     }
 

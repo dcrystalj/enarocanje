@@ -28,6 +28,8 @@ class AbsencesGoogleId extends Migration {
 	{
 		Schema::table('absence', function($table) {
 			$table->dropColumn('google_id');
+		});
+		Schema::table('absence', function($table) {
 			$table->integer('google_id');
 		});
 	}

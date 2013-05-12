@@ -11,8 +11,7 @@ class Breaks extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('break',
-  	    function($table) {
+		Schema::create('break', function($table) {
 		   $table->engine = 'InnoDB';
 		   $table->increments('id');
 		   $table->integer('macservice_id')->unsigned();
@@ -32,7 +31,9 @@ class Breaks extends Migration {
 	 */
 	public function down()
 	{
-		$table->drop_foreign('break_macservice_id_foreign');
+		Schema::table('break', function($table) {
+		$table->dropForeign('break_macservice_id_foreign');
+		});
 		Schema::drop('break');
 	}
 

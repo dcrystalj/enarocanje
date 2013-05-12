@@ -13,6 +13,7 @@ class ConfideSetupUsersTable extends Migration {
         // Creates the users table
         Schema::create('users', function($table)
         {
+	    $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
