@@ -18,7 +18,7 @@
 			checkMostUsed(email);
 		}
 		else {
-			alert("The email you entered is not of a valid format.");
+			alert("{{Lang::get('validation.email',array('attribute'=>'"+email+"'))}}");
 		}
 	}
 
@@ -49,17 +49,18 @@
 
 			
 				var correctedEmail=name+"@"+domains[index];
-				bootbox.dialog("Your email domain closely resembles a common used one. Do you want to use this email?\n"+correctedEmail, [{
-				    "label" : "Yes!",
+				bootbox.dialog("{{Lang::get('messages.emailSuggestion',array('email'=>'"+email+"','corrected'=>'"+correctedEmail+"'))}}", [{
+				    "label" : "Yes",
 				    "class" : "btn-success",
 				    "callback": function() {
 				        document.getElementById("email").value=correctedEmail;
+				        $('#userRegForm').submit();
 				    }
 				}, {
 				    "label" : "No",
 				    "class" : "btn-primary",
 				    "callback": function() {
-				        
+				        $('#userRegForm').submit();
 				    }
 				},]);
 			
@@ -153,7 +154,7 @@
 </script>
 
 
-{{Former::open(URL::route('user.store'))->rules($rules)->onsubmit("checkEmail(event)")}}
+{{Former::open(URL::route('user.store'))->rules($rules)->id('userRegForm')}}
 {{Former::text('name',Lang::get('general.name'))->autofocus()}}
 {{Former::text('surname',Lang::get('general.surname'))}}
 {{Former::text('email',Lang::get('general.email'))}}
@@ -162,7 +163,7 @@
 {{Former::select('timezone',Lang::get('general.timezone'))
 		->options(UserLibrary::timezones(),	'12') }}
 {{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
-{{Former::actions()->submit(Lang::get('general.submit'))}}
+{{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event)")}}
 {{Former::close()}}
 
 
