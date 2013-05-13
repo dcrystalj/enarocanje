@@ -38,6 +38,7 @@ return array(
 	'logout' => 'Logout',
 	'manageService' => 'Manage service',
 	'name' => 'Name',
+	'no' => 'No',
 	'password' => 'Password',
 	'price' => 'Price',
 	'profile' => 'Profile',
@@ -73,5 +74,7 @@ return array(
 	'zipCode' => 'ZIP code',
 	'gimport' => 'Import from google',
 	'undef' => 'Undefined',
+	'yes' => 'Yes',
+
 
 );

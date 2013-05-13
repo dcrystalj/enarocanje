@@ -15,6 +15,6 @@ return array(
 	'registrationSuccess' => 'Registration successfully completed.',
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'notLoggedIn' => 'You are not logged in',
-	
+	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :correctedEmail?\nClick Yes to select the corrected email, click No to keep yours.',
 
 );
