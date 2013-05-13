@@ -3,9 +3,10 @@
 class MacroserviceController extends BaseController {
 
 	public $rules = array(
-		'street'           => 'required|between:4,50',
+		'street'           => 'required|between:2,50',
 		'ZIP_code'         => 'required|numeric',
-		'email'            => 'required|email',
+		'city'			   => 'required|between:2,50',
+		'email'            => 'required|email', 
 		'telephone_number' => 'between:9,15',
 		'site_url'         => 'between:4,35',
 		'description'      => 'max:1024'
@@ -40,14 +41,12 @@ class MacroserviceController extends BaseController {
 
 		if($validation->passes())
 		{
-			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
-
 			//save user and send mail with confirmation link
 				
 			$mac                   = new MacroService;
 			$mac->name             = Input::get( 'name' );
 			$mac->ZIP_code         = Input::get( 'ZIP_code');
-			$mac->city             = $zip->city;
+			$mac->city             = Input::get( 'city');
 			$mac->street           = Input::get( 'street');
 			$mac->email            = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telephone_number');
@@ -106,7 +105,7 @@ class MacroserviceController extends BaseController {
 			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
 			$mac->ZIP_code         = Input::get( 'ZIP_code');
-			$mac->city             = $zip->city;
+			$mac->city             = Input::get( 'city');
 			$mac->street           = Input::get( 'street');
 			$mac->email            = Input::get( 'email');
 			$mac->telephone_number = Input::get( 'telephone_number');
