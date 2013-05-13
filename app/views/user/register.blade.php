@@ -5,27 +5,14 @@
 @stop
 
 @section('content')
+<script>
 
 
-{{Former::open(URL::route('user.store'))->rules($rules)->onsubmit("checkEmail()")}}
-{{Former::text('name',Lang::get('general.name'))->autofocus()}}
-{{Former::text('surname',Lang::get('general.surname'))}}
-{{Former::text('email',Lang::get('general.email'))}}
-{{Former::password('password',Lang::get('general.password'))}}
-{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
-{{Former::select('timezone',Lang::get('general.timezone'))
-		->options(UserLibrary::timezones(),	'12') }}
-{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
-{{Former::actions()->submit(Lang::get('general.submit'))}}
-{{Former::close()}}
-
-
-@stop
-<script type="text/javascript">
 	var domains = ["gmail.com","hotmail.com","yahoo.com","live.com"];
-
-	function checkEmail(){
+	
+	function checkEmail(e){
 		var email = document.getElementById("email").value;
+		e.preventDefault();
 		if (validateEmail(email)){
 			//alert("tr00 email, way to go buddy");
 			checkMostUsed(email);
@@ -59,15 +46,33 @@
 			}
 		}
 		if(index >= 0) {
-			var correctedEmail=name+"@"+domains[index];
+
+			
+				var correctedEmail=name+"@"+domains[index];
+				bootbox.dialog("Your email domain closely resembles a common used one. Do you want to use this email?\n"+correctedEmail, [{
+				    "label" : "Yes!",
+				    "class" : "btn-success",
+				    "callback": function() {
+				        document.getElementById("email").value=correctedEmail;
+				    }
+				}, {
+				    "label" : "No",
+				    "class" : "btn-primary",
+				    "callback": function() {
+				        
+				    }
+				},]);
+			
+
+
 			//alert("Email is "+name+"@"+domains[index]);
-			var confirmMail=confirm("Click ok if you want to use this email address: "+correctedEmail);
-			if(confirmMail==true) {
-				document.getElementById("email").value=correctedEmail;
-			}
-			else {
-				//do nothing
-			}
+			//var confirmMail=confirm("Click ok if you want to use this email address: "+correctedEmail);
+			//if(confirmMail==true) {
+			//	document.getElementById("email").value=correctedEmail;
+			//}
+			//else {
+			//	//do nothing
+			//}
 
 		}
 		else {
@@ -146,3 +151,20 @@
 	  return v0[s1_len];
 	}	
 </script>
+
+
+{{Former::open(URL::route('user.store'))->rules($rules)->onsubmit("checkEmail(event)")}}
+{{Former::text('name',Lang::get('general.name'))->autofocus()}}
+{{Former::text('surname',Lang::get('general.surname'))}}
+{{Former::text('email',Lang::get('general.email'))}}
+{{Former::password('password',Lang::get('general.password'))}}
+{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
+{{Former::select('timezone',Lang::get('general.timezone'))
+		->options(UserLibrary::timezones(),	'12') }}
+{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
+{{Former::actions()->submit(Lang::get('general.submit'))}}
+{{Former::close()}}
+
+
+@stop
+
