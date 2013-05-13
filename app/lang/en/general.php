@@ -55,7 +55,7 @@ return array(
 	'saveChanges' => 'Save changes',
 	'save' => 'Save',
 	'service' => 'Service',
-	'services' => 'Services',
+	'services' => 'Service providers',
 	'slovenianCapital' => 'Slovenian',
 	'slovenian' => 'slovenian',
 	'street' => 'Street',

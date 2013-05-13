@@ -55,7 +55,7 @@ return array(
 	'saveChanges' => 'Shrani spremembe',
 	'save' => 'Save',
 	'service' => 'Storitev',
-	'services' => 'Storitve',
+	'services' => 'Ponudniki storitev',
 	'slovenianCapital' => 'Slovenščina',
 	'slovenian' => 'slovenščina',
 	'street' => 'Ulica',
