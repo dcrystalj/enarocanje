@@ -50,30 +50,31 @@
     </div>
     <div class="span5 offset2">
         @if( isset($mac) && $mac->active==0 )
-        	{{Button::large_link(URL::route('timetable', $mac->id), Lang::get('general.timetable'))}}
-            {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('general.absences'))}}
-            {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('general.services'))}}
-            {{Button::large_link( URL::to('google/export/service_reservation'), 'Export Reservations')}}
-            {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),'Delete',array('id' => 'delete'))}}
+    	
+        {{Button::large_link(URL::route('timetable', $mac->id), Lang::get('general.timetable'))}}
+        {{Button::large_link(URL::route('macro.absence.create', $mac->id), Lang::get('general.absences'))}}
+        {{Button::large_link( URL::route('macro.micro.create',$mac->id), Lang::get('general.justservices'))}}
+        {{Button::large_link( URL::to('google/export/service_reservation'), 'Export Reservations')}}
+        {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),'Delete',array('id' => 'delete'))}}
 
 
-            {{ Former::open(URL::route('macro.destroy',$mac->id))->method('DELETE')->id('delForm')}}, 
-            {{ Former::danger_large_submit('Delete') }}
-            {{ Former::close() }}                  
+        {{ Former::open(URL::route('macro.destroy',$mac->id))->method('DELETE')->id('delForm')}}, 
+        {{ Former::danger_large_submit('Delete') }}
+        {{ Former::close() }}                  
 
-            <script type="text/javascript">
-                    $('#delete').click(function(e) {
-                        e.preventDefault();
-                        bootbox.confirm('Are you sure to delete all services?', function(result) {
-                            if(result){
-                                $('#delForm').submit();
-                            }
-                            $('#event-dialog').modal('hide');
-                        });
+        <script type="text/javascript">
+                $('#delete').click(function(e) {
+                    e.preventDefault();
+                    bootbox.confirm('Are you sure to delete all services?', function(result) {
+                        if(result){
+                            $('#delForm').submit();
+                        }
+                        $('#event-dialog').modal('hide');
                     });
-            </script>
+                });
+        </script>
 
-        @endif
+    @endif
         </div>  
     </div>
 

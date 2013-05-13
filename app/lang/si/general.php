@@ -75,5 +75,6 @@ return array(
 	'gimport' => 'Uvoz iz googla',
 	'undef'=> 'Nemenovan',
 	'yes' => 'Da',
+	'justservices' => 'Storitve'
 );
 

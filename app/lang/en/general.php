@@ -75,6 +75,6 @@ return array(
 	'gimport' => 'Import from google',
 	'undef' => 'Undefined',
 	'yes' => 'Yes',
-
+	'justservices' => 'Services',
 
 );
