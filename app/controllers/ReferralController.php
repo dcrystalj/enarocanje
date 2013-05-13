@@ -30,8 +30,18 @@ class ReferralController extends BaseController {
      */
     public function create()
     {
+        $user  = Auth::user();
+        if($user->referral_code == 0)
+        {
+            $token = UserLibrary::generateUuid();  
+            $user->referral_code = $token;
+            $user->save();
+        }    
+        $token = $user->referral_code;
+        $link = URL::to('provider/create?code='.$token);
         return View::make('referral.create')                   
                     ->with('rules',$this->rules)
+                    ->with('link',$link)
                     ->with('errors',Session::get('errors'))
                     ->with('status',Session::get('status'))
                     ->with('error',Session::get('error'))
@@ -51,12 +61,6 @@ class ReferralController extends BaseController {
         {
             $input = Input::all();
             $user  = Auth::user();
-            if($user->referral_code == 0)
-            {
-                $token = UserLibrary::generateUuid();  
-                $user->referral_code = $token;
-                $user->save();
-            }
             $token = $user->referral_code;
             Mail::send('emails.auth.referralWelcome', compact('token'), function($m) use ($input) 
             {
