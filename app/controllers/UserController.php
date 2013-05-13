@@ -14,7 +14,7 @@ class UserController extends BaseController {
     'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
     'email'    => 'required|email|unique:users',
     'password' => 'required',
-    'repeat'   => 'required|same:password|between:4,30',
+    'repeat'   => 'required|same:password',
     'timezone' => 'min:1',
     'language' => 'min:1',
     );
