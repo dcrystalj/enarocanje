@@ -38,6 +38,7 @@ return array(
 	'logout' => 'Odjava',
 	'manageService' => 'Uredi storitev',
 	'name' => 'Ime',
+	'no' => 'Ne',
 	'password' => 'Geslo',
 	'price' => 'Price',
 	'profile' => 'Profil',
@@ -73,5 +74,6 @@ return array(
 	'zipCode' => 'Poštna številka',
 	'gimport' => 'Uvoz iz googla',
 	'undef'=> 'Nemenovan',
+	'yes' => 'Da',
 );
 

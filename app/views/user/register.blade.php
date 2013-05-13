@@ -50,14 +50,14 @@
 			
 				var correctedEmail=name+"@"+domains[index];
 				bootbox.dialog("{{Lang::get('messages.emailSuggestion',array('email'=>'"+email+"','corrected'=>'"+correctedEmail+"'))}}", [{
-				    "label" : "Yes",
+				    "label" : "{{Lang::get('general.yes')}}",
 				    "class" : "btn-success",
 				    "callback": function() {
 				        document.getElementById("email").value=correctedEmail;
 				        $('#userRegForm').submit();
 				    }
 				}, {
-				    "label" : "No",
+				    "label" : "{{Lang::get('general.yes')}}",
 				    "class" : "btn-primary",
 				    "callback": function() {
 				        $('#userRegForm').submit();
