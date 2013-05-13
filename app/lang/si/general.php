@@ -49,7 +49,7 @@ return array(
 	'register' => 'Registracija',
 	'registration' => 'Registracija',
 	'repeatPassword' => 'Ponovitev gesla',
-	'reservation' => 'Rezervacije',
+	'reservation' => 'Rezervacija',
 	'reset' => 'Reset',
 	'retypePassword' => 'Ponovno vpiši geslo',
 	'saveChanges' => 'Shrani spremembe',
