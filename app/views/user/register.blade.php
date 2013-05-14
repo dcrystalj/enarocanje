@@ -15,8 +15,6 @@
 		
 		e.preventDefault();
 		if (validateEmail(email)){
-			//alert("tr00 email, way to go buddy");
-			
 			checkMostUsed(email);
 		}
 		else {
@@ -32,13 +30,11 @@
 	function checkMostUsed(email) {
 		var domain = email.split("@")[1];
 		var name = email.split("@")[0];
-		//alert(name);
 		var min = 30;
 		var temp = 0;
 		var index = -1;
 		//alert(domain);
 		for (var i=0; i<domains.length;i++){
-			//alert(domain +" "+domains[i])
 			if(domain == domains[i]){		
 				index=-1;
 				break;
