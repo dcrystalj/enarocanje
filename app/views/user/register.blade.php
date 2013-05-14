@@ -6,15 +6,15 @@
 
 @section('content')
 <script>
-	function 
+
 
 	var domains = ["gmail.com","hotmail.com","yahoo.com","live.com"];
 	
 	function checkEmail(e){
 		var email = document.getElementById("email").value;
+		
 		e.preventDefault();
 		if (validateEmail(email)){
-			//alert("tr00 email, way to go buddy");
 			checkMostUsed(email);
 		}
 		else {
@@ -30,14 +30,14 @@
 	function checkMostUsed(email) {
 		var domain = email.split("@")[1];
 		var name = email.split("@")[0];
-		//alert(name);
 		var min = 30;
 		var temp = 0;
 		var index = -1;
+		//alert(domain);
 		for (var i=0; i<domains.length;i++){
-			if(domain.valueOf() == domains[i].valueOf()){
+			if(domain == domains[i]){		
 				index=-1;
-				$('#userRegForm').submit();
+				break;
 			}
 			temp = levenshtein(domain,domains[i]);
 			if(temp<min && temp<4) {
@@ -63,21 +63,9 @@
 				        $('#userRegForm').submit();
 				    }
 				},]);
-			
-
-
-			//alert("Email is "+name+"@"+domains[index]);
-			//var confirmMail=confirm("Click ok if you want to use this email address: "+correctedEmail);
-			//if(confirmMail==true) {
-			//	document.getElementById("email").value=correctedEmail;
-			//}
-			//else {
-			//	//do nothing
-			//}
-
 		}
 		else {
-			//alle ist gut
+			$('#userRegForm').submit();
 		}
 
 	}

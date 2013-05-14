@@ -56,19 +56,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Application Fallback Locale
-	|--------------------------------------------------------------------------
-	|
-	| The fallback locale determines the locale to use when the current one
-	| is not available. You may change the value to correspond to any of
-	| the language folders that are provided through your application.
-	|
-	*/
-
-	'fallback_locale' => 'en',
-
-	/*
-	|--------------------------------------------------------------------------
 	| Encryption Key
 	|--------------------------------------------------------------------------
 	|
@@ -109,6 +96,7 @@ return array(
 		'Illuminate\Foundation\Providers\KeyGeneratorServiceProvider',
 		'Illuminate\Log\LogServiceProvider',
 		'Illuminate\Mail\MailServiceProvider',
+		'Illuminate\Foundation\Providers\MaintenanceServiceProvider',
 		'Illuminate\Database\MigrationServiceProvider',
 		'Illuminate\Foundation\Providers\OptimizeServiceProvider',
 		'Illuminate\Pagination\PaginationServiceProvider',
@@ -173,7 +161,7 @@ return array(
 		'File'            	=> 'Illuminate\Support\Facades\File',
 		'Form'            	=> 'Illuminate\Support\Facades\Form',
 		'Hash'            	=> 'Illuminate\Support\Facades\Hash',
-		'Html'            	=> 'Illuminate\Support\Facades\Html',
+		'Html'            	=> 'Illuminate\Support\Facades\HTML',
 		'Input'           	=> 'Illuminate\Support\Facades\Input',
 		'Lang'            	=> 'Illuminate\Support\Facades\Lang',
 		'Log'             	=> 'Illuminate\Support\Facades\Log',

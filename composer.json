@@ -2,8 +2,8 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"way/generators": "dev-master",
-		"patricktalmadge/bootstrapper": "dev-develop",
 		"anahkiasen/former": "dev-agnostic",
+		"patricktalmadge/bootstrapper": "dev-develop#e7c91cf2b873a9e51ef4abcac7f6d53bddcad631",
 		"barryvdh/laravel-ide-helper": "dev-master",
 		"j20/php-uuid": "*",
 		"iron-io/iron_mq": "dev-master",
@@ -21,7 +21,7 @@
 		]
 	},
 	"scripts": {
-		
+
 	},
 	"config": {
 	    "preferred-install": "dist"
