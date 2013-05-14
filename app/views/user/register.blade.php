@@ -6,7 +6,7 @@
 
 @section('content')
 <script>
-	function 
+
 
 	var domains = ["gmail.com","hotmail.com","yahoo.com","live.com"];
 	
@@ -37,7 +37,7 @@
 		for (var i=0; i<domains.length;i++){
 			if(domain.valueOf() == domains[i].valueOf()){
 				index=-1;
-				$('#userRegForm').submit();
+				break;
 			}
 			temp = levenshtein(domain,domains[i]);
 			if(temp<min && temp<4) {
@@ -57,7 +57,7 @@
 				        $('#userRegForm').submit();
 				    }
 				}, {
-				    "label" : "{{Lang::get('general.no')}}",
+				    "label" : "{{Lang::get('general.yes')}}",
 				    "class" : "btn-primary",
 				    "callback": function() {
 				        $('#userRegForm').submit();
