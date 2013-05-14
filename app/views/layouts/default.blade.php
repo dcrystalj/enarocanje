@@ -38,7 +38,10 @@
 						!Auth::check() ?:
 						[Lang::get('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
 	 						false,null,null,(Auth::user()->isAdmin())],
-					]))
+					]),
+					['style' => 'height: auto']
+
+					)
 
 				->with_menus(
 					Navigation::links( 
@@ -69,7 +72,7 @@
 						[Navigation::VERTICAL_DIVIDER],
 					]),
 					['class' => 'pull-right'] )
-		   		->collapsible()
+		   		->collapsible();
 	   	 	}}
 		</nav>
 		<div>
