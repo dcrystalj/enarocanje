@@ -12,9 +12,11 @@
 	
 	function checkEmail(e){
 		var email = document.getElementById("email").value;
+		
 		e.preventDefault();
 		if (validateEmail(email)){
 			//alert("tr00 email, way to go buddy");
+			
 			checkMostUsed(email);
 		}
 		else {
@@ -34,8 +36,10 @@
 		var min = 30;
 		var temp = 0;
 		var index = -1;
+		//alert(domain);
 		for (var i=0; i<domains.length;i++){
-			if(domain.valueOf() == domains[i].valueOf()){
+			//alert(domain +" "+domains[i])
+			if(domain == domains[i]){		
 				index=-1;
 				break;
 			}
@@ -57,27 +61,15 @@
 				        $('#userRegForm').submit();
 				    }
 				}, {
-				    "label" : "{{Lang::get('general.yes')}}",
+				    "label" : "{{Lang::get('general.no')}}",
 				    "class" : "btn-primary",
 				    "callback": function() {
 				        $('#userRegForm').submit();
 				    }
 				},]);
-			
-
-
-			//alert("Email is "+name+"@"+domains[index]);
-			//var confirmMail=confirm("Click ok if you want to use this email address: "+correctedEmail);
-			//if(confirmMail==true) {
-			//	document.getElementById("email").value=correctedEmail;
-			//}
-			//else {
-			//	//do nothing
-			//}
-
 		}
 		else {
-			//alle ist gut
+			$('#userRegForm').submit();
 		}
 
 	}
