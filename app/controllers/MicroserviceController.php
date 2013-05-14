@@ -42,7 +42,7 @@ class MicroserviceController extends BaseController {
 
 			$micservice                = new MicroService;
 			$micservice->name          = Input::get('name');
-			$micservice->length        = Input::get( 'length' );
+			$micservice->length        = date('H:i', strtotime(Input::get('length')));
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
 			$micservice->price         = floatval(str_replace(',', '.', Input::get( 'price' )));

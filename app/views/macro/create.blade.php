@@ -37,8 +37,8 @@
             {{ Former::open(URL::route('macro.store'))->rules($rules) }}
             {{ Former::select('name',Lang::get('general.name').': ')->options(Service::categories())->autofocus() }}
         @endif
-        {{ Former::text('ZIP_code')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$zipcode).'"]')}}
-        {{ Former::text('city')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$city).'"]')}}
+        {{ Former::text('ZIP_code','ZIP:')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$zipcode).'"]')}}
+        {{ Former::text('city','City:')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$city).'"]')}}
         {{ Former::text('street',Lang::get('general.street').': ')}}
         {{ Former::text('email',Lang::get('general.email').': ')->value(Auth::user()->email)}}
         {{ Former::text('telephone_number',Lang::get('general.telephoneNumber').': ')}}

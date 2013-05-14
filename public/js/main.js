@@ -57,8 +57,13 @@ $(document).ready(function() {
       language: 'pt-BR',
       pickSeconds: false,
    });
-      $('#datetimepicker1').datetimepicker({
+   $('#datetimepicker1').datetimepicker({
       language: 'pt-BR',
       pickSeconds: false,
+   });
+   $('#datetimepicker2').datetimepicker({
+      language: 'pt-BR',
+      pickSeconds: false,
+      pickDate: false,
    });
 });

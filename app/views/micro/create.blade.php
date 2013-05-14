@@ -16,7 +16,28 @@
         @endif
 
         {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
-        {{ Former::select('length','Length:')->options(Service::duration()) }} 
+        {{ Former::text('title','Title:') }}
+
+        @if($errors && $errors->has('length'))
+            <div class="control-group error">
+        @else
+            <div class="control-group required">
+        @endif
+
+            {{ Former::label('length','Length:')->class('control-label')->for('datetimepicker')}}
+            <div class="controls">
+            <div id="datetimepicker2" class="input-append date">
+                <input data-format="hh:mm" type="text" name="length" value="<?php if (isset($mic)) echo $mic->length ?>" ></input>
+                <span class="add-on">
+                   <i data-time-icon="icon-time"></i>
+                </span>
+            </div>
+            @if($errors && $errors->has('length'))
+                <span class="help-inline"> {{$errors->first('length')}}</span>
+            @endif
+            </div>
+        </div>
+
         {{ Former::select('gender','For:')->options(Service::gender()) }} 
         {{ Former::text('price','Price:')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
