@@ -49,7 +49,8 @@ $(document).ready(function() {
          $('#event-dialog').off('click');
       });                     
    });
-
+   //menu bug
+   $('.nav-collapse').addClass('collapse');
    //password hint
    $('#password').pstrength();
    //datepicker
