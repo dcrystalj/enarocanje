@@ -51,6 +51,10 @@ $(document).ready(function() {
    });
    //menu bug
    $('.nav-collapse').addClass('collapse');
+
+   //table for mobile
+   $('.sortable').stacktable();
+
    //password hint
    $('#password').pstrength();
    //datepicker
