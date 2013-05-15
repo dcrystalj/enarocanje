@@ -111,6 +111,7 @@
 	{{ Html::script('js/bootbox.min.js') }}
 	{{ Html::script('js/sorttable.js') }}
 	{{ Html::script('js/passStrength.js') }}
+	{{ Html::script('js/stacktable.js') }}
 	
 </body>
 </Html>

@@ -56,7 +56,7 @@
         }?>
 
         @if(count($tbody)>0)
-        {{ Table::hover_open(["class"=>'sortable']) }}
+        {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
         {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}

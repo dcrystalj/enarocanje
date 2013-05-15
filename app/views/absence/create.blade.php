@@ -103,8 +103,8 @@
     @if(count($absencesT)>0)
         </br>
         <h2>Absences:</h2>
-    {{ Table::hover_open(["class"=>'sortable']) }}
-    {{ Table::headers('#', 'Title','From','To', '') }}
+    {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
+    {{ Table::headers('#', 'Title','From','To', 'Repeat','') }}
     {{ Table::body($absencesT) }}
     {{ Table::close() }}
 

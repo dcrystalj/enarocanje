@@ -13,3 +13,62 @@
 #delForm{
     visibility: hidden;
 }
+
+
+/* tables start */
+
+#stacktable { 
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mobiletable {
+	border-bottom: 1px solid #eee;
+	border-top: 1px;
+}
+
+.st-head-row {
+	text-align: left;
+	width: 90%;	
+	font-weight: normal;
+	font-size: 0.8em;
+}
+
+.st-key { 
+	top: 6px;
+	left: 6px;
+	padding-right: 40px; 
+	font-weight: bold;
+}
+
+.st-val {
+	border: none;
+	position: relative;
+	padding-left: 20px;
+	white-space: normal;
+}
+
+.st-val .btn {
+	width: 130px;
+	padding-right: 0;
+}
+
+.st-val form {
+	/*padding: 0;*/
+	border: 0;
+}
+
+.st-val form .btn{
+	width: 100%;
+}
+
+#mobileTable { display: table; }
+#stacktable { display: none; }
+
+@media only screen and (max-width: 800px) {
+  #mobileTable { display: none; }
+  #stacktable { display: table; }
+}
+/* tables end */
+
+}
