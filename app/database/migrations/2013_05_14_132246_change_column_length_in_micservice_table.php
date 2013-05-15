@@ -17,6 +17,7 @@ class ChangeColumnLengthInMicserviceTable extends Migration {
         });
         Schema::table('micservice', function(Blueprint $table) {
             $table->time('length');
+            $table->string('title');
         });
     }
 
@@ -29,6 +30,7 @@ class ChangeColumnLengthInMicserviceTable extends Migration {
     {
         Schema::table('micservice', function(Blueprint $table) {
             $table->dropColumn('length');
+            $table->dropColumn('title');
         });
         Schema::table('micservice', function(Blueprint $table) {
             $table->integer('length');

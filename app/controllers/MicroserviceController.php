@@ -4,6 +4,7 @@ class MicroserviceController extends BaseController {
 
 	public $rules = array(
 		'name'        => 'required',
+		'title'       => 'required',
 		'length'      => 'required',
 		'description' => 'max:1024',     
 		'price'       => 'numeric_comma|min:0',
@@ -42,6 +43,7 @@ class MicroserviceController extends BaseController {
 
 			$micservice                = new MicroService;
 			$micservice->name          = Input::get('name');
+			$micservice->title         = Input::get('title');
 			$micservice->length        = date('H:i', strtotime(Input::get('length')));
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );
@@ -95,6 +97,7 @@ class MicroserviceController extends BaseController {
 			$category = Service::categoryId($macName);
 
 			$micservice->name          = Input::get( 'name' );
+			$micservice->title         = Input::get( 'title');
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );
 			$micservice->gender        = Input::get( 'gender' );

@@ -17,6 +17,7 @@
 
         {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
         {{ Former::text('title','Title:') }}
+        {{ Former::select('gender','For:')->options(Service::gender()) }} 
 
         @if($errors && $errors->has('length'))
             <div class="control-group error">
@@ -27,7 +28,7 @@
             {{ Former::label('length','Length:')->class('control-label')->for('datetimepicker')}}
             <div class="controls">
             <div id="datetimepicker2" class="input-append date">
-                <input data-format="hh:mm" type="text" name="length" value="<?php if (isset($mic)) echo $mic->length ?>" ></input>
+                <input data-format="hh:mm" type="text" name="length" value="{{ (isset($mic))? $mic->length : '00:00' }}" ></input>
                 <span class="add-on">
                    <i data-time-icon="icon-time"></i>
                 </span>
@@ -38,7 +39,6 @@
             </div>
         </div>
 
-        {{ Former::select('gender','For:')->options(Service::gender()) }} 
         {{ Former::text('price','Price:')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
         {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
         {{ Former::actions()->submit( isset($mic) ? 'Save changes' : 'Add service' ) }}
@@ -57,10 +57,16 @@
                 if($service->price == 0){
                     $service->price = '/';
                 }
+                if(substr($service->length,0,-6) == '00'){
+                    $length = substr($service->length,3,-3) . ' min';
+                }
+                else{
+                    $length = substr($service->length,0,-6) . ' h ' . substr($service->length,3,-3) . ' min';   
+                }
                 $allActivated[]= [
                     'id'     => $i, 
-                    'name'   => Service::services()[$category][$service->name], 
-                    'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length  ,
+                    'title'   => $service->title, 
+                    'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $length,
                     'gender' => Service::gender()[$service->gender], 
                     'price'  => $service->price, 
 

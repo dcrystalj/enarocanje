@@ -65,5 +65,6 @@ $(document).ready(function() {
       language: 'pt-BR',
       pickSeconds: false,
       pickDate: false,
+      maskInput:false,
    });
 });
