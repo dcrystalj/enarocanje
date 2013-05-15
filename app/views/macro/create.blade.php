@@ -5,18 +5,7 @@
 @stop
 
 @section('content')
-    <style>
-        .btn-large{
-            margin-bottom: 10px;
-            width: 200px;
-        }
-        .form-actions{
-            background-color: white !important;
-        }
-        #delForm{
-            visibility: hidden;
-        }
-    </style>
+
     <?php 
     $zipcode = [];
     $city = [];

@@ -1,7 +1,7 @@
  
  ☐ conflict za več absencov?
- ☐ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy
- ☐ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani.
+ ✔ Gumb za brisanje rezervacije je na zacetku vedno viden (Izgine sele kasneje) se je buggy @done (13-05-15 01:09)
+ ✔ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani. @done (13-05-15 01:19)
  ☐ Ce kliknemo [Reserve] preden izberemo termin se ne prikaze nobeno obvestilo
  ☐ Remove users.gcalendar column.
  

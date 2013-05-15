@@ -6,6 +6,9 @@
 
 @section('content')
 
+<div class="row-fluid">
+<div class="span5">
+
     @if(isset($abs))
         {{ Former::open(URL::route('macro.absence.update', [$mac->id, $abs->id] ))->method('PUT')->rules($rules) }}
         {{ Former::populate($abs) }}
@@ -66,31 +69,37 @@
 	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
     {{ Former::close() }}
 	{{-- Button::link("/google/export", Lang::get('general.export')) --}}
-    {{ Button::link("/google/import", Lang::get('general.gimport'), array('id' => 'google_import')) }}
+</div>
+<div class="span5 offset2">
+
+    {{ Button::large_link("/google/import", Lang::get('general.gimport'), array('id' => 'google_import')) }}
+
+</div>
+</div>
 
 <?php
-       $absencesT = []; 
-        $i = 1; 
-        foreach ($absences as $absence){
-            if($absence->repetable == 1){
-                $repeat = '✔';
-            } 
-            else
-            {
-                $repeat = '✘';
-            }   
-            $absencesT[]= [
-                'id'     => $i, 
-                'title'   => $absence->title,
-                'from'   => substr($absence->from,0,-3),
-                'to'   => substr($absence->to,0,-3),
-                'repeatable' => $repeat,
-                'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
-                'delete'  => delete($mac->id,$absence->id),
-            ];
-            $i++;
-        }
-    ?>
+   $absencesT = []; 
+    $i = 1; 
+    foreach ($absences as $absence){
+        if($absence->repetable == 1){
+            $repeat = '✔';
+        } 
+        else
+        {
+            $repeat = '✘';
+        }   
+        $absencesT[]= [
+            'id'     => $i, 
+            'title'   => $absence->title,
+            'from'   => substr($absence->from,0,-3),
+            'to'   => substr($absence->to,0,-3),
+            'repeatable' => $repeat,
+            'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+            'delete'  => delete($mac->id,$absence->id),
+        ];
+        $i++;
+    }
+?>
     @if(count($absencesT)>0)
         </br>
         <h2>Absences:</h2>
