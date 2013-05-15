@@ -38,6 +38,7 @@ return array(
 	'logout' => 'Logout',
 	'manageService' => 'Manage service',
 	'name' => 'Name',
+	'no' => 'No',
 	'password' => 'Password',
 	'price' => 'Price',
 	'profile' => 'Profile',
@@ -55,7 +56,7 @@ return array(
 	'saveChanges' => 'Save changes',
 	'save' => 'Save',
 	'service' => 'Service',
-	'services' => 'Services',
+	'services' => 'Service providers',
 	'slovenianCapital' => 'Slovenian',
 	'slovenian' => 'slovenian',
 	'street' => 'Street',
@@ -73,5 +74,7 @@ return array(
 	'zipCode' => 'ZIP code',
 	'gimport' => 'Import from google',
 	'undef' => 'Undefined',
+	'yes' => 'Yes',
+	'justservices' => 'Services',
 
 );

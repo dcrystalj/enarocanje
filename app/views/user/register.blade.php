@@ -5,33 +5,20 @@
 @stop
 
 @section('content')
+<script>
 
 
-{{Former::open(URL::route('user.store'))->rules($rules)->onsubmit("checkEmail()")}}
-{{Former::text('name',Lang::get('general.name'))->autofocus()}}
-{{Former::text('surname',Lang::get('general.surname'))}}
-{{Former::text('email',Lang::get('general.email'))}}
-{{Former::password('password',Lang::get('general.password'))}}
-{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
-{{Former::select('timezone',Lang::get('general.timezone'))
-		->options(UserLibrary::timezones(),	'12') }}
-{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
-{{Former::actions()->submit(Lang::get('general.submit'))}}
-{{Former::close()}}
-
-
-@stop
-<script type="text/javascript">
 	var domains = ["gmail.com","hotmail.com","yahoo.com","live.com"];
-
-	function checkEmail(){
+	
+	function checkEmail(e){
 		var email = document.getElementById("email").value;
+		
+		e.preventDefault();
 		if (validateEmail(email)){
-			//alert("tr00 email, way to go buddy");
 			checkMostUsed(email);
 		}
 		else {
-			alert("The email you entered is not of a valid format.");
+			alert("{{Lang::get('validation.email',array('attribute'=>'"+email+"'))}}");
 		}
 	}
 
@@ -43,12 +30,12 @@
 	function checkMostUsed(email) {
 		var domain = email.split("@")[1];
 		var name = email.split("@")[0];
-		//alert(name);
 		var min = 30;
 		var temp = 0;
 		var index = -1;
+		//alert(domain);
 		for (var i=0; i<domains.length;i++){
-			if(domain.valueOf() == domains[i].valueOf()){
+			if(domain == domains[i]){		
 				index=-1;
 				break;
 			}
@@ -59,19 +46,26 @@
 			}
 		}
 		if(index >= 0) {
-			var correctedEmail=name+"@"+domains[index];
-			//alert("Email is "+name+"@"+domains[index]);
-			var confirmMail=confirm("Click ok if you want to use this email address: "+correctedEmail);
-			if(confirmMail==true) {
-				document.getElementById("email").value=correctedEmail;
-			}
-			else {
-				//do nothing
-			}
 
+			
+				var correctedEmail=name+"@"+domains[index];
+				bootbox.dialog("{{Lang::get('messages.emailSuggestion',array('email'=>'"+email+"','corrected'=>'"+correctedEmail+"'))}}", [{
+				    "label" : "{{Lang::get('general.yes')}}",
+				    "class" : "btn-success",
+				    "callback": function() {
+				        document.getElementById("email").value=correctedEmail;
+				        $('#userRegForm').submit();
+				    }
+				}, {
+				    "label" : "{{Lang::get('general.no')}}",
+				    "class" : "btn-primary",
+				    "callback": function() {
+				        $('#userRegForm').submit();
+				    }
+				},]);
 		}
 		else {
-			//alle ist gut
+			$('#userRegForm').submit();
 		}
 
 	}
@@ -146,3 +140,20 @@
 	  return v0[s1_len];
 	}	
 </script>
+
+
+{{Former::open(URL::route('user.store'))->rules($rules)->id('userRegForm')}}
+{{Former::text('name',Lang::get('general.name'))->autofocus()}}
+{{Former::text('surname',Lang::get('general.surname'))}}
+{{Former::text('email',Lang::get('general.email'))}}
+{{Former::password('password',Lang::get('general.password'))}}
+{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
+{{Former::select('timezone',Lang::get('general.timezone'))
+		->options(UserLibrary::timezones(),	'12') }}
+{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
+{{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event)")}}
+{{Former::close()}}
+
+
+@stop
+

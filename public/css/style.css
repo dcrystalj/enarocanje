@@ -2,3 +2,14 @@
 #gender {
 	margin-bottom: 0;
 }
+
+.btn-large{
+    margin-bottom: 10px;
+    width: 200px;
+}
+.form-actions{
+    background-color: white !important;
+}
+#delForm{
+    visibility: hidden;
+}

@@ -49,7 +49,8 @@ $(document).ready(function() {
          $('#event-dialog').off('click');
       });                     
    });
-
+   //menu bug
+   $('.nav-collapse').addClass('collapse');
    //password hint
    $('#password').pstrength();
    //datepicker
@@ -57,8 +58,14 @@ $(document).ready(function() {
       language: 'pt-BR',
       pickSeconds: false,
    });
-      $('#datetimepicker1').datetimepicker({
+   $('#datetimepicker1').datetimepicker({
       language: 'pt-BR',
       pickSeconds: false,
+   });
+   $('#datetimepicker2').datetimepicker({
+      language: 'pt-BR',
+      pickSeconds: false,
+      pickDate: false,
+      maskInput:false,
    });
 });

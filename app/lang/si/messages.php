@@ -15,5 +15,6 @@ return array(
 	'registrationSuccess' => 'Registracija je uspela.',
 	'settingsSuccess' => 'Spremembe so bile shranjene.',
 	'notLoggedIn' => 'Niste prijavljeni',
+	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :corrected?\nPritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
 	
 );
