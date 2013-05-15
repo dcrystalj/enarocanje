@@ -20,9 +20,13 @@
 {{ Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) }}
 &nbsp;&nbsp;
 {{ Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) }}
+{{ Button::success_link("#", Lang::get('general.save.new'), array('id' => 'continue')) }}
 </p>
 
 <div id='calendar'></div>
+<form id="submit_form" method="post" action="{{ route("breaks", array($id)) }}">
+	<input type="hidden" name="events" id="events" />
+</form>
 <script>
 @include('calendar.calendar_def')
 
@@ -72,9 +76,14 @@ $(function() {
 		for(var i=0; i<events.length; i++)
 			calendar.fullCalendar('removeEvents', events[i]._id);
 	});
-	$('#save').click(function(e) {
+	$('#save,#continue').click(function(e) {
 		e.preventDefault();
-		cal_save(calendar, '{{ route("timetable_submit", array($id)) }}', function(data) {
+		var events = calendar.fullCalendar('clientEvents');
+		var x = document.getElementById('events').value = JSON.stringify(events);
+		alert(x);
+		document.getElementById('submit_form').submit();
+		return;
+		cal_save(calendar, '{{ route("breaks", array($id)) }}', function(data) {
 			bootbox.alert("Timetable saved.", function() {
 				window.location = '{{ route("breaks", array($id) )}}';
 			});

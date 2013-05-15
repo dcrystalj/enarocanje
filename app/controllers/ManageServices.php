@@ -85,11 +85,42 @@ class ManageServices extends BaseController {
 	public function timetable($macro_id) {
 		return View::make('Provider.TimeTable', array('id' => $macro_id));
 	}
-
 	public function breaks($macro_id) {
-		return View::make('Provider.Breaks', array('id' => $macro_id));
+		$events = Input::get('events');
+		$events = json_decode($events);
+
+		$inverted = array();
+		$i = 0;
+		foreach($events as $event) {
+			$start = strtotime($event->start);
+			$end = strtotime($event->end);
+			$day = ((date('w', $start)-1 + 7*2) % 7); // Monday - day 0
+			$b = date('Y-m-d H:i', $start);
+			$e = date('w', $end);
+
+			die("Day: ".$b."=".$day);
+			$start = date('G:i', strtotime($event->start));
+			$end = date('G:i', strtotime($event->end));
+
+			$inverted[] = array(
+				'id' => 'inverted_'.$i,
+				'title' => '',
+				'start' => 324,
+			);
+		}
+
+		return View::make('Provider.Breaks',
+			array(
+				'id' => $macro_id,
+				'events' => $events,
+				'inverted' => $inverted,
+			));
 	}
 	
+	/*
+	 * Old function for submit event time.
+	 * (Look timetable())
+	 * */
 	public function submit_time($id) {
 		$events = Input::get('events');
 		$events = json_decode($events);
@@ -99,7 +130,6 @@ class ManageServices extends BaseController {
 			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));
 			$end = date('G:i', strtotime($event->end));
-			print "$day: $start ... $end\n";
 			DB::table('working_hour')->insert(array(
 												  'macservice_id' => $id,
 												  'day' => $day,
