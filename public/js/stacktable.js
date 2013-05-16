@@ -18,13 +18,13 @@
         stacktable;
 
     return $tables.each(function() {
-      var $stacktable = $('<table id="'+settings.id+'"><tbody></tbody></table>');
+      var $stacktable = $('<table id="'+settings.id+'" class="table-hover"><tbody></tbody></table>');
       if (typeof settings.myClass !== undefined) $stacktable.addClass(settings.myClass);
       var markup = '';
       $table = $(this);
       $topRow = $table.find('tr').eq(0);
       $table.find('tr').each(function(index,value) {
-        markup += '<table class="mobiletable"><tr>';
+        markup += '<table class="mobiletable mobiletable-hover"><tr>';
         // for the first row, top left table cell is the head of the table
         if (index===0) {
           //markup += '<tr><th class="st-head-row st-head-row-main">'+$(this).find('th,td').eq(0).html()+'</th></tr>';
@@ -34,7 +34,7 @@
         else {
           $(this).find('td').each(function(index,value) {
             if (index===0) {
-              markup += '<tr><th class="st-head-row">'+$(this).html()+'</th></tr>';
+              markup += '<tr><th class="st-head-row">'+$(this).html()+'</th><th></th></tr>';
             } else {
               if ($(this).html() !== ''){
                 markup += '<tr>';
@@ -51,7 +51,7 @@
               }
             }
           });
-          markup += '</table>';
+          markup += '<tr style="line-height: 5px"><td>&nbsp</td><td>&nbsp</td></tr></table>';
         }
       });
       $stacktable.append($(markup));
