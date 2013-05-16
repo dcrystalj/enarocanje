@@ -192,7 +192,7 @@ $(function() {
 							title: allevents[0].title,
 							data:{	
 								'name' : $('#name').val(),
-								'mail' : $('#mail').val(),
+								'mail' : $('#email').val(),
 								'telephone': $('#telephone').val()
 							}
 						}
