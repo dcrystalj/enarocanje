@@ -5,7 +5,7 @@ class MicroserviceController extends BaseController {
 	public $rules = array(
 		'name'        => 'required',
 		'title'       => 'required',
-		'length'      => 'required',
+		'length'      => 'required|min_time',
 		'description' => 'max:1024',     
 		'price'       => 'numeric_comma|min:0',
   	);

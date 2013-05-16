@@ -25,6 +25,14 @@ class BaseController extends Controller {
         	//$value = floatval($value);
         	return is_numeric($value);
         });
+        Validator::extend('min_time', function($attribute, $value, $parameters)
+        {
+        	if( intval(str_replace(':','',$value) ) == 0)
+        	{
+        		return false;
+        	}
+        	return true;
+        });
 	}
 
 }

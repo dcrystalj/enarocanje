@@ -34,6 +34,7 @@
         if ($mic){ 
         $tbody = []; 
         $i = 1; 
+        $length = 0;
         $macroName = MacroService::find($mac)->name;
         $category = Service::categoryId($macroName);
         foreach ($mic as $service){
@@ -42,10 +43,19 @@
                 if($service->price == 0){
                     $service->price = '/';
                 }
+                if(substr($service->length,0,-6) == '00')
+                {
+                    $length = Service::lengthMin($service->length);
+                }    
+                else
+                {
+                    $length = Service::lengthH($service->length);
+                    $length .= Service::lengthMin($service->length);
+                }
                 $tbody[] = [
                 'id'     => $i, 
                 'name'   => Service::services()[$category][$service->name], 
-                'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length, 
+                'length' => $length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
                 'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')

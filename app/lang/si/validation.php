@@ -48,6 +48,7 @@ return array(
 		"file"        => "Izbran atribut :attribute mora biti najmanj :min kilobajtov.",
 		"string"      => "Izbran atribut :attribute mora biti najmanj :min znakov.",
 	),
+	"min_time"        => "Izbran atribut :attribute mora biti več kot 0",
 	"notin"           => "Izbran atribut :attribute je neveljaven.",
 	"numeric"         => "Izbran atribut :attribute mora biti število.",
 	"regex"           => "Izbran atribut :attribute je neveljaven.",

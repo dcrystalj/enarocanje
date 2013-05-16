@@ -46,7 +46,7 @@
 
         <?php 
         $microservice   = $mac->microservices;
-        $duration       = Service::duration();
+        $length = 0;
         $allActivated   = []; 
         $allDeactivated = [];
         $i              = 1; 
@@ -57,16 +57,20 @@
                 if($service->price == 0){
                     $service->price = '/';
                 }
-                if(substr($service->length,0,-6) == '00'){
-                    $length = substr($service->length,3,-3) . ' min';
+                if(substr($service->length,0,-6) == '00')
+                {
+                    $length = Service::lengthMin($service->length);
+                }    
+                else
+                {
+                    $length = Service::lengthH($service->length);
+                    $length .= Service::lengthMin($service->length);
                 }
-                else{
-                    $length = substr($service->length,0,-6) . ' h ' . substr($service->length,3,-3) . ' min';   
-                }
+
                 $allActivated[]= [
                     'id'     => $i, 
                     'title'   => $service->title, 
-                    'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $length,
+                    'length' => $length,
                     'gender' => Service::gender()[$service->gender], 
                     'price'  => $service->price, 
 
@@ -85,7 +89,7 @@
             }
             else if(!$service->isActive()){
                 $allDeactivated[] = [
-                    'name'        => Service::services()[$category][$service->name], 
+                    'title'        => $service->title, 
                     'link1'       => activate($mac->id, $service)
                  ];
             }

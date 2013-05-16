@@ -48,6 +48,7 @@ return array(
 		"file"        => "The :attribute must be at least :min kilobytes.",
 		"string"      => "The :attribute must be at least :min characters.",
 	),
+	"min_time"		  => "The :attribute can't be 0.",
 	"notin"           => "The selected :attribute is invalid.",
 	"numeric"         => "The :attribute must be a number.",
 	"regex"           => "The :attribute format is invalid.",

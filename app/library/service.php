@@ -42,6 +42,8 @@ class Service {
     	'absence' => 'Absence',
     );
 
+    private static $length;
+
 	public static function categories() {
 		return self::$serviceCategories;
 	}
@@ -61,6 +63,30 @@ class Service {
 	public static function duration() {
 		return self::$duration;
 	}	
+
+	public static function lengthMin($len) {
+        if(substr($len,3,-4) == '0')
+        {
+            self::$length = substr($len,4,-3) . ' min';    
+        }
+        else
+        {
+            self::$length = substr($len,3,-3) . ' min';
+        }
+        return self::$length;
+	}
+
+	public static function lengthH($len) {
+        if(substr($len,0,-7) == '0')
+        {
+            self::$length = substr($len,1,-6) . ' h ';    
+        }
+        else
+        {
+            self::$length = substr($len,0,-6) . ' h ';
+        }
+        return self::$length;
+	}
 
 	public static function micro($serviceName) {
 		$category = self::categoryId($serviceName);
