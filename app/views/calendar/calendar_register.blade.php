@@ -3,9 +3,9 @@
   <div class="modal-body">
   Enter your info:<br />
   {{Former::open()}}
-  {{Former::text('name')}}
-  {{Former::email('mail')}}
-  {{Former::text('telephone')}}
+  {{Former::text('Name')}}
+  {{Former::email('Email')}}
+  {{Former::text('Telephone')}}
   {{Former::close()}}
   </div>
   <!-- dialog buttons -->
