@@ -23,6 +23,10 @@
 </p>
 
 <div id='calendar'></div>
+<form id="submit_form" method="post" action="{{ route("breaks_submit", array($id)) }}">
+	<input type="hidden" name="events" id="events" value="<?php print urlencode(json_encode($events)); ?>" />
+	<input type="hidden" name="breaks" id="breaks" />
+</form>
 <script>
 @include('calendar.calendar_def')	
 fc_init({
@@ -48,15 +52,8 @@ fc_init({
 			error: cal_error,
 			editable: true,
 		},
-		{
-			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($id)) }}',
-			type: 'GET',
-			error: cal_error,
-			editable: false,
-			color: "rgba(192,192,192, 0.5)",
-			className: "termin"
-		}
-	]
+	],
+	events: <?php print json_encode($inverted); ?>
 	});
 
 $(function() {
@@ -70,11 +67,11 @@ $(function() {
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
-		cal_save(calendar, '{{ route("breaks_submit", array($id)) }}', function(d) {
-			bootbox.alert("Breaks saved.");
-		}, function(ev) {
-			return (ev.eventType == 'break');
-		});
+		var events = calendar.fullCalendar('clientEvents', function(e) {return e.editable !== false;});
+		for(i=0; i<events.length; i++)
+			 events[i] = cal_event_data(events[i]);
+		document.getElementById('breaks').value = encodeURI(JSON.stringify(events));
+		document.getElementById('submit_form').submit();
 	});
 });
 </script>

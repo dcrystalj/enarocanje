@@ -88,27 +88,69 @@ class ManageServices extends BaseController {
 	public function breaks($macro_id) {
 		$events = Input::get('events');
 		$events = json_decode($events);
+		$one_day = 3600*24;
+		$start = date("Y-m-d", strtotime(Input::get('start'))+$one_day); // Ugly: First day = monday
+		$end   = date("Y-m-d", strtotime(Input::get('end'))+$one_day);
+
+		// Day -> event
+		$days = array();
+		foreach($events as $event) {
+			$day = $this->stringToDay(date("l",strtotime($event->start))); //get from 0 to 6 what day is it
+			$days[$day] = $event;
+		}
 
 		$inverted = array();
 		$i = 0;
-		foreach($events as $event) {
-			$start = strtotime($event->start);
-			$end = strtotime($event->end);
-			$day = ((date('w', $start)-1 + 7*2) % 7); // Monday - day 0
-			$b = date('Y-m-d H:i', $start);
-			$e = date('w', $end);
+		// TODO: Invering algoirtem -> library
+		while($start != $end)
+		{
 
-			die("Day: ".$b."=".$day);
-			$start = date('G:i', strtotime($event->start));
-			$end = date('G:i', strtotime($event->end));
+			$day = $this->stringToDay(date("l",strtotime($start))); //get from 0 to 6 what day is it
+			//is not day off?
+			if(isset($days[$day]))
+			{
+				$event = $days[$day];
+				$hour_begin = date('H:i', strtotime($event->start));
+				$hour_end = date('H:i', strtotime($event->end));
 
-			$inverted[] = array(
-				'id' => 'inverted_'.$i,
-				'title' => '',
-				'start' => 324,
-			);
+				// Before - after
+				// 00:00-begin end-23-59
+				if($hour_begin != '00:00')
+					       $inverted[] = array(
+					       		   'id' => 'inverted_'.$i++,
+							   'title' => '',
+							   'start' => $start.' 00:00:00',
+							   'end' => $start.' '.$hour_begin,
+							   'allDay' => false,
+							   'className' => 'termin',
+							   'color' => 'rgba(192,192,192,0.5)',
+							   'editable' => false,
+						);
+				if($hour_end != '23:59')
+					       $inverted[] = array(
+					       		   'id' => 'inverted_'.$i++,
+							   'title' => '',
+							   'start' => $start.' '.$hour_end,
+							   'end' => $start.' 23:59:59',
+							   'allDay' => false,
+							   'className' => 'termin',
+							   'color' => 'rgba(192,192,192,0.5)',
+							   'editable' => false,
+						);
+			}else{ //is day off
+			       $inverted[] = array(
+			       		   'id' => 'inverted_'.$i++,
+					   'title' => '',
+					   'start' => $start.' 00:00:00',
+					   'end' => $start.' 23:59:59',
+					   'allDay' => false,
+					   'className' => 'termin',
+					   'color' => 'rgba(192,192,192,0.5)',
+					   'editable' => false,
+				);
+			}
+			$start =  date("Y-m-d", strtotime("$start +1 day"));
 		}
-
 		return View::make('Provider.Breaks',
 			array(
 				'id' => $macro_id,
@@ -139,22 +181,51 @@ class ManageServices extends BaseController {
 		}
 	}
 
+	// TODO: Rename -> submit()
 	public function submit_breaks($id) {
+	       // Get events
+		$events = json_decode(urldecode(Input::get('events')));
+		$breaks = json_decode(urldecode(Input::get('breaks')));
 
-		$events = Input::get('events');
-		$events = json_decode($events);
+		// Clean table
+		Whours::where('macservice_id', $id)->delete();
 		Breakt::where('macservice_id', $id)->delete();
 
+		foreach($breaks as $break) {
+			$day = ((date('w', strtotime($break->start))-1 + 7*2) % 7); // Monday - day 0
+			$start = date('G:i', strtotime($break->start));
+			$end = date('G:i', strtotime($break->end));
+			DB::table('break')->insert(array(
+				'macservice_id' => $id,
+				'day' => $day,
+				'from' => $start,
+				'to' => $end,
+			));
+		}
 		foreach($events as $event) {
 			$day = ((date('w', strtotime($event->start))-1 + 7*2) % 7); // Monday - day 0
 			$start = date('G:i', strtotime($event->start));
 			$end = date('G:i', strtotime($event->end));
-			DB::table('break')->insert(array(
-										   'macservice_id' => $id,
-										   'day' => $day,
-										   'from' => $start,
-										   'to' => $end,
-									   ));
+			DB::table('working_hour')->insert(array(
+				'macservice_id' => $id,
+				'day' => $day,
+				'from' => $start,
+				'to' => $end,
+			));
 		}
+		return Redirect::to('macro/create')->with('status', 'Timetable was submited.');
 	}
+
+	// TODO: MicroserviceApi (to library)
+	protected function stringToDay($i){
+		$day['Monday']    = 0;
+		$day['Tuesday']   = 1;
+		$day['Wednesday'] = 2;
+		$day['Thursday']  = 3;
+		$day['Friday']    = 4;
+		$day['Saturday']  = 5;
+		$day['Sunday']    = 6;
+		return isset($day[$i])?$day[$i]: '';
+	}
+
 }

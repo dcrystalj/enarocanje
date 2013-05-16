@@ -17,14 +17,15 @@
 <p>
 {{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) }}
-&nbsp;&nbsp;
-{{ Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) }}
-{{ Button::success_link("#", Lang::get('general.save.new'), array('id' => 'continue')) }}
+{{-- Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) --}}
+{{-- Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) --}}
+{{ Button::success_link("#", Lang::get('general.save'), array('id' => 'continue')) }}
 </p>
 
 <div id='calendar'></div>
 <form id="submit_form" method="post" action="{{ route("breaks", array($id)) }}">
+	<input type="hidden" name="start" id="start" />
+	<input type="hidden" name="end" id="end" />
 	<input type="hidden" name="events" id="events" />
 </form>
 <script>
@@ -79,15 +80,12 @@ $(function() {
 	$('#save,#continue').click(function(e) {
 		e.preventDefault();
 		var events = calendar.fullCalendar('clientEvents');
-		var x = document.getElementById('events').value = JSON.stringify(events);
-		alert(x);
+		for(i=0; i<events.length; i++)
+			 events[i] = cal_event_data(events[i]);
+		document.getElementById('events').value = JSON.stringify(events);
+		document.getElementById('start').value = calendar.fullCalendar('getView').start.toISOString();
+		document.getElementById('end').value = calendar.fullCalendar('getView').end.toISOString();
 		document.getElementById('submit_form').submit();
-		return;
-		cal_save(calendar, '{{ route("breaks", array($id)) }}', function(data) {
-			bootbox.alert("Timetable saved.", function() {
-				window.location = '{{ route("breaks", array($id) )}}';
-			});
-		});
 	});
 });
 </script>
