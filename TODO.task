@@ -4,6 +4,10 @@
  ✔ Ce nimamo vnesenih odsotnosti, je gumb za uvoz cisto na dnu strani. @done (13-05-15 01:19)
  ☐ Ce kliknemo [Reserve] preden izberemo termin se ne prikaze nobeno obvestilo
  ☐ Remove users.gcalendar column.
+ ☐ Ce kliknemo potrditveni link, in takoj nato zamenjamo jezik pokne.
+ ☐ Timetable: Ko odstranimo 'event', izginejo tudi vsi eventi ki smo jih uredili (klik na event + submit). (isto breaki)
+ ☐ Timetable: Pri urejanju eventa lahko podamo neveljavno uro (<6 || >21) (isto breaki)
+
  
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
