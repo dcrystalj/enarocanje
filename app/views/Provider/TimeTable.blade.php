@@ -13,13 +13,12 @@
 
 @section('content')
 @include('calendar.calendar_dialog')
-
 <p>
 {{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
 {{-- Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) --}}
 {{-- Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) --}}
-{{ Button::success_link("#", Lang::get('general.save'), array('id' => 'continue')) }}
+{{ Button::success_link("#", Lang::get('general.next'), array('id' => 'continue')) }}
 </p>
 
 <div id='calendar'></div>
@@ -59,6 +58,9 @@ fc_init({
 	eventClick: cal_show_dialog,
 
 	// Load events
+	@if(sizeof($events))
+	events: <?php print json_encode($events); ?>,
+	@else
 	eventSources: [
 		{
 			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
@@ -67,6 +69,7 @@ fc_init({
 			editable: true,
 		}
 	],
+	@endif
 });
 
 $(function() {

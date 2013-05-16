@@ -109,7 +109,6 @@ class GCal extends BaseController {
 			{
 				$u = User::find($reservation->user_id);
 				$serviceName = Service::serviceName($service->id);
-				
 				if($u->name) 
 				{
 					$name = $u->name.' '.$u->surname;

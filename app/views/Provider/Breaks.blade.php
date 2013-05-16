@@ -17,14 +17,14 @@
 <p>
 {{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link("/service/$id/time", Lang::get('general.back')) }}
+{{ Button::link('#', Lang::get('general.back'), array('id' => 'back')) }}
 &nbsp;&nbsp;
 {{ Button::success_link("#",Lang::get('general.save'),array('id' => 'save')) }}
 </p>
 
 <div id='calendar'></div>
 <form id="submit_form" method="post" action="{{ route("breaks_submit", array($id)) }}">
-	<input type="hidden" name="events" id="events" value="<?php print urlencode(json_encode($events)); ?>" />
+	<input type="hidden" name="events" id="events" value="<?php print htmlspecialchars(json_encode($events)); ?>" />
 	<input type="hidden" name="breaks" id="breaks" />
 </form>
 <script>
@@ -65,12 +65,18 @@ $(function() {
 			return (e.eventType == 'break');
 		});
 	});
+	$('#back').click(function(e) {
+		e.preventDefault();
+		var form = document.getElementById('submit_form');
+		form.action = '{{ route("timetable_back", array($id)) }}';
+		form.submit();
+	});
 	$('#save').click(function(e) {
 		e.preventDefault();
 		var events = calendar.fullCalendar('clientEvents', function(e) {return e.editable !== false;});
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);
-		document.getElementById('breaks').value = encodeURI(JSON.stringify(events));
+		document.getElementById('breaks').value = JSON.stringify(events);
 		document.getElementById('submit_form').submit();
 	});
 });
