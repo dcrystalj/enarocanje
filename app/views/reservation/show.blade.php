@@ -26,12 +26,11 @@ $leng =  timeToMinutes(MicroService::find($mic)->length)
 
 ?>
 
-<p>{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}</p>
-<p>{{ Button::link(URL::current().'?gcal=1','Show google events') }}</p>
-@if($reservation)
-<p>{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations')) }}</p>
-@endif
-
+<p>
+{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}&nbsp
+{{ Button::link(URL::current().'?gcal=1','Show google events') }} &nbsp
+{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations'),array('id' => 'export_reservation')) }}&nbsp
+</p>
 
 <div id='calendar'></div>
 
@@ -48,7 +47,10 @@ fc_init({
 			.css('line-height',1)
 			.css('padding-top','2px');
 
-		//button show red
+		//button show googleexport
+		if(event.eventType == 'reservation'){
+			$('#export_reservation').show();
+		}
 		
 	},
 
@@ -72,7 +74,7 @@ fc_init({
 			fc_insert(start, end, {
 				id: -1,
 				title: '{{ ($leng > 29) ? "Your choice: \\n" : ""}} from'+time(start)+' to '+time(end),
-				eventType: 'reservation',
+				eventType: 'newreservation',
 			});
 		}
 	},
@@ -104,11 +106,6 @@ fc_init({
 			});	
 		}
 	},
-	eventDragStart: function( event, jsEvent, ui, view ) { 
-		if(event.eventType == "reservation"){
-			return false;
-		}
-	},
 	eventSources: [
 		{
 			url: '{{ URL::action("MicroserviceApiController@getTimetable", array($mac)) }}',
@@ -134,7 +131,6 @@ fc_init({
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
 		},
-		@if(false)
 		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
 			@if(Auth::check())
@@ -144,26 +140,17 @@ fc_init({
 			editable: false,
 			color: "red",
 		},
-		@endif
 		@if($calendar_id)
 		{	
-		  url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
-				type: 'GET',
-				error: cal_error,
-				editable: false,
-				color: "rgba(192,192,192, 0.5)",
-				className: "termin"
-				},
+			url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
+			type: 'GET',
+			error: cal_error,
+			editable: false,
+			color: "rgba(192,192,192, 0.5)",
+			className: "termin"
+		},
 		@endif
 	],
-	@if($reservation)
-	events: [<?php // Show reservation
-		print json_encode(array_merge($reservation, array(
-			'color' => 'red',
-			'editable' => false,
-		)));
-	?>],
-	@endif
 	//check if data has been fetched
 	loading: function(bool) {
 		//if client hasnt already made reservation, then hide delete button
@@ -265,7 +252,7 @@ $(function() {
 	width: 118px !important;
 }
 
-#delete{
+#export_reservation{
 	display: none;
 }
 
