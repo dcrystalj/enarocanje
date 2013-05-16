@@ -28,9 +28,12 @@ $leng =  timeToMinutes(MicroService::find($mic)->length)
 
 <p>{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::link(URL::current().'?gcal=1','Show google events') }}</p>
-@if($reservation)
-<p>{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations')) }}</p>
-@endif
+<p>{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations'),
+	array(
+		'id' => 'export_reservation',
+		 'style' => $reservation?'':'display:none'
+	)) }}
+</p>
 
 
 <div id='calendar'></div>
