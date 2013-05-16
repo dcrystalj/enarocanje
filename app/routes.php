@@ -21,6 +21,7 @@ Route::resource('ManageServices','ManageServices');
 Route::post('/service/{id}/time/submit', array('as' => 'timetable_submit', 'uses' => 'ManageServices@submit_time'));
 Route::post('/service/{id}/breaks/submit',array('as' => 'breaks_submit', 'uses' => 'ManageServices@submit_breaks'));
 Route::get('/service/{id}/time',array('as' => 'timetable', 'uses' => 'ManageServices@timetable'));
+Route::post('/service/{id}/time',array('as' => 'timetable_back', 'uses' => 'ManageServices@timetable_back'));
 Route::post('/service/{id}/breaks', array( 'as' => 'breaks', 'uses' => 'ManageServices@breaks'));
 
 

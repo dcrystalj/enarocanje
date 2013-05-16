@@ -139,9 +139,10 @@ function cal_error() {
 
 function cal_event_data(event) {
 	return {
-		start: getDate(event.start),
-		end: getDate(event.end),
-		title: event.title,
+	    start: getDate(event.start),
+	    end: getDate(event.end),
+	    title: event.title,
+	    allDay: false,
 	};
 }
 
@@ -158,7 +159,7 @@ function getDate(t) {
 	var d = t.getDate();
 	if(M < 10) M = '0'+M;
 	if(d < 10) d = '0'+d;
-	return y+'-'+M+'-'+d+getHour(t);
+	return y+'-'+M+'-'+d+' '+getHour(t);
 }
 
 

@@ -83,7 +83,17 @@ class ManageServices extends BaseController {
 
 
 	public function timetable($macro_id) {
-		return View::make('Provider.TimeTable', array('id' => $macro_id));
+	       return View::make('Provider.TimeTable', array(
+	       	      'id' => $macro_id,
+		      'events' => null,
+		      ));
+	}
+	public function timetable_back($macro_id) {
+	       $events = json_decode(Input::get('events'));
+	       return View::make('Provider.TimeTable', array(
+	       	      'id' => $macro_id,
+		      'events' => $events,
+		      ));
 	}
 	public function breaks($macro_id) {
 		$events = Input::get('events');
@@ -121,13 +131,14 @@ class ManageServices extends BaseController {
 												  'to' => $end,
 											  ));
 		}
+		Session::put('timetable_events', $events);
 	}
 
 	// TODO: Rename -> submit()
 	public function submit_breaks($id) {
 	       // Get events
-		$events = json_decode(urldecode(Input::get('events')));
-		$breaks = json_decode(urldecode(Input::get('breaks')));
+		$events = json_decode(Input::get('events'));
+		$breaks = json_decode(Input::get('breaks'));
 
 		// Clean table
 		Whours::where('macservice_id', $id)->delete();
