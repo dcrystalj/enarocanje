@@ -19,7 +19,7 @@
 &nbsp;&nbsp;
 {{-- Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) --}}
 {{-- Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) --}}
-{{ Button::success_link("#", Lang::get('general.save'), array('id' => 'continue')) }}
+{{ Button::success_link("#", Lang::get('general.next'), array('id' => 'continue')) }}
 </p>
 
 <div id='calendar'></div>
