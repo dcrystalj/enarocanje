@@ -191,9 +191,9 @@ $(function() {
 							end: getDate(allevents[0].end),
 							title: allevents[0].title,
 							data:{	
-								'name' : $('#name').val(),
-								'mail' : $('#mail').val(),
-								'telephone': $('#telephone').val()
+								'name' : $('#Name').val(),
+								'mail' : $('#Email').val(),
+								'telephone': $('#Telephone').val()
 							}
 						}
 
