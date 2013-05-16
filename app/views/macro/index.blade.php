@@ -17,7 +17,7 @@
                 'name'   => $service->name,
                 'City'   => $service->city . '<br>' . $service->street, 
                 'Email'  => $service->email,
-                'link'   => Html::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
+                'link'   => Button::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
              ];
              $i++;
         }

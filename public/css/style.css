@@ -25,11 +25,11 @@
 .mobiletable {
 	border-bottom: 1px solid #eee;
 	border-top: 1px;
+	width: 200px;
 }
 
 .st-head-row {
 	text-align: left;
-	width: 90%;	
 	font-weight: normal;
 	font-size: 0.8em;
 }
@@ -37,28 +37,34 @@
 .st-key { 
 	top: 6px;
 	left: 6px;
-	padding-right: 40px; 
+	width: 60%;	
+	/*padding-right: 20px; */
 	font-weight: bold;
 }
 
 .st-val {
 	border: none;
 	position: relative;
-	padding-left: 20px;
 	white-space: normal;
+	text-align: right;
 }
 
-.st-val .btn {
-	width: 130px;
-	padding-right: 0;
+.st-val-whole a {
+	width: 100%;
+	padding: 0px;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
+		margin-left: auto;
+	margin-right: auto;
 }
 
-.st-val form {
+.st-val-whole form {
 	/*padding: 0;*/
 	border: 0;
 }
 
-.st-val form .btn{
+.st-val-whole form .btn{
 	width: 100%;
 }
 

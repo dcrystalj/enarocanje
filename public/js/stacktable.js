@@ -41,7 +41,10 @@
                 if ($topRow.find('td,th').eq(index).html()){
                   markup += '<td class="st-key">'+$topRow.find('td,th').eq(index).html()+'</td>';
                 } else {
-                  markup += '<td class="st-key"></td>';
+                  markup += '<td colspan="2" class="st-val-whole">'+$(this).html()+'</td>';
+                   markup +=  '</tr>';
+                  return;
+
                 }
                 markup += '<td class="st-val">'+$(this).html()+'</td>';
                 markup += '</tr>';

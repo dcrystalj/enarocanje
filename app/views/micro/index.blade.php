@@ -48,7 +48,7 @@
                 'length' => array_key_exists($service->length, $duration) ? $duration[$service->length] : $service->length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
-                'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
+                'link'   => Button::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
                 ];
                 $i++;
             }
