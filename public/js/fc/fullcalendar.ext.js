@@ -84,8 +84,11 @@ function cal_repair_event(cal, event) {
 
 function cal_show_dialog(event) {
 	if(typeof event.source.editable != 'undefined' && !event.source.editable) return;
-	$('#efrom').val(getHour(event.start));
-	$('#eto').val(getHour(event.end));
+	var begin = getHour(event.start);
+	var end = getHour(event.end);
+	$('#efrom').val(begin);
+	$('#eto').val(end);
+	setTimePicker(begin, end);
 	$('#event-dialog').modal({
 		backdrop: 'static',
 		keyboard: true,
