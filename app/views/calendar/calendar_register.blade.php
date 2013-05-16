@@ -6,7 +6,7 @@
   {{Former::text(trans('general.name'))}}
   {{Former::email(trans('general.email'))}}
   {{Former::text(trans('general.telephone'))}}
-  {{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event,'#tempUserRegForm')")}}
+  {{Former::actions()->button(Lang::get('general.submit'))->onclick("alert('neki')")}}
   {{Former::close()}}
   </div>
   <!-- dialog buttons -->
