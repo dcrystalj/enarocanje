@@ -58,7 +58,7 @@
                 'length' => $length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
-                'link'   => Html::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
+                'link'   => Button::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
                 ];
                 $i++;
             }
@@ -66,7 +66,7 @@
         }?>
 
         @if(count($tbody)>0)
-        {{ Table::hover_open(["class"=>'sortable']) }}
+        {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
         {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}

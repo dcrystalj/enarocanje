@@ -109,6 +109,11 @@ class Service {
 	
 	public static function serviceName($micid){
 		$mic      = MicroService::find($micid);
+		return $mic->title;
+	}	
+
+	public static function serviceName1($micid){
+		$mic      = MicroService::find($micid);
 		$category = $mic->category;
 		$name     = Service::services()[$category][$mic->name];
 		return $name;

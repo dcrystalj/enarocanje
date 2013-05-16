@@ -96,7 +96,7 @@
         }
         ?>
 
-        {{ Table::hover_open(["class"=>'sortable']) }}
+        {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
         {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
@@ -104,7 +104,7 @@
         @if(count($allDeactivated)>0)
             </br>
             <h2>Deactivated:</h2>
-            {{ Table::hover_open(["class"=>'sortable']) }}
+            {{ Table::hover_open(["class"=>'sortable','id'=> 'mobileTable']) }}
             {{ Table::headers( 'Name', '', '') }}
             {{ Table::body($allDeactivated) }}
             {{ Table::close() }}
