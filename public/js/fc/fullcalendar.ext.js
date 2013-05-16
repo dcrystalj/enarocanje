@@ -91,6 +91,7 @@ function cal_show_dialog(event) {
 		keyboard: true,
 		show: true,
 	});
+
 	$('#event-dialog a.b_delete').click(function() {
 		calendar.fullCalendar('removeEvents', event._id);
 		$('#event-dialog').modal('hide');
@@ -110,6 +111,7 @@ function cal_show_dialog(event) {
 	});
 	$('#event-dialog').on('hide', function() {
 		$('#event-dialog').off('click');
+		$('#event-dialog .btn').unbind();
 	});
 }
 

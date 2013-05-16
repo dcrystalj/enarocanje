@@ -28,6 +28,10 @@ $leng =  timeToMinutes(MicroService::find($mic)->length)
 
 <p>{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}</p>
 <p>{{ Button::link(URL::current().'?gcal=1','Show google events') }}</p>
+@if($reservation)
+<p>{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations')) }}</p>
+@endif
+
 
 <div id='calendar'></div>
 
@@ -130,6 +134,7 @@ fc_init({
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
 		},
+		@if(false)
 		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
 			@if(Auth::check())
@@ -139,6 +144,7 @@ fc_init({
 			editable: false,
 			color: "red",
 		},
+		@endif
 		@if($calendar_id)
 		{	
 		  url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
@@ -150,6 +156,14 @@ fc_init({
 				},
 		@endif
 	],
+	@if($reservation)
+	events: [<?php // Show reservation
+		print json_encode(array_merge($reservation, array(
+			'color' => 'red',
+			'editable' => false,
+		)));
+	?>],
+	@endif
 	//check if data has been fetched
 	loading: function(bool) {
 		//if client hasnt already made reservation, then hide delete button
