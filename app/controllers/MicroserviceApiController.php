@@ -4,12 +4,6 @@ class MicroserviceApiController extends BaseController
 {
 	public function getTimetable($id)
 	{
-
-		$timetable = array();
-		$lastday   = 0;
-		$j         = 0;
-		$i         = 0;
-		
 		if(Auth::user() && !Auth::user()->isProvider())
 		{
 			$workingHours = Cache::remember('timetable'.$id, 10, function() use ($id)
@@ -20,42 +14,11 @@ class MicroserviceApiController extends BaseController
 		else
 			$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
 
-		$start = date("Y-m-d", Input::get('start')); //get start day
-		$end   = date("Y-m-d", Input::get('end'));
+		$one_day = 3600*24; // Ugly: First day = monday
+		$start = Input::get('start')+$one_day; //get start day
+		$end   = Input::get('end')+$one_day;
 
-		while(strcmp($start,$end)<=0)
-		{
-
-			$day = $this->stringToDay(date("l",strtotime("$start"))); //get from 0 to 6 what day is it
-			//is not day off?
-			if($this->isDayInArray($workingHours, $day))
-			{
-
-				$from = "00:00:00";
-				$i=0;
-				while($workingHours[$i]->day != $day){
-					$i++;
-				}
-				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
-				{
-					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
-					$from = $workingHours[$i]->to;
-					$i++;
-					$j++;
-				}
-
-				$timetable[] = $this->timetableArray($j,$start,$from,"23:59:59");
-
-			}else{ //is day off
-
-				$timetable[] = $this->timetableArray($i,$start,"00:00:00","23:59:59");
-
-			}
-			$start =  date("Y-m-d", strtotime("$start +1 day"));
-			$j++;
-
-		}
-
+		$timetable = Events::invert($start, $end, $workingHours);
 		return Response::json($timetable);
 	}
 
