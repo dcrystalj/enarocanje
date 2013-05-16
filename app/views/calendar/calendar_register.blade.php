@@ -2,9 +2,11 @@
   <!-- dialog contents -->
   <div class="modal-body">
   Enter your info:<br />
+  {{Former::open()}}
   {{Former::text('name')}}
   {{Former::email('mail')}}
   {{Former::text('telephone')}}
+  {{Former::close()}}
   </div>
   <!-- dialog buttons -->
   <div class="modal-footer">

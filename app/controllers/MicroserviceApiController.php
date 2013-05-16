@@ -268,11 +268,17 @@ class MicroserviceApiController extends BaseController
 		$events = Input::get('event');
 		$event  = json_decode($events);
 		
-		$date   = date('Y-m-d', strtotime($event->start)); //Monday - day 0
-		$start  = date('G:i', strtotime($event->start));
-		$end    = date('G:i', strtotime($event->end));
-		$name   = $event->data->name;
-		$mail   = $event->data->mail;
+		$date      = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start     = date('G:i', strtotime($event->start));
+		$end       = date('G:i', strtotime($event->end));
+		$mail      = $event->data->mail;
+		$name      = $event->data->name;
+		$telephone = $event->data->telephone;
+		
+		if($telephone == "" || $mail == "")
+		{
+			return json_encode(array('success'=>false,'text'=>'Please fill the form.'));
+		}
 
 		if(	is_null(User::whereEmail($mail)->first()) ||
 			!is_null(User::whereEmail($mail)->first()) &&
@@ -292,7 +298,7 @@ class MicroserviceApiController extends BaseController
 			}
 			$tempuser->email  = $mail;
 			$tempuser->name   = $name;
-			$tempuser->telephone = $event->data->telephone;
+			$tempuser->telephone = $telephone;
 			$tempuser->status = -1;
 			$tempuser->save();
 		
