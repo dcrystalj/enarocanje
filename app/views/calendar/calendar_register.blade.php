@@ -2,10 +2,11 @@
   <!-- dialog contents -->
   <div class="modal-body">
   Enter your info:<br />
-  {{Former::open()}}
-  {{Former::text('Name')}}
-  {{Former::email('Email')}}
-  {{Former::text('Telephone')}}
+  {{Former::open()->id('tempUserRegForm')}}
+  {{Former::text(trans('general.name'))}}
+  {{Former::email(trans('general.email'))}}
+  {{Former::text(trans('general.telephone'))}}
+  {{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event,'#tempUserRegForm')")}}
   {{Former::close()}}
   </div>
   <!-- dialog buttons -->

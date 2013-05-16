@@ -63,6 +63,7 @@ return array(
 	'street' => 'Street',
 	'submit' => 'Submit',
 	'surname' => 'Surname',
+	'telephone' => 'Telephone',
 	'telephoneNumber' => 'Telephone number',
 	'timetable' => 'Timetable',
 	'timezone' => 'Timezone',
