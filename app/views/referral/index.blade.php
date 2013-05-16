@@ -24,7 +24,7 @@
         }
     ?>
 
-    {{ Table::hover_open(["class"=>'sortable']) }}
+    {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
     {{ Table::headers('#', 'Provider','Invited provider', '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
