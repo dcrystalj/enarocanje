@@ -78,7 +78,13 @@
 }
 
 .st-val-whole form .btn{
-	width: 100%;
+	width: 96%;
+	padding: 0px;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
+	margin-left: 2%;
+	margin-right: auto;
 }
 
 #mobileTable { display: table; }
