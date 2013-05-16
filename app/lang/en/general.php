@@ -52,6 +52,7 @@ return array(
 	'repeatPassword' => 'Repeat password',
 	'reservation' => 'Reservations',
 	'reset' => 'Reset',
+	'next' => 'Next',
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
 	'save' => 'Save',

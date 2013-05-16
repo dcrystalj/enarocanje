@@ -18,7 +18,7 @@ class CreateReservationTable extends Migration {
 			$table->time('to');
 			$table->integer('day');
 			$table->integer('microservice');
-			$table->integer('user');
+			$table->integer('user')->unsigned()->index();
 			$table->timestamps();
 		});
 	}

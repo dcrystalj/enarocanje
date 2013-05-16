@@ -94,7 +94,7 @@ class GCal extends BaseController {
 			);
 		}
 
-		$r = $this->exportToGcal('select', $reservations, true);
+		$r = $this->exportToGcal('select', $reservations);
 		if($r !== true)	return $r;
 		return Redirect::to('/user/'.$user->id)->with('success', 'Reservations sucessfully exported.');
 	}
@@ -109,7 +109,6 @@ class GCal extends BaseController {
 			{
 				$u = User::find($reservation->user_id);
 				$serviceName = Service::serviceName($service->id);
-				
 				if($u->name) 
 				{
 					$name = $u->name.' '.$u->surname;

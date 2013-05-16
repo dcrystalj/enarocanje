@@ -28,7 +28,7 @@
             {{ Former::label('length','Length:')->class('control-label')->for('datetimepicker')}}
             <div class="controls">
             <div id="datetimepicker2" class="input-append date">
-                <input data-format="hh:mm" type="text" name="length" value="{{ (isset($mic))? $mic->length : '00:00' }}" ></input>
+                <input data-format="hh:mm" type="text" name="length" value="{{ (isset($mic))? substr($mic->length,0,-3) : '00:00' }}" ></input>
                 <span class="add-on">
                    <i data-time-icon="icon-time"></i>
                 </span>
@@ -142,14 +142,10 @@
     {
         $activate = Form::open( array(
             'method' => 'GET', 
-            'url'    => URL::route(
-                'microactivate', 
-                [$macId,$mic->id]),
-                'class'    => 'activate'
-            )
+            'url'    => URL::route('microactivate', [$macId,$mic->id]))
         );
-        $activate .=    Form::hidden('date','',['id'=>'hiddendate']);
-        $activate .=    Form::submit('Activate');
+        $activate .=    Form::hidden('date',null,['id'=>'hiddendate']);
+        $activate .=    Form::submit('Activate',['class'    => 'activate']);
 
         if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")))
         {

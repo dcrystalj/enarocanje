@@ -4,12 +4,6 @@ class MicroserviceApiController extends BaseController
 {
 	public function getTimetable($id)
 	{
-
-		$timetable = array();
-		$lastday   = 0;
-		$j         = 0;
-		$i         = 0;
-		
 		if(Auth::user() && !Auth::user()->isProvider())
 		{
 			$workingHours = Cache::remember('timetable'.$id, 10, function() use ($id)
@@ -20,42 +14,11 @@ class MicroserviceApiController extends BaseController
 		else
 			$workingHours = Whours::where('macservice_id',$id)->orderBy('day')->get();
 
-		$start = date("Y-m-d", Input::get('start')); //get start day
-		$end   = date("Y-m-d", Input::get('end'));
+		$one_day = 3600*24; // Ugly: First day = monday
+		$start = Input::get('start')+$one_day; //get start day
+		$end   = Input::get('end')+$one_day;
 
-		while(strcmp($start,$end)<=0)
-		{
-
-			$day = $this->stringToDay(date("l",strtotime("$start"))); //get from 0 to 6 what day is it
-			//is not day off?
-			if($this->isDayInArray($workingHours, $day))
-			{
-
-				$from = "00:00:00";
-				$i=0;
-				while($workingHours[$i]->day != $day){
-					$i++;
-				}
-				while(isset($workingHours[$i]) && $workingHours[$i]->day == $day)
-				{
-					$timetable[] = $this->timetableArray($i,$start,$from,$workingHours[$i]->from);
-					$from = $workingHours[$i]->to;
-					$i++;
-					$j++;
-				}
-
-				$timetable[] = $this->timetableArray($j,$start,$from,"23:59:59");
-
-			}else{ //is day off
-
-				$timetable[] = $this->timetableArray($i,$start,"00:00:00","23:59:59");
-
-			}
-			$start =  date("Y-m-d", strtotime("$start +1 day"));
-			$j++;
-
-		}
-
+		$timetable = Events::invert($start, $end, $workingHours);
 		return Response::json($timetable);
 	}
 
@@ -76,7 +39,7 @@ class MicroserviceApiController extends BaseController
 		foreach ($r as $b) 
 		{
 			$date  = $b->date;
-			$title = "Your reservation: from  ";
+			$title = "From: ";
 			$title .= date('G:i',strtotime($b->from)) ." to ";
 			$title .= date('G:i',strtotime($b->to));
 
@@ -183,18 +146,19 @@ class MicroserviceApiController extends BaseController
 
 	}
 
-	public function postDeletereservation($id){
+	public function postDeletereservation($id,$reservationid){
 		$userid = Auth::user()->id;
 		$microservid = $id;
 
- 		$r = Reservation::where('micservice_id',$microservid)
-					// ->where('id',Input::get('event')) //FIXME : je to potrebno?
-					->where('user_id',$userid)
-					->delete();
+ 		$r = Reservation::where('id',$reservationid)
+			->where('micservice_id',$microservid)
+			->where('user_id',$userid)
+			->delete();
+
 		if($r)			
-			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted.'));
 		else
-			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again'));
+			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again.'));
 
 	}
 
@@ -304,11 +268,17 @@ class MicroserviceApiController extends BaseController
 		$events = Input::get('event');
 		$event  = json_decode($events);
 		
-		$date   = date('Y-m-d', strtotime($event->start)); //Monday - day 0
-		$start  = date('G:i', strtotime($event->start));
-		$end    = date('G:i', strtotime($event->end));
-		$name   = $event->data->name;
-		$mail   = $event->data->mail;
+		$date      = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start     = date('G:i', strtotime($event->start));
+		$end       = date('G:i', strtotime($event->end));
+		$mail      = $event->data->mail;
+		$name      = $event->data->name;
+		$telephone = $event->data->telephone;
+		
+		if($telephone == "" || $mail == "")
+		{
+			return json_encode(array('success'=>false,'text'=>'Please fill the form.'));
+		}
 
 		if(	is_null(User::whereEmail($mail)->first()) ||
 			!is_null(User::whereEmail($mail)->first()) &&
@@ -328,6 +298,7 @@ class MicroserviceApiController extends BaseController
 			}
 			$tempuser->email  = $mail;
 			$tempuser->name   = $name;
+			$tempuser->telephone = $telephone;
 			$tempuser->status = -1;
 			$tempuser->save();
 		

@@ -17,10 +17,36 @@ class CustomerReservation extends BaseController {
 			return $gcal->selectCalendar();
 		}
 		$calendar_id = Input::get('calendar_id', false);
+
+		// Load reservation
+		$reservation = null;
+		if($user = Auth::user()) {
+			$r = Reservation::where('micservice_id',$mic)
+				->where('user_id',$user->id)
+				->where('date','>=',Input::get('start'))
+				->first(); // only one
+			if($r) {
+				$date  = $r->date;
+				$title = "From: ";
+				$title .= date('G:i',strtotime($r->from)) ." to ";
+				$title .= date('G:i',strtotime($r->to));
+				$reservation = array(
+					'id' => $r->id,
+					'title' => $title,
+					'start' => $date.' '.$r->from,
+					'end' => $date.' '.$r->to,
+					'allDay' => false,
+					'eventType' => 'reservation',
+
+				);
+			}
+		}
+
 		return View::make('reservation.show')
 			->with('mac',$mac)
 			->with('mic',$mic)
-			->with('calendar_id', $calendar_id);
+			->with('calendar_id', $calendar_id)
+			->with('reservation', $reservation);
 	}
 	public function show($mac,$mic)
 	{
