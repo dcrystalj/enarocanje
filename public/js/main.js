@@ -86,7 +86,7 @@ function checkEmail(e, formName){
       checkMostUsed(email,formName);
    }
    else {
-      alert("{{Lang::get('validation.email',array('attribute'=>'"+email+"'))}}");
+    alert("The "+email+" email format is invalid.");
    }
 }
 

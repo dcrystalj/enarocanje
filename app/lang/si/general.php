@@ -62,6 +62,7 @@ return array(
 	'street' => 'Ulica',
 	'submit' => 'Pošlji',
 	'surname' => 'Priimek',
+	'telephone' => 'Telefon',
 	'telephoneNumber' => 'Telefonska številka',
 	'timetable' => 'Delovni čas',
 	'timezone' => 'Časovni pas',

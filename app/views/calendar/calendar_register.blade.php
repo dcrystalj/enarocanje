@@ -2,11 +2,11 @@
   <!-- dialog contents -->
   <div class="modal-body">
   Enter your info:<br />
-  {{Former::open()->id('tempUserRegForm')}}
+  {{Former::open(URL::route('CustomerReservation'))->id('tempUserRegForm')}}
   {{Former::text(trans('general.name'))}}
-  {{Former::email(trans('general.email'))}}
-  {{Former::text(trans('general.telephone'))}}
-  {{Former::actions()->button(Lang::get('general.submit'))->onclick("alert('neki')")}}
+  {{Former::email('email',trans('general.email'))}}
+  {{Former::text(trans('general.telephoneNumber'))}}
+  {{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event,'#tempUserRegForm')")}}
   {{Former::close()}}
   </div>
   <!-- dialog buttons -->
