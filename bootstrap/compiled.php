@@ -157,6 +157,7 @@ class Container implements ArrayAccess
         // If no concrete type was given, we will simply set the concrete type to
         // the abstract. This allows concrete types to be registered as shared
         // without being made state their classes in both of the parameters.
+        unset($this->instances[$abstract]);
         if (is_null($concrete)) {
             $concrete = $abstract;
         }
@@ -588,6 +589,7 @@ use Symfony\Component\HttpKernel\Exception\FatalErrorException;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
 class Application extends Container implements HttpKernelInterface, ResponsePreparerInterface
 {
     /**
@@ -672,7 +674,26 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
     public function setRequestForConsoleEnvironment()
     {
         $url = $this['config']->get('app.url', 'http://localhost');
-        $this['request'] = Request::create($url, 'GET', array(), array(), array(), $_SERVER);
+        $this->instance('request', Request::create($url, 'GET', array(), array(), array(), $_SERVER));
+    }
+    /**
+     * Redirect the request if it has a trailing slash.
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    public function redirectIfTrailingSlash()
+    {
+        if ($this->runningInConsole()) {
+            return;
+        }
+        // Here we will check if the request path ends in a single trailing slash and
+        // redirect it using a 301 response code if it does which avoids duplicate
+        // content in this application while still providing a solid experience.
+        $path = $this['request']->getPathInfo();
+        if ($path != '/' and ends_with($path, '/') and !ends_with($path, '//')) {
+            with(new SymfonyRedirect($this['request']->fullUrl(), 301))->send();
+            die;
+        }
     }
     /**
      * Bind the installation paths to the application.
@@ -694,7 +715,7 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public static function getBootstrapFile()
     {
-        return 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation' . '/start.php';
+        return 'C:\\xampp\\htdocs\\enarocanje\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation' . '/start.php';
     }
     /**
      * Start the exception handling for the request.
@@ -1003,7 +1024,7 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
-        $this['request'] = $request;
+        $this->instance('request', $request);
         Facade::clearResolvedInstance('request');
         return $this->dispatch($request);
     }
@@ -1094,7 +1115,7 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public function isDownForMaintenance()
     {
-        return file_exists($this['path'] . '/storage/meta/down');
+        return file_exists($this['path.storage'] . '/meta/down');
     }
     /**
      * Register a maintenance mode event listener.
@@ -1614,6 +1635,16 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     public function isJson()
     {
         return str_contains($this->server->get('CONTENT_TYPE'), '/json');
+    }
+    /**
+     * Determine if the current request is asking for JSON in return.
+     *
+     * @return bool
+     */
+    public function wantsJson()
+    {
+        $acceptable = $this->getAcceptableContentTypes();
+        return isset($acceptable[0]) and $acceptable[0] == 'application/json';
     }
     /**
      * Get the Illuminate session store implementation.
@@ -5092,13 +5123,23 @@ class ExceptionServiceProvider extends ServiceProvider
      */
     protected function registerWhoopsHandler()
     {
-        if ($this->app['request']->ajax() or $this->app->runningInConsole()) {
+        if ($this->shouldReturnJson()) {
             $this->app['whoops.handler'] = function () {
                 return new JsonResponseHandler();
             };
         } else {
             $this->registerPrettyWhoopsHandler();
         }
+    }
+    /**
+     * Determine if the error provider should return JSON.
+     *
+     * @return bool
+     */
+    protected function shouldReturnJson()
+    {
+        $definitely = $this->app['request']->ajax() or $this->app->runningInConsole();
+        return $definitely or $this->app['request']->wantsJson();
     }
     /**
      * Register the "pretty" Whoops handler.
@@ -8475,7 +8516,7 @@ class Router
      * @param  Closure|string  $callback
      * @return void
      */
-    public function addFilter($name, $callback)
+    public function filter($name, $callback)
     {
         $this->filters[$name] = $callback;
     }
@@ -8517,12 +8558,16 @@ class Router
      *
      * @param  string  $pattern
      * @param  string|array  $names
+     * @param  array|null  $methods
      * @return void
      */
-    public function matchFilter($pattern, $names)
+    public function when($pattern, $names, $methods = null)
     {
         foreach ((array) $names as $name) {
-            $this->patternFilters[$pattern][] = $name;
+            if (!is_null($methods)) {
+                $methods = array_change_key_case((array) $methods);
+            }
+            $this->patternFilters[$pattern][] = compact('name', 'methods');
         }
     }
     /**
@@ -8533,16 +8578,38 @@ class Router
      */
     public function findPatternFilters(Request $request)
     {
-        $filters = array();
-        foreach ($this->patternFilters as $pattern => $values) {
+        $results = array();
+        foreach ($this->patternFilters as $pattern => $filters) {
             // To find the pattern middlewares for a request, we just need to check the
             // registered patterns against the path info for the current request to
             // the application, and if it matches we'll merge in the middlewares.
             if (str_is('/' . $pattern, $request->getPathInfo())) {
-                $filters = array_merge($filters, $values);
+                $merge = $this->filterPatternsByMethod($request, $filters);
+                $results = array_merge($results, $merge);
             }
         }
-        return $filters;
+        return $results;
+    }
+    /**
+     * Filter pattern filters that don't apply to the request verb.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $filters
+     * @return array
+     */
+    protected function filterPatternsByMethod(Request $request, $filters)
+    {
+        $results = array();
+        $method = strtolower($request->getMethod());
+        // The idea here is to check and see if the pattern filter applies to this HTTP
+        // request based on the request methods. Pattern filters might be limited by
+        // the request verb to make it simply to assign to the given verb at once.
+        foreach ($filters as $filter) {
+            if (is_null($filter['methods']) or in_array($method, $filter['methods'])) {
+                $results[] = $filter['name'];
+            }
+        }
+        return $results;
     }
     /**
      * Call the "after" global filters.
@@ -12014,7 +12081,7 @@ class SessionManager extends Manager
     protected function getOptions()
     {
         $config = $this->app['config']['session'];
-        return array('cookie_domain' => $config['domain'], 'cookie_lifetime' => $config['lifetime'] * 60, 'cookie_path' => $config['path'], 'gc_divisor' => $config['lottery'][1], 'gc_probability' => $config['lottery'][0], 'name' => $config['cookie']);
+        return array('cookie_domain' => $config['domain'], 'cookie_lifetime' => $config['lifetime'] * 60, 'cookie_path' => $config['path'], 'cookie_httponly' => '1', 'name' => $config['cookie'], 'gc_divisor' => $config['lottery'][1], 'gc_probability' => $config['lottery'][0]);
     }
     /**
      * Get the default session driver name.
@@ -13896,6 +13963,7 @@ class WhoopsDisplayer implements ExceptionDisplayerInterface
      */
     public function display(Exception $exception)
     {
+        header('HTTP/1.1 500 Internal Server Error');
         $this->whoops->handleException($exception);
     }
 }
@@ -14203,28 +14271,6 @@ namespace Illuminate\Support\Facades;
 
 class Route extends Facade
 {
-    /**
-     * Register a new filter with the application.
-     *
-     * @param  string   $name
-     * @param  Closure|string  $callback
-     * @return void
-     */
-    public static function filter($name, $callback)
-    {
-        return static::$app['router']->addFilter($name, $callback);
-    }
-    /**
-     * Tie a registered middleware to a URI pattern.
-     *
-     * @param  string  $pattern
-     * @param  string|array  $name
-     * @return void
-     */
-    public static function when($pattern, $name)
-    {
-        return static::$app['router']->matchFilter($pattern, $name);
-    }
     /**
      * Determine if the current route matches a given name.
      *
@@ -19269,7 +19315,7 @@ class PrettyPageHandler extends Handler
         // Get the 'pretty-template.php' template file
         // @todo: this can be made more dynamic &&|| cleaned-up
         if (!($resources = $this->getResourcesPath())) {
-            $resources = 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\filp\\whoops\\src\\Whoops\\Handler' . '/../Resources';
+            $resources = 'C:\\xampp\\htdocs\\enarocanje\\vendor\\filp\\whoops\\src\\Whoops\\Handler' . '/../Resources';
         }
         $templateFile = "{$resources}/pretty-template.php";
         // @todo: Make this more reliable,

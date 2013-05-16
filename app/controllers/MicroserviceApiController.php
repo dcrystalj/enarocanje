@@ -39,7 +39,7 @@ class MicroserviceApiController extends BaseController
 		foreach ($r as $b) 
 		{
 			$date  = $b->date;
-			$title = "Your reservation: from  ";
+			$title = "From: ";
 			$title .= date('G:i',strtotime($b->from)) ." to ";
 			$title .= date('G:i',strtotime($b->to));
 
@@ -146,18 +146,19 @@ class MicroserviceApiController extends BaseController
 
 	}
 
-	public function postDeletereservation($id){
+	public function postDeletereservation($id,$reservationid){
 		$userid = Auth::user()->id;
 		$microservid = $id;
 
- 		$r = Reservation::where('micservice_id',$microservid)
-					// ->where('id',Input::get('event')) //FIXME : je to potrebno?
-					->where('user_id',$userid)
-					->delete();
+ 		$r = Reservation::where('id',$reservationid)
+			->where('micservice_id',$microservid)
+			->where('user_id',$userid)
+			->delete();
+
 		if($r)			
-			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted'));
+			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted.'));
 		else
-			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again'));
+			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again.'));
 
 	}
 
@@ -291,6 +292,7 @@ class MicroserviceApiController extends BaseController
 			}
 			$tempuser->email  = $mail;
 			$tempuser->name   = $name;
+			$tempuser->telephone = $event->data->telephone;
 			$tempuser->status = -1;
 			$tempuser->save();
 		
