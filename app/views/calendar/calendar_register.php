@@ -1,7 +1,7 @@
 <div id="event-dialog" class="modal hide fade">
   <!-- dialog contents -->
   <div class="modal-body">
-  Enter yor info:<br />
+  Enter your info:<br />
 	name:&nbsp;<input type="text" id="name" /><br />
 	email:&nbsp;<input type="email" id="mail" />
   </div>
