@@ -52,6 +52,7 @@ return array(
 	'repeatPassword' => 'Ponovitev gesla',
 	'reservation' => 'Rezervacija',
 	'reset' => 'Reset',
+	'next' => 'Naprej',
 	'retypePassword' => 'Ponovno vpiši geslo',
 	'saveChanges' => 'Shrani spremembe',
 	'save' => 'Save',
