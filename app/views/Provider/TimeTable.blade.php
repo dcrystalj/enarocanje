@@ -73,6 +73,7 @@ fc_init({
 });
 
 $(function() {
+	calendar.fullCalendar('render');
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
