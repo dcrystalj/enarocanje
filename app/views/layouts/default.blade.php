@@ -11,13 +11,13 @@
 		@yield('title')
 	</title>
 
-	{{ Html::script('js/jquery/jquery191.js') }}
-	{{ Html::script('js/jquery/jqueryui-1103.custom.min.js') }}
+	{{ Html2::script('js/jquery/jquery191.js') }}
+	{{ Html2::script('js/jquery/jqueryui-1103.custom.min.js') }}
 	
-	{{ Html::style('bootstrap/css/bootstrap.min.css') }}
-	{{ Html::style('bootstrap/css/bootstrap-responsive.min.css') }}
-	{{ Html::style('css/style.css') }}
-	{{ Html::style('css/bootstrap-datetimepicker.min.css') }}
+	{{ Html2::style('bootstrap/css/bootstrap.min.css') }}
+	{{ Html2::style('bootstrap/css/bootstrap-responsive.min.css') }}
+	{{ Html2::style('css/style.css') }}
+	{{ Html2::style('css/bootstrap-datetimepicker.min.css') }}
 
     @yield('assets')
 	
@@ -105,13 +105,13 @@
 
 	</div>
 
-	{{ Html::script("js/main.js") }}
-	{{ Html::script("bootstrap/js/bootstrap.min.js") }}
-	{{ Html::script("js/bootstrap-datetimepicker.min.js") }}
-	{{ Html::script('js/bootbox.min.js') }}
-	{{ Html::script('js/sorttable.js') }}
-	{{ Html::script('js/passStrength.js') }}
-	{{ Html::script('js/stacktable.js') }}
+	{{ Html2::script("js/main.js") }}
+	{{ Html2::script("bootstrap/js/bootstrap.min.js") }}
+	{{ Html2::script("js/bootstrap-datetimepicker.min.js") }}
+	{{ Html2::script('js/bootbox.min.js') }}
+	{{ Html2::script('js/sorttable.js') }}
+	{{ Html2::script('js/passStrength.js') }}
+	{{ Html2::script('js/stacktable.js') }}
 	
 </body>
 </Html>
