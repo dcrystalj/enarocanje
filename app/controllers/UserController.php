@@ -3,15 +3,15 @@
 class UserController extends BaseController {
 
   public $rulesSettings = array(
-    'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-    'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+    'name'     => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+    'surname'  => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
     'timezone' => 'min:1',
     'language' => 'min:1',
   );
 
   public $rules = array(
-    'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-    'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+    'name'     => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+    'surname'  => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
     'email'    => 'required|email|unique:users',
     'password' => 'required',
     'repeat'   => 'required|same:password',
