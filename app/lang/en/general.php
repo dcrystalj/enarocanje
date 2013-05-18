@@ -4,6 +4,7 @@ return array(
 
 
 	'absences' => 'Absences',
+	'addAbsences' => 'Add absences',
 	'activate' => 'Activate',
 	'addAbsences' => 'Add absences',
 	'addService' => 'Add service',
@@ -53,6 +54,7 @@ return array(
 	'reservation' => 'Reservations',
 	'reset' => 'Reset',
 	'next' => 'Next',
+	'repeatable' => 'Repeatable',
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
 	'save' => 'Save',
@@ -75,6 +77,7 @@ return array(
 	'yourChoice' => 'Your choice: \nfrom :from to :to',
 	'zipCode' => 'ZIP code',
 	'gimport' => 'Import from google',
+	'title' => 'Title',
 	'undef' => 'Undefined',
 	'yes' => 'Yes',
 	'justservices' => 'Services',

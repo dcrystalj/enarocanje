@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Add absences
+    {{trans('general.addAbsences')}}
 @stop
 
 @section('content')
@@ -16,8 +16,8 @@
         {{ Former::open(URL::route('macro.absence.store',$mac->id))->rules($rules) }}
     @endif
     
-    {{ Former::text('title','Title:')}}
-    {{ Former::checkbox('repetable','Repeatable:')}}
+    {{ Former::text('title',trans('general.title'+':')}}
+    {{ Former::checkbox('repetable',trans('general.repeatable:')}}
 
     @if($errors && $errors->has('from'))
         <div class="control-group error">

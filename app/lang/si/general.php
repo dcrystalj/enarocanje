@@ -4,6 +4,7 @@ return array(
 
 
 	'absences' => 'Odsotnosti',
+	'addAbsences' => 'Dodaj odsotnosti',
 	'activate' => 'Vključi',
 	'addAbsences' => 'Dodaj odsotnosti',
 	'addService' => 'Dodaj storitev',
@@ -52,6 +53,7 @@ return array(
 	'reservation' => 'Rezervacija',
 	'reset' => 'Ponastavi',
 	'next' => 'Naprej',
+	'repeatable' => 'Ponavljajoče',
 	'retypePassword' => 'Ponovno vpiši geslo',
 	'saveChanges' => 'Shrani spremembe',
 	'save' => 'Shrani',
@@ -74,6 +76,7 @@ return array(
 	'yourChoice' => 'Vaša izbira: \nod :from do :to',
 	'zipCode' => 'Poštna številka',
 	'gimport' => 'Uvoz iz googla',
+	'title' => 'Naslov',
 	'undef'=> 'Neimenovan',
 	'yes' => 'Da',
 	'justservices' => 'Storitve'
