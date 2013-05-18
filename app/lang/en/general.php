@@ -78,6 +78,5 @@ return array(
 	'undef' => 'Undefined',
 	'yes' => 'Yes',
 	'justservices' => 'Services',
-	'dummy' => 'Dummy dummy',
 
 );
