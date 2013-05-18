@@ -18,5 +18,6 @@ return array(
 	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :corrected?\nPritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
 	'mailSuccessfullySent' => 'Email je bil uspešno poslan',
 	'enterInfo' => 'Vnesite vaše podatke',
+	'forgot' => 'Ste pozabili geslo? Kliknite tu',
 	
 );
