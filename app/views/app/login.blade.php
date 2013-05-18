@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
+{{trans('general.login')}}
 @stop
 
 @section('content')

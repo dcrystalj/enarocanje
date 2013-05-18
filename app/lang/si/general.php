@@ -79,6 +79,12 @@ return array(
 	'title' => 'Naslov',
 	'undef'=> 'Neimenovan',
 	'yes' => 'Da',
-	'justservices' => 'Storitve'
+	'justservices' => 'Storitve',
+	'saveChanges' => 'Shrani spremembe',
+	'addAbsence' => 'Dodaj odsotnosti',
+	'from' => 'Od',
+	'to' => 'Do',
+	'repeat' => 'Ponavljajoče',
+	'resetPassword' => 'Ponastavitev gesla',
 );
 

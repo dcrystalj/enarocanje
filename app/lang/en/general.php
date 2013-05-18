@@ -81,5 +81,10 @@ return array(
 	'undef' => 'Undefined',
 	'yes' => 'Yes',
 	'justservices' => 'Services',
-
+	'saveChanges' => 'Save changes',
+	'addAbsence' => 'Add absence',
+	'from' => 'From',
+	'to' => 'To',
+	'repeat' => 'Repeat',
+	'resetPassword' => 'Reset password',
 );

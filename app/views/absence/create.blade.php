@@ -16,16 +16,16 @@
         {{ Former::open(URL::route('macro.absence.store',$mac->id))->rules($rules) }}
     @endif
     
-    {{ Former::text('title',trans('general.title'+':')}}
-    {{ Former::checkbox('repetable',trans('general.repeatable:')}}
+    {{ Former::text('title',trans('general.title').':')}}
+    {{ Former::checkbox('repetable',trans('general.repeatable').':')}}
 
     @if($errors && $errors->has('from'))
         <div class="control-group error">
     @else
         <div class="control-group required">
     @endif
-
-        {{ Former::label('from','From:')->class('control-label')->for('datetimepicker')}}
+        {{--  in case of failure            Former::label('from','From:')->class('control-label')->for('datetimepicker')--}}
+        {{ Former::label(trans('general.from').':','from')->class('control-label')->for('datetimepicker')}}
         <div class="controls">
         <div id="datetimepicker" class="input-append date">
             <input data-format="yyyy-MM-dd hh:mm" type="text" name="from" value="<?php if (isset($abs)) echo substr($abs->from,0,-3) ?>" ></input>
@@ -44,8 +44,8 @@
     @else
         <div class="control-group required">
     @endif
-
-        {{ Former::label('to','To:*')->class('control-label')->for('datetimepicker1')}}
+        {{--in case of failure  Former::label('to','To:*')->class('control-label')->for('datetimepicker1')--}}
+        {{ Former::label(trans('general.to').':')->class('control-label')->for('datetimepicker1')}}
         <div class="controls">
         <div id="datetimepicker1" class="input-append date">
             <input data-format="yyyy-MM-dd hh:mm" type="text" name="to" value="<?php if (isset($abs)) echo substr($abs->to,0,-3) ?>" >
@@ -66,7 +66,7 @@
 
     
     
-	{{ Former::actions()->submit( isset($abs) ? 'Save changes' : 'Add absence' ) }}
+	{{ Former::actions()->submit( isset($abs) ? trans('general.saveChanges') : trans('general.addAbsence') ) }}
     {{ Former::close() }}
 	{{-- Button::link("/google/export", Lang::get('general.export')) --}}
 </div>
@@ -94,7 +94,7 @@
             'from'   => substr($absence->from,0,-3),
             'to'   => substr($absence->to,0,-3),
             'repeatable' => $repeat,
-            'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),'Edit'),
+            'edit'  => Button::link(URL::route('macro.absence.edit', array($mac->id, $absence->id)),trans('general.edit')),
             'delete'  => delete($mac->id,$absence->id),
         ];
         $i++;
@@ -102,9 +102,9 @@
 ?>
     @if(count($absencesT)>0)
         </br>
-        <h2>Absences:</h2>
+        <h2>{{trans('general.absences')}}</h2>
     {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-    {{ Table::headers('#', 'Title','From','To', 'Repeat','') }}
+    {{ Table::headers('#', trans('general.title'),trans('general.from'),trans('general.to'), trans('general.repeat'),'') }}
     {{ Table::body($absencesT) }}
     {{ Table::close() }}
 
@@ -120,7 +120,7 @@
                                     [$macId,$absId]),
                                     )
                         );
-            $delete .= Form::submit('Delete');
+            $delete .= Form::submit(trans('general.delete'));
             $delete .= Form::close();
             return $delete;
         }

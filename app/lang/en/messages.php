@@ -16,5 +16,7 @@ return array(
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'notLoggedIn' => 'You are not logged in',
 	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :corrected?\nClick Yes to select the corrected email, click No to keep yours.',
+	'mailSuccessfullySent' => 'Email was successfully sent',
+	'enterInfo' => 'Enter your info',
 
 );

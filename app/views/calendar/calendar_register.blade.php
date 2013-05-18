@@ -1,7 +1,7 @@
 <div id="event-dialog" class="modal hide fade">
   <!-- dialog contents -->
   <div class="modal-body">
-  Enter your info:<br />
+  {{trans('messages.unique'.':')}}<br />
   {{Former::open()->id('tempUserRegForm')}}
   {{Former::text(trans('general.name'))}}
   {{Former::email(trans('general.email'))}}
