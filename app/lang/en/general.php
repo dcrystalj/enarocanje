@@ -86,4 +86,5 @@ return array(
 	'to' => 'To',
 	'repeat' => 'Repeat',
 	'resetPassword' => 'Reset password',
+	'dummy' => 'Dummy dummy',
 );
