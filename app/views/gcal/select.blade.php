@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Select calendar
+{{trans('general.selectCalendar')}}
 @stop
 
 @section('content')

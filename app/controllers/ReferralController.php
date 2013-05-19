@@ -68,7 +68,7 @@ class ReferralController extends BaseController {
                     ->subject($input['content']);
             });               
             return Redirect::route('referral.create')
-                                ->with('success','Referral successfully send');
+                                ->with('success',trans('messages.referralSent'));
             
         }
         return Redirect::back()

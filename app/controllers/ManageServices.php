@@ -166,7 +166,7 @@ class ManageServices extends BaseController {
 				'to' => $end,
 			));
 		}
-		return Redirect::to('macro/create')->with('success', 'Timetable was submited.');
+		return Redirect::to('macro/create')->with('success', trans('messages.wasSubmitted'));
 	}
 
 }

@@ -15,7 +15,7 @@ return array(
 
 	"password" => "Geslo mora biti vsaj 6 znakov dolgo in se mora ujemat s potrditvijo.",
 
-	"user"     => "Uporabnim s tem e-mail naslovom ne obstaja.",
+	"user"     => "Uporabnik s tem e-mail naslovom ne obstaja.",
 
 	"token"    => "Žeton za obnovitev gesla je neveljaven.",
 

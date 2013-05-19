@@ -1,9 +1,9 @@
 @extends('layouts.default')
 
 @section('title')
-Select calendar
+{{trans('general.selectCalendar')}}
 @stop
 
 @section('content')
-	Login to google api: <a href="<?= $url ?>">Login</a>
+	{{trans('messages.loginToGoogleAPI')}}: <a href="<?= $url ?>">Login</a>
 @stop

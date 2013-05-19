@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Password Reset</h2>
+		<h2>{{trans('general.resetPassword')}}</h2>
 
 		<div>
-			To reset your password, complete this form: {{ URL::action('AppController@getResetpassword', array($token)) }}
+			{{trans('general.toResetPassword')}}: {{ URL::action('AppController@getResetpassword', array($token)) }}			
+			{{trans('messages.ignoreEmail')}}
 		</div>
 	</body>
 </html>

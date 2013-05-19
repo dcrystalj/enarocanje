@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Reset Password
+{{trans('general.resetPassword')}}
 @stop
 
 @section('content')
@@ -14,7 +14,7 @@ Reset Password
  	
 		@if (Session::has('postforgot'))
 			
-			<p>{{ Alert::success('Mail was successfully sent') }}</p>
+			<p>{{ Alert::success(trans('messages.mailSuccessfullySent')) }}</p>
 			<?php Session::forget('postforgot'); ?>
 			
 		@endif

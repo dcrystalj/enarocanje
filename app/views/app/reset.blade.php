@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Reset Password
+{{trans('general.resetPassword')}}
 @stop
 
 @section('content')

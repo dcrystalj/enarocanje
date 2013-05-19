@@ -1,16 +1,16 @@
 <div id="event-dialog" class="modal hide fade">
   <!-- dialog contents -->
   <div class="modal-body">
-  Enter your info:<br />
+  {{trans('messages.enterInfo').':'}}<br />
   {{Former::open()->id('tempUserRegForm')}}
-  {{Former::text(trans('general.name'))}}
-  {{Former::email(trans('general.email'))}}
-  {{Former::text(trans('general.telephoneNumber'))}}
+  {{Former::text('name',trans('general.name'))}}
+  {{Former::email('email',trans('general.email'))}}
+  {{Former::text('telephone',trans('general.telephoneNumber'))}}
   {{Former::close()}}
   </div>
-  <!-- dialog buttons -->
+  <!-- dialog buttons Cancel-->
   <div class="modal-footer">
-  <a href="#" class="b_cancel btn">Cancel</a>
-  <a href="#" class="b_save btn btn-success">Submit</a>
+  <a href="#" class="b_cancel btn">{{trans('general.cancel')}}</a>
+  <a href="#" class="b_save btn btn-success">{{trans('general.submit')}}</a>
   </div>
 </div>

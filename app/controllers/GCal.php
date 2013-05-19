@@ -35,7 +35,7 @@ class GCal extends BaseController {
 			return Redirect::to("/macro/$mac/absence/create")->with('error', $e->getMessage());
 		}
 
-		return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully exported.');
+		return Redirect::to("/macro/$mac/absence/create")->with('success', trans('messages.absencesSuccessfullyExported'));
 	}
 
 
@@ -77,7 +77,7 @@ class GCal extends BaseController {
 				 'abs_type' => 'absence',
 			 ));
 		}
-		return Redirect::to("/macro/$mac/absence/create")->with('success', 'Absences sucessfully imported.');
+		return Redirect::to("/macro/$mac/absence/create")->with('success', trans('messages.absencesSuccessfullyImported'));
 	}
 
 	public function exportUserReservations() {
@@ -90,13 +90,13 @@ class GCal extends BaseController {
 			$reservations[] = array(
 				'from' => $reservation->date.' '.$reservation->from,
 				'to' => $reservation->date.' '.$reservation->to,
-				'title' => 'Reservation: '.$serviceName,
+				'title' => trans('general.reservation').': '.$serviceName,
 			);
 		}
 
 		$r = $this->exportToGcal('select', $reservations);
 		if($r !== true)	return $r;
-		return Redirect::to('/user/'.$user->id)->with('success', 'Reservations sucessfully exported.');
+		return Redirect::to('/user/'.$user->id)->with('success', trans('messages.reservationSuccessfullyExported'));
 	}
 
 	public function exportServiceReservations() {
@@ -120,7 +120,7 @@ class GCal extends BaseController {
 				$reservations[] = array(
 					'from' => $reservation->date.' '.$reservation->from,
 					'to' => $reservation->date.' '.$reservation->to,
-					'title' => 'Reservation: '.$name.' for '.$serviceName
+					'title' => trans('general.reservation').': '.$name.' '.trans('general.reservation').' '.$serviceName
 					/* 'model' => $reservation, */
 				);
 			}
@@ -132,7 +132,7 @@ class GCal extends BaseController {
 		}
 		if($r !== true)
 			return $r;
-		return Redirect::to('/macro/create')->with('success', 'Reservations sucessfully exported.');
+		return Redirect::to('/macro/create')->with('success', trans('messages.reservationSuccessfullyExported'));
 				
 	}
 
@@ -182,7 +182,7 @@ class GCal extends BaseController {
 		$list = $gcal->listCalendars();
 		if(!isset($list[$calendarId])) {
 			if(!$calendarTitle)
-				die("Undefined calendar title.");
+				die(trans('messages.undefinedCalendar'));
 			$cal = $gcal->createCalendar($calendarTitle);
 			$user = Auth::user();
 			$user->gcalendar = $calendarId = $cal['id'];

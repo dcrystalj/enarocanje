@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
+{{trans('general.login')}}
 @stop
 
 @section('content')
@@ -10,5 +11,5 @@
     {{ Former::password('password',Lang::get('general.password').':')->id('Password') }}
     {{ Former::actions()->submit(Lang::get('general.login')) }}
     {{ Former::close() }}   
-    <p>Forgotten password? Click here: {{Html::link(URL::action('AppController@getForgot'))}}</p>
+    <p>{{trans('messages.forgot')}}: {{Html::link(URL::action('AppController@getForgot'))}}</p>
 @stop

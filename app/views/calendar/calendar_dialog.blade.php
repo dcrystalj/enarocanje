@@ -1,7 +1,7 @@
 <div id="event-dialog" class="modal hide fade">
   <!-- dialog contents -->
   <div class="modal-body">
-	From:&nbsp;
+	{{trans('general.from')}}:&nbsp;
 	<div id="tp1" class="timepicker input-append date">
 	  <input data-format="hh:mm" type="time" placeholder="08:00" id="efrom"></input>
 	  <span class="add-on">
@@ -10,7 +10,7 @@
 	  </span>
 	</div>
 <br />
-	To: &nbsp;&nbsp;&nbsp;&nbsp;
+	{{trans('general.to')}}:&nbsp;
 
 	<div id="tp2" class="timepicker input-append date">
 	  <input data-format="hh:mm" type="time" placeholder="16:00" id="eto"></input>
@@ -22,9 +22,9 @@
   </div>
   <!-- dialog buttons -->
   <div class="modal-footer">
-	<a href="#" class="b_cancel btn">Cancel</a>
-	<a href="#" class="b_delete btn btn-danger">Delete</a>
-	<a href="#" class="b_save btn btn-success">Submit</a>
+	<a href="#" class="b_cancel btn">{{trans('general.cancel')}}</a>
+	<a href="#" class="b_delete btn btn-danger">{{trans('general.delete')}}</a>
+	<a href="#" class="b_save btn btn-success">{{trans('general.submit')}}</a>
   </div>
 </div>
 <script>

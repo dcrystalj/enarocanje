@@ -41,12 +41,12 @@ class AppController extends BaseController
 					Session::set('language',
 					UserLibrary::languageAbbrs(Auth::user()->language));
 				}
-				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
+				return Redirect::route('home')->with('success', trans('messages.successfulLogin')); 
 			}
 			else
 			{
 				return  Redirect::back()
-					 	->with('error','Could not login, please try again')
+					 	->with('error',trans('messages.wrongEmailPassword'))
 					 	->with('rules',$this->rules);
 			}
 		}
@@ -57,7 +57,7 @@ class AppController extends BaseController
 		Auth::logout();
 		Session::forget('user');
 		Cookie::forget('user');
-		return Redirect::route('home')->with('status', 'Sucessfully logged out.');
+		return Redirect::route('home')->with('status', trans('messages.successfulLogout'));
 	}
 
 	public function getForgot()
@@ -86,7 +86,7 @@ class AppController extends BaseController
 	        $user->password = Hash::make($password);
 	        $user->save();
 
-	        return Redirect::to('home')->with('success', 'Password sucessfully changed.');
+	        return Redirect::to('home')->with('success', trans('messages.successfullyChangedPassword'));
 	    });
 	}
 }

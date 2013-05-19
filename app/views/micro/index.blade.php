@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Services
+    {{trans('general.services')}}
 @stop
 
 @section('content')
@@ -12,12 +12,12 @@
     ?>
 
     @if(count($mic)==0)
-        {{ Typography::warning('No services avaliable yet') }}
+        {{ Typography::warning(trans('messages.noServicesYet')) }}
     @else
         {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label('gender', 'Filter services by gender:') }}
+        {{ Form::label('gender', trans('messages.filterByGender').':') }}
         {{ Form::select('gender', Service::gender(),Input::get('gender')) }}
-        {{ Form::submit('Filter') }}
+        {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
         <?php
@@ -25,7 +25,7 @@
         {
             $mic = MacroService::find($mac)->microservices()->where(function($query){
                 $query->where('gender', Input::get('gender'))
-                      ->orWhere('gender','U');   
+                      ->orWhere('gender','U');
             })->get();    
         }
         else{
@@ -58,7 +58,7 @@
                 'length' => $length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 
-                'link'   => Button::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),'Reservate')
+                'link'   => Button::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),trans('general.reservate'))
                 ];
                 $i++;
             }
@@ -67,11 +67,11 @@
 
         @if(count($tbody)>0)
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', 'Name', 'Length', 'Description', 'Price(€)', '') }}
+        {{ Table::headers('#', trans('general.name'), trans('general.length'), trans('general.description'), trans('general.price').'(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
         @else
-        {{ Typography::warning('No services avaliable yet for this filter') }}
+        {{ Typography::warning(trans('messages.noServicesForFilter')) }}
         @endif
     @endif
    
