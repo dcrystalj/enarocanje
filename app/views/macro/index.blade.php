@@ -15,7 +15,7 @@
             $tbody[] = [
                 'id'     => $i, 
                 'name'   => $service->name,
-                'City'   => $service->city . '<br>' . $service->street, 
+                'City'   => $service->city . ' <br>' . $service->street, 
                 'Email'  => $service->email,
                 'link'   => Button::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
              ];
