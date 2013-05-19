@@ -85,3 +85,7 @@ Route::get('google/export/service_reservation', 'GCal@exportServiceReservations'
 Route::get('google/events/{calendar_id}', 'GCal@getEvents');
 //Route::get('google/export', 'GCal@exportReservations');
 //Route::get('google/import/holidays', 'GCal@importHolidays');
+
+Route::get('spucajbazozdejtkoj', function(){
+	
+});

@@ -170,6 +170,11 @@ $(function() {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', -1);
 
+		if( getDate(allevents[0].start) <  getDate(new Date())) {
+			$('#statusmessage').text('{{ trans("messages.cannotMakeOnPast") }}').show();
+			return;
+		}
+
 		bootbox.confirm("{{trans('messages.areYouSureMake')}} " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){	
