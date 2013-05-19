@@ -19,5 +19,22 @@ return array(
 	'mailSuccessfullySent' => 'Email je bil uspešno poslan',
 	'enterInfo' => 'Vnesite vaše podatke',
 	'forgot' => 'Ste pozabili geslo? Kliknite tu',
-	
+	'welcomeToECommerce' => 'Dobrodošli na E-Commerce',
+	'joinUs' => 'Pridružite se nam na E-Commerce, kliknite na povezavo in se registrirajte.',
+	'toResetPassword' => 'Za ponastavitev gesla izpolnite obrazec',
+	'thankYouForRegistration' => 'Hvala za registracijo. Prosimo, kliknite na povezavo, da bi dokončali registracijo.',
+	'confirmEmail' => 'Za potrditev vašega email naslova, prosimo, izpolnite obrazec.',
+	'youMadeReservation' => 'Rezervirali ste termin na dan ',
+	'hasMadeReservation' => ' je rezerviral termin na dan ',
+	'loginToGoogleAPI' => 'Prijava v Google APIs',
+	'noServicesYet' => 'Na voljo še ni nobene storitve',
+	'filterByGender' => 'Filtriraj storitve po spolu',
+	'noServicesForFilter' => 'Za ta filter še ni storitev',
+	'referAFriend' => 'Proporoči prijatelju',
+	'yourChoice' => 'Vaša izbira',
+	'cannotDeleteOnPast' => 'Ne morete zbrisati rezervacij za pretekle dni.',
+	'areYouSureDelete' => 'Ali ste prepričani, da bi radi zbrisali rezervacijo na dan ',
+	'areYouSureMake' => 'Ali ste prepričani, da bi radi naredili rezervacijo na dan  ',
+
+
 );

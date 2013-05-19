@@ -4,12 +4,12 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Reservation information</h2>
+		<h2>{{trans('general.reservationInformation')}}</h2>
 
 		<div>
-			User {{ $username }} ({{ $useremail }}) have just made reservation on 
-			{{ $date }} at
-			{{ $from }} for 
+			{{trans('general.user')}} {{ $username }} ({{ $useremail }}) {{trans('messages.hasMadeReservation')}}
+			{{ $date }} {{trans('general.at')}}
+			{{ $from }} {{trans('general.for')}}
 			{{ $name }}.
 		</div>
 	</body>

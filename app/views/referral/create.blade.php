@@ -1,16 +1,16 @@
 @extends('layouts.default')
 
 @section('title')
-    Refer a friend
+    {{trans('messages.referAFriend')}}
 @stop
 
 @section('content')
 
     {{ Former::open(URL::route('referral.store'))->rules($rules) }}
-    {{ Former::text('to','To:')}}
-    {{ Former::text('content','Subject:') }}
+    {{ Former::text('to',trans('general.to').':')}}
+    {{ Former::text('content',trans('general.subject').':') }}
        Referral link: {{ Typography::info($link) }}
-    {{ Former::actions()->submit('Send referral' ) }}
+    {{ Former::actions()->submit(trans('general.sendReferral') ) }}
     {{ Former::close() }}   
 
 @stop

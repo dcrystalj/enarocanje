@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Welcome to e-commerce</h2>
+		<h2>{{trans('general.welcomeToECommerce')}}</h2>
 
 		<div>
-			To confirm your email, complete this form: {{ URL::to('provider/confirm', array($token)) }}
+			{{trans('messages.confirmEmail')}}: {{ URL::to('provider/confirm', array($token)) }}
 		</div>
 	</body>
 </html>
