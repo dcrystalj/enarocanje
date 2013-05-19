@@ -48,7 +48,7 @@ class Provider extends BaseController {
 			{
 			    if($message == Lang::get('messages.unique',array('attribute'=>'email')))
 			    return View::make('app.login')
-							->with('status', $message . 'Please login.')
+							->with('status', $message . trans('messages.pleaseLogin'))
 							->with('email', Input::get('email'));
 			}
 
@@ -87,7 +87,7 @@ class Provider extends BaseController {
 				    ->subject('Welcome!');
 			});
 			
-			return Redirect::home()->with('success','Your activation mail was sent on email');
+			return Redirect::home()->with('success',trans('messages.activationMail'));
 		}
 	}
 
@@ -132,11 +132,11 @@ class Provider extends BaseController {
 
 		    	$user->save();	
 
-		    	return Redirect::back()->with('success','Settings saved.');
+		    	return Redirect::back()->with('success',trans('messages.settingsSaved'));
 		    }
 		    else
 		    {
-		    	return Redirect::back()->with('error','Failed to save settings.');
+		    	return Redirect::back()->with('error',trans('messages.settingsNotSaved'));
 		    }
 			
 		}		
@@ -162,11 +162,11 @@ class Provider extends BaseController {
 				Auth::loginUsingId($user->id);
 			    Session::put('user',$user);
 
-				return View::make('home')->with('success','Registration successfully completed.');
+				return View::make('home')->with('success',trans('messages.registrationSuccess'));
 			}
 		}
 
-		App::abort(404,'Page not found');
+		App::abort(404,trans('messages.fourOfour'));
 	}
 
 }

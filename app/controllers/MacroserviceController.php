@@ -57,7 +57,7 @@ class MacroserviceController extends BaseController {
 
 			if($mac){
 				return Redirect::route('macro.create')
-								->with('success','successfully saved');
+								->with('success',trans('messages.successfullySaved'));
 			}
 		}
 
@@ -116,7 +116,7 @@ class MacroserviceController extends BaseController {
 
 			if($mac){
 				return Redirect::route('macro.create')
-								->with('success','Successfully edited');
+								->with('success',trans('messages.successfullyEdited'));
 			}
 		}
 
@@ -142,10 +142,10 @@ class MacroserviceController extends BaseController {
 			$macservice->delete();
 
 			return Redirect::route('macro.create')
-							->with('status','Services were successfully deleted.');
+							->with('status',trans('messages.servicesSuccessfullyDeleted'));
 		}
 		
-		return Redirect::route('macro.create')->with('error','Services could not be deleted. ');
+		return Redirect::route('macro.create')->with('error',trans('messages.servicesUnsuccessfullyDeleted'));
 		
 	}
 
@@ -156,10 +156,10 @@ class MacroserviceController extends BaseController {
 			$macservice->active=0;
 			$macservice->save();
 			return Redirect::route('macro.create')
-							->with('success','Service ' . $macservice->name . ' was activated!');
+							->with('success',trans('general.service').' '.$macservice->name . trans('messages.wasActivated'));
 		}
 		
-		return Redirect::rotue('macro.create')->with('error','Service ' . $macservice->name . " was not activated.\nPlease try again.");
+		return Redirect::rotue('macro.create')->with('error',trans('general.service').' '.$macservice->name . trans('messages.wasNotActivated'));
 		
 	}
 

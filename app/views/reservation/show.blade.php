@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-Reservation
+{{trans('general.reservation')}}
 @stop
 
 @section('assets')
@@ -27,8 +27,8 @@ $leng =  timeToMinutes(MicroService::find($mic)->length)
 ?>
 
 <p>
-{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}&nbsp
-{{ Button::link(URL::current().'?gcal=1','Show google events') }} &nbsp
+{{ Button::success_link('#',trans('general.reserve'),array('id' => 'reserve')) }}&nbsp
+{{ Button::link(URL::current().'?gcal=1',trans('messages.showGoogleEvents')) }} &nbsp
 {{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations'),array('id' => 'export_reservation')) }}&nbsp
 </p>
 
@@ -60,7 +60,7 @@ fc_init({
 			revertFunc();
 		}
 
-		event.title = '{{ ($leng > 29) ? trans("mess4ages.yourChoice").": \\n" : ""}} from  '+time(event.start)+' to '+time(event.end);
+		event.title = '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} {{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
@@ -73,7 +73,7 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} from'+time(start)+' to '+time(end),
+				title: '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} {{trans("general.from")}} '+time(start)+' {{trans("general.to")}} '+time(end),
 				eventType: 'newreservation',
 			});
 		}
@@ -85,12 +85,12 @@ fc_init({
 		if(event.eventType == 'reservation'){
 			
 			if(event.start < new Date()){
-				bootbox.alert("Cannot delete reservations on past days.");
+				bootbox.alert("{{trans('messages.cannotDeleteOnPast')}}");
 				return;
 			}
 
 			bootbox.confirm(
-			"Are you sure you want to delete reservation on " + fromTo(event) +" ?", function(result) {
+			"{{trans('messages.areYouSureDelete')}} " + fromTo(event) +"?", function(result) {
 		  	 	if(result){
 					$.post('{{ URL::action("MicroserviceApiController@postDeletereservation", array($mic)) }}/'+event.id, {'event': event.id}, function(e){
 						e = JSON.parse(e);
@@ -170,7 +170,7 @@ $(function() {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', -1);
 
-		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
+		bootbox.confirm("{{trans('messages.areYouSureMake')}} " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){	
 		  		if(!'{{ Auth::check() }}'){

@@ -58,6 +58,7 @@ return array(
 	'reservate' => 'Reservate',
 	'reservation' => 'Reservation',
 	'reservations' => 'Reservations',
+	'reservr' => 'Reserve',
 	'reset' => 'Reset',
 	'next' => 'Next',
 	'repeatable' => 'Repeatable',
@@ -104,6 +105,13 @@ return array(
 	'invitedProvider' => 'Invited provider',
 	'subject' => 'Subject',
 	'sendReferral' => 'Send referral',
+	'monday' =>	'Monday',
+	'tuseday' => 'Tuesday' ,
+	'wednesday' => 'Wednesday',
+	'thursday' => 'Thursday',
+	'friday' => 'Friday',
+	'saturday' => 'Saturday',
+	'sunday' => 'Sunday', 	
 
 
 );

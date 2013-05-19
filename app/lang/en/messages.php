@@ -35,5 +35,35 @@ return array(
 	'cannotDeleteOnPast' => 'Cannot delete reservations on past days.',
 	'areYouSureDelete' => 'Are you sure you want to delete reservation on',
 	'areYouSureMake' => 'Are you sure you want to make reservation on ',
+	'showGoogleEvents' => 'Show Google calendar events',
+	'wrongEmailPassword' => 'Could not login, please try again. Check that your email and/or password are correct.',
+	'successfulLogin' => 'Sucessfully logged in.',
+	'successfulLogout' => 'Sucessfully logged out.',
+	'successfullyChangedPassword' => 'Password sucessfully changed.',
+	'absencesSuccessfullyExported' => 'Absences sucessfully exported.',
+	'absencesSuccessfullyImported' => 'Absences sucessfully imported.',
+	'reservationSuccessfullyExported' => 'Reservations sucessfully exported.',
+	'undefinedCalendar' => 'Undefined calendar title.',
+	'servicesSuccessfullyDeleted' => 'Services were successfully deleted.',
+	'servicesUnsuccessfullyDeleted' => 'Services could not be deleted.',
+	'wasNotActivated' => ' was not activated.\nPlease try again.',
+	'wasActivated' => ' was activated!',
+	'wasSubmitted' => 'Timetable was submited.',
+	'cannotMakeOnPast' => 'Cannot make reservation on passed days',
+	'successfulReservation' => 'Successful reservation!',
+	'unsuccessfulReservation' => 'Unuccessful reservation!',
+	'successfullyDeleted' => 'Sucessfully deleted.',
+	'unsuccessfullyDeleted' => 'Unucessfully deleted, please try again.',
+	'pleaseFill' => 'Please fill the form.',
+	'emailTakenPleaseLogin' => 'Email is already taken, please login.',
+	'pleaseLogin' => 'Please login.',
+	'activationEmail' => 'Your activation email was sent to your email.',
+	'settingsSaved' => 'Settings saved.',
+	'settingsNotSaved' => 'Failed to save settings..',
+	'referralSent' => 'Referral successfully sent.',
+
+
+
+
 
 );

@@ -7,7 +7,7 @@
 @section('content')
 
     {{ Former::open(URL::route('referral.store'))->rules($rules) }}
-    {{ Former::text('to',trans('general.to').':')}}
+    {{ Former::text('to',trans('general.for').':')}}
     {{ Former::text('content',trans('general.subject').':') }}
        Referral link: {{ Typography::info($link) }}
     {{ Former::actions()->submit(trans('general.sendReferral') ) }}

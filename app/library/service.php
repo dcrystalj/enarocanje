@@ -33,8 +33,8 @@ class Service {
 
 	private static $sex = array(
         'U' => 'Unisex',
-        'M' => 'Man',
-        'W' => 'Woman',
+        'M' => 'Male',
+        'W' => 'Female',
     );
 
     private static $absences = array(
