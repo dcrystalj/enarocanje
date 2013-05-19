@@ -111,5 +111,7 @@ return array(
 	'friday' => 'Petek',
 	'saturday' => 'Sobota',
 	'sunday' => 'Nedelja', 	
+	'reservationInformation' => 'Informacije o rezervaciji',
+
 );
 

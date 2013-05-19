@@ -112,6 +112,7 @@ return array(
 	'friday' => 'Friday',
 	'saturday' => 'Saturday',
 	'sunday' => 'Sunday', 	
+	'reservationInformation' => 'Reservation information',
 
 
 );
