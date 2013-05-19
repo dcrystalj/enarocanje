@@ -60,7 +60,7 @@ fc_init({
 			revertFunc();
 		}
 
-		event.title = '{{ ($leng > 29) ? "Your choice: \\n" : ""}} from  '+time(event.start)+' to '+time(event.end);
+		event.title = '{{ ($leng > 29) ? trans("mess4ages.yourChoice").": \\n" : ""}} from  '+time(event.start)+' to '+time(event.end);
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
@@ -73,7 +73,7 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: '{{ ($leng > 29) ? "Your choice: \\n" : ""}} from'+time(start)+' to '+time(end),
+				title: '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} from'+time(start)+' to '+time(end),
 				eventType: 'newreservation',
 			});
 		}
