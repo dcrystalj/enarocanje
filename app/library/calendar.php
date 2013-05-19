@@ -15,6 +15,16 @@ class Calendar {
 		'selectable'=> true,
 		'defaultView'=> 'agendaWeek',
 		'selectHelper'=> true,	
+		'buttonText' => [
+    		'prev' =>     '&lsaquo;', // <
+    		'next' =>     '&rsaquo;', // >
+    		'prevYear' => '&laquo;',  // <<
+    		'nextYear' => '&raquo;',  // >>
+    		'today' =>    'today',
+    		'month' =>    'month',
+    		'week' =>     'week',
+    		'day' =>      'day',
+		],
 	);
 
 	public static function defs() {
