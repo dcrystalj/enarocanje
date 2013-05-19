@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('title')
-{{Lang::get('general.timetable')}}
+	{{trans('general.timetable')}}
 @stop
 
 @section('assets')
@@ -13,19 +13,48 @@
 @section('content')
 @include('calendar.calendar_dialog')
 <p>
-{{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
+{{ Button::danger_link('#',trans('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{-- Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) --}}
-{{-- Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) --}}
-{{ Button::success_link("#", Lang::get('general.next'), array('id' => 'continue')) }}
+{{-- Button::link("/service/$id/breaks", trans('general.breaks'), array('id' => 'breaks')) --}}
+{{-- Button::success_link("#", trans('general.save'), array('id' => 'save')) --}}
+{{ Button::success_link("#", trans('general.next'), array('id' => 'continue')) }}
 </p>
 
+<dl class="dl-horizontal" >
+{{ Form::horizontal_open() }}
+
+<dt>Monday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',1) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
+
+<dt>Tuesday:</dt> 
+<dd>{{ Timepicker::from($errors,'00:00:00',3) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',4)}}</dd>
+
+<dt>Wednesday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',5) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',6)}}</dd>
+
+<dt>Thursday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',7) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',8)}}</dd>
+
+<dt>Friday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',9) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',10)}}</dd>
+
+<dt>Saturday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',11) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',12)}}</dd>
+
+<dt>Sunday:</dt>
+<dd>{{ Timepicker::from($errors,'00:00:00',13) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',14)}}</dd>
+
+{{ Former::close() }}
+</dl>
+
 <div id='calendar'></div>
-<form id="submit_form" method="post" action="{{ route("breaks", array($id)) }}">
-	<input type="hidden" name="start" id="start" />
-	<input type="hidden" name="end" id="end" />
-	<input type="hidden" name="events" id="events" />
-</form>
+{{ Former::open(route('breaks', array($id)))->id('submit_form') }}
+{{ Former::hidden('start')->id('start') }}
+{{ Former::hidden('end')->id('end') }}
+{{ Former::hidden('events')->id('events') }}
+{{ Former::submit() }}
+{{ Former::close() }}
+
 <script>
 @include('calendar.calendar_def')
 
@@ -64,7 +93,7 @@ fc_init({
 		{
 			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
 			type: 'GET',
-			error: function() { alert("{{Lang::get('messages.fetchingError')}}") },
+			error: function() { alert("{{trans('messages.fetchingError')}}") },
 			editable: true,
 		}
 	],
@@ -112,6 +141,15 @@ $(function() {
 .fc-agenda-slots tr * {
 	height: 10px !important;
 	line-height: 10px;
+}
+
+.form-horizontal .control-group {
+	margin-bottom: 5px;
+}
+
+.dl-horizontal {
+	margin-left: auto;
+	margin-right: auto;
 }
 </style>
 

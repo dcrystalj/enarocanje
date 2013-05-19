@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.userRegistration')}}
+    {{trans('general.userRegistration')}}
 @stop
 
 @section('content')
@@ -11,15 +11,15 @@
 
 
 {{Former::open(URL::route('user.store'))->rules($rules)->id('userRegForm')}}
-{{Former::text('name',Lang::get('general.name'))->autofocus()}}
-{{Former::text('surname',Lang::get('general.surname'))}}
-{{Former::text('email',Lang::get('general.email'))}}
-{{Former::password('password',Lang::get('general.password'))}}
-{{Former::password('repeat',Lang::get('general.repeatPassword'))}}
-{{Former::select('timezone',Lang::get('general.timezone'))
+{{Former::text('name',trans('general.name'))->autofocus()}}
+{{Former::text('surname',trans('general.surname'))}}
+{{Former::text('email',trans('general.email'))}}
+{{Former::password('password',trans('general.password'))}}
+{{Former::password('repeat',trans('general.repeatPassword'))}}
+{{Former::select('timezone',trans('general.timezone'))
 		->options(UserLibrary::timezones(),	'12') }}
-{{Former::select('language',Lang::get('general.language'))->options(Lang::get('general.languages'))}}
-{{Former::actions()->button(Lang::get('general.submit'))->onclick("checkEmail(event,'#userRegForm')")}}
+{{Former::select('language',trans('general.language'))->options(trans('general.languages'))}}
+{{Former::actions()->button(trans('general.submit'))->onclick("checkEmail(event,'#userRegForm')")}}
 {{Former::close()}}
 
 

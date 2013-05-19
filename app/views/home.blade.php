@@ -1,15 +1,15 @@
 @extends('layouts.default')
 
 @section('title')
-	{{Lang::get('general.home')}}
+	{{trans('general.home')}}
 @stop
 
 @section('content')
 
 	@if (Auth::check())
-	<p>{{Lang::get('general.welcome'); Auth::user()->name }} </p>
+	<p>{{trans('general.welcome'); Auth::user()->name }} </p>
 	@else
-	<p>{{Lang::get('messages.notLoggedIn')}}</p>
+	<p>{{trans('messages.notLoggedIn')}}</p>
 	@endif
 
 @stop

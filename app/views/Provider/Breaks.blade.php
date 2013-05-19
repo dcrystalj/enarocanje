@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-{{Lang::get('general.breaks')}}
+{{trans('general.breaks')}}
 @stop
 
 @section('assets')
@@ -15,11 +15,11 @@
 @include('calendar.calendar_dialog')
 
 <p>
-{{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
+{{ Button::danger_link('#',trans('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link('#', Lang::get('general.back'), array('id' => 'back')) }}
+{{ Button::link('#', trans('general.back'), array('id' => 'back')) }}
 &nbsp;&nbsp;
-{{ Button::success_link("#",Lang::get('general.save'),array('id' => 'save')) }}
+{{ Button::success_link("#",trans('general.save'),array('id' => 'save')) }}
 </p>
 
 <div id='calendar'></div>

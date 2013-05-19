@@ -44,11 +44,11 @@ class UserLibrary {
 
 	//returns translated languages array
 	public static function languages() {
-		return Lang::get('general.languages');
+		return trans('general.languages');
 	}
 	//returns translated language
 	public static function language($i) {
-		return Lang::get('general.languages')[$i]; 
+		return trans('general.languages')[$i]; 
 	}
 	public static function languageAbbrs($i) {
 		return self::$languageAbbrsArray[$i];

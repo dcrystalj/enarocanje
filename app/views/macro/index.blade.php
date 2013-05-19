@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.providers')}}
+    {{trans('general.providers')}}
 @stop
 
 @section('content')
@@ -17,14 +17,14 @@
                 'name'   => $service->name,
                 'City'   => $service->city . ' <br>' . $service->street, 
                 'Email'  => $service->email,
-                'link'   => Button::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
+                'link'   => Button::link(URL::route('macro.micro.index', $service->id),trans('general.choose'))
              ];
              $i++;
         }
     ?>
 
     {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-    {{ Table::headers('#', Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
+    {{ Table::headers('#', trans('general.name'),trans('general.city'), trans('general.email'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
    

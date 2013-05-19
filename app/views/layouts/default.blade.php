@@ -32,11 +32,11 @@
 						//['Home', URL::to('home'), (Request::is('home') || Request::is('/')),
 						//	false,null,'home'],
 	 					!Auth::check() ?: 
-	 					[Lang::get('general.manageService'),URL::to('macro/create'), Request::is('macro/create'),
+	 					[trans('general.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
-						[Lang::get('general.services'),URL::to('macro')],
+						[trans('general.services'),URL::to('macro')],
 						!Auth::check() ?:
-						[Lang::get('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
+						[trans('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
 	 						false,null,null,(Auth::user()->isAdmin())],
 					]),
 					['style' => 'height: auto']
@@ -47,16 +47,16 @@
 					Navigation::links( 
 			     		Auth::check() ?
 			      		[	
-							[Lang::get('general.profile'),URL::action('UserController@show',[Auth::user()->id])],
+							[trans('general.profile'),URL::action('UserController@show',[Auth::user()->id])],
 							[Navigation::VERTICAL_DIVIDER],
-							[Lang::get('general.logout'),URL::to('app/logout')],
+							[trans('general.logout'),URL::to('app/logout')],
 						] 
 						:
 			       		[
-			       	 		[Lang::get('general.login'),URL::to('app/login')],		     
-			       	 		[Lang::get('general.register'),'#',false,false,[		       	 		
-								[Lang::get('general.userRegistration'),URL::to('user/create')],
-								[Lang::get('general.providerRegistration'),URL::to('provider/create')],				
+			       	 		[trans('general.login'),URL::to('app/login')],		     
+			       	 		[trans('general.register'),'#',false,false,[		       	 		
+								[trans('general.userRegistration'),URL::to('user/create')],
+								[trans('general.providerRegistration'),URL::to('provider/create')],				
 							]]
 						]),
 			      	['class' => 'pull-right'] )
@@ -65,8 +65,8 @@
 			     		//Za namene razvoja
 			     		//Auth::check() ?:   
 		       			//[Trans('general.language'),'#',false,false,[		       	 		
-							[Lang::get('general.englishCapital'), URL::to('lang/en')],
-							[Lang::get('general.slovenianCapital'), URL::to('lang/si')],							
+							[trans('general.englishCapital'), URL::to('lang/en')],
+							[trans('general.slovenianCapital'), URL::to('lang/si')],							
 						//]],
 						
 						[Navigation::VERTICAL_DIVIDER],

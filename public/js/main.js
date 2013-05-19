@@ -72,6 +72,12 @@ $(document).ready(function() {
       pickDate: false,
       maskInput:false,
    });
+   $('.dtp').datetimepicker({
+      language: 'pt-BR',
+      pickSeconds: false,
+      pickDate: false,
+      maskInput:false,
+   });
 });
 
 
