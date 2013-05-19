@@ -8,6 +8,7 @@
 
 		<div>
 			{{trans('messages.confirmEmail')}}: {{ URL::to('provider/confirm', array($token)) }}
+			{{trans('messages.ignoreEmail')}}
 		</div>
 	</body>
 </html>

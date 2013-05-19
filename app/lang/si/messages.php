@@ -23,7 +23,7 @@ return array(
 	'joinUs' => 'Pridružite se nam na E-Commerce, kliknite na povezavo in se registrirajte.',
 	'toResetPassword' => 'Za ponastavitev gesla izpolnite obrazec',
 	'thankYouForRegistration' => 'Hvala za registracijo. Prosimo, kliknite na povezavo, da bi dokončali registracijo.',
-	'confirmEmail' => 'Za potrditev vašega email naslova, prosimo, izpolnite obrazec.',
+	'confirmEmail' => 'Za potrditev vašega email naslova, prosimo, sledite povezavi',
 	'youMadeReservation' => 'Rezervirali ste termin na dan ',
 	'hasMadeReservation' => ' je rezerviral termin na dan ',
 	'loginToGoogleAPI' => 'Prijava v Google APIs',
@@ -62,4 +62,5 @@ return array(
 	'settingsSaved' => 'Uspešno shranjeno.',
 	'settingsNotSaved' => 'Neuspešno shranjeno.',
 	'referralSent' => 'Priporočilo je bilo uspešno poslano.',
+	'ignoreEmail' => 'Če niste zahtevali tega, prosimo, ignorirajte ta email.',
 );

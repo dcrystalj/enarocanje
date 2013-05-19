@@ -23,7 +23,7 @@ return array(
 	'joinUs' => 'Join us on e-commerce, click on this link and register',
 	'toResetPassword' => 'To reset your password, complete this form',
 	'thankYouForRegistration' => 'Thank you for your registration. Please click the following link to complete your registration.',
-	'confirmEmail' => 'To confirm your email, complete this form',
+	'confirmEmail' => 'To confirm your email, click this link',
 	'youMadeReservation' => 'You have just made reservation on ',
 	'hasMadeReservation' => ' has just made reservation on ',
 	'loginToGoogleAPI' => 'Login to Google API',
@@ -61,6 +61,7 @@ return array(
 	'settingsSaved' => 'Settings saved.',
 	'settingsNotSaved' => 'Failed to save settings..',
 	'referralSent' => 'Referral successfully sent.',
+	'ignoreEmail' => 'If you have not requested this, please, disregard this email.',
 
 
 

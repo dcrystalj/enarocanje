@@ -7,7 +7,8 @@
 		<h2>{{trans('general.resetPassword')}}</h2>
 
 		<div>
-			{{trans('general.toResetPassword')}}: {{ URL::action('AppController@getResetpassword', array($token)) }}
+			{{trans('general.toResetPassword')}}: {{ URL::action('AppController@getResetpassword', array($token)) }}			
+			{{trans('messages.ignoreEmail')}}
 		</div>
 	</body>
 </html>

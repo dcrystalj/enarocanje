@@ -25,7 +25,7 @@
     ?>
 
     {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-    {{ Table::headers('#', trans('general.provider',trans('general.invitedProvider', '') }}
+    {{ Table::headers('#', trans('general.provider'),trans('general.invitedProvider'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
 

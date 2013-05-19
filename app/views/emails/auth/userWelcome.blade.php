@@ -9,6 +9,7 @@
 		<div>
 			<p>{{trans('messages.thankYouForRegistration')}}</p>
 			{{ URL::to('user/confirm', array($token)) }}
+			{{trans('messages.ignoreEmail')}}
 		</div>
 	</body>
 </html>
