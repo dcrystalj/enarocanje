@@ -84,10 +84,10 @@ class Provider extends BaseController {
 			Mail::send('emails.auth.welcome', compact('token'), function($m) use ($user)
 			{
 			    $m 	->to($user->email, $user->name)
-				    ->subject('Welcome!');
+				    ->subject(trans('general.welcome'));
 			});
 			
-			return Redirect::home()->with('success',trans('messages.activationMail'));
+			return Redirect::home()->with('success',trans('messages.activationEmail'));
 		}
 	}
 
