@@ -14,9 +14,6 @@ class Html2 extends Html {
 		return '<link media="all" type="text/css" rel="stylesheet" href="'.URL::to($src).'?ts='.$ts.'">'."\n";
 	}
 
-	public static function debug() {
-		print_r(self::$scripts);
-	}
 	public static function get_translates() {
 		$translates = array();
 		foreach(self::$scripts as $script)
