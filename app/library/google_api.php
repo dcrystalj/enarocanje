@@ -107,8 +107,8 @@ class GoogleApi {
 			}
 		}
 
-		foreach($existings as $id=>$item)
-			$this->cal->events->delete($cId, $id);
+		//foreach($existings as $id=>$item)
+		//	$this->cal->events->delete($cId, $id);
 	}
 
 	/* Helper */

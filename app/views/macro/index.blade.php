@@ -8,11 +8,25 @@
 
     <?php 
         $macroService = MacroService::whereActive(0)->get();
+<<<<<<< HEAD
         $categories = Categories::all();
         $categoryName['none'] = 'none';
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
+=======
+        $tbody = []; 
+        $i = 1; 
+        foreach ($macroService as $service){    
+            $tbody[] = [
+                'id'     => $i, 
+                'name'   => $service->name,
+                'City'   => $service->city . ' <br>' . $service->street, 
+                'Email'  => $service->email,
+                'link'   => Button::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
+             ];
+             $i++;
+>>>>>>> a9b7dd19e557e9729f7df337a4c514c5540ff8cc
         }
     ?>
 

@@ -4,11 +4,12 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>Registration confirmation</h2>
+		<h2>{{trans('general.registrationConfirmation')}}</h2>
 
 		<div>
-			<p>Thank you for your registration. Please click the following link to complete your registration.</p>
+			<p>{{trans('messages.thankYouForRegistration')}}</p>
 			{{ URL::to('user/confirm', array($token)) }}
+			{{trans('messages.ignoreEmail')}}
 		</div>
 	</body>
 </html>

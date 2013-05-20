@@ -1,14 +1,13 @@
 @extends('layouts.default')
-
 @section('title')
 {{Lang::get('general.timetable')}}
 @stop
 
 @section('assets')
-{{ Html::style('css/fc/fullcalendar.css') }}
-{{-- Html::style('css/fc/fullcalendar.print.css') --}}
-{{ Html::script('js/fc/fullcalendar.js') }}
-{{ Html::script('js/fc/fullcalendar.ext.js') }}
+{{ Html2::style('css/fc/fullcalendar.css') }}
+{{-- Html2::style('css/fc/fullcalendar.print.css') --}}
+{{ Html2::script('js/fc/fullcalendar.js') }}
+{{ Html2::script('js/fc/fullcalendar.ext.js') }}
 @stop
 
 @section('content')
@@ -73,6 +72,7 @@ fc_init({
 });
 
 $(function() {
+	calendar.fullCalendar('render');
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();

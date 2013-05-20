@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Referrals
+    {{trans('general.referrals')}}
 @stop
 
 @section('content')
@@ -25,7 +25,7 @@
     ?>
 
     {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-    {{ Table::headers('#', 'Provider','Invited provider', '') }}
+    {{ Table::headers('#', trans('general.provider'),trans('general.invitedProvider'), '') }}
     {{ Table::body($tbody) }}
     {{ Table::close() }}
 

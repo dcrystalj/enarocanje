@@ -5,10 +5,10 @@
 @stop
 
 @section('assets')
-{{ Html::style('css/fc/fullcalendar.css') }}
-{{-- Html::style('css/fc/fullcalendar.print.css') --}}
-{{ Html::script('js/fc/fullcalendar.js') }}
-{{ Html::script('js/fc/fullcalendar.ext.js') }}
+{{ Html2::style('css/fc/fullcalendar.css') }}
+{{-- Html2::style('css/fc/fullcalendar.print.css') --}}
+{{ Html2::script('js/fc/fullcalendar.js') }}
+{{ Html2::script('js/fc/fullcalendar.ext.js') }}
 @stop
 
 @section('content')
@@ -32,11 +32,11 @@ fc_init({
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 
 		
-		event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
+		event.title = "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
 
 		if (isOverlapping(event.start, event.end)) { 
 			revertFunc();
-			event.title = 'Your choice: \nfrom  '+time(event.start)+' to '+time(event.end);
+			event.title = "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
 		}
 	},
 	select: function(start, end, allDay) {
@@ -50,7 +50,7 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: 'Your choice: \nfrom  '+time(start)+' to '+time(end),
+				title: "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(start)+' {{trans("general.to")}} '+time(end),
 				eventType: 'reservation',
 			});
 		}

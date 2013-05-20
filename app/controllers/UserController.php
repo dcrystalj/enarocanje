@@ -3,15 +3,15 @@
 class UserController extends BaseController {
 
   public $rulesSettings = array(
-    'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-    'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+    'name'     => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+    'surname'  => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
     'timezone' => 'min:1',
     'language' => 'min:1',
   );
 
   public $rules = array(
-    'name'     => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
-    'surname'  => 'required|max:20|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
+    'name'     => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',  
+    'surname'  => 'required|max:100|regex:/[a-zščžćđA-ZŠČŽĆĐ]+/',
     'email'    => 'required|email|unique:users',
     'password' => 'required',
     'repeat'   => 'required|same:password',
@@ -79,7 +79,7 @@ class UserController extends BaseController {
         $passwordReminder->save();
 
         Queue::getIron()->ssl_verifypeer = false;
-        Mail::queue('emails.auth.userWelcome', compact('token'), function($m) use ($user)
+        Mail::send('emails.auth.userWelcome', compact('token'), function($m) use ($user)
         {
             $m  ->to($user->email, $user->name)
                 ->subject(Lang::get('general.welcome'));

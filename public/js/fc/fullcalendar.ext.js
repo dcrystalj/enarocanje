@@ -84,8 +84,11 @@ function cal_repair_event(cal, event) {
 
 function cal_show_dialog(event) {
 	if(typeof event.source.editable != 'undefined' && !event.source.editable) return;
-	$('#efrom').val(getHour(event.start));
-	$('#eto').val(getHour(event.end));
+	var begin = getHour(event.start);
+	var end = getHour(event.end);
+	$('#efrom').val(begin);
+	$('#eto').val(end);
+	setTimePicker(begin, end);
 	$('#event-dialog').modal({
 		backdrop: 'static',
 		keyboard: true,
@@ -95,9 +98,11 @@ function cal_show_dialog(event) {
 	$('#event-dialog a.b_delete').click(function() {
 		calendar.fullCalendar('removeEvents', event._id);
 		$('#event-dialog').modal('hide');
+		$('#event-dialog .btn').unbind();
 	});
 	$('#event-dialog a.b_cancel').click(function() {
 		$('#event-dialog').modal('hide');
+		$('#event-dialog .btn').unbind();
 	});
 	$('#event-dialog a.b_save').click(function() {
 		var from = $('#efrom').val().split(':');
@@ -108,10 +113,10 @@ function cal_show_dialog(event) {
 		event.end.setMinutes(parseInt(to[1], 10));
 		calendar.fullCalendar('updateEvent', event);
 		$('#event-dialog').modal('hide');
+		$('#event-dialog .btn').unbind();
 	});
 	$('#event-dialog').on('hide', function() {
 		$('#event-dialog').off('click');
-		$('#event-dialog .btn').unbind();
 	});
 }
 

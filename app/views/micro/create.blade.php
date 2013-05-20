@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Manage Services
+    {{trans('general.manageServices')}}
 @stop
 
 @section('content')
@@ -15,9 +15,9 @@
             {{ Former::open(URL::route('macro.micro.store',$mac->id))->rules($rules) }}
         @endif
 
-        {{ Former::select('name','Service:')->options(Service::micro($mac->name))->autofocus() }}
-        {{ Former::text('title','Title:') }}
-        {{ Former::select('gender','For:')->options(Service::gender()) }} 
+        {{ Former::select('name',trans('general.service').':')->options(Service::micro($mac->name))->autofocus() }}
+        {{ Former::text('title',trans('general.title').':') }}
+        {{ Former::select('gender',trans('general.forCapital').':')->options(Service::gender()) }} 
 
         @if($errors && $errors->has('length'))
             <div class="control-group error">
@@ -25,7 +25,7 @@
             <div class="control-group required">
         @endif
 
-            {{ Former::label('length','Length:')->class('control-label')->for('datetimepicker')}}
+            {{ Former::label(trans('general.length').':')->class('control-label')->for('datetimepicker')}}
             <div class="controls">
             <div id="datetimepicker2" class="input-append date">
                 <input data-format="hh:mm" type="text" name="length" value="{{ (isset($mic))? substr($mic->length,0,-3) : '00:00' }}" ></input>
@@ -39,9 +39,9 @@
             </div>
         </div>
 
-        {{ Former::text('price','Price:')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
-        {{ Former::textarea('description','Description:')->rows(10)->columns(20) }}
-        {{ Former::actions()->submit( isset($mic) ? 'Save changes' : 'Add service' ) }}
+        {{ Former::text('price',trans('general.price').':')->append('€')->pattern('[+-]?\d*[\.,]?\d+') }}
+        {{ Former::textarea('description',trans('general.description').':')->rows(10)->columns(20) }}
+        {{ Former::actions()->submit( isset($mic) ? trans('general.saveChanges') : trans('general.addService') ) }}
         {{ Former::close() }}   
 
         <?php 
@@ -76,11 +76,11 @@
 
                     'link'   => Button::link(
                                     URL::route('macro.micro.edit',
-                                        [$mac->id, $service->id]), 'Edit'),
+                                        [$mac->id, $service->id]), trans('general.edit')),
 
                     'showReserv'  => Button::link(
                                     URL::route('macro.micro.reservation.show',
-                                        [$mac->id, $service->id, 0]), 'Show reservations'),
+                                        [$mac->id, $service->id, 0]), trans('general.showReservations')),
 
                     'deactivate'  => deactivate($mac->id, $service),
 
@@ -97,13 +97,13 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', 'Name', 'Length','Gender', 'Price(€)', '', '', '') }}
+        {{ Table::headers('#', trans('general.name'), trans('general.length'),trans('general.gender'), trans('general.price').'(€)', '', '', '') }}
         {{ Table::body($allActivated) }}
         {{ Table::close() }}
 
         @if(count($allDeactivated)>0)
             </br>
-            <h2>Deactivated:</h2>
+            <h2>{{trans('general.deactivated')}}:</h2>
             {{ Table::hover_open(["class"=>'sortable','id'=> 'mobileTable']) }}
             {{ Table::headers( 'Name', '', '') }}
             {{ Table::body($allDeactivated) }}
@@ -124,7 +124,7 @@
             )
         );
         $deactivate .=    Form::hidden('date','',['id'=>'hiddendate']);
-        $deactivate .=    Form::submit('Deactivate');
+        $deactivate .=    Form::submit(trans('general.deactivate'));
 
         if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")) )
         {
@@ -145,7 +145,7 @@
             'url'    => URL::route('microactivate', [$macId,$mic->id]))
         );
         $activate .=    Form::hidden('date',null,['id'=>'hiddendate']);
-        $activate .=    Form::submit('Activate',['class'    => 'activate']);
+        $activate .=    Form::submit(trans('general.activate'),['class'    => 'activate']);
 
         if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")))
         {

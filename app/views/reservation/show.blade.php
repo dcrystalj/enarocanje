@@ -1,14 +1,14 @@
 @extends('layouts.default')
 
 @section('title')
-Reservation
+{{trans('general.reservation')}}
 @stop
 
 @section('assets')
-{{ Html::style('css/fc/fullcalendar.css') }}
-{{-- Html::style('css/fc/fullcalendar.print.css') --}}
-{{ Html::script('js/fc/fullcalendar.js') }}
-{{ Html::script('js/fc/fullcalendar.ext.js') }}
+{{ Html2::style('css/fc/fullcalendar.css') }}
+{{-- Html2::style('css/fc/fullcalendar.print.css') --}}
+{{ Html2::script('js/fc/fullcalendar.js') }}
+{{ Html2::script('js/fc/fullcalendar.ext.js') }}
 @stop
 
 @section('content')
@@ -26,12 +26,11 @@ $leng =  timeToMinutes(MicroService::find($mic)->length)
 
 ?>
 
-<p>{{ Button::success_link('#','Reserve',array('id' => 'reserve')) }}</p>
-<p>{{ Button::link(URL::current().'?gcal=1','Show google events') }}</p>
-@if($reservation)
-<p>{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations')) }}</p>
-@endif
-
+<p>
+{{ Button::success_link('#',trans('general.reserve'),array('id' => 'reserve')) }}&nbsp
+{{ Button::link(URL::current().'?gcal=1',trans('messages.showGoogleEvents')) }} &nbsp
+{{ Button::link(URL::to('/google/export/reservations'), Lang::get('general.exportReservations'),array('id' => 'export_reservation')) }}&nbsp
+</p>
 
 <div id='calendar'></div>
 
@@ -48,7 +47,10 @@ fc_init({
 			.css('line-height',1)
 			.css('padding-top','2px');
 
-		//button show red
+		//button show googleexport
+		if(event.eventType == 'reservation'){
+			$('#export_reservation').show();
+		}
 		
 	},
 
@@ -58,7 +60,7 @@ fc_init({
 			revertFunc();
 		}
 
-		event.title = '{{ ($leng > 29) ? "Your choice: \\n" : ""}} from  '+time(event.start)+' to '+time(event.end);
+		event.title = '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} {{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
@@ -71,8 +73,8 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: '{{ ($leng > 29) ? "Your choice: \\n" : ""}} from'+time(start)+' to '+time(end),
-				eventType: 'reservation',
+				title: '{{ ($leng > 29) ? trans("messages.yourChoice").": \\n" : ""}} {{trans("general.from")}} '+time(start)+' {{trans("general.to")}} '+time(end),
+				eventType: 'newreservation',
 			});
 		}
 	},
@@ -83,12 +85,12 @@ fc_init({
 		if(event.eventType == 'reservation'){
 			
 			if(event.start < new Date()){
-				bootbox.alert("Cannot delete reservations on past days.");
+				bootbox.alert("{{trans('messages.cannotDeleteOnPast')}}");
 				return;
 			}
 
 			bootbox.confirm(
-			"Are you sure you want to delete reservation on " + fromTo(event) +" ?", function(result) {
+			"{{trans('messages.areYouSureDelete')}} " + fromTo(event) +"?", function(result) {
 		  	 	if(result){
 					$.post('{{ URL::action("MicroserviceApiController@postDeletereservation", array($mic)) }}/'+event.id, {'event': event.id}, function(e){
 						e = JSON.parse(e);
@@ -102,11 +104,6 @@ fc_init({
 		  	 	}
 				return;
 			});	
-		}
-	},
-	eventDragStart: function( event, jsEvent, ui, view ) { 
-		if(event.eventType == "reservation"){
-			return false;
 		}
 	},
 	eventSources: [
@@ -134,7 +131,6 @@ fc_init({
 			color: "rgba(192,192,192, 0.5)",
 			className: "termin"
 		},
-		@if(false)
 		{			
 			url: '{{ URL::action("MicroserviceApiController@getUsertimetable", array($mic)) }}',
 			@if(Auth::check())
@@ -144,26 +140,17 @@ fc_init({
 			editable: false,
 			color: "red",
 		},
-		@endif
 		@if($calendar_id)
 		{	
-		  url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
-				type: 'GET',
-				error: cal_error,
-				editable: false,
-				color: "rgba(192,192,192, 0.5)",
-				className: "termin"
-				},
+			url: '{{ URL::action("GCal@getEvents", array($calendar_id)) }}',
+			type: 'GET',
+			error: cal_error,
+			editable: false,
+			color: "rgba(192,192,192, 0.5)",
+			className: "termin"
+		},
 		@endif
 	],
-	@if($reservation)
-	events: [<?php // Show reservation
-		print json_encode(array_merge($reservation, array(
-			'color' => 'red',
-			'editable' => false,
-		)));
-	?>],
-	@endif
 	//check if data has been fetched
 	loading: function(bool) {
 		//if client hasnt already made reservation, then hide delete button
@@ -183,7 +170,12 @@ $(function() {
 		e.preventDefault();
 		var allevents = calendar.fullCalendar('clientEvents', -1);
 
-		bootbox.confirm("Are you sure you want to make reservation on " + fromTo(allevents[0]) +" ?", function(result) {
+		if( getDate(allevents[0].start) <  getDate(new Date())) {
+			$('#statusmessage').text('{{ trans("messages.cannotMakeOnPast") }}').show();
+			return;
+		}
+
+		bootbox.confirm("{{trans('messages.areYouSureMake')}} " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){	
 		  		if(!'{{ Auth::check() }}'){
@@ -205,7 +197,7 @@ $(function() {
 							title: allevents[0].title,
 							data:{	
 								'name' : $('#name').val(),
-								'mail' : $('#mail').val(),
+								'mail' : $('#email').val(),
 								'telephone': $('#telephone').val()
 							}
 						}
@@ -265,7 +257,7 @@ $(function() {
 	width: 118px !important;
 }
 
-#delete{
+#export_reservation{
 	display: none;
 }
 

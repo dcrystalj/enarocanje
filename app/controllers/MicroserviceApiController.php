@@ -39,8 +39,8 @@ class MicroserviceApiController extends BaseController
 		foreach ($r as $b) 
 		{
 			$date  = $b->date;
-			$title = "From: ";
-			$title .= date('G:i',strtotime($b->from)) ." to ";
+			$title = trans('general.from').": ";
+			$title .= date('G:i',strtotime($b->from)) ." ".trans('general.to')." ";
 			$title .= date('G:i',strtotime($b->to));
 
 			$timetable[] = array(
@@ -99,7 +99,7 @@ class MicroserviceApiController extends BaseController
 		{
 			return json_encode(array(
 				'success' => false,
-				'text'    => 'Cannot make reservation on passed days')
+				'text'    => trans('messages.cannotMakeOnPast'))
 			);
 		}
 
@@ -122,27 +122,27 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
+			Mail::send('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
 		    		$data['useremail'], 
 		    		$data['username']
 		    	)
-		    	->subject('Successful reservation!');
+		    	->subject(trans('messages.successfulReservation'));
 			});
 
-			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
+			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->email, 
 		    		$r->microservice->macroservice->name
 		    	)
-		    	->subject('Successful reservation!');
+		    	->subject(trans('messages.successfulReservation'));
 			});
 
-			return json_encode(array('success'=>true,'text'=>'Sucessfull reservation'));
+			return json_encode(array('success'=>true,'text'=>trans('messages.successfulReservation')));
 		}
-		return json_encode(array('success'=>false,'text'=>'Unucessfully created reservation'));
+		return json_encode(array('success'=>false,'text'=>trans('messages.unsuccessfulReservation')));
 
 	}
 
@@ -156,9 +156,9 @@ class MicroserviceApiController extends BaseController
 			->delete();
 
 		if($r)			
-			return json_encode(array('success'=>true,'text'=>'Sucessfully deleted.'));
+			return json_encode(array('success'=>true,'text'=>trans('messages.successfullyDeleted')));
 		else
-			return json_encode(array('success'=>false,'text'=>'Unucessfully deleted, please try again.'));
+			return json_encode(array('success'=>false,'text'=>trans('messages.unsuccessfullyDeleted')));
 
 	}
 
@@ -268,11 +268,17 @@ class MicroserviceApiController extends BaseController
 		$events = Input::get('event');
 		$event  = json_decode($events);
 		
-		$date   = date('Y-m-d', strtotime($event->start)); //Monday - day 0
-		$start  = date('G:i', strtotime($event->start));
-		$end    = date('G:i', strtotime($event->end));
-		$name   = $event->data->name;
-		$mail   = $event->data->mail;
+		$date      = date('Y-m-d', strtotime($event->start)); //Monday - day 0
+		$start     = date('G:i', strtotime($event->start));
+		$end       = date('G:i', strtotime($event->end));
+		$mail      = $event->data->mail;
+		$name      = $event->data->name;
+		$telephone = $event->data->telephone;
+		
+		if($telephone == "" || $mail == "")
+		{
+			return json_encode(array('success'=>false,'text'=>trans('messages.pleaseFill')));
+		}
 
 		if(	is_null(User::whereEmail($mail)->first()) ||
 			!is_null(User::whereEmail($mail)->first()) &&
@@ -292,7 +298,7 @@ class MicroserviceApiController extends BaseController
 			}
 			$tempuser->email  = $mail;
 			$tempuser->name   = $name;
-			$tempuser->telephone = $event->data->telephone;
+			$tempuser->telephone = $telephone;
 			$tempuser->status = -1;
 			$tempuser->save();
 		
@@ -320,27 +326,27 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
-			Mail::queue('emails.reservation.customer', $data, function($m) use ($data)
+			Mail::send('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(		    		
 		    		$data['useremail'], 
 		    		$data['username']
 		    	)
-		    	->subject('Successful reservation!');
+		    	->subject(trans('messages.successfulReservation'));
 			});
 
-			Mail::queue('emails.reservation.provider', $data, function($m) use ($r)
+			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
 		    		$r->microservice->macroservice->email, 
 		    		$r->microservice->macroservice->name
 		    	)
-		    	->subject('Successful reservation!');
+		    	->subject(trans('messages.successfulReservation'));
 			});
 
-			return json_encode(array('success'=>true,'text'=>'Sucessfully saved'));
+			return json_encode(array('success'=>true,'text'=>trans('messages.successfullySaved')));
 		}
-		return json_encode(array('success'=>false,'text'=>'Email is already taken, please login first'));
+		return json_encode(array('success'=>false,'text'=>trans('messages.emailTakenPleaseLogin')));
 	}
 
 
@@ -367,6 +373,28 @@ class MicroserviceApiController extends BaseController
 		$day['Sunday']    = 6;
 		return isset($day[$i])?$day[$i]: '';
 	}
+	/*
+	protected function dayToString($i){
+		$day[0] = trans('general.monday');
+		$day[1] = trans('general.tuseday')
+		$day[2] = trans('general.wednesday')
+		$day[3] = trans('general.thursday')
+		$day[4] = trans('general.friday')
+		$day[5] = trans('general.saturday')
+		$day[6] = trans('general.sunday')
+		return $day[$i];
+	}
+	protected function stringToDay($i){
+		$day[trans('general.monday')]    = 0;
+		$day[trans('general.tuseday')]   = 1;
+		$day[trans('general.wednesday')] = 2;
+		$day[trans('general.thursday')]  = 3;
+		$day[trans('general.friday')]    = 4;
+		$day[trans('general.saturday')]  = 5;
+		$day[trans('general.sunday')]    = 6;
+		return isset($day[$i])?$day[$i]: '';
+	} 
+	*/
 
 	protected function isDayInArray($workingHours,$day){
 		

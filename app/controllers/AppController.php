@@ -41,22 +41,52 @@ class AppController extends BaseController
 					Session::set('language',
 					UserLibrary::languageAbbrs(Auth::user()->language));
 				}
-				return Redirect::route('home')->with('success', 'Sucessfully logged in.'); 
+				return Redirect::route('home')->with('success', trans('messages.successfulLogin')); 
 			}
 			else
 			{
 				return  Redirect::back()
-					 	->with('error','Could not login, please try again')
+					 	->with('error',trans('messages.wrongEmailPassword'))
 					 	->with('rules',$this->rules);
 			}
 		}
 	}
 
-	public function getLogout(){
+	public function getLogout()
+	{
 		Auth::logout();
 		Session::forget('user');
 		Cookie::forget('user');
-		return Redirect::route('home')->with('status', 'Sucessfully logged out.');
+		return Redirect::route('home')->with('status', trans('messages.successfulLogout'));
 	}
 
+	public function getForgot()
+	{
+		return View::make('app.forgot');
+	}
+
+	public function postForgot()
+	{
+		$credentials = array('email' => Input::get('email'));
+		Session::put('postforgot','1');
+   		return Password::remind($credentials);
+	}
+
+	public function getResetpassword($token)
+	{
+		return View::make('app.reset')->with('token', $token);
+	}
+
+	public function postResetpassword($token)
+	{
+		$credentials = array('email' => Input::get('email'));
+
+	    return Password::reset($credentials, function($user, $password)
+	    {
+	        $user->password = Hash::make($password);
+	        $user->save();
+
+	        return Redirect::to('home')->with('success', trans('messages.successfullyChangedPassword'));
+	    });
+	}
 }
