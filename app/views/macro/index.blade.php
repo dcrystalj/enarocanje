@@ -13,6 +13,7 @@
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
+        }
         $tbody = []; 
         $i = 1; 
         foreach ($macroService as $service){    
