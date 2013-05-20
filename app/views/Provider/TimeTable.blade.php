@@ -20,48 +20,41 @@
 {{ Button::success_link("#", trans('general.next'), array('id' => 'continue')) }}
 </p>
 
-<dl class="dl-horizontal" >
-{{ Form::horizontal_open() }}
 
-<dt>Monday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',1) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
-
-<dt>Tuesday:</dt> 
-<dd>{{ Timepicker::from($errors,'00:00:00',3) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',4)}}</dd>
-
-<dt>Wednesday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',5) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',6)}}</dd>
-
-<dt>Thursday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',7) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',8)}}</dd>
-
-<dt>Friday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',9) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',10)}}</dd>
-
-<dt>Saturday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',11) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',12)}}</dd>
-
-<dt>Sunday:</dt>
-<dd>{{ Timepicker::from($errors,'00:00:00',13) }}</dd><dd>{{ Timepicker::to($errors,'00:00:00',14)}}</dd>
-
-{{ Former::close() }}
-</dl>
+@include('Provider.mobileTimeTable')
 
 <div id='calendar'></div>
 {{ Former::open(route('breaks', array($id)))->id('submit_form') }}
 {{ Former::hidden('start')->id('start') }}
 {{ Former::hidden('end')->id('end') }}
 {{ Former::hidden('events')->id('events') }}
-{{ Former::submit() }}
 {{ Former::close() }}
 
+
 <script>
+function fillFields(calendar){
+	//clear filds
+	for(i=1;i<=14;i++){
+		$('#datetimepick'+i+' input').val('00:00');
+	}
+
+	var events = calendar.fullCalendar('clientEvents');
+	var temp = []
+	for(i=0; i<events.length; i++){
+		temp[i] = cal_event_data(events[i]);
+		day = new Date(temp[i].start).getDay();
+		if (day==0) day=7;
+		$('#datetimepick'+(day*2-1)+' input').val(getHour(new Date(temp[i].start)));
+		$('#datetimepick'+day*2+' input').val(getHour(new Date(temp[i].end)));
+	}
+}
 @include('calendar.calendar_def')
 
 fc_init({
 	// Remove existing event
 	eventDrop: function(event) {
 		cal_clear_day(calendar, event);
+		fillFields(calendar);
 	},
 
 	// Insert event
@@ -70,6 +63,7 @@ fc_init({
 		calendar.fullCalendar('unselect');
 
 		if(!calendar.fullCalendar('clientEvents').length) {
+
 			start.setDate(start.getDate()-start.getDay()); // First day in week
 			end.setDate(end.getDate()-end.getDay()); // Same day
 			for(var day=1; day<=7; day++) {
@@ -80,10 +74,13 @@ fc_init({
 		} else {
 			fc_insert(start, end, {eventType: 'work'});
 		}
+		fillFields(calendar);
 	},
 
 	// Show edit dialog
-	eventClick: cal_show_dialog,
+	eventClick: function(event){
+		cal_show_dialog(event);
+	},
 
 	// Load events
 	@if(sizeof($events))
@@ -98,10 +95,23 @@ fc_init({
 		}
 	],
 	@endif
+
+	loading: function(bool) {
+		if(!bool )
+		{
+			fillFields(calendar);
+		}
+	}, 
 });
 
 $(function() {
 	calendar.fullCalendar('render');
+
+	fillFields(calendar);
+	
+	//hide for mobile
+	$('#calendar').addClass('visible-desktop');
+
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
@@ -111,6 +121,20 @@ $(function() {
 	});
 	$('#save,#continue').click(function(e) {
 		e.preventDefault();
+		// $('body').append($('#datetimepick'+1*2).val().getTime());
+		//mobile
+		if( $('.visible-desktop').css('display') == 'none!important' ) {
+
+			//insert events from text fields
+			for(i=1; i<=7; i++){
+				// start.setDate(start.getDate()-start.getDay()); // First day in week
+				// end.setDate(end.getDate()-end.getDay()); // Same day
+				var s = new Date($('#datetimepick'+(i*2-1)+' input').val().getTime()+1000*3600*24*i);
+				var e = new Date($('#datetimepick'+i*2+' input').val().getTime()+1000*3600*24*i);
+				fc_insert(s, e, {eventType: 'work'});
+			}
+		}
+
 		var events = calendar.fullCalendar('clientEvents');
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);
@@ -118,9 +142,14 @@ $(function() {
 		document.getElementById('start').value = calendar.fullCalendar('getView').start.toISOString();
 		document.getElementById('end').value = calendar.fullCalendar('getView').end.toISOString();
 		document.getElementById('submit_form').submit();
+		
 	});
 });
+
+
+
 </script>
+
 
 <style>
 /* Hide unnecessary things */
@@ -150,6 +179,9 @@ $(function() {
 .dl-horizontal {
 	margin-left: auto;
 	margin-right: auto;
+}
+dt {
+	margin-top: 10px;
 }
 </style>
 

@@ -99,10 +99,13 @@ function cal_show_dialog(event) {
 		calendar.fullCalendar('removeEvents', event._id);
 		$('#event-dialog').modal('hide');
 		$('#event-dialog .btn').unbind();
+		fillFields(calendar);
 	});
 	$('#event-dialog a.b_cancel').click(function() {
 		$('#event-dialog').modal('hide');
 		$('#event-dialog .btn').unbind();
+
+		fillFields(calendar);
 	});
 	$('#event-dialog a.b_save').click(function() {
 		var from = $('#efrom').val().split(':');
@@ -114,9 +117,13 @@ function cal_show_dialog(event) {
 		calendar.fullCalendar('updateEvent', event);
 		$('#event-dialog').modal('hide');
 		$('#event-dialog .btn').unbind();
+
+		fillFields(calendar);
 	});
 	$('#event-dialog').on('hide', function() {
 		$('#event-dialog').off('click');
+
+		fillFields(calendar);
 	});
 }
 
@@ -168,11 +175,6 @@ function getDate(t) {
 	if(d < 10) d = '0'+d;
 	return y+'-'+M+'-'+d+' '+getHour(t);
 }
-
-
-
-
-
 
 
 

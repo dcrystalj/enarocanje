@@ -10,9 +10,9 @@ class Timepicker {
         else
             $str .= "<div class='control-group required'>";
     
-        $str .= Former::label(trans('general.from').':','from')->class('control-label')->for('datetimepick$i');
+        $str .= Former::label(trans('general.from').':','from')->class('control-label')->for('datetimepick'.$i);
         $str .= "<div class='controls'>
-         <div id='datetimepick$i' class='input-append date dtp'>
+         <div id='datetimepick{$i}' class='input-append date dtp'>
              <input data-format='hh:mm' type='text' name='from' value='". (is_null($from) ?: substr($from,0,-3)) ."' class='input-small' ></input>
             <span class='add-on'>
                <i data-time-icon='icon-time' data-date-icon='icon-calendar'></i>
@@ -31,7 +31,7 @@ class Timepicker {
 
     }
 
-    public static function to($errors,$from)
+    public static function to($errors,$from,$i)
     {    
         $str = '';
         
@@ -40,9 +40,9 @@ class Timepicker {
         else
             $str .= "<div class='control-group required'>";
     
-        $str .= Former::label(trans('general.to').':','to')->class('control-label')->for('datetimepick$i');
+        $str .= Former::label(trans('general.to').':','to')->class('control-label')->for('datetimepick'.$i);
         $str .= "<div class='controls'>
-         <div id='datetimepick$' class='input-append date dtp'>
+         <div id='datetimepick{$i}' class='input-append date dtp'>
              <input data-format='hh:mm' type='text' name='to' value='". (is_null($from) ?: substr($from,0,-3)) ."' class='input-small' ></input>
             <span class='add-on'>
                <i data-time-icon='icon-time' data-date-icon='icon-calendar'></i>
