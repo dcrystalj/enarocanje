@@ -112,6 +112,22 @@
 	{{ Html2::script('js/sorttable.js') }}
 	{{ Html2::script('js/passStrength.js') }}
 	{{ Html2::script('js/stacktable.js') }}
-	
+
+<script>
+var _trans = {{ Html2::get_translates() }};
+function trans(trans) {
+  trans = ((typeof(_trans[trans])) === 'undefined')?trans:_trans[trans];
+  if(typeof arguments[1] === 'object') {
+    var key;
+    for(key in arguments[1]) {
+      var val = arguments[1][key];
+      key = ':'+key;
+      while(trans.indexOf(key) !== -1)
+	trans = trans.replace(key, val);
+    }
+  }
+  return trans;
+}
+</script>
 </body>
 </Html>
