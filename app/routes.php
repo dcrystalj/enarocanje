@@ -64,7 +64,10 @@ Route::resource('macro.absence','AbsenceController');
 // referral controller
 Route::resource('referral','ReferralController');
 
- 
+// categorization controller
+Route::resource('category','CategorizationController');
+
+
 //iron.io mail 
 Route::post('queue/push', function(){
 	return Queue::marshal();

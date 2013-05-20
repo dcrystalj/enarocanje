@@ -715,7 +715,7 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public static function getBootstrapFile()
     {
-        return 'C:\\xampp\\htdocs\\enarocanje\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation' . '/start.php';
+        return 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation' . '/start.php';
     }
     /**
      * Start the exception handling for the request.
@@ -19315,7 +19315,7 @@ class PrettyPageHandler extends Handler
         // Get the 'pretty-template.php' template file
         // @todo: this can be made more dynamic &&|| cleaned-up
         if (!($resources = $this->getResourcesPath())) {
-            $resources = 'C:\\xampp\\htdocs\\enarocanje\\vendor\\filp\\whoops\\src\\Whoops\\Handler' . '/../Resources';
+            $resources = 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\filp\\whoops\\src\\Whoops\\Handler' . '/../Resources';
         }
         $templateFile = "{$resources}/pretty-template.php";
         // @todo: Make this more reliable,

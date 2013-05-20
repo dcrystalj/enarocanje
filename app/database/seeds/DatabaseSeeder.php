@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('ZipcodeTableSeeder');
 		//$this->call('UsersTableSeeder');
+		$this->call('Categories_tableTableSeeder');
+		$this->call('CategoriesTableSeeder');
 	}
 
 }

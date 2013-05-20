@@ -9,11 +9,16 @@
     <?php 
     $zipcode = [];
     $city = [];
+    $category = [];
     $mac = Auth::user()->macroservices()->first(); 
     $zip = ZIPcode::all();
+    $categories = categories::all();
     foreach ($zip as $z) {
         $zipcode[] = $z->ZIP_code;
         $city[] = $z->city;
+    }
+    foreach ($categories as $cat) {
+        $category[$cat->name] = $cat->name;
     }
     ?>
     <div class="row-fluid">
@@ -21,10 +26,10 @@
         @if(isset($mac))
             {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mac) }}
-            {{ Former::select('name',Lang::get('general.name').': ')->options(Service::categories())->autofocus()->disabled() }}
+            {{ Former::select('name',Lang::get('general.name').': ')->options($category)->autofocus()->disabled() }}
         @else
             {{ Former::open(URL::route('macro.store'))->rules($rules) }}
-            {{ Former::select('name',Lang::get('general.name').': ')->options(Service::categories())->autofocus() }}
+            {{ Former::select('name',Lang::get('general.name').': ')->options($category)->autofocus() }}
         @endif
         {{ Former::text('ZIP_code','ZIP:')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$zipcode).'"]')->autocomplete('off')}}
         {{ Former::text('city','City:')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$city).'"]')->autocomplete('off')}}

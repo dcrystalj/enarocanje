@@ -38,6 +38,9 @@
 						!Auth::check() ?:
 						[Lang::get('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
 	 						false,null,null,(Auth::user()->isAdmin())],
+	 					!Auth::check() ?:
+						['Categories',URL::route('category.create'),Request::is('category.create'),
+	 						false,null,null,(Auth::user()->isAdmin())],
 					]),
 					['style' => 'height: auto']
 
