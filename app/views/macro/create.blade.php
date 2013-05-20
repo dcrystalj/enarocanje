@@ -12,13 +12,10 @@
     $category = [];
     $mac = Auth::user()->macroservices()->first(); 
     $zip = ZIPcode::all();
-    $categories = categories::all();
+    $category = Service::categories();
     foreach ($zip as $z) {
         $zipcode[] = $z->ZIP_code;
         $city[] = $z->city;
-    }
-    foreach ($categories as $cat) {
-        $category[$cat->name] = $cat->name;
     }
     ?>
     <div class="row-fluid">

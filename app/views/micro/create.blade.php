@@ -51,6 +51,7 @@
         $allDeactivated = [];
         $i              = 1; 
         $category = Service::categoryId($mac->name);
+
         foreach ($microservice as $service){
             if($service->isActive() && $service->category == $category)
             {
