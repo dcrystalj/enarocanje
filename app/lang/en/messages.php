@@ -66,7 +66,7 @@ return array(
 	'unsafePassword' => "Unsafe password!",
 	'eventMissing' => 'Event type is missing!',
 	'fetchingError' => "There was an error while fetching events!",
-
+	'resetPassword' => 'Reset password',
 
 
 
