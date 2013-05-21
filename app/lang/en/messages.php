@@ -58,11 +58,11 @@ return array(
 	'pleaseLogin' => 'Please login.',
 	'activationEmail' => 'Your activation email was sent to your email.',
 	'settingsSaved' => 'Settings saved.',
-	'settingsNotSaved' => 'Failed to save settings..',
+	'settingsNotSaved' => 'Failed to save settings.',
 	'referralSent' => 'Referral successfully sent.',
 	'ignoreEmail' => 'If you have not requested this, please, disregard this email.',
 	'activateServicesFrom' => 'Activate service from: ',
-	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :suggested? Click Yes to select the corrected email, click No to keep yours.'
+	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :suggested? Click Yes to select the corrected email, click No to keep yours.',
 	'unsafePassword' = "Unsafe password!",
 	
 

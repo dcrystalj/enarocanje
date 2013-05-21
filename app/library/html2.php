@@ -29,7 +29,7 @@ class Html2 extends Html {
 			'validation.email',
 			'messages.emailSuggestion',
 			'general.yes',
-			'general.no'
+			'general.no',
 
 		),
 		'js/fc/fullcalendar.ext.js' => array(
@@ -41,8 +41,8 @@ class Html2 extends Html {
 			'general.medium',
 			'general.strong',
 			'general.veryStrong',
-			'messages.unsafePassword'
+			'messages.unsafePassword',
 
-		)
+		),
 	);
 };
