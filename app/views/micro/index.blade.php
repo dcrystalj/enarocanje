@@ -7,7 +7,6 @@
 @section('content')
 
     <?php 
-        $duration = Service::duration();
         $mic = MacroService::find($mac)->microservices()->get();
     ?>
 
@@ -54,7 +53,7 @@
                 }
                 $tbody[] = [
                 'id'     => $i, 
-                'name'   => Service::services()[$category][$service->name], 
+                'title'  => $service->title,
                 'length' => $length, 
                 'desc'   => $service->description, 
                 'price'  => $service->price, 

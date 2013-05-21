@@ -68,7 +68,7 @@ class Service {
 
 	/*public static function duration() {
 		return self::$duration;
-	}*/	
+	}*/
 
 	public static function lengthMin($len) {
         if(substr($len,3,-4) == '0')

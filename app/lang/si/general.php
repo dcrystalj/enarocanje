@@ -40,7 +40,7 @@ return array(
 	'login' => 'Prijava',
 	'logout' => 'Odjava',
 	'manageService' => 'Uredi storitev',
-	'manageServices' => 'Uredi storiteve',
+	'manageServices' => 'Uredi storitve',
 	'name' => 'Ime',
 	'no' => 'Ne',
 	'password' => 'Geslo',
