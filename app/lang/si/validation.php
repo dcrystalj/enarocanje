@@ -31,7 +31,7 @@ return array(
 	"different"       => "Izbrana atributa :attribute in :other morata biti različna.",
 	"digits"          => "Izbran atribut :attribute mora biti :digits števk dolg.",
 	"digits_between"  => "Izbran atribut :attribute mora biti med :min in :max števk.",
-	"email"           => "Izbran atribut :attribute email format is neveljaven.",
+	"email"           => "Izbran atribut :attribute email format je neveljaven.",
 	"exists"          => "Izbran atribut :attribute je neveljaven.",
 	"image"           => "Izbran atribut :attribute mora biti slika.",
 	"in"              => "Izbran atribut :attribute je neveljaven.",

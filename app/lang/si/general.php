@@ -112,6 +112,14 @@ return array(
 	'saturday' => 'Sobota',
 	'sunday' => 'Nedelja', 	
 	'reservationInformation' => 'Informacije o rezervaciji',
+	'veryWeak' => 'Zelo šibko',
+	'weak' => 'Šibko',
+	'medium' => 'Srednje',
+	'strong' => 'Močno',
+	'veryStrong' => 'Zelo močno',
+
+
+
 
 );
 

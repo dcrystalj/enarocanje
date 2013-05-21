@@ -15,7 +15,6 @@ return array(
 	'registrationSuccess' => 'Registracija je uspela.',
 	'settingsSuccess' => 'Spremembe so bile shranjene.',
 	'notLoggedIn' => 'Niste prijavljeni',
-	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :corrected?\nPritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
 	'mailSuccessfullySent' => 'Email je bil uspešno poslan',
 	'enterInfo' => 'Vnesite vaše podatke',
 	'forgot' => 'Ste pozabili geslo? Kliknite tu',
@@ -63,4 +62,14 @@ return array(
 	'settingsNotSaved' => 'Neuspešno shranjeno.',
 	'referralSent' => 'Priporočilo je bilo uspešno poslano.',
 	'ignoreEmail' => 'Če niste zahtevali tega, prosimo, ignorirajte ta email.',
+	'activateServicesFrom' => 'Vključite storitve od: ',
+	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :suggested? Pritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
+	'unsafePassword' = "Geslo ni varno!",
+	
+
+
+
+
+
+
 );

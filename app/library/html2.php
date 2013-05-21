@@ -25,8 +25,23 @@ class Html2 extends Html {
 	private static $translates = array(
 		'js/main.js' => array(
 			'general.next',
+			'messages.activateServicesFrom',
+			'validation.email',
+			'messages.emailSuggestion',
+			'general.yes',
+			'general.no'
+
 		),
 		'js/fc/fullcalendar.ext.js' => array(
+
+		),
+		'js/passStrength.js' => array(
+			'general.veryWeak',
+			'general.weak',
+			'general.medium',
+			'general.strong',
+			'general.veryStrong',
+			'messages.unsafePassword'
 
 		)
 	);

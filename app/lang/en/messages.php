@@ -15,7 +15,6 @@ return array(
 	'registrationSuccess' => 'Registration successfully completed.',
 	'settingsSuccess' => 'Your settings were successfully updated.',
 	'notLoggedIn' => 'You are not logged in',
-	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :corrected?\nClick Yes to select the corrected email, click No to keep yours.',
 	'mailSuccessfullySent' => 'Email was successfully sent',
 	'enterInfo' => 'Enter your info',
 	'forgot' => 'Forgotten password? Click here',
@@ -62,6 +61,10 @@ return array(
 	'settingsNotSaved' => 'Failed to save settings..',
 	'referralSent' => 'Referral successfully sent.',
 	'ignoreEmail' => 'If you have not requested this, please, disregard this email.',
+	'activateServicesFrom' => 'Activate service from: ',
+	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :suggested? Click Yes to select the corrected email, click No to keep yours.'
+	'unsafePassword' = "Unsafe password!",
+	
 
 
 

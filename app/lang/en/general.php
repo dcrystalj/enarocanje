@@ -113,7 +113,11 @@ return array(
 	'saturday' => 'Saturday',
 	'sunday' => 'Sunday', 	
 	'reservationInformation' => 'Reservation information',
-
+	'veryWeak' => 'Very weak',
+	'weak' => 'Weak',
+	'medium' => 'Medium',
+	'strong' => 'Strong',
+	'veryStrong' => 'Very strong',
 
 );
 
