@@ -83,7 +83,7 @@ return array(
 	'userSettings' => 'User settings',
 	'welcome' => 'Welcome',
 	'yourChoice' => 'Your choice: \nfrom :from to :to',
-	'zipCode' => 'ZIP code',
+	'zipCode' => 'ZIP',
 	'gimport' => 'Import from google',
 	'title' => 'Title',
 	'undef' => 'Undefined',

@@ -11,6 +11,11 @@ class CategorizationController extends BaseController {
 		//
 	}
 
+	public function __construct() {
+        $this->beforeFilter('auth',     ['only'=>['create','store','destroy']]);
+        $this->beforeFilter('admin',    ['only'=>['create','store','destroy']]);
+    }
+
 	public function create()
 	{
 		return View::make('categorization.create')					
