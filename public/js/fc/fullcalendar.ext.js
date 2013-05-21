@@ -10,10 +10,10 @@ function fc_insert(start, end, data)  {
 	if(typeof data == 'undefined')
 		data = {};
 	if(!data['eventType'])
-		alert('Event type is missing!!!!');
+		alert(trans('messages.eventMissing'));
 	calendar.fullCalendar('renderEvent',
 						  $.extend({
-							  title: 'Working day',
+							  title: trans('general.workingDay'),
 							  start: start,
 							  end: end,
 							  allDay: false,
@@ -138,7 +138,7 @@ function cal_save(cal, url, callback, check) {
 }
 
 function cal_error() {
-	bootbox.dialog("There was an error while fetching events!", [{
+	bootbox.dialog(trans('messages.fetchingError'), [{
 		"label" : ":(",
 		"class" : "btn-danger",
 		}]);
@@ -251,7 +251,8 @@ function areConflicts(){
 }
 ///////
 function fromTo(event){
-	return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
+	//return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
+	return trans('general.fromTo',{y:(event.start.getYear()+1900),m:(event.start.getMonth()+1),d:event.start.getDate(),s:time(event.start),e:time(event.end)});
 }
 
 function time(str){

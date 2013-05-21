@@ -118,6 +118,7 @@ return array(
 	'medium' => 'Medium',
 	'strong' => 'Strong',
 	'veryStrong' => 'Very strong',
-
+	'workingDay' => 'Working day',
+	'fromTo' => ':y-:m-:d " from :s to :e',
 );
 

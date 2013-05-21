@@ -117,6 +117,8 @@ return array(
 	'medium' => 'Srednje',
 	'strong' => 'Močno',
 	'veryStrong' => 'Zelo močno',
+	'workingDay' => 'Delovni dan',
+	'fromTo' => ':y-:m-:d " od :s do :e',
 
 
 

@@ -65,7 +65,9 @@ return array(
 	'activateServicesFrom' => 'Vključite storitve od: ',
 	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :suggested? Pritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
 	'unsafePassword' => "Geslo ni varno!",
-	
+	'eventMissing' => 'Tip dogodka manjka!',
+	'fetchingError' => "Pri prenašanju dogodkov je prišlo do napake!",
+
 
 
 

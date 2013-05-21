@@ -33,7 +33,10 @@ class Html2 extends Html {
 
 		),
 		'js/fc/fullcalendar.ext.js' => array(
-
+			'messages.eventMissing',
+			'general.workingDay',
+			'messages.fetchingError',
+			'general.fromTo'
 		),
 		'js/passStrength.js' => array(
 			'general.veryWeak',
