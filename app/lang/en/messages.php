@@ -63,7 +63,7 @@ return array(
 	'ignoreEmail' => 'If you have not requested this, please, disregard this email.',
 	'activateServicesFrom' => 'Activate service from: ',
 	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :suggested? Click Yes to select the corrected email, click No to keep yours.',
-	'unsafePassword' = "Unsafe password!",
+	'unsafePassword' => "Unsafe password!",
 	
 
 

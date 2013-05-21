@@ -64,7 +64,7 @@ return array(
 	'ignoreEmail' => 'Če niste zahtevali tega, prosimo, ignorirajte ta email.',
 	'activateServicesFrom' => 'Vključite storitve od: ',
 	'emailSuggestion' => 'Vnesli ste :email. Mogoče ste hoteli vnesti :suggested? Pritisnite Da za izbiro popravljenega emaila, pritisnite Ne za vaš vnos.',
-	'unsafePassword' = "Geslo ni varno!",
+	'unsafePassword' => "Geslo ni varno!",
 	
 
 
