@@ -67,7 +67,7 @@ return array(
 	'unsafePassword' => "Geslo ni varno!",
 	'eventMissing' => 'Tip dogodka manjka!',
 	'fetchingError' => "Pri prenašanju dogodkov je prišlo do napake!",
-
+	'resetPassword' => 'Ponastavitev gesla',
 
 
 

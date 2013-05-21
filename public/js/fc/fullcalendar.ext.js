@@ -1,9 +1,11 @@
 var calendar;
 var removed = [];
 function fc_init(opts, id) {
-	if(typeof id == 'undefined')
-		id='#calendar';
-	calendar = $(id).fullCalendar($.extend(fc_defs, opts));
+        if(typeof id == 'undefined')
+                id='#calendar';
+        $(function() {
+         calendar = $(id).fullCalendar($.extend(fc_defs, opts));
+        });
 }
 // Helper
 function fc_insert(start, end, data)  {
