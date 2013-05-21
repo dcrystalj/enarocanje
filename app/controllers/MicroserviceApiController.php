@@ -376,7 +376,7 @@ class MicroserviceApiController extends BaseController
 	/*
 	protected function dayToString($i){
 		$day[0] = trans('general.monday');
-		$day[1] = trans('general.tuseday')
+		$day[1] = trans('general.tuesday')
 		$day[2] = trans('general.wednesday')
 		$day[3] = trans('general.thursday')
 		$day[4] = trans('general.friday')
@@ -386,7 +386,7 @@ class MicroserviceApiController extends BaseController
 	}
 	protected function stringToDay($i){
 		$day[trans('general.monday')]    = 0;
-		$day[trans('general.tuseday')]   = 1;
+		$day[trans('general.tuesday')]   = 1;
 		$day[trans('general.wednesday')] = 2;
 		$day[trans('general.thursday')]  = 3;
 		$day[trans('general.friday')]    = 4;
