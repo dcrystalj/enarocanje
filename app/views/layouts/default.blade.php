@@ -120,7 +120,7 @@
 var _trans = {{ Html2::get_translates() }};
 function trans(trans) {
   trans = ((typeof(_trans[trans])) === 'undefined')?trans:_trans[trans];
-  if(typeof arguments[1] === 'object') {
+  if(typeof arguments[1] === 'object' && typeof arguments[0] === 'string') {
     var key;
     for(key in arguments[1]) {
       var val = arguments[1][key];

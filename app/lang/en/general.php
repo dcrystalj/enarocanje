@@ -115,8 +115,8 @@ return array(
 	'fromTo' => ':y-:m-:d " from :s to :e',	
 	'monthLong' => array('January','February','March','April','May','June','July','August','September','October','November','December'),
 	'monthShort' => array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
-	'dayLong' => array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') ,
-	'dayShort' => array('Mon','Tue','Wed','Thu','Fri','Sat','Sun'), 
+	'dayLong' => array('Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') ,
+	'dayShort' => array('Sun', 'Mon','Tue','Wed','Thu','Fri','Sat'), 
 	'today' => 'today',
 	
 
