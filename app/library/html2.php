@@ -51,6 +51,13 @@ class Html2 extends Html {
 			'general.veryStrong',
 			'messages.unsafePassword'
 
+		),
+		'js/bootbox.min.js' => array(
+			'general.ok',
+			'general.cancel',
+			'general.cancel',
+			
+
 		)
 	);
 };

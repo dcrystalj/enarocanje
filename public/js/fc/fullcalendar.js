@@ -1870,7 +1870,11 @@ function zeroPad(n) {
 
 function smartProperty(obj, name) { // get a camel-cased/namespaced property of an object
 	if (obj[name] !== undefined) {
-		return obj[name];
+		//return obj[name];
+		if ('general.today' in _trans && name == 'today') { //please, don't hate me
+			return trans('general.'+name);
+		}
+		return trans(obj[name]);
 	}
 	var parts = name.split(/(?=[A-Z])/),
 		i=parts.length-1, res;

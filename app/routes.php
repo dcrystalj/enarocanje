@@ -92,3 +92,8 @@ Route::get('google/events/{calendar_id}', 'GCal@getEvents');
 Route::get('spucajbazozdejtkoj', function(){
 	
 });
+
+Route::get('logo', function()
+{
+	return View::make('logo');
+});
