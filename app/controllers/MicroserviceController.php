@@ -123,7 +123,7 @@ class MicroserviceController extends BaseController {
 
 	public function destroy($mac,$mic)
 	{
-		$macName = MacroService::find($mac)->name;
+		$macName  = MacroService::find($mac)->name;
 		$category = Service::categoryId($macName);
 
 		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
@@ -149,9 +149,9 @@ class MicroserviceController extends BaseController {
 
 	public function getActivated($mac, $mic)
 	{
-		$macName = MacroService::find($mac)->name;
+		$macName  = MacroService::find($mac)->name;
 		$category = Service::categoryId($macName);
-
+		
 		if (($micservice = Auth::user()->macroservices()->find($mac)->microservices()->find($mic)))
 		{
 			$micservice->active     =0;

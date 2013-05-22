@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder {
 		// $this->call('MacroserviceTableSeeder');
 		// $this->call('WorkinghourTableSeeder');
 
-		//$this->call('ZipcodeTableSeeder');
-		$this->call('UsersTableSeeder');
+		$this->call('ZipcodeTableSeeder');
+		//$this->call('UsersTableSeeder');
+		$this->call('Categories_tableTableSeeder');
+		$this->call('CategoriesTableSeeder');
+
 	}
 
 }

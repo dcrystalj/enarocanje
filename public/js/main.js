@@ -1,11 +1,11 @@
 
 $(document).ready(function() {
-
+   //var prevod = trans('general.next', {ura: 24, minuta:33}); 
    //calendar
    $('.activate').click(function(e) {
       e.preventDefault();
       var click = $(this);
-      $('spanfrom').text('Activate service from: ')
+      $('spanfrom').text(trans('messages.activateServicesFrom'))
       $('#event-dialog').modal({
          backdrop: 'static',
          keyboard: true,
@@ -30,7 +30,7 @@ $(document).ready(function() {
       e.preventDefault();
       var clickd = $(this);
 
-      $('spanfrom').text('Activate service from: ')
+      $('spanfrom').text(trans('messages.activateServicesFrom'))
       $('#event-dialog').modal({
          backdrop: 'static',
          keyboard: true,
@@ -93,7 +93,7 @@ function checkEmail(e, formName){
       checkMostUsed(email,formName);
    }
    else {
-    alert("The "+email+" email format is invalid.");
+    alert(trans('validation.email',{attribute: email}));
    }
 }
 
@@ -123,16 +123,17 @@ function checkMostUsed(email, formName) {
    if(index >= 0) {
 
       
-         var correctedEmail=name+"@"+domains[index];
-         bootbox.dialog('You entered '+email+'. Perhaps you wanted to enter '+correctedEmail+'?\nClick Yes to select the corrected email, click No to keep yours.', [{
-             "label" : "Yes",
+         var suggested=name+"@"+domains[index];
+         
+         bootbox.dialog(trans('messages.emailSuggestion',{email: email, suggested: suggested}), [{
+             "label" : trans('general.yes'),
              "class" : "btn-success",
              "callback": function() {
-                 document.getElementById("email").value=correctedEmail;
+                 document.getElementById("email").value=suggested;
                  $(formName).submit();
              }
          }, {
-             "label" : "No",
+             "label" : trans('general.no'),
              "class" : "btn-primary",
              "callback": function() {
                  $(formName).submit();

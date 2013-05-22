@@ -2,14 +2,14 @@
 
 class Service {
 
-	private static $serviceCategories = array(
+	/*private static $serviceCategories = array(
 		'Nurse salon'   => 'Nurse salon',
 		'Massage salon' => 'Massage salon',
 		'Hair salon'    => 'Hair salon',
 		'Beauty salon'  => 'Beauty salon',
-	);
+	);*/
 
-	private static $duration = array(
+	/*private static $duration = array(
 		'15'  => '15 min',
 		'30'  => '30 min',
 		'45'  => '45 min',
@@ -18,7 +18,7 @@ class Service {
 		'90'  => '1h 30 min',
 		'105' => '1h 45 min',
 		'120' => '2 h',
-    );
+    );*/
 
 	private static $services = array(
 		'3' => array('Manicure', 
@@ -37,32 +37,38 @@ class Service {
         'W' => 'Female',
     );
 
-    private static $absences = array(
+    /*private static $absences = array(
     	'holiday' => 'Holiday', 
     	'absence' => 'Absence',
-    );
+    );*/
 
     private static $length;
 
-	public static function categories() {
+	/*public static function categories() {
 		return self::$serviceCategories;
+	}*/
+
+	public static function categories(){
+		$categories = Categories::all();
+		foreach ($categories as $cat) {
+       		$category[$cat->name] = $cat->name;
+    	}
+    	return $category;
 	}
 
 	public static function categoryId($serviceName) {
-		$i=0;
-		foreach (self::$serviceCategories as $category)
+		$categories = Categories::all();
+		foreach ($categories as $category)
 		{
-			if($category == $serviceName){
-				return $i;
+			if($category->name == $serviceName){
+				return $category->id-1;
 			}
-			$i++;
 		}
-		return -1;
 	}
 
-	public static function duration() {
+	/*public static function duration() {
 		return self::$duration;
-	}	
+	}*/
 
 	public static function lengthMin($len) {
         if(substr($len,3,-4) == '0')
@@ -89,23 +95,27 @@ class Service {
 	}
 
 	public static function micro($serviceName) {
-		$category = self::categoryId($serviceName);
-		$i=0;
-		return self::$services[$category];
-	}	
+		$srv = [];
+		$categories = Categories::all();
+		foreach ($categories as $cat) {
+			if ($cat->name == $serviceName){
+				return self::$services[$cat->id-1];
+			}
+		}
+	}
 
 	public static function gender() {
 		return self::$sex;
 	}
 
-	public static function absence() {
+	/*public static function absence() {
 		return self::$absences;
-	}
+	}*/
 
 
-	public static function services(){
+	/*public static function services(){
 		return self::$services;
-	}	
+	}*/	
 	
 	public static function serviceName($micid){
 		$mic      = MicroService::find($micid);
@@ -120,12 +130,12 @@ class Service {
 	}	
 
 
-	public static function zip() {
+	/*public static function zip() {
     	$zipCode = ZIPcode::All();
 	    foreach ($zipCode as $z) {
 	         $codes[$z->ZIP_code] = $z->ZIP_code . ' ' . $z->city;
 	    }
      	return $codes;
-	}
+	}*/
 
 }

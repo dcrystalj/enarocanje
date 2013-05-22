@@ -83,7 +83,7 @@ return array(
 	'userSettings' => 'User settings',
 	'welcome' => 'Welcome',
 	'yourChoice' => 'Your choice: \nfrom :from to :to',
-	'zipCode' => 'ZIP code',
+	'zipCode' => 'ZIP',
 	'gimport' => 'Import from google',
 	'title' => 'Title',
 	'undef' => 'Undefined',
@@ -105,14 +105,21 @@ return array(
 	'invitedProvider' => 'Invited provider',
 	'subject' => 'Subject',
 	'sendReferral' => 'Send referral',
-	'monday' =>	'Monday',
-	'tuseday' => 'Tuesday' ,
-	'wednesday' => 'Wednesday',
-	'thursday' => 'Thursday',
-	'friday' => 'Friday',
-	'saturday' => 'Saturday',
-	'sunday' => 'Sunday', 	
 	'reservationInformation' => 'Reservation information',
+	'veryWeak' => 'Very weak',
+	'weak' => 'Weak',
+	'medium' => 'Medium',
+	'strong' => 'Strong',
+	'veryStrong' => 'Very strong',
+	'workingDay' => 'Working day',
+	'fromTo' => ':y-:m-:d " from :s to :e',	
+	'monthLong' => array('January','February','March','April','May','June','July','August','September','October','November','December'),
+	'monthShort' => array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
+	'dayLong' => array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') ,
+	'dayShort' => array('Mon','Tue','Wed','Thu','Fri','Sat','Sun'), 
+	'today' => 'today',
+	
+
 
 
 );
