@@ -14,6 +14,8 @@
 @section('content')
 @include('calendar.calendar_register')
 
+<div id="hiddendesktop" class="hidden-desktop"></div>
+
 <?php 
 
 function timeToMinutes($time){
@@ -165,6 +167,11 @@ fc_init({
 	
 $(function() {	
 
+	if( $(document).width() < 800 ) {
+		calendar.fullCalendar('changeView', 'agendaDay');
+		$('.fc-header-title h2').css({ 'font-size': '13px' });
+		$('#calendar').fullCalendar('option', 'height', 750);
+	}
 	// Buttons
 	$('#reserve').click(function(e) {
 		e.preventDefault();

@@ -23,7 +23,7 @@
 
 @include('Provider.mobileTimeTable')
 
-<div id='calendar'></div>
+<div id='calendar' class="visible-desktop"></div>
 {{ Former::open(route('breaks', array($id)))->id('submit_form') }}
 {{ Former::hidden('start')->id('start') }}
 {{ Former::hidden('end')->id('end') }}
@@ -32,22 +32,7 @@
 
 
 <script>
-function fillFields(calendar){
-	//clear filds
-	for(i=1;i<=14;i++){
-		$('#datetimepick'+i+' input').val('00:00');
-	}
 
-	var events = calendar.fullCalendar('clientEvents');
-	var temp = []
-	for(i=0; i<events.length; i++){
-		temp[i] = cal_event_data(events[i]);
-		day = new Date(temp[i].start).getDay();
-		if (day==0) day=7;
-		$('#datetimepick'+(day*2-1)+' input').val(getHour(new Date(temp[i].start)));
-		$('#datetimepick'+day*2+' input').val(getHour(new Date(temp[i].end)));
-	}
-}
 @include('calendar.calendar_def')
 
 fc_init({
@@ -123,16 +108,9 @@ $(function() {
 		e.preventDefault();
 		// $('body').append($('#datetimepick'+1*2).val().getTime());
 		//mobile
-		if( $('.visible-desktop').css('display') == 'none!important' ) {
+		if( $('#calendar').css('display') == 'none' ) {
 
-			//insert events from text fields
-			for(i=1; i<=7; i++){
-				// start.setDate(start.getDate()-start.getDay()); // First day in week
-				// end.setDate(end.getDate()-end.getDay()); // Same day
-				var s = new Date($('#datetimepick'+(i*2-1)+' input').val().getTime()+1000*3600*24*i);
-				var e = new Date($('#datetimepick'+i*2+' input').val().getTime()+1000*3600*24*i);
-				fc_insert(s, e, {eventType: 'work'});
-			}
+			fillCalendar(calendar);
 		}
 
 		var events = calendar.fullCalendar('clientEvents');

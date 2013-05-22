@@ -17,7 +17,21 @@
     }
     ?>
     <div class="row-fluid">
-      <div class="span5">
+    <div class="offset1 span2">
+        @if( isset($mac) && $mac->active==0 )
+        
+        {{Button::large_link(URL::route('timetable', $mac->id), trans('general.timetable'))}}
+        {{Button::large_link(URL::route('macro.absence.create', $mac->id), trans('general.absences'))}}
+        {{Button::large_link( URL::route('macro.micro.create',$mac->id), trans('general.justservices'))}}
+        {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.exportReservations'))}}
+        {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),trans('general.delete'),array('id' => 'delete'))}}
+
+
+        {{ Former::open(URL::route('macro.destroy',$mac->id))->method('DELETE')->id('delForm')}}, 
+        {{ Former::danger_large_submit(trans('general.delete')) }}
+        {{ Former::close() }}
+    </div>
+    <div class="offset2 span5">
         @if(isset($mac))
             {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mac) }}
@@ -37,34 +51,18 @@
         {{ Former::close() }}   
 
     </div>
-    <div class="span5 offset2">
-        @if( isset($mac) && $mac->active==0 )
-    	
-        {{Button::large_link(URL::route('timetable', $mac->id), trans('general.timetable'))}}
-        {{Button::large_link(URL::route('macro.absence.create', $mac->id), trans('general.absences'))}}
-        {{Button::large_link( URL::route('macro.micro.create',$mac->id), trans('general.justservices'))}}
-        {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.exportReservations'))}}
-        {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),trans('general.delete'),array('id' => 'delete'))}}
 
-
-        {{ Former::open(URL::route('macro.destroy',$mac->id))->method('DELETE')->id('delForm')}}, 
-        {{ Former::danger_large_submit(trans('general.delete')) }}
-        {{ Former::close() }}                  
-
-        <script type="text/javascript">
-                $('#delete').click(function(e) {
-                    e.preventDefault();
-                    bootbox.confirm('Are you sure to delete all services?', function(result) {
-                        if(result){
-                            $('#delForm').submit();
-                        }
-                        $('#event-dialog').modal('hide');
-                    });
-                });
-        </script>
-
-    @endif
-        </div>  
+    @endif 
     </div>
-
+    <script type="text/javascript">
+        $('#delete').click(function(e) {
+            e.preventDefault();
+            bootbox.confirm('Are you sure to delete all services?', function(result) {
+                if(result){
+                    $('#delForm').submit();
+                }
+                $('#event-dialog').modal('hide');
+            });
+        });
+    </script>
 @stop

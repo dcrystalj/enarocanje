@@ -28,7 +28,7 @@
 
 <dt>Saturday:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',11) }}</dd>
-<dd>{{ Timepicker::to($errors,'00:00:00',12) }}</dd>c
+<dd>{{ Timepicker::to($errors,'00:00:00',12) }}</dd>
 
 
 <dt>Sunday:</dt>

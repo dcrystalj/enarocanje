@@ -11,16 +11,17 @@ function fc_insert(start, end, data)  {
 		data = {};
 	if(!data['eventType'])
 		alert('Event type is missing!!!!');
-	calendar.fullCalendar('renderEvent',
-						  $.extend({
-							  title: 'Working day',
-							  start: start,
-							  end: end,
-							  allDay: false,
-							  editable: true,
-						  }, data),
-						  true // make the event "stick"
-						 );
+	if(start < end)
+		calendar.fullCalendar('renderEvent',
+			  $.extend({
+				  title: 'Working day',
+				  start: start,
+				  end: end,
+				  allDay: false,
+				  editable: true,
+			  }, data),
+			  true // make the event "stick"
+			 );
 }
 /*
 Event:
@@ -251,6 +252,58 @@ function areConflicts(){
 	}
 	return false;
 }
+
+//responsive
+function fillFields(calendar){
+	//clear filds
+	for(i=1;i<=14;i++){
+		$('#datetimepick'+i+' input').val('00:00');
+	}
+
+	var events = calendar.fullCalendar('clientEvents');
+	var temp = []
+	for(i=0; i<events.length; i++){
+		temp[i] = cal_event_data(events[i]);
+		day = new Date(temp[i].start).getDay();
+		if (day==0) day=7;
+		$('#datetimepick'+(day*2-1)+' input').val(getHour(new Date(temp[i].start)));
+		$('#datetimepick'+day*2+' input').val(getHour(new Date(temp[i].end)));
+	}
+}
+function newDate(s,i){
+	var start = new Date();
+	start.setYear('2013');
+	start.setMonth('3');
+	start.setDate(i);
+	start.setHours(parseInt(s.substr(0,2),10) || 0);
+	start.setMinutes(parseInt(s.substr(3,2),10) || 0);
+	return start;
+}
+
+function fillCalendar(calendar){
+	var events = calendar.fullCalendar('clientEvents');
+	for(var i=0; i<events.length; i++)
+		calendar.fullCalendar('removeEvents', events[i]._id);
+
+	for(i=1;i<=7;i++){
+		var start 	= newDate($('#datetimepick'+(i*2-1)+' input').val(), i);
+		var end 	= newDate($('#datetimepick'+(i*2)+' input').val(), i);
+		fc_insert(start, end, {eventType: 'work'});
+	}
+}
+
+function insertFrom(i){
+	var str = '<div class="control-group required"><label for="datetimepick'+i+'" class="control-label">From:</label><div class="controls">';
+    str += '<div id="datetimepick'+i+'" class="input-append date dtp">';
+	str += ' <input data-format="hh:mm" type="text" name="from" value="00:00" class="input-small">';
+	str += '<span class="add-on">';
+    str += '<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-time"></i>';
+	str += '</span>';
+    str += '</div></div>';
+	str += '</div>';
+	return str;
+}
+
 ///////
 function fromTo(event){
 	return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
