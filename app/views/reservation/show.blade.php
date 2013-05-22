@@ -218,9 +218,8 @@ $(function() {
 							calendar.fullCalendar( 'rerenderEvents' );
 							$('#delete').show();					
 						}
-						$('#event-dialog').modal('hide');
 					});
-
+					$('#event-dialog').modal('hide');
 						
 				});
 				$('#event-dialog').on('hide', function() {

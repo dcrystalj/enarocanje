@@ -315,7 +315,7 @@ class MicroserviceApiController extends BaseController
 
 			$mic      = MicroService::find($microservid);
 			$category = $mic->category;
-			$name     = Service::services()[$category][$mic->name];
+			$name     = $mic->title;
 
 			$data = array(
 				'username'  => $tempuser->name,

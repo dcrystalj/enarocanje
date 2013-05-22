@@ -58,7 +58,7 @@ return array(
 	'reservate' => 'Reservate',
 	'reservation' => 'Reservation',
 	'reservations' => 'Reservations',
-	'reservr' => 'Reserve',
+	'reserve' => 'Reserve',
 	'reset' => 'Reset',
 	'next' => 'Next',
 	'repeatable' => 'Repeatable',
