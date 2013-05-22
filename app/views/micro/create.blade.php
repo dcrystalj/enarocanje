@@ -143,10 +143,10 @@
     {
         $activate = Form::open( array(
             'method' => 'GET', 
-            'url'    => URL::route('microactivate', [$macId,$mic->id]))
+            'url'    => URL::route('microactivate', [$macId,$mic->id]),'class'=>'activate')
         );
         $activate .=    Form::hidden('date',null,['id'=>'hiddendate']);
-        $activate .=    Form::submit(trans('general.activate'),['class'    => 'activate']);
+        $activate .=    Form::submit(trans('general.activate'));
 
         if(strtotime($mic->activefrom) > strtotime(date("Y-m-d")))
         {
