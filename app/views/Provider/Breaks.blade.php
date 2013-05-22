@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-{{Lang::get('general.breaks')}}
+{{trans('general.breaks')}}
 @stop
 
 @section('assets')
@@ -15,34 +15,42 @@
 @include('calendar.calendar_dialog')
 
 <p>
-{{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
+{{ Button::danger_link('#',trans('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{ Button::link('#', Lang::get('general.back'), array('id' => 'back')) }}
+{{ Button::link('#', trans('general.back'), array('id' => 'back')) }}
 &nbsp;&nbsp;
-{{ Button::success_link("#",Lang::get('general.save'),array('id' => 'save')) }}
+{{ Button::success_link("#",trans('general.save'),array('id' => 'save')) }}
 </p>
 
-<div id='calendar'></div>
+@include('Provider.mobileBreaks')
+
+<div id='calendar' class="visible-desktop"></div>
+
 <form id="submit_form" method="post" action="{{ route("breaks_submit", array($id)) }}">
 	<input type="hidden" name="events" id="events" value="<?php print htmlspecialchars(json_encode($events)); ?>" />
 	<input type="hidden" name="breaks" id="breaks" />
 </form>
+
 <script>
+
 @include('calendar.calendar_def')	
 fc_init({
 	eventAfterRender: function(event, element, view) {  
 		var width = $(element).width()+8;
 		$(element).css('width', width + 'px');
+		fillFields(calendar);
 	},
 	eventDrop: function(event, dayDelta, minDelta, allDay, rf) {
 		if (isOverlapping(event.start, event.end))
 			rf();
+		fillFields(calendar);
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
 		calendar.fullCalendar('unselect');
 		if(!isOverlapping(start,end))
 			fc_insert(start, end, {eventType: 'break'});
+		fillFields(calendar);
 	},
 	eventClick: cal_show_dialog,
 	eventSources: [
@@ -57,6 +65,7 @@ fc_init({
 	});
 
 $(function() {
+	fillFields(calendar);
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
@@ -73,6 +82,11 @@ $(function() {
 	});
 	$('#save').click(function(e) {
 		e.preventDefault();
+
+		if( $('#calendar').css('display') == 'none' ) {
+			fillCalendar(calendar);
+		}
+
 		var events = calendar.fullCalendar('clientEvents', function(e) {return e.editable !== false;});
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);

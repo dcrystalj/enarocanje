@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.providers')}}
+    {{trans('general.providers')}}
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
                 'name'   => $service->name,
                 'City'   => $service->city . ' <br>' . $service->street, 
                 'Email'  => $service->email,
-                'link'   => Button::link(URL::route('macro.micro.index', $service->id),Lang::get('general.choose'))
+                'link'   => Button::link(URL::route('macro.micro.index', $service->id),trans('general.choose'))
              ];
              $i++;
         }

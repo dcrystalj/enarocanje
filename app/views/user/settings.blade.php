@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{Lang::get('general.userSettings')}}
+    {{trans('general.userSettings')}}
 @stop
 
 @section('content')
@@ -11,11 +11,11 @@
 ?>
 {{Former::open(URL::route('user.update',Auth::user()->id))->rules($rules)->method('PUT')}}
 {{Former::populate( Auth::user())}}
-{{Former::text('name',Lang::get('general.name'))->autofocus()}}
-{{Former::text('surname',Lang::get('general.surname'))}}
-{{Former::select('timezone',Lang::get('general.timezone'))->options(UserLibrary::timezones(),Auth::user()->time_zone)}}
-{{Former::select('language',Lang::get('general.language'))->options(UserLibrary::languages())}}
-{{Former::actions()->submit(Lang::get('general.submit'))}}
+{{Former::text('name',trans('general.name'))->autofocus()}}
+{{Former::text('surname',trans('general.surname'))}}
+{{Former::select('timezone',trans('general.timezone'))->options(UserLibrary::timezones(),Auth::user()->time_zone)}}
+{{Former::select('language',trans('general.language'))->options(UserLibrary::languages())}}
+{{Former::actions()->submit(trans('general.submit'))}}
 {{Former::close()}}
 
 @stop

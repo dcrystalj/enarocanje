@@ -68,11 +68,11 @@
     
 	{{ Former::actions()->submit( isset($abs) ? trans('general.saveChanges') : trans('general.addAbsence') ) }}
     {{ Former::close() }}
-	{{-- Button::link("/google/export", Lang::get('general.export')) --}}
+	{{-- Button::link("/google/export", trans('general.export')) --}}
 </div>
 <div class="span5 offset2">
 
-    {{ Button::large_link("/google/import", Lang::get('general.gimport'), array('id' => 'google_import')) }}
+    {{ Button::large_link("/google/import", trans('general.gimport'), array('id' => 'google_import')) }}
 
 </div>
 </div>

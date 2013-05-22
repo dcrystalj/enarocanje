@@ -55,7 +55,7 @@
                 'id'     => $i, 
                 'title'  => $service->title,
                 'length' => $length, 
-                'desc'   => $service->description, 
+                'desc'   => strlen($service->description)>15 ? substr($service->description,0,20) .'...' : $service->description, 
                 'price'  => $service->price, 
                 'link'   => Button::link(URL::route('macro.micro.reservation.index',[$mac,$service->id]),trans('general.reservate'))
                 ];

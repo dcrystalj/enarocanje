@@ -71,7 +71,7 @@ class AbsenceController extends BaseController {
             if($absence)
             {
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success',Lang::get('messages.successfullySaved'));
+                                ->with('success',trans('messages.successfullySaved'));
             }
         }
         return Redirect::back()
@@ -93,7 +93,7 @@ class AbsenceController extends BaseController {
                             ->with('absences', $absences);
         }   
         return Redirect::route('macro.absence.create',$mac)
-                        ->with('error',Lang::get('messages.wrongAbsence'));
+                        ->with('error',trans('messages.wrongAbsence'));
     }
 
     /**
@@ -130,7 +130,7 @@ class AbsenceController extends BaseController {
 
             if($absence){
                 return Redirect::route('macro.absence.create',$mac)
-                                ->with('success',Lang::get('messages.successfullyEdited'));
+                                ->with('success',trans('messages.successfullyEdited'));
             }
         }
 
@@ -152,10 +152,10 @@ class AbsenceController extends BaseController {
         {
             $absence->delete();
             return Redirect::route('macro.absence.create',$mac)
-                            ->with('success',Lang::get('messages.successfullyDeleted'));
+                            ->with('success',trans('messages.successfullyDeleted'));
         }
         return Redirect::route('macro.absence.create',$mac)
-                                ->with('error',Lang::get('messages.absenceNotFound'));    
+                                ->with('error',trans('messages.absenceNotFound'));    
     }
 
 }

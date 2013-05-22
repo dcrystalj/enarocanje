@@ -22,8 +22,8 @@
 	@endif
 
     {{ Former::open(URL::action('AppController@postForgot')) }}
-    {{ Former::text('email',Lang::get('general.email').':')
+    {{ Former::text('email',trans('general.email').':')
     			->autofocus()->value(empty($email) ? '' : $email) }}
-    {{ Former::actions()->submit(Lang::get('general.submit')) }}
+    {{ Former::actions()->submit(trans('general.submit')) }}
     {{ Former::close() }}   
 @stop

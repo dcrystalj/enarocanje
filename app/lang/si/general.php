@@ -116,8 +116,8 @@ return array(
 	'fromTo' => ':y-:m-:d od :s do :e',
 	'monthLong' => array('Januar','Februar','Marec','April','Maj','Junij','Julij','Avgust','September','Oktober','November','December'),
 	'monthShort' => array('Jan','Feb','Mar','Apr','Maj','Jun','Jul','Avg','Sep','Okt','Nov','Dec'),
-	'dayLong' => array('Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota','Nedelja') ,
-	'dayShort' => array('Pon','Tor','Sre','Čet','Pet','Sob','Ned'), 	
+	'dayLong' => array('Nedelja', 'Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota') ,
+	'dayShort' => array('Ned', 'Pon','Tor','Sre','Čet','Pet','Sob'), 	
 	'today' => 'danes',
 	
 

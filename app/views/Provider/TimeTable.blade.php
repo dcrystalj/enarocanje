@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('title')
-{{Lang::get('general.timetable')}}
+	{{trans('general.timetable')}}
 @stop
 
 @section('assets')
@@ -13,26 +13,33 @@
 @section('content')
 @include('calendar.calendar_dialog')
 <p>
-{{ Button::danger_link('#',Lang::get('general.reset'),array('id' => 'reset')) }}
+{{ Button::danger_link('#',trans('general.reset'),array('id' => 'reset')) }}
 &nbsp;&nbsp;
-{{-- Button::link("/service/$id/breaks", Lang::get('general.breaks'), array('id' => 'breaks')) --}}
-{{-- Button::success_link("#", Lang::get('general.save'), array('id' => 'save')) --}}
-{{ Button::success_link("#", Lang::get('general.next'), array('id' => 'continue')) }}
+{{-- Button::link("/service/$id/breaks", trans('general.breaks'), array('id' => 'breaks')) --}}
+{{-- Button::success_link("#", trans('general.save'), array('id' => 'save')) --}}
+{{ Button::success_link("#", trans('general.next'), array('id' => 'continue')) }}
 </p>
 
-<div id='calendar'></div>
-<form id="submit_form" method="post" action="{{ route("breaks", array($id)) }}">
-	<input type="hidden" name="start" id="start" />
-	<input type="hidden" name="end" id="end" />
-	<input type="hidden" name="events" id="events" />
-</form>
+
+@include('Provider.mobileTimeTable')
+
+<div id='calendar' class="visible-desktop"></div>
+{{ Former::open(route('breaks', array($id)))->id('submit_form') }}
+{{ Former::hidden('start')->id('start') }}
+{{ Former::hidden('end')->id('end') }}
+{{ Former::hidden('events')->id('events') }}
+{{ Former::close() }}
+
+
 <script>
+
 @include('calendar.calendar_def')
 
 fc_init({
 	// Remove existing event
 	eventDrop: function(event) {
 		cal_clear_day(calendar, event);
+		fillFields(calendar);
 	},
 
 	// Insert event
@@ -41,6 +48,7 @@ fc_init({
 		calendar.fullCalendar('unselect');
 
 		if(!calendar.fullCalendar('clientEvents').length) {
+
 			start.setDate(start.getDate()-start.getDay()); // First day in week
 			end.setDate(end.getDate()-end.getDay()); // Same day
 			for(var day=1; day<=7; day++) {
@@ -51,10 +59,13 @@ fc_init({
 		} else {
 			fc_insert(start, end, {eventType: 'work'});
 		}
+		fillFields(calendar);
 	},
 
 	// Show edit dialog
-	eventClick: cal_show_dialog,
+	eventClick: function(event){
+		cal_show_dialog(event);
+	},
 
 	// Load events
 	@if(sizeof($events))
@@ -64,15 +75,28 @@ fc_init({
 		{
 			url: '{{ URL::action("MicroserviceApiController@getWorkinghours", array($id)) }}',
 			type: 'GET',
-			error: function() { alert("{{Lang::get('messages.fetchingError')}}") },
+			error: function() { alert("{{trans('messages.fetchingError')}}") },
 			editable: true,
 		}
 	],
 	@endif
+
+	loading: function(bool) {
+		if(!bool )
+		{
+			fillFields(calendar);
+		}
+	}, 
 });
 
 $(function() {
 	calendar.fullCalendar('render');
+
+	fillFields(calendar);
+	
+	//hide for mobile
+	$('#calendar').addClass('visible-desktop');
+
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
@@ -82,6 +106,13 @@ $(function() {
 	});
 	$('#save,#continue').click(function(e) {
 		e.preventDefault();
+		// $('body').append($('#datetimepick'+1*2).val().getTime());
+		//mobile
+		if( $('#calendar').css('display') == 'none' ) {
+
+			fillCalendar(calendar);
+		}
+
 		var events = calendar.fullCalendar('clientEvents');
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);
@@ -89,9 +120,14 @@ $(function() {
 		document.getElementById('start').value = calendar.fullCalendar('getView').start.toISOString();
 		document.getElementById('end').value = calendar.fullCalendar('getView').end.toISOString();
 		document.getElementById('submit_form').submit();
+		
 	});
 });
+
+
+
 </script>
+
 
 <style>
 /* Hide unnecessary things */
@@ -112,6 +148,18 @@ $(function() {
 .fc-agenda-slots tr * {
 	height: 10px !important;
 	line-height: 10px;
+}
+
+.form-horizontal .control-group {
+	margin-bottom: 5px;
+}
+
+.dl-horizontal {
+	margin-left: auto;
+	margin-right: auto;
+}
+dt {
+	margin-top: 10px;
 }
 </style>
 

@@ -32,11 +32,11 @@ fc_init({
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 
 		
-		event.title = "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
+		event.title = "{{trans('messages.yourChoice')}} : {{trans("general.from")}} " +time(event.start)+' {{trans("general.to")}} '+time(event.end);
 
 		if (isOverlapping(event.start, event.end)) { 
 			revertFunc();
-			event.title = "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(event.start)+' {{trans("general.to")}} '+time(event.end);
+			event.title = "{{trans('messages.yourChoice')}} {{trans("general.from")}} " +time(event.start)+' {{trans("general.to")}} '+time(event.end);
 		}
 	},
 	select: function(start, end, allDay) {
@@ -50,7 +50,7 @@ fc_init({
 		if(!isOverlapping(start,end)){
 			fc_insert(start, end, {
 				id: -1,
-				title: "{{trans('messages.yourChoice')}}".': \n{{trans("general.from")}}  '+time(start)+' {{trans("general.to")}} '+time(end),
+				title: "{{trans('messages.yourChoice')}} {{trans("general.from")}} " +time(start)+' {{trans("general.to")}} '+time(end),
 				eventType: 'reservation',
 			});
 		}

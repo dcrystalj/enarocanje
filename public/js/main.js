@@ -49,6 +49,7 @@ $(document).ready(function() {
          $('#event-dialog').off('click');
       });                     
    });
+   
    //menu bug
    $('.nav-collapse').addClass('collapse');
 
@@ -67,6 +68,12 @@ $(document).ready(function() {
       pickSeconds: false,
    });
    $('#datetimepicker2').datetimepicker({
+      language: 'pt-BR',
+      pickSeconds: false,
+      pickDate: false,
+      maskInput:false,
+   });
+   $('.dtp').datetimepicker({
       language: 'pt-BR',
       pickSeconds: false,
       pickDate: false,
