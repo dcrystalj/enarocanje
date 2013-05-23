@@ -67,7 +67,7 @@ return array(
 	'eventMissing' => 'Event type is missing!',
 	'fetchingError' => "There was an error while fetching events!",
 	'resetPassword' => 'Reset password',
-
+	'noProvidersYet' => 'No providers avaliable yet',
 
 
 

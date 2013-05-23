@@ -9,7 +9,7 @@
     <?php 
         $macroService = MacroService::whereActive(0)->get();
         $categories = Categories::all();
-        $categoryName['none'] = 'none';
+        $categoryName['none'] = trans('general.none');
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
@@ -29,12 +29,12 @@
     ?>
 
     @if(count($macroService)==0)
-        {{ Typography::warning('No providers avaliable yet') }}
+        {{ Typography::warning(trans('messages.noProvidersYet')) }}
     @else
         {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label('category', 'Filter providers by category:') }}
-        {{ Form::select('categories',$categoryName ,Input::get('category')) }}
-        {{ Form::submit('Filter') }}
+        {{ Form::label(trans('general.filterProvidersByCategory')) }}
+        {{ Form::select(trans('general.categories'),$categoryName ,Input::get('category')) }}
+        {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
         <?php 

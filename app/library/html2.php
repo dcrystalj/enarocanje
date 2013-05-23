@@ -55,9 +55,12 @@ class Html2 extends Html {
 		'js/bootbox.min.js' => array(
 			'general.ok',
 			'general.cancel',
-			'general.cancel',
+			'general.cancel'
 			
+		),
 
+		'js/fc/fullcalendar.js' => array(
+			'general.workingDay'
 		)
 	);
 };

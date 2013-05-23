@@ -32,11 +32,11 @@ fc_init({
 	eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
 
 		
-		event.title = "{{trans('messages.yourChoice')}} : {{trans("general.from")}} " +time(event.start)+' {{trans("general.to")}} '+time(event.end);
+		event.title = "{{trans('messages.yourChoice')}} : {{trans('general.from')}} " +time(event.start)+' {{trans('general.to')}} '+time(event.end);
 
 		if (isOverlapping(event.start, event.end)) { 
 			revertFunc();
-			event.title = "{{trans('messages.yourChoice')}} {{trans("general.from")}} " +time(event.start)+' {{trans("general.to")}} '+time(event.end);
+			event.title = "{{trans('messages.yourChoice')}} {{trans('general.from')}} " +time(event.start)+' {{trans("general.to")}} '+time(event.end);
 		}
 	},
 	select: function(start, end, allDay) {

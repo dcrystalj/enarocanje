@@ -119,7 +119,15 @@ return array(
 	'dayLong' => array('Nedelja', 'Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota') ,
 	'dayShort' => array('Ned', 'Pon','Tor','Sre','Čet','Pet','Sob'), 	
 	'today' => 'danes',
-	
+	'addNewCategory' => 'Dodaj novo kategorijo',
+	'break1' => 'Pavza 1',
+	'categories' => 'Kategorije',
+	'categoryName' => 'Ime kategorije',
+	'filterProvidersByCategory' => 'Filtriraj ponudnike po kategoriji',
+	'filter' => 'Filter',
+	'logo' => 'Logo',
+	'none' => 'Brez',
+
 
 
 );

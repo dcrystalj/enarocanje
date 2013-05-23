@@ -16,7 +16,7 @@ function fc_insert(start, end, data)  {
 	if(start < end)
 		calendar.fullCalendar('renderEvent',
 			  $.extend({
-				  title: 'Working day',
+				  title: trans('general.workingDay'),
 				  start: start,
 				  end: end,
 				  allDay: false,

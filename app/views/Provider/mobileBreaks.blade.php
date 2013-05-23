@@ -2,11 +2,11 @@
 <div id="numofbreaks" style="diplay: hidden;">5</div>
 <div id="breakfield">
 
-<dt>Break 1</dt>
+<dt>{{trans('general.break1')}}</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',1) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
 
-<dt>Break 1</dt>
+<dt>{{trans('general.break1')}}</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',3) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',4)}}</dd>
 

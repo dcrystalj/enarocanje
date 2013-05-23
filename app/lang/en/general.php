@@ -114,13 +114,20 @@ return array(
 	'strong' => 'Strong',
 	'veryStrong' => 'Very strong',
 	'workingDay' => 'Working day',
-	'fromTo' => ':y-:m-:d " from :s to :e',	
+	'fromTo' => ':y-:m-:d from :s to :e',	
 	'monthLong' => array('January','February','March','April','May','June','July','August','September','October','November','December'),
 	'monthShort' => array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
 	'dayLong' => array('Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') ,
 	'dayShort' => array('Sun', 'Mon','Tue','Wed','Thu','Fri','Sat'), 
 	'today' => 'today',
-	
+	'addNewCategory' => 'Add new category',
+	'break1' => 'Break 1',
+	'categories' => 'Categories',
+	'categoryName' => 'Category name',
+	'filterProvidersByCategory' => 'Filter providers by category',
+	'filter' => 'Filter',
+	'logo' => 'Logo',
+	'none' => 'None',
 
 
 
