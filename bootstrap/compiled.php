@@ -182,7 +182,7 @@ class Container implements ArrayAccess
      */
     public function bindIf($abstract, $concrete = null, $shared = false)
     {
-        if (!isset($this[$abstract])) {
+        if (!$this->bound($abstract)) {
             $this->bind($abstract, $concrete, $shared);
         }
     }
@@ -703,9 +703,9 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public function bindInstallPaths(array $paths)
     {
-        $this->instance('path', $paths['app']);
+        $this->instance('path', realpath($paths['app']));
         foreach (array_except($paths, array('app')) as $key => $value) {
-            $this->instance("path.{$key}", $value);
+            $this->instance("path.{$key}", realpath($value));
         }
     }
     /**
@@ -715,7 +715,7 @@ class Application extends Container implements HttpKernelInterface, ResponsePrep
      */
     public static function getBootstrapFile()
     {
-        return 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation' . '/start.php';
+        return '/home/riba1122/enarocanje/vendor/laravel/framework/src/Illuminate/Foundation' . '/start.php';
     }
     /**
      * Start the exception handling for the request.
@@ -1301,7 +1301,8 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function fullUrl()
     {
-        return rtrim($this->getUri(), '/');
+        $query = $this->getQueryString();
+        return $query ? $this->url() . '?' . $query : $this->url();
     }
     /**
      * Get the current path info for the request.
@@ -1399,7 +1400,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function all()
     {
-        return array_merge($this->input(), $this->files->all());
+        return $this->input() + $this->files->all();
     }
     /**
      * Retrieve an input item from the request.
@@ -1410,7 +1411,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function input($key = null, $default = null)
     {
-        $input = array_merge($this->getInputSource()->all(), $this->query->all());
+        $input = $this->getInputSource()->all() + $this->query->all();
         return array_get($input, $key, $default);
     }
     /**
@@ -1421,12 +1422,8 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function only($keys)
     {
-        $results = array();
         $keys = is_array($keys) ? $keys : func_get_args();
-        foreach ($keys as $key) {
-            $results[$key] = $this->get($key);
-        }
-        return $results;
+        return array_only($this->input(), $keys) + array_fill_keys($keys, null);
     }
     /**
      * Get all of the input except for a specified array of items.
@@ -1513,7 +1510,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      *
      * @param  string  $key
      * @param  mixed   $default
-     * @return string
+     * @return mixed
      */
     public function old($key = null, $default = null)
     {
@@ -3933,6 +3930,428 @@ class HeaderBag implements \IteratorAggregate, \Countable
  */
 namespace Symfony\Component\HttpFoundation\Session;
 
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
+/**
+ * Interface for the session.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+interface SessionInterface
+{
+    /**
+     * Starts the session storage.
+     *
+     * @return Boolean True if session started.
+     *
+     * @throws \RuntimeException If session fails to start.
+     *
+     * @api
+     */
+    public function start();
+    /**
+     * Returns the session ID.
+     *
+     * @return string The session ID.
+     *
+     * @api
+     */
+    public function getId();
+    /**
+     * Sets the session ID
+     *
+     * @param string $id
+     *
+     * @api
+     */
+    public function setId($id);
+    /**
+     * Returns the session name.
+     *
+     * @return mixed The session name.
+     *
+     * @api
+     */
+    public function getName();
+    /**
+     * Sets the session name.
+     *
+     * @param string $name
+     *
+     * @api
+     */
+    public function setName($name);
+    /**
+     * Invalidates the current session.
+     *
+     * Clears all session attributes and flashes and regenerates the
+     * session and deletes the old session from persistence.
+     *
+     * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+     *                          will leave the system settings unchanged, 0 sets the cookie
+     *                          to expire with browser session. Time is in seconds, and is
+     *                          not a Unix timestamp.
+     *
+     * @return Boolean True if session invalidated, false if error.
+     *
+     * @api
+     */
+    public function invalidate($lifetime = null);
+    /**
+     * Migrates the current session to a new session id while maintaining all
+     * session attributes.
+     *
+     * @param Boolean $destroy  Whether to delete the old session or leave it to garbage collection.
+     * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+     *                          will leave the system settings unchanged, 0 sets the cookie
+     *                          to expire with browser session. Time is in seconds, and is
+     *                          not a Unix timestamp.
+     *
+     * @return Boolean True if session migrated, false if error.
+     *
+     * @api
+     */
+    public function migrate($destroy = false, $lifetime = null);
+    /**
+     * Force the session to be saved and closed.
+     *
+     * This method is generally not required for real sessions as
+     * the session will be automatically saved at the end of
+     * code execution.
+     */
+    public function save();
+    /**
+     * Checks if an attribute is defined.
+     *
+     * @param string $name The attribute name
+     *
+     * @return Boolean true if the attribute is defined, false otherwise
+     *
+     * @api
+     */
+    public function has($name);
+    /**
+     * Returns an attribute.
+     *
+     * @param string $name    The attribute name
+     * @param mixed  $default The default value if not found.
+     *
+     * @return mixed
+     *
+     * @api
+     */
+    public function get($name, $default = null);
+    /**
+     * Sets an attribute.
+     *
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @api
+     */
+    public function set($name, $value);
+    /**
+     * Returns attributes.
+     *
+     * @return array Attributes
+     *
+     * @api
+     */
+    public function all();
+    /**
+     * Sets attributes.
+     *
+     * @param array $attributes Attributes
+     */
+    public function replace(array $attributes);
+    /**
+     * Removes an attribute.
+     *
+     * @param string $name
+     *
+     * @return mixed The removed value
+     *
+     * @api
+     */
+    public function remove($name);
+    /**
+     * Clears all attributes.
+     *
+     * @api
+     */
+    public function clear();
+    /**
+     * Checks if the session was started.
+     *
+     * @return Boolean
+     */
+    public function isStarted();
+    /**
+     * Registers a SessionBagInterface with the session.
+     *
+     * @param SessionBagInterface $bag
+     */
+    public function registerBag(SessionBagInterface $bag);
+    /**
+     * Gets a bag instance by name.
+     *
+     * @param string $name
+     *
+     * @return SessionBagInterface
+     */
+    public function getBag($name);
+    /**
+     * Gets session meta.
+     *
+     * @return MetadataBag
+     */
+    public function getMetadataBag();
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Storage;
+
+use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
+/**
+ * StorageInterface.
+ *
+ * @author Fabien Potencier <fabien@symfony.com>
+ * @author Drak <drak@zikula.org>
+ *
+ * @api
+ */
+interface SessionStorageInterface
+{
+    /**
+     * Starts the session.
+     *
+     * @throws \RuntimeException If something goes wrong starting the session.
+     *
+     * @return boolean True if started.
+     *
+     * @api
+     */
+    public function start();
+    /**
+     * Checks if the session is started.
+     *
+     * @return boolean True if started, false otherwise.
+     */
+    public function isStarted();
+    /**
+     * Returns the session ID
+     *
+     * @return string The session ID or empty.
+     *
+     * @api
+     */
+    public function getId();
+    /**
+     * Sets the session ID
+     *
+     * @param string $id
+     *
+     * @api
+     */
+    public function setId($id);
+    /**
+     * Returns the session name
+     *
+     * @return mixed The session name.
+     *
+     * @api
+     */
+    public function getName();
+    /**
+     * Sets the session name
+     *
+     * @param string $name
+     *
+     * @api
+     */
+    public function setName($name);
+    /**
+     * Regenerates id that represents this storage.
+     *
+     * This method must invoke session_regenerate_id($destroy) unless
+     * this interface is used for a storage object designed for unit
+     * or functional testing where a real PHP session would interfere
+     * with testing.
+     *
+     * Note regenerate+destroy should not clear the session data in memory
+     * only delete the session data from persistent storage.
+     *
+     * @param Boolean $destroy  Destroy session when regenerating?
+     * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+     *                          will leave the system settings unchanged, 0 sets the cookie
+     *                          to expire with browser session. Time is in seconds, and is
+     *                          not a Unix timestamp.
+     *
+     * @return Boolean True if session regenerated, false if error
+     *
+     * @throws \RuntimeException If an error occurs while regenerating this storage
+     *
+     * @api
+     */
+    public function regenerate($destroy = false, $lifetime = null);
+    /**
+     * Force the session to be saved and closed.
+     *
+     * This method must invoke session_write_close() unless this interface is
+     * used for a storage object design for unit or functional testing where
+     * a real PHP session would interfere with testing, in which case it
+     * it should actually persist the session data if required.
+     *
+     * @throws \RuntimeException If the session is saved without being started, or if the session
+     *                           is already closed.
+     */
+    public function save();
+    /**
+     * Clear all session data in memory.
+     */
+    public function clear();
+    /**
+     * Gets a SessionBagInterface by name.
+     *
+     * @param string $name
+     *
+     * @return SessionBagInterface
+     *
+     * @throws \InvalidArgumentException If the bag does not exist
+     */
+    public function getBag($name);
+    /**
+     * Registers a SessionBagInterface for use.
+     *
+     * @param SessionBagInterface $bag
+     */
+    public function registerBag(SessionBagInterface $bag);
+    /**
+     * @return MetadataBag
+     */
+    public function getMetadataBag();
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session;
+
+/**
+ * Session Bag store.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+interface SessionBagInterface
+{
+    /**
+     * Gets this bag's name
+     *
+     * @return string
+     */
+    public function getName();
+    /**
+     * Initializes the Bag
+     *
+     * @param array $array
+     */
+    public function initialize(array &$array);
+    /**
+     * Gets the storage key for this bag.
+     *
+     * @return string
+     */
+    public function getStorageKey();
+    /**
+     * Clears out data from bag.
+     *
+     * @return mixed Whatever data was contained.
+     */
+    public function clear();
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Attribute;
+
+use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
+/**
+ * Attributes store.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+interface AttributeBagInterface extends SessionBagInterface
+{
+    /**
+     * Checks if an attribute is defined.
+     *
+     * @param string $name The attribute name
+     *
+     * @return Boolean true if the attribute is defined, false otherwise
+     */
+    public function has($name);
+    /**
+     * Returns an attribute.
+     *
+     * @param string $name    The attribute name
+     * @param mixed  $default The default value if not found.
+     *
+     * @return mixed
+     */
+    public function get($name, $default = null);
+    /**
+     * Sets an attribute.
+     *
+     * @param string $name
+     * @param mixed  $value
+     */
+    public function set($name, $value);
+    /**
+     * Returns attributes.
+     *
+     * @return array Attributes
+     */
+    public function all();
+    /**
+     * Sets attributes.
+     *
+     * @param array $attributes Attributes
+     */
+    public function replace(array $attributes);
+    /**
+     * Removes an attribute.
+     *
+     * @param string $name
+     *
+     * @return mixed The removed value
+     */
+    public function remove($name);
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session;
+
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
@@ -4718,6 +5137,157 @@ interface FlashBagInterface extends SessionBagInterface
 namespace Symfony\Component\HttpFoundation\Session\Flash;
 
 /**
+ * FlashBag flash message container.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+class FlashBag implements FlashBagInterface, \IteratorAggregate
+{
+    private $name = 'flashes';
+    /**
+     * Flash messages.
+     *
+     * @var array
+     */
+    private $flashes = array();
+    /**
+     * The storage key for flashes in the session
+     *
+     * @var string
+     */
+    private $storageKey;
+    /**
+     * Constructor.
+     *
+     * @param string $storageKey The key used to store flashes in the session.
+     */
+    public function __construct($storageKey = '_sf2_flashes')
+    {
+        $this->storageKey = $storageKey;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function initialize(array &$flashes)
+    {
+        $this->flashes =& $flashes;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function add($type, $message)
+    {
+        $this->flashes[$type][] = $message;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function peek($type, array $default = array())
+    {
+        return $this->has($type) ? $this->flashes[$type] : $default;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function peekAll()
+    {
+        return $this->flashes;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function get($type, array $default = array())
+    {
+        if (!$this->has($type)) {
+            return $default;
+        }
+        $return = $this->flashes[$type];
+        unset($this->flashes[$type]);
+        return $return;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function all()
+    {
+        $return = $this->peekAll();
+        $this->flashes = array();
+        return $return;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function set($type, $messages)
+    {
+        $this->flashes[$type] = (array) $messages;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function setAll(array $messages)
+    {
+        $this->flashes = $messages;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function has($type)
+    {
+        return array_key_exists($type, $this->flashes) && $this->flashes[$type];
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function keys()
+    {
+        return array_keys($this->flashes);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getStorageKey()
+    {
+        return $this->storageKey;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        return $this->all();
+    }
+    /**
+     * Returns an iterator for flashes.
+     *
+     * @return \ArrayIterator An \ArrayIterator instance
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->all());
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Flash;
+
+/**
  * AutoExpireFlashBag flash message container.
  *
  * @author Drak <drak@zikula.org>
@@ -4856,6 +5426,1002 @@ class AutoExpireFlashBag implements FlashBagInterface
     public function clear()
     {
         return $this->all();
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Storage;
+
+use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
+/**
+ * Metadata container.
+ *
+ * Adds metadata to the session.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+class MetadataBag implements SessionBagInterface
+{
+    const CREATED = 'c';
+    const UPDATED = 'u';
+    const LIFETIME = 'l';
+    /**
+     * @var string
+     */
+    private $name = '__metadata';
+    /**
+     * @var string
+     */
+    private $storageKey;
+    /**
+     * @var array
+     */
+    protected $meta = array();
+    /**
+     * Unix timestamp.
+     *
+     * @var integer
+     */
+    private $lastUsed;
+    /**
+     * Constructor.
+     *
+     * @param string $storageKey The key used to store bag in the session.
+     */
+    public function __construct($storageKey = '_sf2_meta')
+    {
+        $this->storageKey = $storageKey;
+        $this->meta = array(self::CREATED => 0, self::UPDATED => 0, self::LIFETIME => 0);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function initialize(array &$array)
+    {
+        $this->meta =& $array;
+        if (isset($array[self::CREATED])) {
+            $this->lastUsed = $this->meta[self::UPDATED];
+            $this->meta[self::UPDATED] = time();
+        } else {
+            $this->stampCreated();
+        }
+    }
+    /**
+     * Gets the lifetime that the session cookie was set with.
+     *
+     * @return integer
+     */
+    public function getLifetime()
+    {
+        return $this->meta[self::LIFETIME];
+    }
+    /**
+     * Stamps a new session's metadata.
+     *
+     * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+     *                          will leave the system settings unchanged, 0 sets the cookie
+     *                          to expire with browser session. Time is in seconds, and is
+     *                          not a Unix timestamp.
+     */
+    public function stampNew($lifetime = null)
+    {
+        $this->stampCreated($lifetime);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getStorageKey()
+    {
+        return $this->storageKey;
+    }
+    /**
+     * Gets the created timestamp metadata.
+     *
+     * @return integer Unix timestamp
+     */
+    public function getCreated()
+    {
+        return $this->meta[self::CREATED];
+    }
+    /**
+     * Gets the last used metadata.
+     *
+     * @return integer Unix timestamp
+     */
+    public function getLastUsed()
+    {
+        return $this->lastUsed;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * Sets name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    private function stampCreated($lifetime = null)
+    {
+        $timeStamp = time();
+        $this->meta[self::CREATED] = $this->meta[self::UPDATED] = $this->lastUsed = $timeStamp;
+        $this->meta[self::LIFETIME] = null === $lifetime ? ini_get('session.cookie_lifetime') : $lifetime;
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Storage\Handler;
+
+/**
+ * Adds SessionHandler functionality if available.
+ *
+ * @see http://php.net/sessionhandler
+ */
+if (version_compare(phpversion(), '5.4.0', '>=')) {
+    class NativeSessionHandler extends \SessionHandler
+    {
+        
+    }
+} else {
+    class NativeSessionHandler
+    {
+        
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Storage\Proxy;
+
+/**
+ * AbstractProxy.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+abstract class AbstractProxy
+{
+    /**
+     * Flag if handler wraps an internal PHP session handler (using \SessionHandler).
+     *
+     * @var boolean
+     */
+    protected $wrapper = false;
+    /**
+     * @var boolean
+     */
+    protected $active = false;
+    /**
+     * @var string
+     */
+    protected $saveHandlerName;
+    /**
+     * Gets the session.save_handler name.
+     *
+     * @return string
+     */
+    public function getSaveHandlerName()
+    {
+        return $this->saveHandlerName;
+    }
+    /**
+     * Is this proxy handler and instance of \SessionHandlerInterface.
+     *
+     * @return boolean
+     */
+    public function isSessionHandlerInterface()
+    {
+        return $this instanceof \SessionHandlerInterface;
+    }
+    /**
+     * Returns true if this handler wraps an internal PHP session save handler using \SessionHandler.
+     *
+     * @return Boolean
+     */
+    public function isWrapper()
+    {
+        return $this->wrapper;
+    }
+    /**
+     * Has a session started?
+     *
+     * @return Boolean
+     */
+    public function isActive()
+    {
+        if (version_compare(phpversion(), '5.4.0', '>=')) {
+            return $this->active = \PHP_SESSION_ACTIVE === session_status();
+        }
+        return $this->active;
+    }
+    /**
+     * Sets the active flag.
+     *
+     * Has no effect under PHP 5.4+ as status is detected
+     * automatically in isActive()
+     *
+     * @internal
+     *
+     * @param Boolean $flag
+     *
+     * @throws \LogicException
+     */
+    public function setActive($flag)
+    {
+        if (version_compare(phpversion(), '5.4.0', '>=')) {
+            throw new \LogicException('This method is disabled in PHP 5.4.0+');
+        }
+        $this->active = (bool) $flag;
+    }
+    /**
+     * Gets the session ID.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return session_id();
+    }
+    /**
+     * Sets the session ID.
+     *
+     * @param string $id
+     *
+     * @throws \LogicException
+     */
+    public function setId($id)
+    {
+        if ($this->isActive()) {
+            throw new \LogicException('Cannot change the ID of an active session');
+        }
+        session_id($id);
+    }
+    /**
+     * Gets the session name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return session_name();
+    }
+    /**
+     * Sets the session name.
+     *
+     * @param string $name
+     *
+     * @throws \LogicException
+     */
+    public function setName($name)
+    {
+        if ($this->isActive()) {
+            throw new \LogicException('Cannot change the name of an active session');
+        }
+        session_name($name);
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation\Session\Storage\Proxy;
+
+/**
+ * SessionHandler proxy.
+ *
+ * @author Drak <drak@zikula.org>
+ */
+class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterface
+{
+    /**
+     * @var \SessionHandlerInterface
+     */
+    protected $handler;
+    /**
+     * Constructor.
+     *
+     * @param \SessionHandlerInterface $handler
+     */
+    public function __construct(\SessionHandlerInterface $handler)
+    {
+        $this->handler = $handler;
+        $this->wrapper = $handler instanceof \SessionHandler;
+        $this->saveHandlerName = $this->wrapper ? ini_get('session.save_handler') : 'user';
+    }
+    // \SessionHandlerInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function open($savePath, $sessionName)
+    {
+        $return = (bool) $this->handler->open($savePath, $sessionName);
+        if (true === $return) {
+            $this->active = true;
+        }
+        return $return;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function close()
+    {
+        $this->active = false;
+        return (bool) $this->handler->close();
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function read($id)
+    {
+        return (string) $this->handler->read($id);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function write($id, $data)
+    {
+        return (bool) $this->handler->write($id, $data);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function destroy($id)
+    {
+        return (bool) $this->handler->destroy($id);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function gc($maxlifetime)
+    {
+        return (bool) $this->handler->gc($maxlifetime);
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation;
+
+/**
+ * Represents an Accept-* header item.
+ *
+ * @author Jean-François Simon <contact@jfsimon.fr>
+ */
+class AcceptHeaderItem
+{
+    /**
+     * @var string
+     */
+    private $value;
+    /**
+     * @var float
+     */
+    private $quality = 1.0;
+    /**
+     * @var int
+     */
+    private $index = 0;
+    /**
+     * @var array
+     */
+    private $attributes = array();
+    /**
+     * Constructor.
+     *
+     * @param string $value
+     * @param array  $attributes
+     */
+    public function __construct($value, array $attributes = array())
+    {
+        $this->value = $value;
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+    }
+    /**
+     * Builds an AcceptHeaderInstance instance from a string.
+     *
+     * @param string $itemValue
+     *
+     * @return AcceptHeaderItem
+     */
+    public static function fromString($itemValue)
+    {
+        $bits = preg_split('/\\s*(?:;*("[^"]+");*|;*(\'[^\']+\');*|;+)\\s*/', $itemValue, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $value = array_shift($bits);
+        $attributes = array();
+        $lastNullAttribute = null;
+        foreach ($bits as $bit) {
+            if (($start = substr($bit, 0, 1)) === ($end = substr($bit, -1)) && ($start === '"' || $start === '\'')) {
+                $attributes[$lastNullAttribute] = substr($bit, 1, -1);
+            } elseif ('=' === $end) {
+                $lastNullAttribute = $bit = substr($bit, 0, -1);
+                $attributes[$bit] = null;
+            } else {
+                $parts = explode('=', $bit);
+                $attributes[$parts[0]] = isset($parts[1]) && strlen($parts[1]) > 0 ? $parts[1] : '';
+            }
+        }
+        return new self(($start = substr($value, 0, 1)) === ($end = substr($value, -1)) && ($start === '"' || $start === '\'') ? substr($value, 1, -1) : $value, $attributes);
+    }
+    /**
+     * Returns header  value's string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $string = $this->value . ($this->quality < 1 ? ';q=' . $this->quality : '');
+        if (count($this->attributes) > 0) {
+            $string .= ';' . implode(';', array_map(function ($name, $value) {
+                return sprintf(preg_match('/[,;=]/', $value) ? '%s="%s"' : '%s=%s', $name, $value);
+            }, array_keys($this->attributes), $this->attributes));
+        }
+        return $string;
+    }
+    /**
+     * Set the item value.
+     *
+     * @param string $value
+     *
+     * @return AcceptHeaderItem
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+    /**
+     * Returns the item value.
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+    /**
+     * Set the item quality.
+     *
+     * @param float $quality
+     *
+     * @return AcceptHeaderItem
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
+        return $this;
+    }
+    /**
+     * Returns the item quality.
+     *
+     * @return float
+     */
+    public function getQuality()
+    {
+        return $this->quality;
+    }
+    /**
+     * Set the item index.
+     *
+     * @param int $index
+     *
+     * @return AcceptHeaderItem
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+        return $this;
+    }
+    /**
+     * Returns the item index.
+     *
+     * @return int
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+    /**
+     * Tests if an attribute exists.
+     *
+     * @param string $name
+     *
+     * @return Boolean
+     */
+    public function hasAttribute($name)
+    {
+        return isset($this->attributes[$name]);
+    }
+    /**
+     * Returns an attribute by its name.
+     *
+     * @param string $name
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getAttribute($name, $default = null)
+    {
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : $default;
+    }
+    /**
+     * Returns all attributes.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+    /**
+     * Set an attribute.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return AcceptHeaderItem
+     */
+    public function setAttribute($name, $value)
+    {
+        if ('q' === $name) {
+            $this->quality = (double) $value;
+        } else {
+            $this->attributes[$name] = (string) $value;
+        }
+        return $this;
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\HttpFoundation;
+
+/**
+ * Represents an Accept-* header.
+ *
+ * An accept header is compound with a list of items,
+ * sorted by descending quality.
+ *
+ * @author Jean-François Simon <contact@jfsimon.fr>
+ */
+class AcceptHeader
+{
+    /**
+     * @var AcceptHeaderItem[]
+     */
+    private $items = array();
+    /**
+     * @var bool
+     */
+    private $sorted = true;
+    /**
+     * Constructor.
+     *
+     * @param AcceptHeaderItem[] $items
+     */
+    public function __construct(array $items)
+    {
+        foreach ($items as $item) {
+            $this->add($item);
+        }
+    }
+    /**
+     * Builds an AcceptHeader instance from a string.
+     *
+     * @param string $headerValue
+     *
+     * @return AcceptHeader
+     */
+    public static function fromString($headerValue)
+    {
+        $index = 0;
+        return new self(array_map(function ($itemValue) use(&$index) {
+            $item = AcceptHeaderItem::fromString($itemValue);
+            $item->setIndex($index++);
+            return $item;
+        }, preg_split('/\\s*(?:,*("[^"]+"),*|,*(\'[^\']+\'),*|,+)\\s*/', $headerValue, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE)));
+    }
+    /**
+     * Returns header value's string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return implode(',', $this->items);
+    }
+    /**
+     * Tests if header has given value.
+     *
+     * @param string $value
+     *
+     * @return Boolean
+     */
+    public function has($value)
+    {
+        return isset($this->items[$value]);
+    }
+    /**
+     * Returns given value's item, if exists.
+     *
+     * @param string $value
+     *
+     * @return AcceptHeaderItem|null
+     */
+    public function get($value)
+    {
+        return isset($this->items[$value]) ? $this->items[$value] : null;
+    }
+    /**
+     * Adds an item.
+     *
+     * @param AcceptHeaderItem $item
+     *
+     * @return AcceptHeader
+     */
+    public function add(AcceptHeaderItem $item)
+    {
+        $this->items[$item->getValue()] = $item;
+        $this->sorted = false;
+        return $this;
+    }
+    /**
+     * Returns all items.
+     *
+     * @return AcceptHeaderItem[]
+     */
+    public function all()
+    {
+        $this->sort();
+        return $this->items;
+    }
+    /**
+     * Filters items on their value using given regex.
+     *
+     * @param string $pattern
+     *
+     * @return AcceptHeader
+     */
+    public function filter($pattern)
+    {
+        return new self(array_filter($this->items, function (AcceptHeaderItem $item) use($pattern) {
+            return preg_match($pattern, $item->getValue());
+        }));
+    }
+    /**
+     * Returns first item.
+     *
+     * @return AcceptHeaderItem|null
+     */
+    public function first()
+    {
+        $this->sort();
+        return !empty($this->items) ? reset($this->items) : null;
+    }
+    /**
+     * Sorts items by descending quality
+     */
+    private function sort()
+    {
+        if (!$this->sorted) {
+            uasort($this->items, function ($a, $b) {
+                $qA = $a->getQuality();
+                $qB = $b->getQuality();
+                if ($qA === $qB) {
+                    return $a->getIndex() > $b->getIndex() ? 1 : -1;
+                }
+                return $qA > $qB ? -1 : 1;
+            });
+            $this->sorted = true;
+        }
+    }
+}
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Symfony\Component\Debug;
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Debug\Exception\FlattenException;
+if (!defined('ENT_SUBSTITUTE')) {
+    define('ENT_SUBSTITUTE', 8);
+}
+/**
+ * ExceptionHandler converts an exception to a Response object.
+ *
+ * It is mostly useful in debug mode to replace the default PHP/XDebug
+ * output with something prettier and more useful.
+ *
+ * As this class is mainly used during Kernel boot, where nothing is yet
+ * available, the Response content is always HTML.
+ *
+ * @author Fabien Potencier <fabien@symfony.com>
+ */
+class ExceptionHandler
+{
+    private $debug;
+    private $charset;
+    public function __construct($debug = true, $charset = 'UTF-8')
+    {
+        $this->debug = $debug;
+        $this->charset = $charset;
+    }
+    /**
+     * Registers the exception handler.
+     *
+     * @param Boolean $debug
+     *
+     * @return ExceptionHandler The registered exception handler
+     */
+    public static function register($debug = true)
+    {
+        $handler = new static($debug);
+        set_exception_handler(array($handler, 'handle'));
+        return $handler;
+    }
+    /**
+     * Sends a response for the given Exception.
+     *
+     * If you have the Symfony HttpFoundation component installed,
+     * this method will use it to create and send the response. If not,
+     * it will fallback to plain PHP functions.
+     *
+     * @param \Exception $exception An \Exception instance
+     *
+     * @see sendPhpResponse
+     * @see createResponse
+     */
+    public function handle(\Exception $exception)
+    {
+        if (class_exists('Symfony\\Component\\HttpFoundation\\Response')) {
+            $this->createResponse($exception)->send();
+        } else {
+            $this->sendPhpResponse($exception);
+        }
+    }
+    /**
+     * Sends the error associated with the given Exception as a plain PHP response.
+     *
+     * This method uses plain PHP functions like header() and echo to output
+     * the response.
+     *
+     * @param \Exception|FlattenException $exception An \Exception instance
+     */
+    public function sendPhpResponse($exception)
+    {
+        if (!$exception instanceof FlattenException) {
+            $exception = FlattenException::create($exception);
+        }
+        header(sprintf('HTTP/1.0 %s', $exception->getStatusCode()));
+        foreach ($exception->getHeaders() as $name => $value) {
+            header($name . ': ' . $value, false);
+        }
+        echo $this->decorate($this->getContent($exception), $this->getStylesheet($exception));
+    }
+    /**
+     * Creates the error Response associated with the given Exception.
+     *
+     * @param \Exception|FlattenException $exception An \Exception instance
+     *
+     * @return Response A Response instance
+     */
+    public function createResponse($exception)
+    {
+        if (!$exception instanceof FlattenException) {
+            $exception = FlattenException::create($exception);
+        }
+        return new Response($this->decorate($this->getContent($exception), $this->getStylesheet($exception)), $exception->getStatusCode(), $exception->getHeaders());
+    }
+    /**
+     * Gets the HTML content associated with the given exception.
+     *
+     * @param FlattenException $exception A FlattenException instance
+     *
+     * @return string The content as a string
+     */
+    public function getContent(FlattenException $exception)
+    {
+        switch ($exception->getStatusCode()) {
+            case 404:
+                $title = 'Sorry, the page you are looking for could not be found.';
+                break;
+            default:
+                $title = 'Whoops, looks like something went wrong.';
+        }
+        $content = '';
+        if ($this->debug) {
+            try {
+                $count = count($exception->getAllPrevious());
+                $total = $count + 1;
+                foreach ($exception->toArray() as $position => $e) {
+                    $ind = $count - $position + 1;
+                    $class = $this->abbrClass($e['class']);
+                    $message = nl2br($e['message']);
+                    $content .= sprintf('                        <div class="block_exception clear_fix">
+                            <h2><span>%d/%d</span> %s: %s</h2>
+                        </div>
+                        <div class="block">
+                            <ol class="traces list_exception">', $ind, $total, $class, $message);
+                    foreach ($e['trace'] as $trace) {
+                        $content .= '       <li>';
+                        if ($trace['function']) {
+                            $content .= sprintf('at %s%s%s(%s)', $this->abbrClass($trace['class']), $trace['type'], $trace['function'], $this->formatArgs($trace['args']));
+                        }
+                        if (isset($trace['file']) && isset($trace['line'])) {
+                            if ($linkFormat = ini_get('xdebug.file_link_format')) {
+                                $link = str_replace(array('%f', '%l'), array($trace['file'], $trace['line']), $linkFormat);
+                                $content .= sprintf(' in <a href="%s" title="Go to source">%s line %s</a>', $link, $trace['file'], $trace['line']);
+                            } else {
+                                $content .= sprintf(' in %s line %s', $trace['file'], $trace['line']);
+                            }
+                        }
+                        $content .= '</li>
+';
+                    }
+                    $content .= '    </ol>
+</div>
+';
+                }
+            } catch (\Exception $e) {
+                // something nasty happened and we cannot throw an exception anymore
+                if ($this->debug) {
+                    $title = sprintf('Exception thrown when handling an exception (%s: %s)', get_class($exception), $exception->getMessage());
+                } else {
+                    $title = 'Whoops, looks like something went wrong.';
+                }
+            }
+        }
+        return "            <div id=\"sf-resetcontent\" class=\"sf-reset\">\n                <h1>{$title}</h1>\n                {$content}\n            </div>";
+    }
+    /**
+     * Gets the stylesheet associated with the given exception.
+     *
+     * @param FlattenException $exception A FlattenException instance
+     *
+     * @return string The stylesheet as a string
+     */
+    public function getStylesheet(FlattenException $exception)
+    {
+        return '            .sf-reset { font: 11px Verdana, Arial, sans-serif; color: #333 }
+            .sf-reset .clear { clear:both; height:0; font-size:0; line-height:0; }
+            .sf-reset .clear_fix:after { display:block; height:0; clear:both; visibility:hidden; }
+            .sf-reset .clear_fix { display:inline-block; }
+            .sf-reset * html .clear_fix { height:1%; }
+            .sf-reset .clear_fix { display:block; }
+            .sf-reset, .sf-reset .block { margin: auto }
+            .sf-reset abbr { border-bottom: 1px dotted #000; cursor: help; }
+            .sf-reset p { font-size:14px; line-height:20px; color:#868686; padding-bottom:20px }
+            .sf-reset strong { font-weight:bold; }
+            .sf-reset a { color:#6c6159; }
+            .sf-reset a img { border:none; }
+            .sf-reset a:hover { text-decoration:underline; }
+            .sf-reset em { font-style:italic; }
+            .sf-reset h1, .sf-reset h2 { font: 20px Georgia, "Times New Roman", Times, serif }
+            .sf-reset h2 span { background-color: #fff; color: #333; padding: 6px; float: left; margin-right: 10px; }
+            .sf-reset .traces li { font-size:12px; padding: 2px 4px; list-style-type:decimal; margin-left:20px; }
+            .sf-reset .block { background-color:#FFFFFF; padding:10px 28px; margin-bottom:20px;
+                -webkit-border-bottom-right-radius: 16px;
+                -webkit-border-bottom-left-radius: 16px;
+                -moz-border-radius-bottomright: 16px;
+                -moz-border-radius-bottomleft: 16px;
+                border-bottom-right-radius: 16px;
+                border-bottom-left-radius: 16px;
+                border-bottom:1px solid #ccc;
+                border-right:1px solid #ccc;
+                border-left:1px solid #ccc;
+            }
+            .sf-reset .block_exception { background-color:#ddd; color: #333; padding:20px;
+                -webkit-border-top-left-radius: 16px;
+                -webkit-border-top-right-radius: 16px;
+                -moz-border-radius-topleft: 16px;
+                -moz-border-radius-topright: 16px;
+                border-top-left-radius: 16px;
+                border-top-right-radius: 16px;
+                border-top:1px solid #ccc;
+                border-right:1px solid #ccc;
+                border-left:1px solid #ccc;
+                overflow: hidden;
+                word-wrap: break-word;
+            }
+            .sf-reset li a { background:none; color:#868686; text-decoration:none; }
+            .sf-reset li a:hover { background:none; color:#313131; text-decoration:underline; }
+            .sf-reset ol { padding: 10px 0; }
+            .sf-reset h1 { background-color:#FFFFFF; padding: 15px 28px; margin-bottom: 20px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                border: 1px solid #ccc;
+            }';
+    }
+    private function decorate($content, $css)
+    {
+        return "<!DOCTYPE html>\n<html>\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n        <meta name=\"robots\" content=\"noindex,nofollow\" />\n        <style>\n            /* Copyright (c) 2010, Yahoo! Inc. All rights reserved. Code licensed under the BSD License: http://developer.yahoo.com/yui/license.html */\n            html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}\n\n            html { background: #eee; padding: 10px }\n            img { border: 0; }\n            #sf-resetcontent { width:970px; margin:0 auto; }\n            {$css}\n        </style>\n    </head>\n    <body>\n        {$content}\n    </body>\n</html>";
+    }
+    private function abbrClass($class)
+    {
+        $parts = explode('\\', $class);
+        return sprintf('<abbr title="%s">%s</abbr>', $class, array_pop($parts));
+    }
+    /**
+     * Formats an array as a string.
+     *
+     * @param array $args The argument array
+     *
+     * @return string
+     */
+    private function formatArgs(array $args)
+    {
+        $result = array();
+        foreach ($args as $key => $item) {
+            if ('object' === $item[0]) {
+                $formattedValue = sprintf('<em>object</em>(%s)', $this->abbrClass($item[1]));
+            } elseif ('array' === $item[0]) {
+                $formattedValue = sprintf('<em>array</em>(%s)', is_array($item[1]) ? $this->formatArgs($item[1]) : $item[1]);
+            } elseif ('string' === $item[0]) {
+                $formattedValue = sprintf('\'%s\'', htmlspecialchars($item[1], ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
+            } elseif ('null' === $item[0]) {
+                $formattedValue = '<em>null</em>';
+            } elseif ('boolean' === $item[0]) {
+                $formattedValue = '<em>' . strtolower(var_export($item[1], true)) . '</em>';
+            } elseif ('resource' === $item[0]) {
+                $formattedValue = '<em>resource</em>';
+            } else {
+                $formattedValue = str_replace('
+', '', var_export(htmlspecialchars((string) $item[1], ENT_QUOTES | ENT_SUBSTITUTE, $this->charset), true));
+            }
+            $result[] = is_int($key) ? $formattedValue : sprintf('\'%s\' => %s', $key, $formattedValue);
+        }
+        return implode(', ', $result);
     }
 }
 namespace Illuminate\Support;
@@ -5097,7 +6663,7 @@ class ExceptionServiceProvider extends ServiceProvider
     {
         $this->registerWhoops();
         $this->app['exception.debug'] = $this->app->share(function ($app) {
-            return new WhoopsDisplayer($app['whoops']);
+            return new WhoopsDisplayer($app['whoops'], $app->runningInConsole());
         });
     }
     /**
@@ -5138,7 +6704,7 @@ class ExceptionServiceProvider extends ServiceProvider
      */
     protected function shouldReturnJson()
     {
-        $definitely = $this->app['request']->ajax() or $this->app->runningInConsole();
+        $definitely = ($this->app['request']->ajax() or $this->app->runningInConsole());
         return $definitely or $this->app['request']->wantsJson();
     }
     /**
@@ -5554,12 +7120,12 @@ class Str
      */
     public static function words($value, $words = 100, $end = '...')
     {
-        if (trim($value) == '') {
-            return '';
-        }
         preg_match('/^\\s*+(?:\\S++\\s*+){1,' . $words . '}/u', $value, $matches);
+        if (!isset($matches[0])) {
+            return $value;
+        }
         if (strlen($value) == strlen($matches[0])) {
-            $end = '';
+            return $value;
         }
         return rtrim($matches[0]) . $end;
     }
@@ -6699,7 +8265,7 @@ class Filesystem
      */
     public function lastModified($path)
     {
-        return filemtime($path);
+        return filemtime(realpath($path));
     }
     /**
      * Determine if the given path is a directory.
@@ -9486,6 +11052,17 @@ class Dispatcher
             return call_user_func_array($callable, $data);
         };
     }
+    /**
+     * Remove a set of listeners from the dispatcher.
+     *
+     * @param  string  $event
+     * @return void
+     */
+    public function forget($event)
+    {
+        unset($this->listeners[$event]);
+        unset($this->sorted[$event]);
+    }
 }
 namespace Illuminate\Database\Eloquent;
 
@@ -9585,12 +11162,6 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      * @var array
      */
     protected $guarded = array('*');
-    /**
-     * The date fields for the model.clear
-     *
-     * @var array
-     */
-    protected $dates = array();
     /**
      * The relationships that should be touched on save.
      *
@@ -9701,6 +11272,25 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
                     $matches[1] = snake_case($matches[1]);
                 }
                 static::$mutatorCache[$class][] = lcfirst($matches[1]);
+            }
+        }
+    }
+    /**
+     * Register an observer with the Model.
+     *
+     * @param  object  $class
+     * @return void
+     */
+    public static function observe($class)
+    {
+        $instance = new static();
+        $className = get_class($class);
+        // When registering a model observer, we will spin through the possible events
+        // and determine if this observer has that method. If it does, we will hook
+        // it into the model's event system, making it convenient to watch these.
+        foreach ($instance->getObservableEvents() as $event) {
+            if (method_exists($class, $event)) {
+                static::registerModelEvent($event, $className . '@' . $event);
             }
         }
     }
@@ -9823,18 +11413,21 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
     /**
      * Eager load relations on the model.
      *
-     * @param  dynamic  string
+     * @param  array|string  $relations
      * @return void
      */
-    public function load()
+    public function load($relations)
     {
-        $query = $this->newQuery()->with(func_get_args());
+        if (is_string($relations)) {
+            $relations = func_get_args();
+        }
+        $query = $this->newQuery()->with($relations);
         $query->eagerLoadRelations(array($this));
     }
     /**
      * Being querying a model with eager loading.
      *
-     * @param  array  $relations
+     * @param  array|string  $relations
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function with($relations)
@@ -9883,19 +11476,20 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      */
     public function belongsTo($related, $foreignKey = null)
     {
+        list(, $caller) = debug_backtrace(false);
         // If no foreign key was supplied, we can use a backtrace to guess the proper
         // foreign key name by using the name of the relationship function, which
         // when combined with an "_id" should conventionally match the columns.
+        $relation = $caller['function'];
         if (is_null($foreignKey)) {
-            list(, $caller) = debug_backtrace(false);
-            $foreignKey = snake_case($caller['function']) . '_id';
+            $foreignKey = snake_case($relation) . '_id';
         }
         // Once we have the foreign key names, we'll just create a new Eloquent query
         // for the related models and returns the relationship instance which will
         // actually be responsible for retrieving and hydrating every relations.
         $instance = new $related();
         $query = $instance->newQuery();
-        return new BelongsTo($query, $this, $foreignKey);
+        return new BelongsTo($query, $this, $foreignKey, $relation);
     }
     /**
      * Define an polymorphic, inverse one-to-one or many relationship.
@@ -10047,7 +11641,12 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
             // by the timestamp. Then we will go ahead and delete the model instance.
             $this->touchOwners();
             $this->performDeleteOnModel();
+            $this->exists = false;
+            // Once the model has been deleted, we will fire off the deleted event so that
+            // the developers may hook into post-delete operations. We will then return
+            // a boolean true as the delete is presumably successful on the database.
             $this->fireModelEvent('deleted', false);
+            return true;
         }
     }
     /**
@@ -10172,6 +11771,21 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         static::registerModelEvent('deleted', $callback);
     }
     /**
+     * Remove all of the event listeners for the model.
+     *
+     * @return void
+     */
+    public static function flushEventListeners()
+    {
+        if (!isset(static::$dispatcher)) {
+            return;
+        }
+        $instance = new static();
+        foreach ($instance->getObservableEvents() as $event) {
+            static::$dispatcher->forget("eloquent.{$event}: " . get_called_class());
+        }
+    }
+    /**
      * Register a model event with the dispatcher.
      *
      * @param  string   $event
@@ -10184,6 +11798,15 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
             $name = get_called_class();
             static::$dispatcher->listen("eloquent.{$event}: {$name}", $callback);
         }
+    }
+    /**
+     * Get the observable event names.
+     *
+     * @return array
+     */
+    public function getObservableEvents()
+    {
+        return array('creating', 'created', 'updating', 'updated', 'deleting', 'deleted', 'saving', 'saved');
     }
     /**
      * Increment a column's value by a given amount.
@@ -10421,8 +12044,11 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      */
     protected function updateTimestamps()
     {
-        $this->setUpdatedAt($time = $this->freshTimestamp());
-        if (!$this->exists) {
+        $time = $this->freshTimestamp();
+        if (!$this->isDirty(static::UPDATED_AT)) {
+            $this->setUpdatedAt($time);
+        }
+        if (!$this->exists and !$this->isDirty(static::CREATED_AT)) {
             $this->setCreatedAt($time);
         }
     }
@@ -10886,7 +12512,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
     public function attributesToArray()
     {
         $attributes = $this->getAccessibleAttributes();
-        // We want to spin through all the mutated attribtues for this model and call
+        // We want to spin through all the mutated attributes for this model and call
         // the mutator for the attribute. We cache off every mutated attributes so
         // we don't have to constantly check on attributes that actually change.
         foreach ($this->getMutatedAttributes() as $key) {
@@ -10988,7 +12614,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         // retrieval from the model to a form that is more useful for usage.
         if ($this->hasGetMutator($key)) {
             return $this->mutateAttribute($key, $value);
-        } elseif (in_array($key, $this->dates)) {
+        } elseif (in_array($key, $this->getDates())) {
             if ($value) {
                 return $this->asDateTime($value);
             }
@@ -11043,7 +12669,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         if ($this->hasSetMutator($key)) {
             $method = 'set' . studly_case($key) . 'Attribute';
             return $this->{$method}($value);
-        } elseif (in_array($key, $this->dates)) {
+        } elseif (in_array($key, $this->getDates())) {
             if ($value) {
                 $value = $this->fromDateTime($value);
             }
@@ -11059,6 +12685,15 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
     public function hasSetMutator($key)
     {
         return method_exists($this, 'set' . studly_case($key) . 'Attribute');
+    }
+    /**
+     * Get the attributes that should be converted to dates.
+     *
+     * @return array
+     */
+    public function getDates()
+    {
+        return array(static::CREATED_AT, static::UPDATED_AT, static::DELETED_AT);
     }
     /**
      * Convert a DateTime to a storable string.
@@ -11149,6 +12784,16 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         return $this;
     }
     /**
+     * Determine if a given attribute is dirty.
+     *
+     * @param  string  $attribute
+     * @return bool
+     */
+    public function isDirty($attribute)
+    {
+        return array_key_exists($attribute, $this->getDirty());
+    }
+    /**
      * Get the attributes that have been changed since last sync.
      *
      * @return array
@@ -11157,7 +12802,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
     {
         $dirty = array();
         foreach ($this->attributes as $key => $value) {
-            if (!array_key_exists($key, $this->original) or $value != $this->original[$key]) {
+            if (!array_key_exists($key, $this->original) or $value !== $this->original[$key]) {
                 $dirty[$key] = $value;
             }
         }
@@ -11178,11 +12823,12 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      *
      * @param  string  $relation
      * @param  mixed   $value
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function setRelation($relation, $value)
     {
         $this->relations[$relation] = $value;
+        return $this;
     }
     /**
      * Set the entire relations array on the model.
@@ -11224,12 +12870,12 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         $this->connection = $name;
     }
     /**
-     * Resolve a connection instance by name.
+     * Resolve a connection instance.
      *
      * @param  string  $connection
      * @return \Illuminate\Database\Connection
      */
-    public static function resolveConnection($connection)
+    public static function resolveConnection($connection = null)
     {
         return static::$resolver->connection($connection);
     }
@@ -11660,12 +13306,20 @@ class ConnectionFactory
      */
     public function make(array $config, $name = null)
     {
-        if (!isset($config['prefix'])) {
-            $config['prefix'] = '';
-        }
+        $config = $this->parseConfig($config, $name);
         $pdo = $this->createConnector($config)->connect($config);
-        $config['name'] = $name;
         return $this->createConnection($config['driver'], $pdo, $config['database'], $config['prefix'], $config);
+    }
+    /**
+     * Parse and prepare the database configuration.
+     *
+     * @param  array   $config
+     * @param  string  $name
+     * @return array
+     */
+    protected function parseConfig(array $config, $name)
+    {
+        return array_add(array_add($config, 'prefix', ''), 'name', $name);
     }
     /**
      * Create a connector instance based on the configuration.
@@ -12892,6 +14546,15 @@ class Logger implements LoggerInterface
      * Urgent alert.
      */
     const EMERGENCY = 600;
+    /**
+     * Monolog API version
+     *
+     * This is only bumped when API breaks are done and should
+     * follow the major version of the library
+     *
+     * @var int
+     */
+    const API = 1;
     protected static $levels = array(100 => 'DEBUG', 200 => 'INFO', 250 => 'NOTICE', 300 => 'WARNING', 400 => 'ERROR', 500 => 'CRITICAL', 550 => 'ALERT', 600 => 'EMERGENCY');
     /**
      * @var DateTimeZone
@@ -13103,7 +14766,7 @@ class Logger implements LoggerInterface
     }
     /**
      * Gets all supported logging levels.
-     * 
+     *
      * @return array Assoc array with human-readable level names => level codes.
      */
     public static function getLevels()
@@ -13947,14 +15610,28 @@ use Whoops\Run;
 class WhoopsDisplayer implements ExceptionDisplayerInterface
 {
     /**
+     * The Whoops run instance.
+     *
+     * @var \Whoops\Run
+     */
+    protected $whoops;
+    /**
+     * Indicates if the application is in a console environment.
+     *
+     * @var bool
+     */
+    protected $runningInConsole;
+    /**
      * Create a new Whoops exception displayer.
      *
      * @param  \Whoops\Run  $whoops
+     * @param  bool  $runningInConsole
      * @return void
      */
-    public function __construct(Run $whoops)
+    public function __construct(Run $whoops, $runningInConsole)
     {
         $this->whoops = $whoops;
+        $this->runningInConsole = $runningInConsole;
     }
     /**
      * Display the given exception to the user.
@@ -13963,7 +15640,9 @@ class WhoopsDisplayer implements ExceptionDisplayerInterface
      */
     public function display(Exception $exception)
     {
-        header('HTTP/1.1 500 Internal Server Error');
+        if (!$this->runningInConsole and !headers_sent()) {
+            header('HTTP/1.1 500 Internal Server Error');
+        }
         $this->whoops->handleException($exception);
     }
 }
@@ -15117,9 +16796,7 @@ class Route extends BaseRoute
      */
     public function before()
     {
-        $current = $this->getBeforeFilters();
-        $before = array_unique(array_merge($current, func_get_args()));
-        $this->setOption('_before', $before);
+        $this->setBeforeFilters(func_get_args());
         return $this;
     }
     /**
@@ -15130,9 +16807,7 @@ class Route extends BaseRoute
      */
     public function after()
     {
-        $current = $this->getAfterFilters();
-        $after = array_unique(array_merge($current, func_get_args()));
-        $this->setOption('_after', $after);
+        $this->setAfterFilters(func_get_args());
         return $this;
     }
     /**
@@ -15162,7 +16837,7 @@ class Route extends BaseRoute
     public function setBeforeFilters($value)
     {
         $filters = is_string($value) ? explode('|', $value) : (array) $value;
-        $this->setOption('_before', $filters);
+        $this->setOption('_before', array_merge($this->getBeforeFilters(), $filters));
     }
     /**
      * Get the after filters on the route.
@@ -15182,7 +16857,7 @@ class Route extends BaseRoute
     public function setAfterFilters($value)
     {
         $filters = is_string($value) ? explode('|', $value) : (array) $value;
-        $this->setOption('_after', $filters);
+        $this->setOption('_after', array_merge($this->getAfterFilters(), $filters));
     }
     /**
      * Set the matching parameter array on the route.
@@ -19258,6 +20933,113 @@ class Run
  */
 namespace Whoops\Handler;
 
+use Whoops\Exception\Inspector;
+use Whoops\Run;
+use Exception;
+interface HandlerInterface
+{
+    /**
+     * @return int|null  A handler may return nothing, or a Handler::HANDLE_* constant
+     */
+    public function handle();
+    /**
+     * @param Whoops\Run $run
+     */
+    public function setRun(Run $run);
+    /**
+     * @param Exception $exception
+     */
+    public function setException(Exception $exception);
+    /**
+     * @param Whoops\Exception\Inspector $run
+     */
+    public function setInspector(Inspector $inspector);
+}
+/**
+ * Whoops - php errors for cool kids
+ * @author Filipe Dobreira <http://github.com/filp>
+ */
+namespace Whoops\Handler;
+
+use Whoops\Handler\HandlerInterface;
+use Whoops\Exception\Inspector;
+use Whoops\Run;
+use Exception;
+/**
+ * Abstract implementation of a Handler.
+ */
+abstract class Handler implements HandlerInterface
+{
+    /**
+     * Return constants that can be returned from Handler::handle
+     * to message the handler walker.
+     */
+    const DONE = 16;
+    // returning this is optional, only exists for
+    // semantic purposes
+    const LAST_HANDLER = 32;
+    const QUIT = 48;
+    /**
+     * @var Whoops\Run
+     */
+    private $run;
+    /**
+     * @var Whoops\Exception\Inspector $inspector
+     */
+    private $inspector;
+    /**
+     * @var Exception $exception
+     */
+    private $exception;
+    /**
+     * @param Whoops\Run $run
+     */
+    public function setRun(Run $run)
+    {
+        $this->run = $run;
+    }
+    /**
+     * @return Whoops\Run
+     */
+    protected function getRun()
+    {
+        return $this->run;
+    }
+    /**
+     * @param Whoops\Exception\Inspector $inspector
+     */
+    public function setInspector(Inspector $inspector)
+    {
+        $this->inspector = $inspector;
+    }
+    /**
+     * @return Whoops\Run
+     */
+    protected function getInspector()
+    {
+        return $this->inspector;
+    }
+    /**
+     * @param Exception $exception
+     */
+    public function setException(Exception $exception)
+    {
+        $this->exception = $exception;
+    }
+    /**
+     * @return Exception
+     */
+    protected function getException()
+    {
+        return $this->exception;
+    }
+}
+/**
+ * Whoops - php errors for cool kids
+ * @author Filipe Dobreira <http://github.com/filp>
+ */
+namespace Whoops\Handler;
+
 use Whoops\Handler\Handler;
 use InvalidArgumentException;
 class PrettyPageHandler extends Handler
@@ -19315,7 +21097,7 @@ class PrettyPageHandler extends Handler
         // Get the 'pretty-template.php' template file
         // @todo: this can be made more dynamic &&|| cleaned-up
         if (!($resources = $this->getResourcesPath())) {
-            $resources = 'D:\\xampp\\htdocs\\laravel\\enarocanje\\vendor\\filp\\whoops\\src\\Whoops\\Handler' . '/../Resources';
+            $resources = '/home/riba1122/enarocanje/vendor/filp/whoops/src/Whoops/Handler' . '/../Resources';
         }
         $templateFile = "{$resources}/pretty-template.php";
         // @todo: Make this more reliable,
