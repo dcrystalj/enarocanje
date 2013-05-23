@@ -65,7 +65,7 @@ return array(
 	'retypePassword' => 'Ponovno vpišite geslo',
 	'saveChanges' => 'Shrani spremembe',
 	'save' => 'Shrani',
-	'service' => 'Storitev',
+	'service' => 'Ime storitve',
 	'services' => 'Storitve',
 	'slovenianCapital' => 'Slovenščina',
 	'slovenian' => 'slovenščina',

@@ -8,6 +8,9 @@
 
     <?php 
         $mic = MacroService::find($mac)->microservices()->get();
+        $filter1 = array('A' => 'All');
+        $filter2 = Service::gender();
+        $filter = array_merge((array)$filter1,(array)$filter2);
     ?>
 
     @if(count($mic)==0)
@@ -15,11 +18,15 @@
     @else
         {{ Form::open(['method'=>'GET']) }}
         {{ Form::label('gender', trans('messages.filterByGender').':') }}
-        {{ Form::select('gender', Service::gender(),Input::get('gender')) }}
+        {{ Form::select('gender', $filter,Input::get('gender')) }}
         {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
         <?php
+        if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') == 'A'))
+        {
+            $mic = MicroService::all();
+        }
         if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {
             $mic = MacroService::find($mac)->microservices()->where(function($query){
@@ -34,8 +41,6 @@
         $tbody = []; 
         $i = 1; 
         $length = 0;
-        $macroName = MacroService::find($mac)->name;
-        $category = Service::categoryId($macroName);
         foreach ($mic as $service){
             if($service->isActive())
             {

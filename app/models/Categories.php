@@ -5,4 +5,9 @@ class Categories extends Eloquent {
     protected $guarded = array();
 
     public static $rules = array();
+
+    public function servicecat()
+    {
+        return $this->hasMany('ServiceCategories', 'providercat_id');
+    }
 }

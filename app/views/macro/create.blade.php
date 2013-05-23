@@ -33,6 +33,7 @@
         {{ Former::danger_large_submit(trans('general.delete')) }}
         {{ Former::close() }}
     </div>
+    @endif
     <div class="offset2 span5">
         @if(isset($mac))
             {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
@@ -53,8 +54,7 @@
         {{ Former::close() }}   
 
     </div>
-
-    @endif 
+ 
     </div>
     <script type="text/javascript">
         $('#delete').click(function(e) {

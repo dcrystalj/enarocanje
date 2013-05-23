@@ -66,7 +66,7 @@ Route::resource('referral','ReferralController');
 
 // categorization controller
 Route::resource('category','CategorizationController');
-
+Route::resource('category.servicecat','ServiceCatController');
 
 //iron.io mail 
 Route::post('queue/push', function(){
