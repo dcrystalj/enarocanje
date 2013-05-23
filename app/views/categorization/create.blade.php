@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    {{trans('general.addNewCategory')}}
+    {{trans('general.addNewProviderCategory')}}
 @stop
 
 @section('content')
@@ -20,7 +20,9 @@
                 $categories[]= [
                     'id'     => $i, 
                     'name'   => $cat->name,
-                    'delete' => delete($cat->id),
+                    'link'   => Button::link(
+                                    URL::route('category.servicecat.create',
+                                        $cat->id), 'Add service category'),
                 ];
                 $i++;
             }
@@ -35,18 +37,4 @@
             {{ Table::close() }}
         @endif
 
-        <?php 
-        function delete($cat){
-            $delete =   Form::open( array(
-                                    'method' => 'DELETE', 
-                                    'url'    => URL::route(
-                                    'category.destroy',
-                                    $cat),
-                                    )
-                        );
-            $delete .= Form::submit({{trans('general.delete')}});
-            $delete .= Form::close();
-            return $delete;
-        }
-    ?>
 @stop
