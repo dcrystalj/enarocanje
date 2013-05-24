@@ -3,7 +3,6 @@
 return array(
 
 	'absenceNotFound' => 'Odnostnost ni bila najdena',
-	'fetchingError' => 'Problem pri prenašanju dogodka',
 	'fourOfour' => 'Stran ni bila najdena',
 	'successfullyDeleted' => 'Uspešno zbrisano',
 	'successfullyEdited' => 'Uspešno urejeno',
@@ -69,7 +68,7 @@ return array(
 	'fetchingError' => "Pri prenašanju dogodkov je prišlo do napake!",
 	'resetPassword' => 'Ponastavitev gesla',
 	'noProvidersYet' => 'Ponudnikov še ni',
-
+	'error' => 'Zgodila se je napaka!',
 
 
 

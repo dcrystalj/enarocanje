@@ -65,9 +65,9 @@ return array(
 	'emailSuggestion' => 'You entered :email. Perhaps you wanted to enter :suggested? Click Yes to select the corrected email, click No to keep yours.',
 	'unsafePassword' => "Unsafe password!",
 	'eventMissing' => 'Event type is missing!',
-	'fetchingError' => "There was an error while fetching events!",
 	'resetPassword' => 'Reset password',
 	'noProvidersYet' => 'No providers avaliable yet',
+	'error' => 'An error has occured!',
 
 
 

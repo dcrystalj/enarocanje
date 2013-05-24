@@ -169,4 +169,45 @@ class Provider extends BaseController {
 		App::abort(404,trans('messages.fourOfour'));
 	}
 
+	public function logo()
+	{	
+
+		return View::make('logo');
+
+	}
+
+
+	public function saveLogo()
+	{	
+		$imageRule = array(
+		    'image'     => 'image',
+		);
+
+		$image = 'image';
+		//File::put('opera123.jpg',$file);
+		if ($_FILES[$image]["error"] > 0)
+		{
+			return Redirect::back()->with('Error',trans('messages.error'));
+		}
+		do {
+			$filepath = 'image/logo/' . Str::random('20','alpha') . '.jpg';
+		}
+		while(File::exists($filepath));
+			
+		$validation = Validator::make(Input::all(),$imageRule);
+
+        if($validation->fails())
+        {
+            return Redirect::back()->withErrors($validation)->withInput();
+		}
+        else
+        {
+            $user = Auth::user();
+            $user->wat = $filepath;
+            $user->save();
+        }
+
+
+			return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
+	}
 }

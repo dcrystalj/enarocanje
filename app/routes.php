@@ -93,7 +93,6 @@ Route::get('spucajbazozdejtkoj', function(){
 	
 });
 
-Route::get('logo', function()
-{
-	return View::make('logo');
-});
+Route::get('providerLogo', 'Provider@logo');
+Route::post('providerSaveLogo', 'Provider@saveLogo');
+Route::get('providerTrest', 'Provider@trest');

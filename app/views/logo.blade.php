@@ -9,12 +9,9 @@
 
 </script>
 
-
-{{Former::open_for_files()->id('logoForm')}}
-{{Form::file("file")}}
-{{$file = Input::file('opera')}}
-{{Html::image($file)}}
-{{Former::actions()->button(trans('general.submit'))->onclick("")}}
+{{Former::open_for_files(URL::to('providerSaveLogo'),'POST')->id('logoForm')}}
+{{Form::file("image",array('id'=> 'some_id'))}}
+{{Former::submit(trans('general.submit'))}}
 
 {{Former::close()}}
 

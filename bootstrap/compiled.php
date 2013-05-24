@@ -12145,6 +12145,15 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
         return $this->newQuery(false);
     }
     /**
+     * Determine if the model instance has been soft-deleted.
+     *
+     * @return bool
+     */
+    public function trashed()
+    {
+        return $this->softDelete and !is_null($this->{static::DELETED_AT});
+    }
+    /**
      * Get a new query builder that includes soft deletes.
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -12158,7 +12167,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function trashed()
+    public static function onlyTrashed()
     {
         $instance = new static();
         $column = $instance->getQualifiedDeletedAtColumn();
@@ -14546,15 +14555,6 @@ class Logger implements LoggerInterface
      * Urgent alert.
      */
     const EMERGENCY = 600;
-    /**
-     * Monolog API version
-     *
-     * This is only bumped when API breaks are done and should
-     * follow the major version of the library
-     *
-     * @var int
-     */
-    const API = 1;
     protected static $levels = array(100 => 'DEBUG', 200 => 'INFO', 250 => 'NOTICE', 300 => 'WARNING', 400 => 'ERROR', 500 => 'CRITICAL', 550 => 'ALERT', 600 => 'EMERGENCY');
     /**
      * @var DateTimeZone
@@ -14766,7 +14766,7 @@ class Logger implements LoggerInterface
     }
     /**
      * Gets all supported logging levels.
-     *
+     * 
      * @return array Assoc array with human-readable level names => level codes.
      */
     public static function getLevels()
