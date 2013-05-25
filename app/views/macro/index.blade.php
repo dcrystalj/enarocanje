@@ -5,6 +5,9 @@
 @stop
 
 @section('content')
+    <script src="js/lightbox/js/jquery-1.7.2.min.js"></script>
+    <script src="js/lightbox/js/lightbox.js"></script>
+    <link href="js/lightbox/css/lightbox.css" rel="stylesheet" />
 
     <?php 
         $macroService = MacroService::whereActive(0)->get();
@@ -16,9 +19,25 @@
         }
         $tbody = []; 
         $i = 1; 
+        $imageHeight = 100;
+        $imageWidth = 200;
+        $biggerSide = $imageWidth;
+        $path = Auth::user()->logo;
+        $image = File::get($path);
+        echo $path;
+        echo Html::image($path,'alt text');
+        if ($imageHeight > $imageWidth)
+        {
+            $logoPlaceholder = '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="boxxy.jpg" height="' . $imageHeight . '" width="auto" style="height:none"></a>';
+        }
+        else 
+        {
+            $logoPlaceholder = '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="boxxy.jpg" height="auto" width="' . $imageWidth . '" style="height:none"></a>';
+        }
         foreach ($macroService as $service){    
             $tbody[] = [
-                'id'     => $i, 
+                'id'     => $i,
+                'neki'   => $logoPlaceholder,    
                 'name'   => $service->name,
                 'City'   => $service->city . ' <br>' . $service->street, 
                 'Email'  => $service->email,
@@ -51,6 +70,7 @@
             foreach ($macroService as $service){    
                 $tbody[] = [
                     'id'     => $i, 
+                    'neki'   => $logoPlaceholder,   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
                     'Email'  => $service->email,
@@ -61,7 +81,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
+        {{ Table::headers('#','placeholder', Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
     

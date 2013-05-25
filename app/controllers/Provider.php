@@ -184,15 +184,16 @@ class Provider extends BaseController {
 		);
 
 		$image = 'image';
-		//File::put('opera123.jpg',$file);
+		$filepath = 'image/logo';
+		$filename = '';
 		if ($_FILES[$image]["error"] > 0)
 		{
 			return Redirect::back()->with('Error',trans('messages.error'));
 		}
 		do {
-			$filepath = 'image/logo/' . Str::random('20','alpha') . '.jpg';
+			$filename = Str::random('20','alpha') . '.jpg';
 		}
-		while(File::exists($filepath));
+		while(File::exists($filepath . $filename));
 			
 		$validation = Validator::make(Input::all(),$imageRule);
 
@@ -200,14 +201,10 @@ class Provider extends BaseController {
         {
             return Redirect::back()->withErrors($validation)->withInput();
 		}
-        else
-        {
-            $user = Auth::user();
-            $user->wat = $filepath;
-            $user->save();
-        }
-
-
-			return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
+        $user = Auth::user();
+        $user->logo = $filepath . '/' . $filename;
+        $user->save();
+        Input::file($image)->move($filepath,$filename);
+		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
 	}
 }
