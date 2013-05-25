@@ -7,7 +7,7 @@
 @section('content')
 
     <?php 
-        $mic = MacroService::find($mac)->microservices()->get();
+        $mic = MicroService::all();
         $filter = Service::gender();
     ?>
 
@@ -23,13 +23,13 @@
         <?php
         if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {
-            $mic = MacroService::find($mac)->microservices()->where(function($query){
+            $mic = MicroService::where(function($query){
                 $query->where('gender', Input::get('gender'))
                       ->orWhere('gender','U');
             })->get();    
         }
         else{
-            $mic = MacroService::find($mac)->microservices()->get();       
+            $mic = MicroService::all();;       
         }
         if ($mic){ 
         $tbody = []; 
@@ -50,6 +50,8 @@
                     $length = Service::lengthH($service->length);
                     $length .= Service::lengthMin($service->length);
                 }
+
+                $mac = MacroService::find($service->macservice_id)->id;
                 $tbody[] = [
                 'id'     => $i, 
                 'title'  => $service->title,

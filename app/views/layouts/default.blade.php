@@ -34,7 +34,10 @@
 	 					!Auth::check() ?: 
 	 					[trans('general.manageService'),URL::to('macro/create'), Request::is('macro/create'),
 	 						false,null,null,(Auth::user()->status == 2)],
-						[trans('general.services'),URL::to('macro')],
+						[trans('general.services'),'#',false,false,[
+						[trans('general.services'),URL::to('micro')],
+						[trans('general.providers'),URL::to('macro')]
+						]],
 						!Auth::check() ?:
 						[trans('general.referrals'),URL::route('referral.index'),Request::is('referral.index'),
 	 						false,null,null,(Auth::user()->isAdmin())],
