@@ -166,7 +166,6 @@ fc_init({
 });
 	
 $(function() {	
-
 	if( $(document).width() < 800 ) {
 		calendar.fullCalendar('changeView', 'agendaDay');
 		$('.fc-header-title h2').css({ 'font-size': '13px' });

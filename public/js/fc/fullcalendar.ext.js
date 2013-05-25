@@ -1,5 +1,7 @@
 var calendar;
 var removed = [];
+var numofbreaks = new Array(1,1,1,1,1,1,1);
+
 function fc_init(opts, id) {
         if(typeof id == 'undefined')
                 id='#calendar';
@@ -278,6 +280,8 @@ function newDate(s,i){
 	start.setYear('2013');
 	start.setMonth('3');
 	start.setDate(i);
+	var test = 	s.substr(0,2);
+	test = parseInt(test,10);
 	start.setHours(parseInt(s.substr(0,2),10) || 0);
 	start.setMinutes(parseInt(s.substr(3,2),10) || 0);
 	return start;
@@ -295,9 +299,87 @@ function fillCalendar(calendar){
 	}
 }
 
-function insertFrom(i){
-	var str = '<div class="control-group required"><label for="datetimepick'+i+'" class="control-label">From:</label><div class="controls">';
-    str += '<div id="datetimepick'+i+'" class="input-append date dtp">';
+function fillCalendarWithBreaks(calendar){
+	var events = calendar.fullCalendar('clientEvents', function(e) {
+		return e.editable !== false;
+	});
+
+	for(var i=0; i<events.length; i++)
+		calendar.fullCalendar('removeEvents', events[i]._id);
+
+	for(i=1;i<=7;i++){
+		var j = 1;
+		while( j <= numofbreaks[i-1]){
+			var start 	= newDate($('#datetimepick'+i+''+j+' input').val(), i);
+			var end 	= newDate($('#datetimepick'+i+''+(j+1)+' input').val(), i);
+			
+			if(!isOverlapping(start,end))
+				fc_insert(start, end, {eventType: 'break'});
+
+			j+=2;
+		}
+	}
+}
+
+function fillBreakFields(calendar){
+	//clear filds
+	for(var i=1;i<=7;i++){
+		for(var j=1; j<=2; j++)
+			$('#datetimepick'+i+''+j+' input').val('00:00');
+	}
+
+	var events = calendar.fullCalendar('clientEvents', function(e) {
+		return e.eventType == 'break';
+	});
+
+	var temp = []
+	for(i=0; i<events.length; i++){
+		temp[i] = cal_event_data(events[i]);
+		var day = new Date(temp[i].start).getDay();
+		if (day==0) day=7;
+
+		var num = numofbreaks[day-1];
+		$('#datetimepick'+day+''+num+' input').val(getHour(new Date(temp[i].start)));
+		$('#datetimepick'+day+''+(num+1)+' input').val(getHour(new Date(temp[i].end)));
+
+		numofbreaks[day-1]+=2;
+		insertBreakField(day);
+	}
+	
+	//remove unnecessary fields
+	for(var i=1; i<=7; i++){
+		num = numofbreaks[i-1];
+		if(num > 1){
+			$('#datetimepick'+i+''+num).parent().parent().remove();
+			$('#datetimepick'+i+''+(num+1)).parent().parent().remove();
+			numofbreaks[i-1]-=2;
+		}
+	}	
+
+}
+
+function insertBreakField(day){
+	var num = numofbreaks[day-1];
+	$('#day'+day).append('<dd>'+insertFrom(day,num)+'</dd>');
+	$('#day'+day).append('<dd>'+insertTo(day,(num+1))+'</dd>');
+	$('#datetimepick'+day+''+num).datetimepicker({
+	      language: 'pt-BR',
+	      pickSeconds: false,
+	      pickDate: false,
+	      maskInput:false,
+    });
+    $('#datetimepick'+day+''+(num+1)).datetimepicker({
+	      language: 'pt-BR',
+	      pickSeconds: false,
+	      pickDate: false,
+	      maskInput:false,
+    });
+}
+
+
+function insertFrom(i, j){
+	var str = '<div class="control-group required"><label for="datetimepick'+i+j+'" class="control-label">From:</label><div class="controls">';
+    str += '<div id="datetimepick'+i+j+'" class="input-append date dtp">';
 	str += ' <input data-format="hh:mm" type="text" name="from" value="00:00" class="input-small">';
 	str += '<span class="add-on">';
     str += '<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-time"></i>';
@@ -306,6 +388,62 @@ function insertFrom(i){
 	str += '</div>';
 	return str;
 }
+
+function insertTo(i, j){
+	var str = '<div class="control-group required"><label for="datetimepick'+i+j+'" class="control-label">To:</label><div class="controls">';
+    str += '<div id="datetimepick'+i+j+'" class="input-append date dtp">';
+	str += ' <input data-format="hh:mm" type="text" name="to" value="00:00" class="input-small">';
+	str += '<span class="add-on">';
+    str += '<i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-time"></i>';
+	str += '</span>';
+    str += '</div></div>';
+	str += '</div>';
+	return str;
+}
+
+$(function(){
+
+	for (var i=1; i<=7; i++){
+
+		//firstime
+		for(var j=1; j<=2; j++) {
+			$('#datetimepick'+i+''+j).datetimepicker({
+			      language: 'pt-BR',
+			      pickSeconds: false,
+			      pickDate: false,
+			      maskInput:false,
+		    });
+		}
+
+		$('#insert'+i).click(function(e){
+			i = e.target.id.substr(-1,10);
+			e.preventDefault();
+			numofbreaks[i-1]+=2;
+			var breaks = numofbreaks[i-1];
+			$('#day'+i).append("<dd>"+insertFrom(i,breaks)+"</dd><dd>"+insertTo(i,breaks+1)+"</dd>");
+			
+			for(var j=0; j<=1; j++) {
+				$('#datetimepick'+i+''+(parseInt(breaks)+j)).datetimepicker({
+			      language: 'pt-BR',
+			      pickSeconds: false,
+			      pickDate: false,
+			      maskInput:false,
+			   });
+			}
+		});
+
+		$('#remove'+i).click(function(e){
+			i = e.target.id.substr(-1,10);
+			e.preventDefault();
+			var breaks = numofbreaks[i-1];
+			numofbreaks[i-1]-=2;
+			$('#datetimepick'+i+''+(parseInt(breaks)+1)).parent().parent().remove();
+			$('#datetimepick'+i+''+breaks).parent().parent().remove();
+			
+			
+		});
+	}
+});
 
 ///////
 function fromTo(event){
