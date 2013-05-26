@@ -128,6 +128,7 @@ return array(
 	'logo' => 'Logo',
 	'none' => 'Brez',
 	'addNewProviderCategory' => 'Dodaj novo kategorijo ponudnika',
+	'deleteCurrentLogo' => 'Zbriši trenutni logo',
 
 
 

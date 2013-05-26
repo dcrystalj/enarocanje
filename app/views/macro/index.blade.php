@@ -17,22 +17,26 @@
         {
             $categoryName[$cat->name] = $cat->name;
         }
-        //$contents = 
-        $imgpath = 'image/logo/siroka.jpg';
-        $img = imagecreatefromjpeg('public/'.$imgpath);
-        $imgx = imagesx($img);
-        $imgy = imagesy($img);
-        if(2*$imgy > $imgx)
-        { //višinskega tipa
-            $style = 'height:100px; width:auto';
-            $imgx = '100px';
-            $imgy = 'auto';
-        }
-        else
-        { //širinskega tipa
-            $style = 'width:200px; height:auto';
-            $imgx = 'auto';
-            $imgy = '200px';
+        function setImage($path){
+            if($path == ''){
+                return '';
+            }
+            $img = imagecreatefromjpeg('public/'.$path);
+            $imgx = imagesx($img);
+            $imgy = imagesy($img);
+            if(2*$imgy > $imgx)
+            { //višinskega tipa
+                $style = 'height:100px; width:auto';
+                $imgx = '100px';
+                $imgy = 'auto';
+            }
+            else
+            { //širinskega tipa
+                $style = 'width:200px; height:auto';
+                $imgx = 'auto';
+                $imgy = '200px';
+            }
+            return '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="' . $path . '" height="auto" width="100px" style="height:none"></a>';
         }
     ?>
 
@@ -60,7 +64,7 @@
 
                 $tbody[] = [
                     'id'     => $i, 
-                    'logo'   => '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="' . $service->logo . '" height="auto" width="100px" style="height:none"></a>',   
+                    'logo'   => setImage($service->logo),   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
                     'Email'  => $service->email,
@@ -71,7 +75,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#','placeholder', Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
+        {{ Table::headers('#',trans('general.logo'), Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
     

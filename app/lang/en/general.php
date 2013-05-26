@@ -129,6 +129,7 @@ return array(
 	'logo' => 'Logo',
 	'none' => 'None',
 	'addNewProviderCategory' => 'Add new provider category',
+	'deleteCurrentLogo' => 'Delete current logo',
 
 
 
