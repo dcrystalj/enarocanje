@@ -13,19 +13,7 @@
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
-        }
-        $tbody = []; 
-        $i = 1; 
-        foreach ($macroService as $service){    
-            $tbody[] = [
-                'id'     => $i, 
-                'name'   => $service->name,
-                'City'   => $service->city . ' <br>' . $service->street, 
-                'Email'  => $service->email,
-                'link'   => Button::link(URL::route('macro.micro.index', $service->id),trans('general.choose'))
-             ];
-             $i++;
-        }
+        }        
     ?>
 
     @if(count($macroService)==0)
