@@ -183,7 +183,7 @@ class Provider extends BaseController {
 		    'image'     => 'image',
 		);
 
-		$image = 'image';
+		$image = 'logo';
 		$filepath = 'image/logo';
 		$filename = '';
 		if ($_FILES[$image]["error"] > 0)

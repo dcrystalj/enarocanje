@@ -41,7 +41,7 @@
             $i = 1; 
             foreach ($macroService as $service){  
                 $tbody[] = [
-                    'id'     => $i, 
+                    //'id'     => $i, 
                     'logo'   => UserLibrary::getImageLogo($service->logo),   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
@@ -53,7 +53,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#',trans('general.logo'), Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
+        {{ Table::headers(trans('general.logo'), Lang::get('general.name'),Lang::get('general.city'), Lang::get('general.email'), '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
     

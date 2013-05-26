@@ -12,7 +12,7 @@ function fc_insert(start, end, data)  {
 	if(typeof data == 'undefined')
 		data = {};
 	if(!data['eventType'])
-		alert('Event type is missing!!!!');
+		alert(trans('messages.eventTypeIsMissing'));
 	if(start < end)
 		calendar.fullCalendar('renderEvent',
 			  $.extend({
@@ -296,7 +296,7 @@ function fillCalendar(calendar){
 }
 
 function insertFrom(i){
-	var str = '<div class="control-group required"><label for="datetimepick'+i+'" class="control-label">From:</label><div class="controls">';
+	var str = '<div class="control-group required"><label for="datetimepick'+i+'" class="control-label">'+trans('general.from')+':</label><div class="controls">';
     str += '<div id="datetimepick'+i+'" class="input-append date dtp">';
 	str += ' <input data-format="hh:mm" type="text" name="from" value="00:00" class="input-small">';
 	str += '<span class="add-on">';

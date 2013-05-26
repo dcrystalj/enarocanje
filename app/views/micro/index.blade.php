@@ -51,7 +51,7 @@
                     $length .= Service::lengthMin($service->length);
                 }
                 $tbody[] = [
-                'id'     => $i, 
+                //'id'     => $i, 
                 'title'  => $service->title,
                 'length' => $length, 
                 'desc'   => strlen($service->description)>15 ? substr($service->description,0,20) .'...' : $service->description, 
@@ -65,7 +65,7 @@
 
         @if(count($tbody)>0)
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', trans('general.name'), trans('general.length'), trans('general.description'), trans('general.price').'(€)', '') }}
+        {{ Table::headers( trans('general.name'), trans('general.length'), trans('general.description'), trans('general.price').'(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
         @else

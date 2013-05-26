@@ -21,12 +21,10 @@
 	}
 ?>
 {{Former::open_for_files(URL::to('providerSaveLogo'),'POST')->id('logoForm')}}
-{{Former::file("image")->accept('image')->max(2, 'MB')}}
-{{Former::submit(trans('general.submit'))}}
+{{Former::file("logo",trans('general.logo'))->accept('image')->max(2, 'MB')}}
+{{Former::actions()->submit(trans('general.submit'))}}
 @if(isSetLogo($logoPath))
-{{'<br /><br /><br />'}}
 {{UserLibrary::getImageLogo($logoPath)}}
-{{'<br /><br /><br />'}}
 {{Button::link(URL::to('providerDeleteLogo'),trans('general.deleteCurrentLogo'))}}
 @endif
 {{Former::close()}}

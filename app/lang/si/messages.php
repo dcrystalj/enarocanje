@@ -47,7 +47,7 @@ return array(
 	'servicesUnsuccessfullyDeleted' => 'Storitev ni bilo mogoče zbrisati.',
 	'wasNotActivated' => ' ni bilo aktivirano.\nProsimo, poskusite ponovno.',
 	'wasActivated' => ' je bilo aktivirano!',
-	'wasSubmitted' => 'Delovni čas je bil poslan.',
+	'wasSubmitted' => 'Delovni čas je bil shranjen.',
 	'cannotMakeOnPast' => 'Ni mogoče narediti rezervacij za pretekle dni.',
 	'successfulReservation' => 'Rezervacija je bila uspešna!',
 	'unsuccessfulReservation' => 'Rezervacija je bila neuspešna!',
