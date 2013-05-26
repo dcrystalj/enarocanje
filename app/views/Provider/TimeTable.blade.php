@@ -92,8 +92,6 @@ fc_init({
 $(function() {
 	calendar.fullCalendar('render');
 
-	fillFields(calendar);
-
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
