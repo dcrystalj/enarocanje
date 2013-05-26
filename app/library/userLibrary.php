@@ -83,11 +83,20 @@ class UserLibrary {
         if($path == ''){
             return '';
         }
-        if(true)
-        {
-        	echo exif_imagetype('public/'.$path);
+        $imagetype = exif_imagetype('public/'.$path);
+        
+        switch($imagetype){
+        	case 1: //gif
+        	$img = imagecreatefromgif('public/'.$path);
+        	break;
+        	case 2: //jpeg
+        	$img = imagecreatefromjpeg('public/'.$path);
+        	break;
+        	case 3: //png
+        	$img = imagecreatefrompng('public/'.$path);
+        	break;
+
         }
-        $img = imagecreatefromjpeg('public/'.$path);
         if(2*imagesy($img) > imagesx($img))
         { //višinskega tipa
             $style = 'height:100px; width:auto';
