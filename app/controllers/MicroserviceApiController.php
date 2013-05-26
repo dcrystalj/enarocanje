@@ -207,6 +207,7 @@ class MicroserviceApiController extends BaseController
 				"end"       => date("Y-m-d", $date) . " " . $break->to,
 				"allDay"    => false,
 				'eventType' => 'break',
+				'editable'	=> true,
 			);
 		}
 		return Response::json($timetable);

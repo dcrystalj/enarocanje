@@ -38,7 +38,3 @@
 
 {{ Former::close() }}
 </dl>
-
-<script>
-
-</script>

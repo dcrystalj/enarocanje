@@ -23,7 +23,7 @@
 
 @include('Provider.mobileTimeTable')
 
-<div id='calendar' class="visible-desktop"></div>
+<div id='calendar' class="visible-desktop-m"></div>
 {{ Former::open(route('breaks', array($id)))->id('submit_form') }}
 {{ Former::hidden('start')->id('start') }}
 {{ Former::hidden('end')->id('end') }}
@@ -108,8 +108,7 @@ $(function() {
 		e.preventDefault();
 		// $('body').append($('#datetimepick'+1*2).val().getTime());
 		//mobile
-		if( $('#calendar').css('display') == 'none' ) {
-
+		if( $('#calendar').css('visibility') == 'hidden' ) {
 			fillCalendar(calendar);
 		}
 

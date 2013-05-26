@@ -24,7 +24,7 @@
 
 @include('Provider.mobileBreaks')
 
-<div id='calendar' class="visible-desktop"></div>
+<div id='calendar' class="visible-desktop-m"></div>
 
 <form id="submit_form" method="post" action="{{ route("breaks_submit", array($id)) }}">
 	<input type="hidden" name="events" id="events" value="<?php print htmlspecialchars(json_encode($events)); ?>" />
@@ -38,19 +38,18 @@ fc_init({
 	eventAfterRender: function(event, element, view) {  
 		var width = $(element).width()+8;
 		$(element).css('width', width + 'px');
-		fillFields(calendar);
 	},
 	eventDrop: function(event, dayDelta, minDelta, allDay, rf) {
 		if (isOverlapping(event.start, event.end))
 			rf();
-		fillFields(calendar);
+		fillBreakFields(calendar);
 	},
 	select: function(start, end, allDay) {
 		//cal_clear_day(calendar, start);
 		calendar.fullCalendar('unselect');
 		if(!isOverlapping(start,end))
 			fc_insert(start, end, {eventType: 'break'});
-		fillFields(calendar);
+		fillBreakFields(calendar);
 	},
 	eventClick: cal_show_dialog,
 	eventSources: [
@@ -61,11 +60,18 @@ fc_init({
 			editable: true,
 		},
 	],
+	loading: function(bool) {
+		if(!bool ){
+			fillBreakFields(calendar);
+		}
+	}, 
 	events: <?php print json_encode($inverted); ?>
 	});
 
+
+
 $(function() {
-	fillFields(calendar);
+	
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();
@@ -83,11 +89,11 @@ $(function() {
 	$('#save').click(function(e) {
 		e.preventDefault();
 
-		if( $('#calendar').css('display') == 'none' ) {
-			fillCalendar(calendar);
+		if( $('#calendar').css('visibility') == 'hidden' ) {
+			fillCalendarWithBreaks(calendar);
 		}
 
-		var events = calendar.fullCalendar('clientEvents', function(e) {return e.editable !== false;});
+		var events = calendar.fullCalendar('clientEvents', function(e) {return e.eventType == 'break';});
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);
 		document.getElementById('breaks').value = JSON.stringify(events);
@@ -125,6 +131,7 @@ width: 100%;
 	height: 10px !important;
 	line-height: 10px;
 }
+
 </style>
 
 @stop
