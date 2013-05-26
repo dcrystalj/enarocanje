@@ -22,7 +22,7 @@ $(function(){
 	$('#insertb').click(function(e){
 		e.preventDefault();
 		var i = parseInt($('#numofbreaks').val(),10);
-		$('#breakfield').append("<dt>Break "+i+"</dt><dd>"+insertFrom(i)+"</dd><dd>"+insertTo(i)+"</dd>");
+		$('#breakfield').append("<dt>"+trans('general.break')+" "+i+"</dt><dd>"+insertFrom(i)+"</dd><dd>"+insertTo(i)+"</dd>");
 	});
 });
 
