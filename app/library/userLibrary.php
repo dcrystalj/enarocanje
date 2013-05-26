@@ -80,7 +80,7 @@ class UserLibrary {
 
 
     public static function getImageLogo($path){
-        if($path == ''){
+        if($path == '' || !File::exists('public/'.$path)){
             return '';
         }
         $imagetype = exif_imagetype('public/'.$path);
