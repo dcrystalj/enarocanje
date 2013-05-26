@@ -28,7 +28,14 @@ class Service {
 					 'Make-up',),
 		'1' => array('Massage'),       
 		'2' => array('Hair services'),
-		'0' => array('Skin treatments'),
+		'0' => array('Skin treatments',
+					 'Manicure', 
+					 'Pedicure',
+					 'Depilation',
+					 'Solarium',
+					 'Make-up',
+					 'Massage',
+					 'Hair services',),
 	);
 
 	private static $sex = array(
@@ -57,13 +64,7 @@ class Service {
 	}
 
 	public static function categoryId($serviceName) {
-		$categories = Categories::all();
-		foreach ($categories as $category)
-		{
-			if($category->name == $serviceName){
-				return $category->id-1;
-			}
-		}
+		return Categories::where('name',$serviceName)->first()->id;
 	}
 
 	/*public static function duration() {
@@ -94,14 +95,13 @@ class Service {
         return self::$length;
 	}
 
-	public static function micro($serviceName) {
+	public static function micro($macName) {
 		$srv = [];
-		$categories = Categories::all();
+		$categories = Categories::where('name',$macName)->first()->servicecat()->get();
 		foreach ($categories as $cat) {
-			if ($cat->name == $serviceName){
-				return self::$services[$cat->id-1];
-			}
+			$srv[] = $cat->name;
 		}
+		return $srv;
 	}
 
 	public static function gender() {

@@ -65,7 +65,7 @@ return array(
 	'retypePassword' => 'Re-type password',
 	'saveChanges' => 'Save changes',
 	'save' => 'Save',
-	'service' => 'Service',
+	'service' => 'Service name',
 	'services' => 'Services',
 	'slovenianCapital' => 'Slovenian',
 	'slovenian' => 'slovenian',

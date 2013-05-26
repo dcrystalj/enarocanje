@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    
+
     @if(isset($mac))
         <h3> {{ $mac->name }} </h3>
         @if(isset($mic))

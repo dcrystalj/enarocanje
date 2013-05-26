@@ -36,6 +36,10 @@ Route::resource('macro.micro','MicroserviceController');
 Route::get('macro/{mac}/micro/{mic}/activate',array('as'=>'microactivate',
 	'uses'=>'MicroserviceController@getActivated'));
 
+Route::get('micro',function(){
+	return View::make('micro.indexAll');
+});
+
 
 Route::resource('macro.micro.reservation' , 'CustomerReservation');
 
@@ -66,7 +70,7 @@ Route::resource('referral','ReferralController');
 
 // categorization controller
 Route::resource('category','CategorizationController');
-
+Route::resource('category.servicecat','ServiceCatController');
 
 //iron.io mail 
 Route::post('queue/push', function(){

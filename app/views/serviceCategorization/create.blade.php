@@ -1,12 +1,18 @@
 @extends('layouts.default')
 
 @section('title')
-    Add new provider category
+    Add new service category
 @stop
 
 @section('content')
+        <?php
+            $providerCat = Categories::find($procat);
+        ?>
 
-        {{ Former::open(URL::route('category.store'))->rules($rules) }}
+        @if(isset($providerCat))
+            <h3> {{ $providerCat->name }} </h3>
+        @endif
+        {{ Former::open(URL::route('category.servicecat.store',$procat))->rules($rules) }}
         {{ Former::text('name','Category name:')->autofocus() }}
         {{ Former::actions()->submit('Add new category') }}
         {{ Former::close() }} 
@@ -15,14 +21,11 @@
         <?php
             $categories = []; 
             $i = 1; 
-            $category = Categories::all();
+            $category = ServiceCategories::where('providercat_id',$procat)->get();
             foreach ($category as $cat){   
                 $categories[]= [
                     'id'     => $i, 
                     'name'   => $cat->name,
-                    'link'   => Button::link(
-                                    URL::route('category.servicecat.create',
-                                        $cat->id), 'Add service category'),
                 ];
                 $i++;
             }
