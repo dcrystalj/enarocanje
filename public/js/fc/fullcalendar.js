@@ -1565,8 +1565,8 @@ function formatDates(date1, date2, format, options) {
 	}
 	return res;
 };
-
-var daysShort=new Array{
+$(window).load(function() {
+var daysShort=new Array(
 	trans('general.monShort'),
 	trans('general.tueShort'),
 	trans('general.wedShort'),
@@ -1574,8 +1574,8 @@ var daysShort=new Array{
 	trans('general.friShort'),
 	trans('general.satShort'),
 	trans('general.sunShort')
-}
-var daysLong=new Array{
+);
+var daysLong=new Array(
 	trans('general.mon'),
 	trans('general.tue'),
 	trans('general.wed'),
@@ -1583,8 +1583,8 @@ var daysLong=new Array{
 	trans('general.fri'),
 	trans('general.sat'),
 	trans('general.sun')
-}
-var monthsShort=new Array{
+);
+var monthsShort=new Array(
 	trans('general.janShort'),
 	trans('general.febShort'),
 	trans('general.marShort'),
@@ -1597,8 +1597,8 @@ var monthsShort=new Array{
 	trans('general.octShort'),
 	trans('general.novShort'),
 	trans('general.decShort')
-}
-var monthsLong=new Array{
+);
+var monthsLong=new Array(
 	trans('general.jan'),
 	trans('general.feb'),
 	trans('general.mar'),
@@ -1611,8 +1611,8 @@ var monthsLong=new Array{
 	trans('general.oct'),
 	trans('general.nov'),
 	trans('general.dec')
-}
-
+);
+});
 var dateFormatters = {
 	s	: function(d)	{ return d.getSeconds() },
 	ss	: function(d)	{ return zeroPad(d.getSeconds()) },
@@ -1628,8 +1628,8 @@ var dateFormatters = {
 	dddd: function(d,o)	{ return daysLong[d.getDay()] },
 	M	: function(d)	{ return d.getMonth() + 1 },
 	MM	: function(d)	{ return zeroPad(d.getMonth() + 1) },
-	MMM	: function(d,o)	{ return monthsShort[d.getMonth()] },
-	MMMM: function(d,o)	{ return monthsLong[d.getMonth()] },
+	MMM	: function(d,o)	{ return monthsLong[d.getMonth()] },
+	MMMM: function(d,o)	{ return monthsShort[d.getMonth()] },
 	yy	: function(d)	{ return (d.getFullYear()+'').substring(2) },
 	yyyy: function(d)	{ return d.getFullYear() },
 	t	: function(d)	{ return d.getHours() < 12 ? 'a' : 'p' },
