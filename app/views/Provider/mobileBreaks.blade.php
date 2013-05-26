@@ -15,6 +15,7 @@
 	<div class="controls">
 	{{ Button::link("#",'+',['id' => 'insert1','class'=>'input-append']) }}
 	{{ Button::link("#",'-',['id' => 'remove1','class'=>'input-append']) }}
+	{{ Button::link("#",'Same to friday',['id' => 'tofriday','class'=>'input-append']) }}
 	</div>
 </dd>
 </div>

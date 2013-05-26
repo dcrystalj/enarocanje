@@ -159,8 +159,8 @@ function cal_error() {
 
 function cal_event_data(event) {
 	return {
-	    start: getDate(event.start),
-	    end: getDate(event.end),
+	    start: getDate(event.start).replace(/-/g,"/"),
+	    end: getDate(event.end).replace(/-/g,"/"),
 	    title: event.title,
 	    allDay: false,
 	};
@@ -454,6 +454,20 @@ $(function(){
 			
 		});
 	}
+	$('#tofriday').click(function(e){
+		e.preventDefault();
+		var start 	= $('#datetimepick'+1+''+1+' input').val();
+		var end 	= $('#datetimepick'+1+''+2+' input').val();
+
+		for(var j=2; j<=5; j++) {
+						
+			$('#datetimepick'+j+''+1+' input').val(start);
+			$('#datetimepick'+j+''+2+' input').val(end);
+
+
+		}				
+			
+	});
 });
 
 ///////

@@ -92,11 +92,6 @@ fc_init({
 $(function() {
 	calendar.fullCalendar('render');
 
-	fillFields(calendar);
-	
-	//hide for mobile
-	$('#calendar').addClass('visible-desktop');
-
 	// Buttons
 	$('#reset').click(function(e) {
 		e.preventDefault();

@@ -184,6 +184,9 @@ $(function() {
 		bootbox.confirm("{{trans('messages.areYouSureMake')}} " + fromTo(allevents[0]) +" ?", function(result) {
 
 		  	if(result){	
+		  		
+		  		$('#event-dialog').modal('hide');	
+
 		  		if(!'{{ Auth::check() }}'){
 			  		
 			  		$('#event-dialog').modal({
