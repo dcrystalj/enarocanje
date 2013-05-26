@@ -1566,7 +1566,7 @@ function formatDates(date1, date2, format, options) {
 	return res;
 };
 
-var daysShort = {
+var daysShort=new Array{
 	trans('general.monShort'),
 	trans('general.tueShort'),
 	trans('general.wedShort'),
@@ -1575,7 +1575,7 @@ var daysShort = {
 	trans('general.satShort'),
 	trans('general.sunShort')
 }
-var daysLong = {
+var daysLong=new Array{
 	trans('general.mon'),
 	trans('general.tue'),
 	trans('general.wed'),
@@ -1584,7 +1584,7 @@ var daysLong = {
 	trans('general.sat'),
 	trans('general.sun')
 }
-var monthsShort = {
+var monthsShort=new Array{
 	trans('general.janShort'),
 	trans('general.febShort'),
 	trans('general.marShort'),
@@ -1598,7 +1598,7 @@ var monthsShort = {
 	trans('general.novShort'),
 	trans('general.decShort')
 }
-var monthsLong = {
+var monthsLong=new Array{
 	trans('general.jan'),
 	trans('general.feb'),
 	trans('general.mar'),

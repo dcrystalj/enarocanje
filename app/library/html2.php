@@ -65,7 +65,11 @@ class Html2 extends Html {
 
 		'js/fc/fullcalendar.ext.js' => array(
 			'general.from',
-			'messages.eventTypeIsMissing'
+			'messages.eventTypeIsMissing',
+			'general.workingDay',
+			'messages.fetchingError',
+			'general.fromTo',
+			
 		)
 	);
 };
