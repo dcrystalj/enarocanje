@@ -24,7 +24,7 @@
 
 @include('Provider.mobileBreaks')
 
-<div id='calendar' class="visible-desktop"></div>
+<div id='calendar' class="visible-desktop-m"></div>
 
 <form id="submit_form" method="post" action="{{ route("breaks_submit", array($id)) }}">
 	<input type="hidden" name="events" id="events" value="<?php print htmlspecialchars(json_encode($events)); ?>" />
@@ -71,9 +71,6 @@ fc_init({
 
 
 $(function() {
-	//TODO
-	//
-	//$('#calendar').css('visibility','hidden');
 	
 	// Buttons
 	$('#reset').click(function(e) {
@@ -92,11 +89,11 @@ $(function() {
 	$('#save').click(function(e) {
 		e.preventDefault();
 
-		if( $('#calendar').css('display') == 'none' ) {
+		if( $('#calendar').css('visibility') == 'hidden' ) {
 			fillCalendarWithBreaks(calendar);
 		}
 
-		var events = calendar.fullCalendar('clientEvents', function(e) {return e.editable !== false;});
+		var events = calendar.fullCalendar('clientEvents', function(e) {return e.eventType == 'break';});
 		for(i=0; i<events.length; i++)
 			 events[i] = cal_event_data(events[i]);
 		document.getElementById('breaks').value = JSON.stringify(events);

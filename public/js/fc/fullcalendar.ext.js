@@ -276,6 +276,8 @@ function fillFields(calendar){
 	}
 }
 function newDate(s,i){
+	if(parseInt(s.substr(0,2))==0)
+		return 0;
 	var start = new Date();
 	start.setYear('2013');
 	start.setMonth('3');
@@ -301,7 +303,7 @@ function fillCalendar(calendar){
 
 function fillCalendarWithBreaks(calendar){
 	var events = calendar.fullCalendar('clientEvents', function(e) {
-		return e.editable !== false;
+		return e.eventType == 'break';
 	});
 
 	for(var i=0; i<events.length; i++)
@@ -313,7 +315,7 @@ function fillCalendarWithBreaks(calendar){
 			var start 	= newDate($('#datetimepick'+i+''+j+' input').val(), i);
 			var end 	= newDate($('#datetimepick'+i+''+(j+1)+' input').val(), i);
 			
-			if(!isOverlapping(start,end))
+			if( start < end && isValidDate(start) && isValidDate(end))
 				fc_insert(start, end, {eventType: 'break'});
 
 			j+=2;
@@ -399,6 +401,15 @@ function insertTo(i, j){
     str += '</div></div>';
 	str += '</div>';
 	return str;
+}
+
+function isValidDate(d) {
+	var timestamp = Date.parse(d);
+	if (isNaN(timestamp)==false)
+	{
+	    return true;
+	}
+	return false;
 }
 
 $(function(){
