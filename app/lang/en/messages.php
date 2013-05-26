@@ -68,6 +68,7 @@ return array(
 	'resetPassword' => 'Reset password',
 	'noProvidersYet' => 'No providers avaliable yet',
 	'error' => 'An error has occured!',
+	'logoDeleted' => 'Logo was deleted.',
 
 
 

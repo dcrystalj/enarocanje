@@ -17,27 +17,6 @@
         {
             $categoryName[$cat->name] = $cat->name;
         }
-        function setImage($path){
-            if($path == ''){
-                return '';
-            }
-            $img = imagecreatefromjpeg('public/'.$path);
-            $imgx = imagesx($img);
-            $imgy = imagesy($img);
-            if(2*$imgy > $imgx)
-            { //višinskega tipa
-                $style = 'height:100px; width:auto';
-                $imgx = '100px';
-                $imgy = 'auto';
-            }
-            else
-            { //širinskega tipa
-                $style = 'width:200px; height:auto';
-                $imgx = 'auto';
-                $imgy = '200px';
-            }
-            return '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="' . $path . '" height="auto" width="100px" style="height:none"></a>';
-        }
     ?>
 
     @if(count($macroService)==0)
@@ -64,7 +43,7 @@
 
                 $tbody[] = [
                     'id'     => $i, 
-                    'logo'   => setImage($service->logo),   
+                    'logo'   => UserLibrary::getImageLogo($service->logo),   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
                     'Email'  => $service->email,

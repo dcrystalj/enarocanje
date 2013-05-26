@@ -69,6 +69,7 @@ return array(
 	'resetPassword' => 'Ponastavitev gesla',
 	'noProvidersYet' => 'Ponudnikov še ni',
 	'error' => 'Zgodila se je napaka!',
+	'logoDeleted' => 'Logo je bil zbrisan.',
 
 
 

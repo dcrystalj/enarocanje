@@ -77,4 +77,23 @@ class UserLibrary {
 
         return $uuid;
     }
+
+
+    public static function getImageLogo($path){
+        if($path == ''){
+            return '';
+        }
+        $img = imagecreatefromjpeg('public/'.$path);
+        if(2*imagesy($img) > imagesx($img))
+        { //višinskega tipa
+            $style = 'height:100px; width:auto';
+        }
+        else
+        { //širinskega tipa
+            $style = 'width:200px; height:auto';
+        }
+        $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
+        return '<a href="'.$path.'" rel="lightbox" title="'.trans('general.logo').'">'.$htmlImage.'</a>';
+
+    }
 }

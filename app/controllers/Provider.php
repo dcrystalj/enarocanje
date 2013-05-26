@@ -203,23 +203,23 @@ class Provider extends BaseController {
 		} 
 
 		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
-		/*var_dump($macservice);
-		echo "<br />";
-		var_dump($filepath);
-		echo "<br />";
-		var_dump($filename);
-		*/
+		if($macservice->logo != '')
+		{
+			$this->deleteLogo();
+		}
 		$macservice->logo = $filepath . '/' . $filename;
 		$macservice->save();
         Input::file($image)->move('public/' . $filepath,$filename);
 		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
 	}
-	function deleteLogo()
+	public function deleteLogo()
 	{	
 		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
-		$macservice->logo = 'asdasdasdasdas';
+		File::delete('public/'.$macservice->logo);
+		$macservice->logo = '';
 		$macservice->save();
-		return Redirect::to('macro/create')->with('success','logo zbrisan');
+		return Redirect::to('macro/create')->with('success',trans('messages.logoDeleted'));
+		
 	}
 
 }

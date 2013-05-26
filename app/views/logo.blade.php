@@ -8,26 +8,29 @@
 <script>
 
 </script>
-
-{{Former::open_for_files(URL::to('providerSaveLogo'),'POST')->id('logoForm')}}
-{{Former::file("image")->accept('image')->max(10, 'MB')}}
-{{Former::submit(trans('general.submit'))}}
-@if(false)
-{{Former::button(trans('general.deleteCurrentLogo'))}}
-@endif
-{{Former::close()}}
-
 <?php
-	function isSetLogo()
+	$logoPath = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first()->logo;
+	function isSetLogo($logoPath)
 	{
-		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
-		//var_dump($macservice->logo);
-		if($macservice->logo == '')
+		//returns true, if logo is set, false otherwise
+		if($logoPath == '')
 		{
 			return false;
 		}
 		return true;
 	}
 ?>
+{{Former::open_for_files(URL::to('providerSaveLogo'),'POST')->id('logoForm')}}
+{{Former::file("image")->accept('image')->max(2, 'MB')}}
+{{Former::submit(trans('general.submit'))}}
+@if(isSetLogo($logoPath))
+{{'<br /><br /><br />'}}
+{{UserLibrary::getImageLogo($logoPath)}}
+{{'<br /><br /><br />'}}
+{{Button::link(URL::to('providerDeleteLogo'),trans('general.deleteCurrentLogo'))}}
+@endif
+{{Former::close()}}
+
+
 
 @stop

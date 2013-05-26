@@ -99,4 +99,4 @@ Route::get('spucajbazozdejtkoj', function(){
 
 Route::get('providerLogo', 'Provider@logo');
 Route::post('providerSaveLogo', 'Provider@saveLogo');
-Route::get('providerTrest', 'Provider@trest');
+Route::get('providerDeleteLogo', 'Provider@deleteLogo');
