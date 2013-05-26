@@ -16,7 +16,7 @@
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
-        }
+	}
     ?>
 
     @if(count($macroService)==0)
@@ -40,7 +40,6 @@
             $tbody = []; 
             $i = 1; 
             foreach ($macroService as $service){  
-
                 $tbody[] = [
                     'id'     => $i, 
                     'logo'   => UserLibrary::getImageLogo($service->logo),   
