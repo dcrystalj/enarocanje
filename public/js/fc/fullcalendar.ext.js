@@ -159,8 +159,8 @@ function cal_error() {
 
 function cal_event_data(event) {
 	return {
-	    start: getDate(event.start),
-	    end: getDate(event.end),
+	    start: getDate(event.start).replace(/-/g,"/"),
+	    end: getDate(event.end).replace(/-/g,"/"),
 	    title: event.title,
 	    allDay: false,
 	};
