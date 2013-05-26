@@ -1631,7 +1631,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function isJson()
     {
-        return str_contains($this->server->get('CONTENT_TYPE'), '/json');
+        return str_contains($this->header('CONTENT_TYPE'), '/json');
     }
     /**
      * Determine if the current request is asking for JSON in return.
@@ -7045,12 +7045,17 @@ class Str
      * Determine if a given string ends with a given needle.
      *
      * @param string $haystack
-     * @param string $needle
+     * @param string|array $needles
      * @return bool
      */
-    public static function endsWith($haystack, $needle)
+    public static function endsWith($haystack, $needles)
     {
-        return $needle == substr($haystack, strlen($haystack) - strlen($needle));
+        foreach ((array) $needles as $needle) {
+            if ($needle == substr($haystack, strlen($haystack) - strlen($needle))) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Cap a string with a single instance of a given value.
@@ -12707,12 +12712,25 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
     /**
      * Convert a DateTime to a storable string.
      *
-     * @param  DateTime  $value
+     * @param  DateTime|int  $value
      * @return string
      */
-    protected function fromDateTime(DateTime $value)
+    protected function fromDateTime($value)
     {
-        return $value->format($this->getDateFormat());
+        $format = $this->getDateFormat();
+        // If the value is already a DateTime instance, we will just skip the rest of
+        // these checks since they will be a waste of time, and hinder performance
+        // when checking the field. We will just return the DateTime right away.
+        if ($value instanceof DateTime) {
+            
+        } elseif (is_numeric($value)) {
+            $value = Carbon::createFromTimestamp($value);
+        } elseif (preg_match('/^(\\d{4})-(\\d{2})-(\\d{2})$/', $value)) {
+            $value = Carbon::createFromFormat('Y-m-d', $value);
+        } elseif (!$value instanceof DateTime) {
+            $value = Carbon::createFromFormat($format, $value);
+        }
+        return $value->format($format);
     }
     /**
      * Return a timestamp as DateTime object.
@@ -12722,7 +12740,14 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
      */
     protected function asDateTime($value)
     {
-        if (!$value instanceof DateTime) {
+        // If this value is an integer, we will assume it is a UNIX timestamp's value
+        // and format a Carbon object from this timestamp. This allows flexibility
+        // when defining your date fields as they might be UNIX timestamps here.
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp($value);
+        } elseif (preg_match('/^(\\d{4})-(\\d{2})-(\\d{2})$/', $value)) {
+            return Carbon::createFromFormat('Y-m-d', $value);
+        } elseif (!$value instanceof DateTime) {
             $format = $this->getDateFormat();
             return Carbon::createFromFormat($format, $value);
         }
@@ -13186,10 +13211,14 @@ class DatabaseManager implements ConnectionResolverInterface
     {
         $connection->setFetchMode($this->app['config']['database.fetch']);
         $connection->setEventDispatcher($this->app['events']);
+        // The database connection can also utilize a cache manager instance when cache
+        // functionality is used on queries, which provides an expressive interface
+        // to caching both fluent queries and Eloquent queries that are executed.
+        $connection->setCacheManager($this->app['cache']);
+        $app = $this->app;
         // We will setup a Closure to resolve the paginator instance on the connection
         // since the Paginator isn't sued on every request and needs quite a few of
         // our dependencies. It'll be more efficient to lazily resolve instances.
-        $app = $this->app;
         $connection->setPaginator(function () use($app) {
             return $app['paginator'];
         });

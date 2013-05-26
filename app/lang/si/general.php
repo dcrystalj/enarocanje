@@ -124,7 +124,7 @@ return array(
 	'categories' => 'Kategorije',
 	'categoryName' => 'Ime kategorije',
 	'filterProvidersByCategory' => 'Filtriraj ponudnike po kategoriji',
-	'filter' => 'Filter',
+	'filter' => 'Filtriraj',
 	'logo' => 'Logo',
 	'none' => 'Brez',
 	'addNewProviderCategory' => 'Dodaj novo kategorijo ponudnika',

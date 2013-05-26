@@ -194,17 +194,24 @@ class Provider extends BaseController {
 			$filename = Str::random('20','alpha') . '.jpg';
 		}
 		while(File::exists($filepath . $filename));
-			
+				
 		$validation = Validator::make(Input::all(),$imageRule);
 
         if($validation->fails())
         {
             return Redirect::back()->withErrors($validation)->withInput();
-		}
-        $user = Auth::user();
-        $user->logo = $filepath . '/' . $filename;
-        $user->save();
-        Input::file($image)->move($filepath,$filename);
+		} 
+
+		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
+		/*var_dump($macservice);
+		echo "<br />";
+		var_dump($filepath);
+		echo "<br />";
+		var_dump($filename);
+		*/
+		$macservice->logo = $filepath . '/' . $filename;
+		$macservice->save();
+        Input::file($image)->move('public/' . $filepath,$filename);
 		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
 	}
 }

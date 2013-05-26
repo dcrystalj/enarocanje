@@ -17,33 +17,22 @@
         {
             $categoryName[$cat->name] = $cat->name;
         }
-        $tbody = []; 
-        $i = 1; 
-        $imageHeight = 100;
-        $imageWidth = 200;
-        $biggerSide = $imageWidth;
-        $path = Auth::user()->logo;
-        $image = File::get($path);
-        echo $path;
-        echo Html::image($path,'alt text');
-        if ($imageHeight > $imageWidth)
-        {
-            $logoPlaceholder = '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="boxxy.jpg" height="' . $imageHeight . '" width="auto" style="height:none"></a>';
+        //$contents = 
+        $imgpath = 'image/logo/siroka.jpg';
+        $img = imagecreatefromjpeg('public/'.$imgpath);
+        $imgx = imagesx($img);
+        $imgy = imagesy($img);
+        if(2*$imgy > $imgx)
+        { //višinskega tipa
+            $style = 'height:100px; width:auto';
+            $imgx = '100px';
+            $imgy = 'auto';
         }
-        else 
-        {
-            $logoPlaceholder = '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="boxxy.jpg" height="auto" width="' . $imageWidth . '" style="height:none"></a>';
-        }
-        foreach ($macroService as $service){    
-            $tbody[] = [
-                'id'     => $i,
-                'neki'   => $logoPlaceholder,    
-                'name'   => $service->name,
-                'City'   => $service->city . ' <br>' . $service->street, 
-                'Email'  => $service->email,
-                'link'   => Button::link(URL::route('macro.micro.index', $service->id),trans('general.choose'))
-             ];
-             $i++;
+        else
+        { //širinskega tipa
+            $style = 'width:200px; height:auto';
+            $imgx = 'auto';
+            $imgy = '200px';
         }
     ?>
 
@@ -67,10 +56,11 @@
 
             $tbody = []; 
             $i = 1; 
-            foreach ($macroService as $service){    
+            foreach ($macroService as $service){  
+
                 $tbody[] = [
                     'id'     => $i, 
-                    'neki'   => $logoPlaceholder,   
+                    'logo'   => '<a href="boxxy.jpg" rel="lightbox" title="my caption"><img src="' . $service->logo . '" height="auto" width="100px" style="height:none"></a>',   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
                     'Email'  => $service->email,
