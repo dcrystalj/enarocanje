@@ -97,7 +97,6 @@ class UserLibrary {
         	break;
 
         }
-        /*
         if(2*imagesy($img) > imagesx($img))
         { //višinskega tipa
             $style = 'height:100px; width:auto';
@@ -106,10 +105,18 @@ class UserLibrary {
         { //širinskega tipa
             $style = 'width:200px; height:auto';
         }
+        $styleBig = '';
+        /*if(imagesy($img) > imagesx($img))
+        {
+            $styleBig = 'width:auto; height:<script>3*screen.height/4</script>';
+        }
+        else
+        {
+            $styleBig = 'width:<script>3*screen.height/4</script>; height:auto';
+        }
         */
-        $style = 'width:200px; height:auto';
         $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
-        return '<a href="'.$path.'" rel="lightbox" title="'.trans('general.logo').'">'.$htmlImage.'</a>';
+        return '<a href="'.$path.'" rel="lightbox" '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
 
     }
 }

@@ -112,7 +112,6 @@
 
 <script>
 
-<<<<<<< HEAD
 $(function(){
 	$('#insertb').click(function(e){
 		e.preventDefault();
@@ -120,8 +119,6 @@ $(function(){
 		$('#breakfield').append("<dt>"+trans('general.break')+" "+i+"</dt><dd>"+insertFrom(i)+"</dd><dd>"+insertTo(i)+"</dd>");
 	});
 });
-=======
->>>>>>> 2fd5049d47315505a7a0467283a11d320092a441
 
 
 </script>
