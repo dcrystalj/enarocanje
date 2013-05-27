@@ -85,7 +85,8 @@ class Events {
 	}
 
 	// Reservation from database -> event for google
-	public static function reservation_to_event($reservation) {
+	// Sync - synchronizate with google
+	public static function reservation_to_event($reservation, $sync=false) {
 	  $u = User::find($reservation->user_id);
 	  $serviceName = Service::serviceName($reservation->micservice_id);
 	  if($u->name) 
@@ -96,11 +97,13 @@ class Events {
 	      $name = $u->email;
 	    }
 	  
-	  return array(
+	  $ev = array(
 	    'from' => $reservation->date.' '.$reservation->from,
 	    'to' => $reservation->date.' '.$reservation->to,
 	    'title' => trans('general.reservation').': '.$name.' '.trans('general.reservation').' '.$serviceName
-	    /* 'model' => $reservation, */
 	  );
+	  if($sync)
+	    $ev['model'] = $reservation;
+	  return $ev;
 	}
 };

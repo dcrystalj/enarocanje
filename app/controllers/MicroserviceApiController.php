@@ -145,8 +145,8 @@ class MicroserviceApiController extends BaseController
 			// Push to provider calenar
 			$provider = $r->microservice->macroservice->user;
 			if($provider->gtoken) {
-			  $gcal = new GoogleApi($provider->gtoken);
-			  $ev = Events::reservation_to_event($r);
+			  $gcal = new GoogleApi($provider);
+			  $ev = Events::reservation_to_event($r, true);
 			  $gcal->add_or_update($provider->gcalendar, array($ev));
 			}
 
@@ -160,11 +160,26 @@ class MicroserviceApiController extends BaseController
 		$userid = Auth::user()->id;
 		$microservid = $id;
 
+		// Delete reservation from google
+ 		$r = Reservation::where('id',$reservationid)
+			->where('micservice_id',$microservid)
+			->where('user_id',$userid)
+		  ->first();
+		if($r && $r->google_id) {
+		  $micro = MicroService::where('id', $microservid)->first();
+		  $macro = MacroService::where('id', $micro->macservice_id)->first();
+		  $provider = $macro->user;
+		  if($provider->gtoken) {
+		    $gcal = new GoogleApi($provider);
+		    $gcal->removeEvent($provider->gcalendar, $r->google_id);
+		  }
+		}
+
+		// Delete from database
  		$r = Reservation::where('id',$reservationid)
 			->where('micservice_id',$microservid)
 			->where('user_id',$userid)
 			->delete();
-
 		if($r)			
 			return json_encode(array('success'=>true,'text'=>trans('messages.successfullyDeleted')));
 		else
