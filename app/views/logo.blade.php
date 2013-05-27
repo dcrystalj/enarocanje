@@ -25,6 +25,7 @@
 {{Former::actions()->submit(trans('general.submit'))}}
 @if(isSetLogo($logoPath))
 {{UserLibrary::getImageLogo($logoPath)}}
+{{'<br /><br /><br />'}}
 {{Button::link(URL::to('providerDeleteLogo'),trans('general.deleteCurrentLogo'))}}
 @endif
 {{Former::close()}}

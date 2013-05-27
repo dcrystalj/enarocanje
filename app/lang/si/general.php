@@ -167,7 +167,17 @@ return array(
 	'none' => 'Brez',
 	'addNewProviderCategory' => 'Dodaj novo kategorijo ponudnika',
 	'deleteCurrentLogo' => 'Zbriši trenutni logo',
-
+	'manicure' => 'Manikura', 
+	'pedicure' => 'Pedikura',
+	'depilation' => 'Depilacija',
+	'solarium' => 'Solarij',
+	'makeUp' => 'Make-up',
+	'massage' => 'Masaža',       
+	'hairServices' => 'Lasne storitve',
+	'skinTreatments' => 'Kožni tretmaji',
+	'unisex' => 'Unisex',
+	'male' => 'Moški',
+	'female' => 'Ženski',
 
 
 );

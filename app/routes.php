@@ -80,6 +80,7 @@ Route::post('queue/push', function(){
 //languages
 Route::get('lang/{lang}', function($lang){
 	Session::set('language',$lang);
+	echo "bootbox.setlocale(".$lang.");";
 	return Redirect::back();
 });
 

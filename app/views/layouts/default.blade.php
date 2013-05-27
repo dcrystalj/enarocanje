@@ -119,7 +119,9 @@
 	{{ Html2::script('js/passStrength.js') }}
 	{{ Html2::script('js/stacktable.js') }}
 
+
 <script>
+bootbox.setLocale('{{Session::get('language')}}');
 var _trans = {{ Html2::get_translates() }};
 function trans(trans) {
   trans = ((typeof(_trans[trans])) === 'undefined')?trans:_trans[trans];

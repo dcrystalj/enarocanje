@@ -168,6 +168,17 @@ return array(
 	'none' => 'None',
 	'addNewProviderCategory' => 'Add new provider category',
 	'deleteCurrentLogo' => 'Delete current logo',
+	'manicure' => 'Manicure', 
+	'pedicure' => 'Pedicure',
+	'depilation' => 'Depilation',
+	'solarium' => 'Solarium',
+	'makeUp' => 'Make-up',
+	'massage' => 'Massage',       
+	'hairServices' => 'Hair services',
+	'skinTreatments' => 'Skin treatments',
+	'unisex' => 'Unisex',
+	'male' => 'Male',
+	'female' => 'Female',
 
 
 
