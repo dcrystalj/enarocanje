@@ -459,12 +459,21 @@ $(function(){
 		var start 	= $('#datetimepick'+1+''+1+' input').val();
 		var end 	= $('#datetimepick'+1+''+2+' input').val();
 
-		for(var j=2; j<=5; j++) {
-						
+		for(var j=2; j<=5; j++) {						
 			$('#datetimepick'+j+''+1+' input').val(start);
 			$('#datetimepick'+j+''+2+' input').val(end);
+		}				
+			
+	});	
 
+	$('#tofridaytime').click(function(e){
+		e.preventDefault();
+		var start 	= $('#datetimepick'+1+' input').val();
+		var end 	= $('#datetimepick'+2+' input').val();
 
+		for(var j=1; j<=10; j+=2) {
+			$('#datetimepick'+j+' input').val(start);
+			$('#datetimepick'+(j+1)+' input').val(end);
 		}				
 			
 	});

@@ -4,7 +4,11 @@
 <dt>{{trans('general.mon')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',1) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
-
+<dd>
+	<div class="controls">
+	{{ Button::link("#",'Same to friday',['id' => 'tofridaytime','class'=>'input-append']) }}
+	</div>
+</dd>
 
 <dt>{{trans('general.tue')}}:</dt> 
 <dd>{{ Timepicker::from($errors,'00:00:00',3) }}</dd>
