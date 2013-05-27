@@ -83,4 +83,24 @@ class Events {
 	public static function stringToDay($i){
 		return isset(self::$day_to_num[$i])?self::$day_to_num[$i]:null;
 	}
+
+	// Reservation from database -> event for google
+	public static function reservation_to_event($reservation) {
+	  $u = User::find($reservation->user_id);
+	  $serviceName = Service::serviceName($reservation->micservice_id);
+	  if($u->name) 
+	    {
+	      $name = $u->name.' '.$u->surname;
+	    } else 
+	    {
+	      $name = $u->email;
+	    }
+	  
+	  return array(
+	    'from' => $reservation->date.' '.$reservation->from,
+	    'to' => $reservation->date.' '.$reservation->to,
+	    'title' => trans('general.reservation').': '.$name.' '.trans('general.reservation').' '.$serviceName
+	    /* 'model' => $reservation, */
+	  );
+	}
 };

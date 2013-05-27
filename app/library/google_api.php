@@ -7,12 +7,14 @@ class GoogleApi {
 	private $cal;
 	private $ret = null;
 
-	public function __construct() {
+	public function __construct($gtoken=null) {
 		$this->client = new Google_Client();
 		$this->client->setApplicationName('e-narocanje');
 		$this->cal = new Google_CalendarService($this->client);
-		if($token = Session::get('gtoken'))
-			$this->client->setAccessToken($token);
+		if($gtoken === null)
+		  $gtoken = Session::get('gtoken');
+		if($gtoken)
+		    $this->client->setAccessToken($gtoken);
 		$this->client->setRedirectUri(URL::to('google/auth'));
 	}
 

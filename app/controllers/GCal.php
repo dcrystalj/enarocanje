@@ -104,33 +104,17 @@ class GCal extends BaseController {
 		if(!($user && $user->isProvider())) return;
 
 		$calendar_id = 'select';
-		if($gtoken = $user->getGtoken()) {
+		if($gtoken = $user->gtoken) {
 		  Session::put('gtoken', $gtoken);
-		  $calendar_id = $user->getGcalendar();
+		  $calendar_id = $user->gcalendar;
 		}
 
 		$reservations = array();
 		$services = $user->macroservices->first()->microservices;
 		foreach($services as $service) {
-			foreach($service->reservations as $reservation) 
-			{
-				$u = User::find($reservation->user_id);
-				$serviceName = Service::serviceName($service->id);
-				if($u->name) 
-				{
-					$name = $u->name.' '.$u->surname;
-				} else 
-				{
-					$name = $u->email;
-				}
-
-				$reservations[] = array(
-					'from' => $reservation->date.' '.$reservation->from,
-					'to' => $reservation->date.' '.$reservation->to,
-					'title' => trans('general.reservation').': '.$name.' '.trans('general.reservation').' '.$serviceName
-					/* 'model' => $reservation, */
-				);
-			}
+		  foreach($service->reservations as $reservation) {
+		    $reservations[] = Events::reservation_to_event($reservation);
+		  }
 		}
 		try {
 			$r = $this->exportToGcal($calendar_id, $reservations);
@@ -141,41 +125,12 @@ class GCal extends BaseController {
 			return $r;
 
 		// Save provider calendar id
-		$user->setGtoken(Session::get('gtoken'));
-		$user->setGcalendar(Session::get('gcalendar'));
+		$user->gtoken = Session::get('gtoken');
+		$user->gcalendar = Session::get('gcalendar');
 		$user->save();
 		
 		return Redirect::to('/macro/create')->with('success', trans('messages.reservationSuccessfullyExported'));
 				
-	}
-
-	public function importHolidays() {
-		$gcal = new GoogleApi();
-		if(!$gcal->isLoggedIn())
-			return Redirect::to($gcal->getUrl());
-
-		$events = array();
-		foreach($gcal->listCalendars() as $id=>$item) {
-			if(strpos($id, 'holiday') != null) {
-				$events = $gcal->listEvents($id);
-				break;
-			}
-		}
-
-		$mac = 58;
-		// FIXME: user_id
-		Absences::where('abs_type', 'holiday')->where('macservice_id', $mac)->delete();
-		foreach($events as $event) {
-			DB::table('absence')->insert(array(
-											 'macservice_id' => $mac,
-											 'from' => $event['start'],
-											 'to' => $event['stop'],
-											 'title' => $event['summary'],
-											 'repetable' => false, // TODO
-											 'google_id' => $event['id'],
-											 'abs_type' => 'holiday',
-										 ));
-		}
 	}
 
 	private function exportToGcal($calendarId, $events, $calendarTitle='') {

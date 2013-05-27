@@ -56,6 +56,7 @@ class AppController extends BaseController
 	{
 		Auth::logout();
 		Session::forget('user');
+		Session::forget('gtoken');
 		Cookie::forget('user');
 		return Redirect::route('home')->with('status', trans('messages.successfulLogout'));
 	}

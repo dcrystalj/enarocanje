@@ -122,6 +122,7 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
+			// Send email to customer
 			Mail::send('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
@@ -131,6 +132,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject(trans('messages.successfulReservation'));
 			});
 
+			// Send email to provider
 			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
@@ -139,6 +141,14 @@ class MicroserviceApiController extends BaseController
 		    	)
 		    	->subject(trans('messages.successfulReservation'));
 			});
+
+			// Push to provider calenar
+			$provider = $r->microservice->macroservice->user;
+			if($provider->gtoken) {
+			  $gcal = new GoogleApi($provider->gtoken);
+			  $ev = Events::reservation_to_event($r);
+			  $gcal->add_or_update($provider->gcalendar, array($ev));
+			}
 
 			return json_encode(array('success'=>true,'text'=>trans('messages.successfulReservation')));
 		}
