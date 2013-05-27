@@ -14,6 +14,9 @@
     visibility: hidden;
 }
 
+input {
+	min-width: 200px!important;
+}
 
 /* tables start */
 
@@ -99,6 +102,7 @@
 	}
 }
 /* tables end */
+
 
 
 }
