@@ -120,9 +120,9 @@ class GoogleApi {
 	}
 
 	/* --- */
-	function selectCalendar($warn=false) {
+	function selectCalendar() {
 		$list = $this->listCalendars();
-		return View::Make('gcal.select')->with('calendars', $list)->with('status', $warn?'Warning: All events in selected calendar will be removed!':null);
+		return View::Make('gcal.select')->with('calendars', $list);
 	}
 
 	/* +++ */

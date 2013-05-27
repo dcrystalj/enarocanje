@@ -102,6 +102,13 @@ class GCal extends BaseController {
 	public function exportServiceReservations() {
 		$user = Auth::user();
 		if(!($user && $user->isProvider())) return;
+
+		$calendar_id = 'select';
+		if($gtoken = $user->getGtoken()) {
+		  Session::put('gtoken', $gtoken);
+		  $calendar_id = $user->getGcalendar();
+		}
+
 		$reservations = array();
 		$services = $user->macroservices->first()->microservices;
 		foreach($services as $service) {
@@ -126,12 +133,18 @@ class GCal extends BaseController {
 			}
 		}
 		try {
-			$r = $this->exportToGcal('select', $reservations, true);
+			$r = $this->exportToGcal($calendar_id, $reservations);
 		} catch(Exception $e) {
 			return Redirect::to('/macro/create')->with('error', $e->getMessage());
 		}
 		if($r !== true)
 			return $r;
+
+		// Save provider calendar id
+		$user->setGtoken(Session::get('gtoken'));
+		$user->setGcalendar(Session::get('gcalendar'));
+		$user->save();
+		
 		return Redirect::to('/macro/create')->with('success', trans('messages.reservationSuccessfullyExported'));
 				
 	}
@@ -170,16 +183,18 @@ class GCal extends BaseController {
 		if(!$gcal->isLoggedIn())
 			return Redirect::to($gcal->getUrl());
 
-		// Select calendar
+		// Select existing calendar
 		if($calendarId == 'select') {
 			if($id = Input::get('calendar_id')) {
 				$calendarId = $id;
 			} else {
-				return $gcal->selectCalendar(true);
+				return $gcal->selectCalendar();
 			}
 		}
 
 		$list = $gcal->listCalendars();
+
+		// Create calendar if not exist
 		if(!isset($list[$calendarId])) {
 			if(!$calendarTitle)
 				die(trans('messages.undefinedCalendar'));
@@ -188,7 +203,9 @@ class GCal extends BaseController {
 			$user->gcalendar = $calendarId = $cal['id'];
 			$user->save();
 		}
+		Session::put('gcalendar', $calendarId);
 
+		// Push events to calendar
 		$gcal->add_or_update($calendarId, $events);
 		return true;
 	}
