@@ -122,6 +122,7 @@ class MicroserviceApiController extends BaseController
 			);
 
 			Queue::getIron()->ssl_verifypeer = false;
+			// Send email to customer
 			Mail::send('emails.reservation.customer', $data, function($m) use ($data)
 			{
 			    $m->to(
@@ -131,6 +132,7 @@ class MicroserviceApiController extends BaseController
 		    	->subject(trans('messages.successfulReservation'));
 			});
 
+			// Send email to provider
 			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
 			{
 			    $m->to(
@@ -139,6 +141,14 @@ class MicroserviceApiController extends BaseController
 		    	)
 		    	->subject(trans('messages.successfulReservation'));
 			});
+
+			// Push to provider calenar
+			$provider = $r->microservice->macroservice->user;
+			if($provider->gtoken) {
+			  $gcal = new GoogleApi($provider);
+			  $ev = Events::reservation_to_event($r, true);
+			  $gcal->add_or_update($provider->gcalendar, array($ev));
+			}
 
 			return json_encode(array('success'=>true,'text'=>trans('messages.successfulReservation')));
 		}
@@ -150,11 +160,26 @@ class MicroserviceApiController extends BaseController
 		$userid = Auth::user()->id;
 		$microservid = $id;
 
+		// Delete reservation from google
+ 		$r = Reservation::where('id',$reservationid)
+			->where('micservice_id',$microservid)
+			->where('user_id',$userid)
+		  ->first();
+		if($r && $r->google_id) {
+		  $micro = MicroService::where('id', $microservid)->first();
+		  $macro = MacroService::where('id', $micro->macservice_id)->first();
+		  $provider = $macro->user;
+		  if($provider->gtoken) {
+		    $gcal = new GoogleApi($provider);
+		    $gcal->removeEvent($provider->gcalendar, $r->google_id);
+		  }
+		}
+
+		// Delete from database
  		$r = Reservation::where('id',$reservationid)
 			->where('micservice_id',$microservid)
 			->where('user_id',$userid)
 			->delete();
-
 		if($r)			
 			return json_encode(array('success'=>true,'text'=>trans('messages.successfullyDeleted')));
 		else

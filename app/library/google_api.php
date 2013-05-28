@@ -7,13 +7,35 @@ class GoogleApi {
 	private $cal;
 	private $ret = null;
 
-	public function __construct() {
+	public function __construct($user=null) {
 		$this->client = new Google_Client();
 		$this->client->setApplicationName('e-narocanje');
 		$this->cal = new Google_CalendarService($this->client);
-		if($token = Session::get('gtoken'))
-			$this->client->setAccessToken($token);
+
+		// Get token
+		$gtoken = Session::get('gtoken');
+		if($user && $user->gtoken) {
+		  $this->renew($user);
+		  $gtoken = $user->gtoken;
+		}
+
+		if($gtoken)
+		    $this->client->setAccessToken($gtoken);
 		$this->client->setRedirectUri(URL::to('google/auth'));
+	}
+
+	protected function renew($user) {
+	  $token = json_decode($user->gtoken);
+	  $diff = time()-$token->created;
+
+	  // If expire after 2min
+	  if($diff > ($token->expires_in-120)) {
+	    $this->client->refreshToken($token->refresh_token);
+
+	    $user->gtoken = $new_token = $this->client->getAccessToken();
+	    $user->save();
+	    Session::put('gtoken', $new_token);
+	  }
 	}
 
 	public function isLoggedIn() {
@@ -111,6 +133,11 @@ class GoogleApi {
 		//	$this->cal->events->delete($cId, $id);
 	}
 
+	
+	public function removeEvent($calendar_id, $event_id) {
+	  $this->cal->events->delete($calendar_id, $event_id);
+	}
+
 	/* Helper */
 	public  function r($r=null) {
 		if($r === null)
@@ -120,9 +147,9 @@ class GoogleApi {
 	}
 
 	/* --- */
-	function selectCalendar($warn=false) {
+	function selectCalendar() {
 		$list = $this->listCalendars();
-		return View::Make('gcal.select')->with('calendars', $list)->with('status', $warn?'Warning: All events in selected calendar will be removed!':null);
+		return View::Make('gcal.select')->with('calendars', $list);
 	}
 
 	/* +++ */
