@@ -10,9 +10,10 @@
 	<title>
 		@yield('title')
 	</title>
-
 	{{ Html2::script('js/jquery/jquery191.js') }}
 	{{ Html2::script('js/jquery/jqueryui-1103.custom.min.js') }}
+	{{ Html2::script('js/moment/moment.min.js') }}
+	{{ Html2::script('js/moment/lang/sl.js') }}
 	
 	{{ Html2::style('bootstrap/css/bootstrap.min.css') }}
 	{{ Html2::style('bootstrap/css/bootstrap-responsive.min.css') }}
@@ -134,6 +135,9 @@ function trans(trans) {
   }
   return trans;
 }
+
+// Set moment locale
+moment.lang('{{ ((Session::get("language") == "si")?"sl":"en")}}');
 </script>
 </body>
 </Html>

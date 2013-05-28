@@ -112,7 +112,7 @@ return array(
 	'strong' => 'Strong',
 	'veryStrong' => 'Very strong',
 	'workingDay' => 'Working day',
-	'fromTo' => ':y-:m-:d " from :s to :e',	
+	'fromTo' => ':date from :s to :e',
 	'monthLong' => array('January','February','March','April','May','June','July','August','September','October','November','December'),
 	'monthShort' => array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'),
 	'dayLong' => array('Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') ,

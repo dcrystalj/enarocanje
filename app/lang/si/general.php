@@ -111,7 +111,7 @@ return array(
 	'strong' => 'Močno',
 	'veryStrong' => 'Zelo močno',
 	'workingDay' => 'Delovni dan',
-	'fromTo' => ':y-:m-:d od :s do :e',
+	'fromTo' => ':date od :s do :e',
 	'monthLong' => array('Januar','Februar','Marec','April','Maj','Junij','Julij','Avgust','September','Oktober','November','December'),
 	'monthShort' => array('Jan','Feb','Mar','Apr','Maj','Jun','Jul','Avg','Sep','Okt','Nov','Dec'),
 	'dayLong' => array('Nedelja', 'Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota') ,
