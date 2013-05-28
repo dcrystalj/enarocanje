@@ -104,10 +104,12 @@ class GCal extends BaseController {
 		if(!($user && $user->isProvider())) return;
 
 		$calendar_id = 'select';
+		/*
 		if($gtoken = $user->gtoken) {
 		  Session::put('gtoken', $gtoken);
 		  $calendar_id = $user->gcalendar;
 		}
+		 */
 
 		$reservations = array();
 		$services = $user->macroservices->first()->microservices;
