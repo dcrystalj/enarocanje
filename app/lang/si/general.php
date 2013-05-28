@@ -178,6 +178,8 @@ return array(
 	'unisex' => 'Unisex',
 	'male' => 'Moški',
 	'female' => 'Ženski',
+	'pictures' => 'Slike',
+	'picture' => 'Slika',
 
 
 );

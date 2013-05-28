@@ -20,86 +20,29 @@ class Service {
 		'120' => '2 h',
     );*/
 
-
-	private static function returnServices() {
-		array(
-			'3' => array(
-				"asd",
-				"asd",
-				"asdasd",
-				trans('general.from'),
-				trans('general.manicure'), 
-				trans('general.pedicure'),
-				trans('general.depilation'),
-				trans('general.solarium'),
-				trans('general.makeUp'),
-			),
-			'1' => array(
-				trans('general.massage'),
-			),       
-			'2' => array(
-				trans('general.hairServices'),
-			),
-			'0' => array(
-				trans('general.skinTreatments'),
-				trans('general.manicure'), 
-				trans('general.pedicure'), 
-				trans('general.depilation'), 
-				trans('general.solarium'), 
-				trans('general.makeUp'), 
-				trans('general.massage'), 
-				trans('general.hairServices'),
-			),
-		);
-	}
-	private static function returnSex()
-	{
-		return array(
-	        'U' => trans('general.unisex'), 
-	        'M' => trans('general.male'), 
-	        'W' => trans('general.female'), 
-    	);
-	}
-
-
-	private static $services = returnServices();
-	private static $sex = returnSex();
-/*	private static $services = array(
-		'3' => array(
-			"asd",
-			"asd",
-			"asdasd",
-			trans('general.from'),
-			trans('general.manicure'), 
-			trans('general.pedicure'),
-			trans('general.depilation'),
-			trans('general.solarium'),
-			trans('general.makeUp'),
-		),
-		'1' => array(
-			trans('general.massage'),
-		),       
-		'2' => array(
-			trans('general.hairServices'),
-		),
-		'0' => array(
-			trans('general.skinTreatments'),
-			trans('general.manicure'), 
-			trans('general.pedicure'), 
-			trans('general.depilation'), 
-			trans('general.solarium'), 
-			trans('general.makeUp'), 
-			trans('general.massage'), 
-			trans('general.hairServices'),
-		),
+	private static $services = array(
+		'3' => array('Manicure', 
+					 'Pedicure',
+					 'Depilation',
+					 'Solarium',
+					 'Make-up',),
+		'1' => array('Massage'),       
+		'2' => array('Hair services'),
+		'0' => array('Skin treatments',
+					 'Manicure', 
+					 'Pedicure',
+					 'Depilation',
+					 'Solarium',
+					 'Make-up',
+					 'Massage',
+					 'Hair services',),
 	);
-	private static $sex = array(
-        'U' => trans('general.unisex'), 
-        'M' => trans('general.male'), 
-        'W' => trans('general.female'), 
-    );
 
-*/
+	private static $sex = array(
+        'U' => 'Unisex',
+        'M' => 'Male',
+        'W' => 'Female',
+    );
 
     /*private static $absences = array(
     	'holiday' => 'Holiday', 

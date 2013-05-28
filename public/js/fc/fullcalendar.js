@@ -1573,7 +1573,7 @@ var daysShort=new Array(
 	trans('general.wedShort'),
 	trans('general.thuShort'),
 	trans('general.friShort'),
-	trans('general.satShort'),
+	trans('general.satShort')
 );
 var daysLong=new Array(
 	trans('general.sun'),
@@ -1582,7 +1582,7 @@ var daysLong=new Array(
 	trans('general.wed'),
 	trans('general.thu'),
 	trans('general.fri'),
-	trans('general.sat'),
+	trans('general.sat')
 );
 var monthsShort=new Array(
 	trans('general.janShort'),

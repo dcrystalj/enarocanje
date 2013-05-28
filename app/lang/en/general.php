@@ -179,6 +179,8 @@ return array(
 	'unisex' => 'Unisex',
 	'male' => 'Male',
 	'female' => 'Female',
+	'pictures' => 'Pictures',
+	'picture' => 'Picture',
 
 
 

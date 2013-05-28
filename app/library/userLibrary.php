@@ -79,7 +79,7 @@ class UserLibrary {
     }
 
 
-    public static function getImageLogo($path){
+    public static function getImageWithSize($path,$imgx,$imgy){
         if($path == '' || !File::exists('public/'.$path)){
             return '';
         }
@@ -95,15 +95,16 @@ class UserLibrary {
         	case 3: //png
         	$img = imagecreatefrompng('public/'.$path);
         	break;
-
+        	default: 
+    			return Redirect::back()->with('error','Image type not supported');
         }
         if(2*imagesy($img) > imagesx($img))
         { //višinskega tipa
-            $style = 'height:100px; width:auto';
+            $style = 'height:'.$imgy.'; width:auto';
         }
         else
         { //širinskega tipa
-            $style = 'width:200px; height:auto';
+            $style = 'width:'.$imgx.'; height:auto';
         }
         $styleBig = '';
         /*if(imagesy($img) > imagesx($img))
@@ -118,5 +119,31 @@ class UserLibrary {
         $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
         return '<a href="'.$path.'" rel="lightbox" '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
 
+    }
+    public static function getImageExtensionFromMime($mimetype){
+    	switch($mimetype){
+    		case 'image/png':
+    			return '.png';
+    		case 'image/jpeg':
+    			return '.jpg';
+    		case 'image/gif':
+    			return '.gif';
+    		default: 
+    			return Redirect::back()->with('error','Image type not supported');
+    			break;
+    		}
+    }
+    public static function getPicturesFromMacservice(){
+
+        $macservice_id = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->select('id')->first()->id;
+        $pictures = DB::table('provider_pictures')->where('macservice_id','=',$macservice_id)->get();
+
+        $tabela = array();
+        foreach ($pictures as $picture)
+        {
+            array_push($tabela,$picture);
+            //echo UserLibrary::getImageLogo($picture->path);
+        }
+        return $tabela;
     }
 }

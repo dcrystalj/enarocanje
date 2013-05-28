@@ -101,3 +101,6 @@ Route::get('spucajbazozdejtkoj', function(){
 Route::get('providerLogo', 'Provider@logo');
 Route::post('providerSaveLogo', 'Provider@saveLogo');
 Route::get('providerDeleteLogo', 'Provider@deleteLogo');
+Route::get('providerPictures', 'Provider@pictures');
+Route::post('providerSavePictures', 'Provider@savePictures');
+Route::get('providerDeletePictures', 'Provider@deletePictures');
