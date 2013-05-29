@@ -28,8 +28,7 @@
 
         {{Button::large_link( URL::to('providerLogo'), trans('general.logo'))}}
         {{Button::large_link( URL::to('providerPictures'), trans('general.pictures'))}}
-
-        @if(Auth::user()->gtoken)
+        @if(!empty(Auth::user()->gtoken))
         {{Button::danger_large_link( URL::to('google/disable_sync'), trans('general.unsync'),array('id' => 'unsync'))}}
         @else
             {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.sync'))}}

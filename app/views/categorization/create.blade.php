@@ -8,7 +8,7 @@
 
         {{ Former::open(URL::route('category.store'))->rules($rules) }}
         {{ Former::text('name',trans('general.categoryName')+':')->autofocus() }}
-        {{ Former::actions()->submit({{trans('general.addNewCategory')}}) }}
+        {{ Former::actions()->submit(trans('general.addNewCategory')) }}
         {{ Former::close() }} 
 
 
@@ -32,7 +32,7 @@
             </br>
             <h2>{{trans('general.categoryName')}}:</h2>
             {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-            {{ Table::headers('#', {{trans('general.categoryName')}},'') }}
+            {{ Table::headers('#', trans('general.categoryName'),'') }}
             {{ Table::body($categories) }}
             {{ Table::close() }}
         @endif

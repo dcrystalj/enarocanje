@@ -18,7 +18,7 @@ class ServiceCatController extends BaseController {
 
 	public function create($procat)
 	{
-		return View::make('ServiceCategorization.create')					
+		return View::make('serviceCategorization.create')					
 					->with('rules',$this->rules)
 					->with('procat',$procat)
 					->with('errors',Session::get('errors'))
@@ -41,7 +41,7 @@ class ServiceCatController extends BaseController {
 			if($category)
 			{
 				return Redirect::route('category.servicecat.create',$procat)
-								->with('success',trans('messages.successfullySaved');
+								->with('success',trans('messages.successfullySaved'));
 			}
 		}
 		return Redirect::back()
