@@ -139,6 +139,7 @@ class MacroserviceController extends BaseController {
 			$macservice->absences()->delete();
 			Whours::where('macservice_id',$macservice->id)->delete();
 			Breakt::where('macservice_id',$macservice->id)->delete();
+			DB::table('provider_pictures')->where('macservice_id', $id)->delete();
 			$macservice->delete();
 
 			return Redirect::route('macro.create')
