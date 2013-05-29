@@ -168,6 +168,8 @@ return array(
 	'none' => 'None',
 	'addNewProviderCategory' => 'Add new provider category',
 	'deleteCurrentLogo' => 'Delete current logo',
+	'deleteCurrentPicture' => 'Delete picture',
+	'pictureDeleted' => 'Picture deleted',
 	'manicure' => 'Manicure', 
 	'pedicure' => 'Pedicure',
 	'depilation' => 'Depilation',
@@ -181,7 +183,7 @@ return array(
 	'female' => 'Female',
 	'pictures' => 'Pictures',
 	'picture' => 'Picture',
-
+	'sameToFriday' => 'Same to friday',
 
 
 );

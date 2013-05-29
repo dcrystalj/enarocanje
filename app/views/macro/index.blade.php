@@ -42,7 +42,7 @@
             foreach ($macroService as $service){  
                 $tbody[] = [
                     //'id'     => $i, 
-                    'logo'   => UserLibrary::getImageWithSize($service->logo,'200px','100px'),   
+                    'logo'   => UserLibrary::getImageWithSize($service->logo,'200px','100px','rel="lightbox"'),   
                     'name'   => $service->name,
                     'City'   => $service->city . '<br>' . $service->street, 
                     'Email'  => $service->email,

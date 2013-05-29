@@ -102,5 +102,10 @@ Route::get('providerLogo', 'Provider@logo');
 Route::post('providerSaveLogo', 'Provider@saveLogo');
 Route::get('providerDeleteLogo', 'Provider@deleteLogo');
 Route::get('providerPictures', 'Provider@pictures');
-Route::post('providerSavePictures', 'Provider@savePictures');
-Route::get('providerDeletePictures', 'Provider@deletePictures');
+Route::post('providerSavePicture', 'Provider@savePicture');
+Route::get('providerDeletePicture/{path}', 'Provider@deletePicture');
+
+
+Route::any('provider/profile/{token}','Provider@profile');
+
+Route::get('user/{id}', 'UserController@showProfile');

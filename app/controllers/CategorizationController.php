@@ -39,7 +39,7 @@ class CategorizationController extends BaseController {
 			if($category)
 			{
 				return Redirect::route('category.create')
-								->with('success','successfully saved');
+								->with('success',trans('messages.successfullySaved');
 			}
 		}
 		return Redirect::back()

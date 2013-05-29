@@ -1,4 +1,8 @@
 /* line 6, ../sass/lightbox.sass */
+
+
+
+
 #lightboxOverlay {
   position: absolute;
   top: 0;
@@ -23,8 +27,8 @@
 }
 /* line 24, ../sass/lightbox.sass */
 #lightbox img {
-  width: auto;
-  height: auto;
+  /*width: auto;
+  height: auto;*/
 }
 /* line 27, ../sass/lightbox.sass */
 #lightbox a img {

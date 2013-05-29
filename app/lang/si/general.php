@@ -167,6 +167,8 @@ return array(
 	'none' => 'Brez',
 	'addNewProviderCategory' => 'Dodaj novo kategorijo ponudnika',
 	'deleteCurrentLogo' => 'Zbriši trenutni logo',
+	'deleteCurrentPicture' => 'Zbriši sliko',
+	'pictureDeleted' => 'Slika je bila izbrisana',
 	'manicure' => 'Manikura', 
 	'pedicure' => 'Pedikura',
 	'depilation' => 'Depilacija',
@@ -180,6 +182,7 @@ return array(
 	'female' => 'Ženski',
 	'pictures' => 'Slike',
 	'picture' => 'Slika',
+	'sameToFriday' => 'Enako do petka',
 
 
 );

@@ -79,7 +79,7 @@ class UserLibrary {
     }
 
 
-    public static function getImageWithSize($path,$imgx,$imgy){
+    public static function getImageWithSize($path,$imgx,$imgy,$lightbox){
         if($path == '' || !File::exists('public/'.$path)){
             return '';
         }
@@ -98,13 +98,14 @@ class UserLibrary {
         	default: 
     			return Redirect::back()->with('error','Image type not supported');
         }
+        $maxwidthmaxheight = '<script>screen.width/2</script> maxheight:<script>screen.height/2</script>';
         if(2*imagesy($img) > imagesx($img))
         { //višinskega tipa
-            $style = 'height:'.$imgy.'; width:auto';
+            $style = 'height:'.$imgy.'; width:auto'.$maxwidthmaxheight;
         }
         else
         { //širinskega tipa
-            $style = 'width:'.$imgx.'; height:auto';
+            $style = 'width:'.$imgx.'; height:auto; maxwidth:'.$maxwidthmaxheight;
         }
         $styleBig = '';
         /*if(imagesy($img) > imagesx($img))
@@ -117,7 +118,7 @@ class UserLibrary {
         }
         */
         $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
-        return '<a href="'.$path.'" rel="lightbox" '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
+        return '<a href="'.$path.'" '.$lightbox.' '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
 
     }
     public static function getImageExtensionFromMime($mimetype){
@@ -146,4 +147,15 @@ class UserLibrary {
         }
         return $tabela;
     }
+    //<a class="fancybox" rel="group" href="boxxy.jpg"><img src="boxxy.jpg" height="100px" width="100px" alt="" /></a>
+        public static function getPictureForGallery($path){
+
+        return '<a class="img_thumb fancybox" rel="group" href="'.$path.'">
+                    <img src="'.$path.'" height="100px" width="100px" alt="" />'
+                    .Button::link(URL::action('Provider@deletePicture',array($path)),trans('general.deleteCurrentPicture')).
+                    '</a>';
+//URL::action("MicroserviceApiController@getBreaks", array($id))
+        }               //URL::action("MicroserviceApiController@getWorkinghours", array($id))
+    //<a class="fancybox" rel="group" href="boxxy.jpg"><img src="boxxy.jpg" height="100px" width="100px" alt="" /></a>
+
 }

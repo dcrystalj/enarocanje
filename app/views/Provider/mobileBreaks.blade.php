@@ -6,7 +6,7 @@
 {{-- Former::horizontal_open()->id('li') --}}
 
 <div class="day">
-<dt>Monday:</dt>
+<dt>{{trans('general.mon')}}:</dt>
 <div id="day1">
 	<dd>{{ Timepicker::from($errors,'00:00:00','11') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','12')}}</dd>
@@ -15,13 +15,13 @@
 	<div class="controls">
 	{{ Button::link("#",'+',['id' => 'insert1','class'=>'input-append']) }}
 	{{ Button::link("#",'-',['id' => 'remove1','class'=>'input-append']) }}
-	{{ Button::link("#",'Same to friday',['id' => 'tofriday','class'=>'input-append']) }}
+	{{ Button::link("#",trans('general.sameToFriday'),['id' => 'tofriday','class'=>'input-append']) }}
 	</div>
 </dd>
 </div>
 
 <div class="day">
-<dt>Tuesday:</dt> 
+<dt>{{trans('general.tue')}}:</dt> 
 <div id="day2">
 	<dd>{{ Timepicker::from($errors,'00:00:00','21') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','22')}}</dd>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="day">
-<dt>Wednesday:</dt> 
+<dt>{{trans('general.wed')}}:</dt> 
 <div id="day3">
 	<dd>{{ Timepicker::from($errors,'00:00:00','31') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','32')}}</dd>
@@ -49,7 +49,7 @@
 </div>
 
 <div class="day">
-<dt>Thursday:</dt> 
+<dt>{{trans('general.thu')}}:</dt> 
 <div id="day4">
 	<dd>{{ Timepicker::from($errors,'00:00:00','41') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','42')}}</dd>
@@ -63,7 +63,7 @@
 </div>
 
 <div class="day">
-<dt>Friday:</dt> 
+<dt>{{trans('general.fri')}}:</dt> 
 <div id="day5">
 	<dd>{{ Timepicker::from($errors,'00:00:00','51') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','52')}}</dd>
@@ -77,7 +77,7 @@
 </div>
 
 <div class="day">
-<dt>Saturday:</dt> 
+<dt>{{trans('general.sat')}}:</dt> 
 <div id="day6">
 	<dd>{{ Timepicker::from($errors,'00:00:00','61') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','62')}}</dd>
@@ -91,7 +91,7 @@
 </div>
 
 <div class="day">
-<dt>Sunday:</dt> 
+<dt>{{trans('general.sun')}}:</dt> 
 <div id="day7">
 	<dd>{{ Timepicker::from($errors,'00:00:00','71') }}</dd>
 	<dd>{{ Timepicker::to($errors,'00:00:00','72')}}</dd>

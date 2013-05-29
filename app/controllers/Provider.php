@@ -16,8 +16,8 @@ class Provider extends BaseController {
    	);
 
 	public function __construct() {
-		$this->beforeFilter('auth',		['only'=>['edit','update']]);
-		$this->beforeFilter('provider',	['only'=>['edit','update']]);
+		$this->beforeFilter('auth',		['only'=>['edit','update','logo','saveLogo','deleteLogo','pictures','savePictures','deletePictures']]);
+		$this->beforeFilter('provider',	['only'=>['edit','update','logo','saveLogo','deleteLogo','pictures','savePictures','deletePictures']]);
 		$this->beforeFilter('admin',	['only'=>['edit','update']]);
 	}
 
@@ -221,7 +221,7 @@ class Provider extends BaseController {
 		File::delete('public/'.$macservice->logo);
 		$macservice->logo = '';
 		$macservice->save();
-		return Redirect::to('macro/create')->with('success',trans('messages.logoDeleted'));
+		return Redirect::back()->with('success',trans('messages.logoDeleted'));
 		
 	}
 
@@ -236,7 +236,7 @@ class Provider extends BaseController {
 	}
 
 
-	public function savePictures(){
+	public function savePicture(){
 		$imageRule = array(
 		    'image' => 'image',
 		);
@@ -263,15 +263,13 @@ class Provider extends BaseController {
 		$macservice_id = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->select('id')->first();
 		DB::table('provider_pictures')->insert(array('macservice_id' => $macservice_id['id'],'path' => $wholepath));
         Input::file($image)->move('public/' . $filepath,$filename);
-		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
+		return Redirect::back()->with('success',trans('messages.successfullySaved'));
 	}
-	public function deletePicture()
+	public function deletePicture($path)
 	{	
-		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
-		File::delete('public/'.$macservice->logo);
-		$macservice->logo = '';
-		$macservice->save();
-		return Redirect::to('macro/create')->with('success',trans('messages.logoDeleted'));
+		DB::table('provider_pictures')->where('path','=',$path)->delete();
+		File::delete('public/'.$path);
+		return Redirect::to('providerPictures')->with('success',trans('messages.pictureDeleted'));
 		
 	}
 

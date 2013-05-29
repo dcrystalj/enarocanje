@@ -6,7 +6,7 @@
 <dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
 <dd>
 	<div class="controls">
-	{{ Button::link("#",'Same to friday',['id' => 'tofridaytime','class'=>'input-append']) }}
+	{{ Button::link("#",trans('general.sameToFriday'),['id' => 'tofridaytime','class'=>'input-append']) }}
 	</div>
 </dd>
 
