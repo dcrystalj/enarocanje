@@ -1,0 +1,7 @@
+.img_thumb img {
+	padding: 5px;
+	background: white;
+	border: 1px solid #BBB;
+	margin: 7px 14px 7px 0;
+	width: 160px;
+}
