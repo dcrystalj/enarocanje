@@ -67,7 +67,7 @@ return array(
 	'eventMissing' => 'Event type is missing!',
 	'fetchingError' => "There was an error while fetching events!",
 	'resetPassword' => 'Reset password',
-
+	'deleteEvents' => 'Do you want to delete events from Google calendar?',
 
 
 

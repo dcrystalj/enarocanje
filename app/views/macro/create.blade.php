@@ -26,7 +26,7 @@
         {{Button::large_link(URL::route('macro.absence.create', $mac->id), trans('general.absences'))}}
         {{Button::large_link( URL::route('macro.micro.create',$mac->id), trans('general.justservices'))}}
 	@if(Auth::user()->gtoken)
-        {{Button::danger_large_link( URL::to('google/disable_sync'), trans('general.unsync'))}}
+	{{Button::danger_large_link( URL::to('google/disable_sync'), trans('general.unsync'),array('id' => 'unsync'))}}
 	@else
         {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.sync'))}}
 	@endif
@@ -70,5 +70,28 @@
                 $('#event-dialog').modal('hide');
             });
         });
+      $('#unsync').click(function(e) {
+	  e.preventDefault();
+	  var location = $(this).attr('href');
+	  bootbox.dialog('<?php print trans("messages.deleteEvents") ?>', [
+	      {
+		  "label" : "<?php echo trans('general.yes') ?>",
+		  "class" : "btn-success",
+		  "callback": function() {
+		      document.location.href = location+"?delete_events=1";
+		  }
+	      }, 
+	      {
+		  "label" : "<?php echo trans('general.no') ?>",
+		  "class" : "btn-primary",
+		  "callback": function() {
+		      document.location.href = location;
+		  }
+	      }, 
+	      { 
+		  "label" : "<?php echo trans('general.cancel') ?>",
+		  "class" : "btn"
+	      },]);
+      });
     </script>
 @stop

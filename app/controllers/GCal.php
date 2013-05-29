@@ -11,19 +11,22 @@ class GCal extends BaseController {
 	public function disableSync() {
 	  $user = Auth::user();
 	  if($user->gtoken) {
-	    // Clear token
-	    $user->gtoken = '';
-	    $user->gcalendar = '';
-	    $user->save();
-
 	    // Clear reservations google_event_id
+	    $gcal = Input::get('delete_events')?(new GoogleApi($user)):false;
 	    $services = $user->macroservices->first()->microservices()->get();
 	    foreach($services as $service) {
 	      foreach($service->reservations()->get() as $reservation) {
+		if($gcal && $reservation->google_id)
+		  $gcal->removeEvent($user->gcalendar, $reservation->google_id);
 		$reservation->google_id = '';
 		$reservation->save();
 	      }
 	    }
+
+	    // Clear token
+	    $user->gtoken = '';
+	    $user->gcalendar = '';
+	    $user->save();
 	  }
 	  return Redirect::back();
 	}
@@ -136,7 +139,7 @@ class GCal extends BaseController {
 		$services = $user->macroservices->first()->microservices;
 		foreach($services as $service) {
 		  foreach($service->reservations as $reservation) {
-		    $reservations[] = Events::reservation_to_event($reservation);
+		    $reservations[] = Events::reservation_to_event($reservation, true);
 		  }
 		}
 		try {
