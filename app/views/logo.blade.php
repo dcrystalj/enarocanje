@@ -27,6 +27,7 @@
 	{{Former::file("logo",trans('general.logo'))->accept('image')->max(2, 'MB')}}
 {{Former::actions()->submit(trans('general.submit'))}}
 @if(isSetLogo($logoPath))
+
 	{{UserLibrary::getImageWithSize($logoPath,'200px','100px','rel="lightbox"')}}
 	{{'<br /><br /><br />'}}
 	{{Button::link(URL::to('providerDeleteLogo'),trans('general.deleteCurrentLogo'))}}
