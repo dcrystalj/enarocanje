@@ -51,6 +51,62 @@ class Html2 extends Html {
 			'general.veryStrong',
 			'messages.unsafePassword'
 
+		),
+		'js/bootbox.min.js' => array(
+			'general.ok',
+			'general.cancel',
+			'general.cancel'
+		),
+
+		'js/fc/fullcalendar.js' => array(
+			'general.workingDay',
+			'general.monShort',
+			'general.tueShort',
+			'general.wedShort',
+			'general.thuShort',
+			'general.friShort',
+			'general.satShort',
+			'general.sunShort',
+			'general.mon',
+			'general.tue',
+			'general.wed',
+			'general.thu',
+			'general.fri',
+			'general.sat',
+			'general.sun',
+			'general.janShort',
+			'general.febShort',
+			'general.marShort',
+			'general.aprShort',
+			'general.mayShort',
+			'general.junShort',
+			'general.julShort',
+			'general.augShort',
+			'general.sepShort',
+			'general.octShort',
+			'general.novShort',
+			'general.decShort',
+			'general.jan',
+			'general.feb',
+			'general.mar',
+			'general.apr',
+			'general.may',
+			'general.jun',
+			'general.jul',
+			'general.aug',
+			'general.sep',
+			'general.oct',
+			'general.nov',
+			'general.dec'
+		),
+
+		'js/fc/fullcalendar.ext.js' => array(
+			'general.from',
+			'general.workingDay',
+			'messages.fetchingError',
+			'general.fromTo',
+			'general.eventMissing'
+			
 		)
 	);
 };

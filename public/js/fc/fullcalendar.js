@@ -1565,7 +1565,58 @@ function formatDates(date1, date2, format, options) {
 	}
 	return res;
 };
+$(window).load(function() {
+var daysShort=new Array(
+	trans('general.sunShort'),
+	trans('general.monShort'),
+	trans('general.tueShort'),
+	trans('general.wedShort'),
+	trans('general.thuShort'),
+	trans('general.friShort'),
+	trans('general.satShort')
+);
+var daysLong=new Array(
+	trans('general.sun'),
+	trans('general.mon'),
+	trans('general.tue'),
+	trans('general.wed'),
+	trans('general.thu'),
+	trans('general.fri'),
+	trans('general.sat')
+);
+var monthsShort=new Array(
+	trans('general.janShort'),
+	trans('general.febShort'),
+	trans('general.marShort'),
+	trans('general.aprShort'),
+	trans('general.mayShort'),
+	trans('general.junShort'),
+	trans('general.julShort'),
+	trans('general.augShort'),
+	trans('general.sepShort'),
+	trans('general.octShort'),
+	trans('general.novShort'),
+	trans('general.decShort')
+);
+var monthsLong=new Array(
+	trans('general.jan'),
+	trans('general.feb'),
+	trans('general.mar'),
+	trans('general.apr'),
+	trans('general.may'),
+	trans('general.jun'),
+	trans('general.jul'),
+	trans('general.aug'),
+	trans('general.sep'),
+	trans('general.oct'),
+	trans('general.nov'),
+	trans('general.dec')
+);
+for (var i = 1; i <= 7; i++) {
 
+	document.getElementsByClassName('fc-widget-header')[i].innerHTML = daysShort[i-1];
+};
+});
 
 var dateFormatters = {
 	s	: function(d)	{ return d.getSeconds() },
@@ -1578,12 +1629,12 @@ var dateFormatters = {
 	HH	: function(d)	{ return zeroPad(d.getHours()) },
 	d	: function(d)	{ return d.getDate() },
 	dd	: function(d)	{ return zeroPad(d.getDate()) },
-	ddd	: function(d,o)	{ return trans('general.dayShort')[d.getDay()] },
-	dddd: function(d,o)	{ return trans('general.dayLong')[d.getDay()] },
+	ddd	: function(d,o)	{ return defaults['dayNamesShort'][d.getDay()] },
+	dddd: function(d,o)	{ return defaults['dayNames'][d.getDay()] },
 	M	: function(d)	{ return d.getMonth() + 1 },
 	MM	: function(d)	{ return zeroPad(d.getMonth() + 1) },
-	MMM	: function(d,o)	{ return trans('general.dayShort')[d.getMonth()] },
-	MMMM: function(d,o)	{ return trans('general.dayLong')[d.getMonth()] },
+	MMM	: function(d,o)	{ return defaults['monthNamesShort'][d.getMonth()] },
+	MMMM: function(d,o)	{ return defaults['monthNames'][d.getMonth()] },
 	yy	: function(d)	{ return (d.getFullYear()+'').substring(2) },
 	yyyy: function(d)	{ return d.getFullYear() },
 	t	: function(d)	{ return d.getHours() < 12 ? 'a' : 'p' },
@@ -1870,7 +1921,11 @@ function zeroPad(n) {
 
 function smartProperty(obj, name) { // get a camel-cased/namespaced property of an object
 	if (obj[name] !== undefined) {
-		return obj[name];
+		//return obj[name];
+		if ('general.today' in _trans && name == 'today') { //please, don't hate me
+			return trans('general.'+name);
+		}
+		return trans(obj[name]);
 	}
 	var parts = name.split(/(?=[A-Z])/),
 		i=parts.length-1, res;

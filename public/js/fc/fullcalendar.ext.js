@@ -14,11 +14,11 @@ function fc_insert(start, end, data)  {
 	if(typeof data == 'undefined')
 		data = {};
 	if(!data['eventType'])
-		alert('Event type is missing!!!!');
+		alert(trans('general.eventMissing'));
 	if(start < end)
 		calendar.fullCalendar('renderEvent',
 			  $.extend({
-				  title: 'Working day',
+				  title: trans('general.workingDay'),
 				  start: start,
 				  end: end,
 				  allDay: false,

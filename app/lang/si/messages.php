@@ -3,7 +3,6 @@
 return array(
 
 	'absenceNotFound' => 'Odnostnost ni bila najdena',
-	'fetchingError' => 'Problem pri prenašanju dogodka',
 	'fourOfour' => 'Stran ni bila najdena',
 	'successfullyDeleted' => 'Uspešno zbrisano',
 	'successfullyEdited' => 'Uspešno urejeno',
@@ -48,7 +47,7 @@ return array(
 	'servicesUnsuccessfullyDeleted' => 'Storitev ni bilo mogoče zbrisati.',
 	'wasNotActivated' => ' ni bilo aktivirano.\nProsimo, poskusite ponovno.',
 	'wasActivated' => ' je bilo aktivirano!',
-	'wasSubmitted' => 'Delovni čas je bil poslan.',
+	'wasSubmitted' => 'Delovni čas je bil shranjen.',
 	'cannotMakeOnPast' => 'Ni mogoče narediti rezervacij za pretekle dni.',
 	'successfulReservation' => 'Rezervacija je bila uspešna!',
 	'unsuccessfulReservation' => 'Rezervacija je bila neuspešna!',
@@ -69,7 +68,9 @@ return array(
 	'fetchingError' => "Pri prenašanju dogodkov je prišlo do napake!",
 	'resetPassword' => 'Ponastavitev gesla',
 	'deleteEvents' => 'Želite izbrisati dogodke tudi iz google koledarja?',
-
+	'noProvidersYet' => 'Ponudnikov še ni',
+	'error' => 'Zgodila se je napaka!',
+	'logoDeleted' => 'Logo je bil zbrisan.',
 
 
 

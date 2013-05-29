@@ -56,7 +56,7 @@ class MicroserviceController extends BaseController {
 			if($micservice)
 			{
 				return Redirect::route('macro.micro.create',$mac)
-								->with('success','successfully saved');
+								->with('success',trans('messages.successfullySaved'));
 			}
 		}
 		return Redirect::back()

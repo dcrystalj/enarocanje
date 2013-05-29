@@ -5,5 +5,5 @@
 @stop
 
 @section('content')
-	{{trans('messages.loginToGoogleAPI')}}: <a href="<?= $url ?>">Login</a>
+	{{trans('messages.loginToGoogleAPI')}}: <a href="<?= $url ?>">{{trans('general.login')}}</a>
 @stop
