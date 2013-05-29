@@ -27,6 +27,8 @@ return array(
 	'english' => 'english',
 	'englishCapital' => 'English',
 	'exportReservations' => 'Export reservations',
+	'sync' => 'Synchronize with Google',
+	'unsync' => 'Disable synchronization',
 	'filter' => 'Filter',
 	'gender' => 'Gender',
 	'germanCapital' => 'German',

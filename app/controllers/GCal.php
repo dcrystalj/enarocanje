@@ -7,6 +7,27 @@ class GCal extends BaseController {
 		return Redirect::to($state->redirect);
 	}
 
+	// Disable synchronization
+	public function disableSync() {
+	  $user = Auth::user();
+	  if($user->gtoken) {
+	    // Clear token
+	    $user->gtoken = '';
+	    $user->gcalendar = '';
+	    $user->save();
+
+	    // Clear reservations google_event_id
+	    $services = $user->macroservices->first()->microservices()->get();
+	    foreach($services as $service) {
+	      foreach($service->reservations()->get() as $reservation) {
+		$reservation->google_id = '';
+		$reservation->save();
+	      }
+	    }
+	  }
+	  return Redirect::back();
+	}
+
 	// Sync: Absences -> google calendar
 	public function exportAbsences() {
 		$user = Auth::user();

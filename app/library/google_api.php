@@ -42,12 +42,11 @@ class GoogleApi {
 	  $token = json_decode($user->gtoken);
 
 	  if($this->is_expired($token)) {
-	  // If expire after 2min
+	    // If expire after 2min
 	    $this->client->refreshToken($token->refresh_token);
 
 	    $user->gtoken = $new_token = $this->client->getAccessToken();
 	    $user->save();
-	    diew("RENEW");
 	    Session::put('gtoken', $new_token);
 	  }
 	}

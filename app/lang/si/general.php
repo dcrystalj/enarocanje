@@ -27,6 +27,8 @@ return array(
 	'english' => 'angleščina',
 	'englishCapital' => 'Angleščina',
 	'exportReservations' => 'Izvozi rezervacije',
+	'sync' => 'Sinhroniziraj z Google',
+	'unsync' => 'Ustavi sinhronizacijo',
 	'filter' => 'Filtriraj',
 	'gender' => 'Spol',
 	'germanCapital' => 'Nemščina',

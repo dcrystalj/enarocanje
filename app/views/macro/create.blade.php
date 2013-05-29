@@ -25,7 +25,11 @@
         {{Button::large_link(URL::route('timetable', $mac->id), trans('general.timetable'))}}
         {{Button::large_link(URL::route('macro.absence.create', $mac->id), trans('general.absences'))}}
         {{Button::large_link( URL::route('macro.micro.create',$mac->id), trans('general.justservices'))}}
-        {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.exportReservations'))}}
+	@if(Auth::user()->gtoken)
+        {{Button::danger_large_link( URL::to('google/disable_sync'), trans('general.unsync'))}}
+	@else
+        {{Button::large_link( URL::to('google/export/service_reservation'), trans('general.sync'))}}
+	@endif
         {{Button::danger_large_link(URL::route('macro.destroy',$mac->id),trans('general.delete'),array('id' => 'delete'))}}
 
 
