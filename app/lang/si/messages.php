@@ -39,9 +39,9 @@ return array(
 	'successfulLogout' => 'Odjava je bila uspešna.',
 	'successfullyChangedPassword' => 'Geslo je bilo zamenjano.',
 	
-	'absencesSuccessfullyExported' => 'Odsotnosti so bile izvožene uspešno.',
-	'absencesSuccessfullyImported' => 'Odsotnosti so bile uvožene uspešno.',
-	'reservationSuccessfullyExported' => 'Rezervacije so bile izvožene uspešno.',
+	'absencesSuccessfullyExported' => 'Odsotnosti so bile uspešno izvožene.',
+	'absencesSuccessfullyImported' => 'Odsotnosti so bile uspešno uvožene.',
+	'reservationSuccessfullyExported' => 'Rezervacije so bile uspešno izvožene.',
 	'undefinedCalendar' => 'Nedefiniran koledar.',
 	'servicesSuccessfullyDeleted' => 'Storitve so bile uspešno zbrisane.',
 	'servicesUnsuccessfullyDeleted' => 'Storitev ni bilo mogoče zbrisati.',
@@ -67,10 +67,10 @@ return array(
 	'eventMissing' => 'Tip dogodka manjka!',
 	'fetchingError' => "Pri prenašanju dogodkov je prišlo do napake!",
 	'resetPassword' => 'Ponastavitev gesla',
+	'deleteEvents' => 'Želite izbrisati dogodke tudi iz google koledarja?',
 	'noProvidersYet' => 'Ponudnikov še ni',
 	'error' => 'Zgodila se je napaka!',
 	'logoDeleted' => 'Logo je bil zbrisan.',
-
 
 
 

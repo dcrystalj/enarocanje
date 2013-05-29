@@ -482,7 +482,11 @@ $(function(){
 ///////
 function fromTo(event){
 	//return (event.start.getYear()+1900)+"-"+(event.start.getMonth()+1)+"-"+event.start.getDate() + " from " + time(event.start) +" to "+time(event.end);
-	return trans('general.fromTo',{y:(event.start.getYear()+1900),m:(event.start.getMonth()+1),d:event.start.getDate(),s:time(event.start),e:time(event.end)});
+	//return trans('general.fromTo',{y:(event.start.getYear()+1900),m:(event.start.getMonth()+1),d:event.start.getDate(),s:time(event.start),e:time(event.end)});
+	var start = moment(event.start);
+	var end = moment(event.end);
+	var date = start.format("D MMMM YYYY");
+	return trans('general.fromTo',{date: date, s:time(event.start),e:time(event.end)});
 }
 
 function time(str){

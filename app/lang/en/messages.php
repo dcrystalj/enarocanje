@@ -66,6 +66,7 @@ return array(
 	'unsafePassword' => "Unsafe password!",
 	'eventMissing' => 'Event type is missing!',
 	'resetPassword' => 'Reset password',
+	'deleteEvents' => 'Do you want to delete events from Google calendar?',
 	'noProvidersYet' => 'No providers avaliable yet',
 	'error' => 'An error has occured!',
 	'logoDeleted' => 'Logo was deleted.',

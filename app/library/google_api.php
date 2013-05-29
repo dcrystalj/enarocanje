@@ -13,10 +13,20 @@ class GoogleApi {
 		$this->cal = new Google_CalendarService($this->client);
 
 		// Get token
-		$gtoken = Session::get('gtoken');
-		if($user && $user->gtoken) {
-		  $this->renew($user);
-		  $gtoken = $user->gtoken;
+		$gtoken = null;
+		if($user) {
+		  if($user->gtoken) {
+		  	$this->renew($user);
+		  	$gtoken = $user->gtoken;
+		  } else {
+			  return;
+		  }
+		} else {
+			$gtoken = Session::get('gtoken');
+			if($gtoken && $this->is_expired(json_decode($gtoken))) {
+				$gtoken = null;
+				Session::forget('gtoken');
+			}
 		}
 
 		if($gtoken)
@@ -24,15 +34,20 @@ class GoogleApi {
 		$this->client->setRedirectUri(URL::to('google/auth'));
 	}
 
+	protected function is_expired($token) {
+	  $diff = time()-$token->created;
+	  return ($diff > ($token->expires_in-120));
+	}
 	protected function renew($user) {
 	  $token = json_decode($user->gtoken);
-	  $diff = time()-$token->created;
 
-	  // If expire after 2min
-	  if($diff > ($token->expires_in-120)) {
+	  if($this->is_expired($token)) {
+	    // If expire after 2min
 	    $this->client->refreshToken($token->refresh_token);
 
-	    $user->gtoken = $new_token = $this->client->getAccessToken();
+	    $new_token = json_decode($this->client->getAccessToken());
+	    $new_token->refresh_token = $token->refresh_token;
+	    $user->gtoken = $new_token = json_encode($new_token);
 	    $user->save();
 	    Session::put('gtoken', $new_token);
 	  }
