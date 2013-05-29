@@ -24,7 +24,7 @@
     @else
         {{ Form::open(['method'=>'GET']) }}
         {{ Form::label(trans('general.filterProvidersByCategory')) }}
-        {{ Form::select(trans('general.categories'),$categoryName ,Input::get('category')) }}
+        {{ Form::select('categories', $categoryName ,Input::get('categories')) }}
         {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
