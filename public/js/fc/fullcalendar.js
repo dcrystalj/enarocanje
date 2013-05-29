@@ -1567,22 +1567,22 @@ function formatDates(date1, date2, format, options) {
 };
 $(window).load(function() {
 var daysShort=new Array(
-	trans('general.sunShort'),
 	trans('general.monShort'),
 	trans('general.tueShort'),
 	trans('general.wedShort'),
 	trans('general.thuShort'),
 	trans('general.friShort'),
-	trans('general.satShort')
+	trans('general.satShort'),
+	trans('general.sunShort')
 );
 var daysLong=new Array(
-	trans('general.sun'),
 	trans('general.mon'),
 	trans('general.tue'),
 	trans('general.wed'),
 	trans('general.thu'),
 	trans('general.fri'),
-	trans('general.sat')
+	trans('general.sat'),
+	trans('general.sun')
 );
 var monthsShort=new Array(
 	trans('general.janShort'),

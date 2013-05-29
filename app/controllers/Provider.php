@@ -267,7 +267,7 @@ class Provider extends BaseController {
 	}
 	public function deletePicture($path)
 	{	
-		DB::table('provider_pictures')->where('path','=',$path)->delete();
+		DB::table('provider_pictures')->where('path',$path)->delete();
 		File::delete('public/'.$path);
 		return Redirect::to('providerPictures')->with('success',trans('messages.pictureDeleted'));
 		

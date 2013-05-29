@@ -152,7 +152,7 @@ class UserLibrary {
 
         return '<a class="img_thumb fancybox" rel="group" href="'.$path.'">
                     <img src="'.$path.'" height="100px" width="100px" alt="" />'
-                    .Button::link(URL::action('Provider@deletePicture',array($path)),trans('general.deleteCurrentPicture')).
+                    .Button::link(URL::to('providerDeletePicture',array($path)),trans('general.deleteCurrentPicture')).
                     '</a>';
 //URL::action("MicroserviceApiController@getBreaks", array($id))
         }               //URL::action("MicroserviceApiController@getWorkinghours", array($id))
