@@ -40,9 +40,9 @@ return array(
 	'successfulLogout' => 'Odjava je bila uspešna.',
 	'successfullyChangedPassword' => 'Geslo je bilo zamenjano.',
 	
-	'absencesSuccessfullyExported' => 'Odsotnosti so bile izvožene uspešno.',
-	'absencesSuccessfullyImported' => 'Odsotnosti so bile uvožene uspešno.',
-	'reservationSuccessfullyExported' => 'Rezervacije so bile izvožene uspešno.',
+	'absencesSuccessfullyExported' => 'Odsotnosti so bile uspešno izvožene.',
+	'absencesSuccessfullyImported' => 'Odsotnosti so bile uspešno uvožene.',
+	'reservationSuccessfullyExported' => 'Rezervacije so bile uspešno izvožene.',
 	'undefinedCalendar' => 'Nedefiniran koledar.',
 	'servicesSuccessfullyDeleted' => 'Storitve so bile uspešno zbrisane.',
 	'servicesUnsuccessfullyDeleted' => 'Storitev ni bilo mogoče zbrisati.',
