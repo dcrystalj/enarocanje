@@ -1,14 +1,14 @@
 @extends('layouts.default')
 
 @section('title')
-    Add new provider category
+    {{trans('general.addNewProviderCategory')}}
 @stop
 
 @section('content')
 
         {{ Former::open(URL::route('category.store'))->rules($rules) }}
-        {{ Former::text('name','Category name:')->autofocus() }}
-        {{ Former::actions()->submit('Add new category') }}
+        {{ Former::text('name',trans('general.categoryName')+':')->autofocus() }}
+        {{ Former::actions()->submit(trans('general.addNewCategory')) }}
         {{ Former::close() }} 
 
 
@@ -30,9 +30,9 @@
 
          @if(count($categories)>0)
             </br>
-            <h2>Categories:</h2>
+            <h2>{{trans('general.categoryName')}}:</h2>
             {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-            {{ Table::headers('#', 'Category name','') }}
+            {{ Table::headers('#', trans('general.categoryName'),'') }}
             {{ Table::body($categories) }}
             {{ Table::close() }}
         @endif

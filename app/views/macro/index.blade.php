@@ -5,24 +5,27 @@
 @stop
 
 @section('content')
+    <script src="js/lightbox/js/jquery-1.7.2.min.js"></script>
+    <script src="js/lightbox/js/lightbox.js"></script>
+    <link href="js/lightbox/css/lightbox.css" rel="stylesheet" />
 
     <?php 
         $macroService = MacroService::whereActive(0)->get();
         $categories = Categories::all();
-        $categoryName['none'] = 'none';
+        $categoryName['none'] = trans('general.none');
         foreach ($categories as $cat)
         {
             $categoryName[$cat->name] = $cat->name;
-        }        
+	}
     ?>
 
     @if(count($macroService)==0)
-        {{ Typography::warning('No providers avaliable yet') }}
+        {{ Typography::warning(trans('messages.noProvidersYet')) }}
     @else
         {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label('category', 'Filter providers by category:') }}
-        {{ Form::select('categories',$categoryName ,Input::get('category')) }}
-        {{ Form::submit('Filter') }}
+        {{ Form::label(trans('general.filterProvidersByCategory')) }}
+        {{ Form::select('categories', $categoryName ,Input::get('categories')) }}
+        {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
         {{ Form::open(['method' => 'GET']) }}
         {{ Form::label(Lang::get('general.search') . ':') }}
@@ -46,9 +49,10 @@
 
             $tbody = []; 
             $i = 1; 
-            foreach ($macroService as $service){    
+            foreach ($macroService as $service){  
                 $tbody[] = [
-                    'id'     => $i, 
+                    //'id'     => $i, 
+                    'logo'   => UserLibrary::getImageWithSize($service->logo,'200px','100px','rel="lightbox"'),   
                     'name'   => $service->name,
                     'title'  => $service->title,
                     'City'   => $service->city . '<br>' . $service->street, 
@@ -60,7 +64,7 @@
         ?>
 
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', Lang::get('general.name'),Lang::get('general.title'),Lang::get('general.city'), Lang::get('general.email'), '') }}
+        {{ Table::headers(trans('general.logo'), Lang::get('general.name'),Lang::get('general.title'),Lang::get('general.city'), Lang::get('general.email'), '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
     

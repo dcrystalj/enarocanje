@@ -1,41 +1,41 @@
 <dl class="dl-horizontal hidden-desktop" >
 {{ Former::horizontal_open()->id('li') }}
 
-<dt>Monday:</dt>
+<dt>{{trans('general.mon')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',1) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',2)}}</dd>
 <dd>
 	<div class="controls">
-	{{ Button::link("#",'Same to friday',['id' => 'tofridaytime','class'=>'input-append']) }}
+	{{ Button::link("#",trans('general.sameToFriday'),['id' => 'tofridaytime','class'=>'input-append']) }}
 	</div>
 </dd>
 
-<dt>Tuesday:</dt> 
+<dt>{{trans('general.tue')}}:</dt> 
 <dd>{{ Timepicker::from($errors,'00:00:00',3) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',4)}}</dd>
 
 
-<dt>Wednesday:</dt>
+<dt>{{trans('general.wed')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',5) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',6) }}</dd>
 
 
-<dt>Thursday:</dt>
+<dt>{{trans('general.thu')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',7) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',8)}}</dd>
 
 
-<dt>Friday:</dt>
+<dt>{{trans('general.fri')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',9) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',10)}}</dd>
 
 
-<dt>Saturday:</dt>
+<dt>{{trans('general.sat')}}:</dt>
 <dd>{{ Timepicker::from($errors,'00:00:00',11) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',12) }}</dd>
 
 
-<dt>Sunday:</dt>
+<dt>{{trans('general.sun')}}:</dt>
 
 <dd>{{ Timepicker::from($errors,'00:00:00',13) }}</dd>
 <dd>{{ Timepicker::to($errors,'00:00:00',14)}}</dd>

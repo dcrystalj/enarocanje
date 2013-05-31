@@ -16,8 +16,8 @@ class Provider extends BaseController {
    	);
 
 	public function __construct() {
-		$this->beforeFilter('auth',		['only'=>['edit','update']]);
-		$this->beforeFilter('provider',	['only'=>['edit','update']]);
+		$this->beforeFilter('auth',		['only'=>['edit','update','logo','saveLogo','deleteLogo','pictures','savePictures','deletePictures']]);
+		$this->beforeFilter('provider',	['only'=>['edit','update','logo','saveLogo','deleteLogo','pictures','savePictures','deletePictures']]);
 		$this->beforeFilter('admin',	['only'=>['edit','update']]);
 	}
 
@@ -167,6 +167,110 @@ class Provider extends BaseController {
 		}
 
 		App::abort(404,trans('messages.fourOfour'));
+	}
+
+	public function logo()
+	{	
+
+		return View::make('logo');
+
+	}
+
+
+	public function saveLogo()
+	{	
+		$imageRule = array(
+		    'image'     => 'image',
+		);
+
+		$image = 'logo';
+		$filepath = 'image/logo';
+		$filename = '';
+
+        //$imagetype = exif_imagetype('public/'.$path);
+		//if(true) return $_FILES[$image]['type'];
+		if ($_FILES[$image]["error"] > 0)
+		{
+			return Redirect::back()->with('Error',trans('messages.error'));
+		}
+		do {
+			$filename = Str::random('20','alpha') . UserLibrary::getImageExtensionFromMime($_FILES[$image]['type']);
+		}
+		while(File::exists($filepath . $filename));
+				
+		$validation = Validator::make(Input::all(),$imageRule);
+
+        if($validation->fails())
+        {
+            return Redirect::back()->withErrors($validation)->withInput();
+		} 
+
+		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
+		if($macservice->logo != '')
+		{
+			$this->deleteLogo();
+		}
+		$macservice->logo = $filepath . '/' . $filename;
+		$macservice->save();
+        Input::file($image)->move('public/' . $filepath,$filename);
+		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
+	}
+	public function deleteLogo()
+	{	
+		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
+		File::delete('public/'.$macservice->logo);
+		$macservice->logo = '';
+		$macservice->save();
+		return Redirect::back()->with('success',trans('messages.logoDeleted'));
+		
+	}
+
+
+
+
+		public function pictures()
+	{	
+
+		return View::make('pictures');
+
+	}
+
+
+	public function savePicture(){
+		$imageRule = array(
+		    'image' => 'image',
+		);
+
+		$image = 'picture';
+		$filepath = 'image/pictures';
+		$filename = '';
+		if ($_FILES[$image]["error"] > 0)
+		{
+			return Redirect::back()->with('Error',trans('messages.error'));
+		}
+		do {
+			$filename = Str::random('20','alpha') . UserLibrary::getImageExtensionFromMime($_FILES[$image]['type']);
+		}
+		while(File::exists($filepath . $filename));
+		$wholepath = $filepath .'/'. $filename;
+		$validation = Validator::make(Input::all(),$imageRule);
+
+        if($validation->fails())
+        {
+            return Redirect::back()->withErrors($validation)->withInput();
+		} 
+
+		$macservice_id = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->select('id')->first();
+		DB::table('provider_pictures')->insert(array('macservice_id' => $macservice_id['id'],'path' => $wholepath));
+        Input::file($image)->move('public/' . $filepath,$filename);
+		return Redirect::back()->with('success',trans('messages.successfullySaved'));
+	}
+	public function deletePicture($path)
+	{	
+		DB::table('provider_pictures')->where('path','=',$path)->delete();
+		File::delete('public/'.$path);
+		return Redirect::to('providerPictures')->with('success',trans('messages.pictureDeleted'));
+		
 	}
 
 }

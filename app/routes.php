@@ -78,6 +78,7 @@ Route::post('queue/push', function(){
 //languages
 Route::get('lang/{lang}', function($lang){
 	Session::set('language',$lang);
+	echo "bootbox.setlocale(".$lang.");";
 	return Redirect::back();
 });
 
@@ -95,3 +96,15 @@ Route::get('google/events/{calendar_id}', 'GCal@getEvents');
 Route::get('spucajbazozdejtkoj', function(){
 	
 });
+
+Route::get('providerLogo', 'Provider@logo');
+Route::post('providerSaveLogo', 'Provider@saveLogo');
+Route::get('providerDeleteLogo', 'Provider@deleteLogo');
+Route::get('providerPictures', 'Provider@pictures');
+Route::post('providerSavePicture', 'Provider@savePicture');
+Route::get('providerDeletePicture/{path}', 'Provider@deletePicture');
+
+
+Route::any('provider/profile/{token}','Provider@profile');
+
+Route::get('user/{id}', 'UserController@showProfile');

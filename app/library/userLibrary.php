@@ -77,4 +77,85 @@ class UserLibrary {
 
         return $uuid;
     }
+
+
+    public static function getImageWithSize($path,$imgx,$imgy,$lightbox){
+        if($path == '' || !File::exists('public/'.$path)){
+            return '';
+        }
+        $imagetype = exif_imagetype('public/'.$path);
+        
+        switch($imagetype){
+        	case 1: //gif
+        	$img = imagecreatefromgif('public/'.$path);
+        	break;
+        	case 2: //jpeg
+        	$img = imagecreatefromjpeg('public/'.$path);
+        	break;
+        	case 3: //png
+        	$img = imagecreatefrompng('public/'.$path);
+        	break;
+        	default: 
+    			return Redirect::back()->with('error','Image type not supported');
+        }
+        $maxwidthmaxheight = '<script>screen.width/2</script> maxheight:<script>screen.height/2</script>';
+        if(2*imagesy($img) > imagesx($img))
+        { //višinskega tipa
+            $style = 'height:'.$imgy.'; width:auto'.$maxwidthmaxheight;
+        }
+        else
+        { //širinskega tipa
+            $style = 'width:'.$imgx.'; height:auto; maxwidth:'.$maxwidthmaxheight;
+        }
+        $styleBig = '';
+        /*if(imagesy($img) > imagesx($img))
+        {
+            $styleBig = 'width:auto; height:<script>3*screen.height/4</script>';
+        }
+        else
+        {
+            $styleBig = 'width:<script>3*screen.height/4</script>; height:auto';
+        }
+        */
+        $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
+        return '<a href="'.$path.'" '.$lightbox.' '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
+
+    }
+    public static function getImageExtensionFromMime($mimetype){
+    	switch($mimetype){
+    		case 'image/png':
+    			return '.png';
+    		case 'image/jpeg':
+    			return '.jpg';
+    		case 'image/gif':
+    			return '.gif';
+    		default: 
+    			return Redirect::back()->with('error','Image type not supported');
+    			break;
+    		}
+    }
+    public static function getPicturesFromMacservice(){
+
+        $macservice_id = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->select('id')->first()->id;
+        $pictures = DB::table('provider_pictures')->where('macservice_id','=',$macservice_id)->get();
+
+        $tabela = array();
+        foreach ($pictures as $picture)
+        {
+            array_push($tabela,$picture);
+            //echo UserLibrary::getImageLogo($picture->path);
+        }
+        return $tabela;
+    }
+    //<a class="fancybox" rel="group" href="boxxy.jpg"><img src="boxxy.jpg" height="100px" width="100px" alt="" /></a>
+        public static function getPictureForGallery($path){
+
+        return '<a class="img_thumb fancybox" rel="group" href="'.$path.'">
+                    <img src="'.$path.'" height="100px" width="100px" alt="" />'
+                    .Button::link(URL::action('Provider@deletePicture',array($path)),trans('general.deleteCurrentPicture')).
+                    '</a>';
+//URL::action("MicroserviceApiController@getBreaks", array($id))
+        }               //URL::action("MicroserviceApiController@getWorkinghours", array($id))
+    //<a class="fancybox" rel="group" href="boxxy.jpg"><img src="boxxy.jpg" height="100px" width="100px" alt="" /></a>
+
 }

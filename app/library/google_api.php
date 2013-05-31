@@ -39,6 +39,7 @@ class GoogleApi {
 	  return ($diff > ($token->expires_in-120));
 	}
 	protected function renew($user) {
+          if(!$user->gtoken) return;
 	  $token = json_decode($user->gtoken);
 
 	  if($this->is_expired($token)) {

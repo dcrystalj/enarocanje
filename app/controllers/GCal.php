@@ -136,9 +136,9 @@ class GCal extends BaseController {
 		 */
 
 		$reservations = array();
-		$services = $user->macroservices->first()->microservices;
+		$services = $user->macroservices()->first()->microservices()->get();
 		foreach($services as $service) {
-		  foreach($service->reservations as $reservation) {
+		  foreach($service->reservations()->get() as $reservation) {
 		    $reservations[] = Events::reservation_to_event($reservation, true);
 		  }
 		}

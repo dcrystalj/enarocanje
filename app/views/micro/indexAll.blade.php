@@ -79,7 +79,7 @@
 
         @if(count($tbody)>0)
         {{ Table::hover_open(["class"=>'sortable', 'id'=> 'mobileTable']) }}
-        {{ Table::headers('#', trans('general.name'),trans('general.title'), trans('general.length'), trans('general.description'), trans('general.price').'(€)', '') }}
+        {{ Table::headers( trans('general.name'), trans('general.length'), trans('general.description'), trans('general.price').'(€)', '') }}
         {{ Table::body($tbody) }}
         {{ Table::close() }}
         @else
