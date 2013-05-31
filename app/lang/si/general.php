@@ -165,7 +165,7 @@ return array(
 	'break1' => 'Pavza 1',
 	'categories' => 'Kategorije',
 	'categoryName' => 'Ime kategorije',
-	'filterProvidersByCategory' => 'Filtriraj ponudnike po kategoriji',
+	'filterProvidersByCategory' => 'Filtriraj po kategoriji',
 	'filter' => 'Filtriraj',
 	'logo' => 'Logo',
 	'none' => 'Brez',

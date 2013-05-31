@@ -166,7 +166,7 @@ return array(
 	'break1' => 'Break 1',
 	'categories' => 'Categories',
 	'categoryName' => 'Category name',
-	'filterProvidersByCategory' => 'Filter providers by category',
+	'filterProvidersByCategory' => 'Filter by category',
 	'filter' => 'Filter',
 	'logo' => 'Logo',
 	'none' => 'None',

@@ -25,7 +25,9 @@
         {{ Former::open()->method('GET') }}
         {{ Former::select('categories',trans('general.filterProvidersByCategory'). ':')->options($categoryName)->value(Input::get('categories')) }}
         {{ Former::text('search',trans('general.search'). ':')->value(Input::get('search')) }}
+        <div class="controls">
         {{ Former::submit(trans('general.filter')) }}
+        </div> 
         {{ Former::close() }}
 
         <?php 
