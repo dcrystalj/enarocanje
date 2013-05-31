@@ -25,23 +25,36 @@
         {{ Form::open(['method'=>'GET']) }}
         {{ Form::label(trans('general.filterProvidersByCategory')) }}
         {{ Form::select('categories', $categoryName ,Input::get('categories')) }}
-        {{ Form::submit(trans('general.filter')) }}
-        {{ Form::close() }}
-        {{ Form::open(['method' => 'GET']) }}
         {{ Form::label(Lang::get('general.search') . ':') }}
         {{ Form::text('search',Input::get('search')) }}
-        {{ Form::submit(trans('general.search')) }}
+        {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
         <?php 
-        if (array_key_exists (strtr(Input::get('categories'), array("+" => " ")),$categoryName) && (strtr(Input::get('categories'), array("+" => " "))) != 'none')
+        if (array_key_exists (strtr(Input::get('categories'), array("+" => " ")),$categoryName) && (strtr(Input::get('categories'), array("+" => " "))) != 'none' &&
+            strtr(Input::get('search'), array("+" => " ")) == '')
         {
             $macroService = MacroService::where('name', strtr(Input::get('categories'), array("+" => " ")))->get();
         }
-        else if(strtr(Input::get('search'), array("+" => " ")) != '')
+        else if(strtr(Input::get('search'), array("+" => " ")) != '' && (strtr(Input::get('categories'), array("+" => " "))) == 'none')
         {
             $src = strtr(Input::get('search'), array("+" => " "));
-            $macroService = MacroService::Where('name', 'like', '%'.$src.'%')->orWhere('city', 'like', '%'.$src.'%')->orWhere('title', 'like', '%'.$src.'%')->get();
+            $macroService = MacroService::Where(function($query) use ($src)
+                {
+                    $query->where('name', 'like', '%'.$src.'%')
+                          ->orWhere('city', 'like', '%'.$src.'%')
+                          ->orWhere('title', 'like', '%'.$src.'%');
+                })->get();
+        }
+        else if(strtr(Input::get('search'), array("+" => " ")) != '' && (strtr(Input::get('categories'), array("+" => " "))) != 'none')
+        {
+            $src = strtr(Input::get('search'), array("+" => " "));
+            $macroService = MacroService::where('name',strtr(Input::get('categories'), array("+" => " ")))->where(function($query) use ($src)
+                {
+                    $query->where('name', 'like', '%'.$src.'%')
+                          ->orWhere('city', 'like', '%'.$src.'%')
+                          ->orWhere('title', 'like', '%'.$src.'%');
+                })->get();
         }
         else{
             $mic = MacroService::whereActive(0)->get();       
@@ -50,8 +63,7 @@
             $tbody = []; 
             $i = 1; 
             foreach ($macroService as $service){  
-                $tbody[] = [
-                    //'id'     => $i, 
+                $tbody[] = [ 
                     'logo'   => UserLibrary::getImageWithSize($service->logo,'200px','100px','rel="lightbox"'),   
                     'name'   => $service->name,
                     'title'  => $service->title,
