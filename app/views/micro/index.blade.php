@@ -20,12 +20,26 @@
         {{ Form::submit(trans('general.filter')) }}
         {{ Form::close() }}
 
+        {{ Form::open(['method' => 'GET']) }}
+        {{ Form::label(Lang::get('general.search') . ':') }}
+        {{ Form::text('search',Input::get('search')) }}
+        {{ Form::submit(trans('general.search')) }}
+        {{ Form::close() }}
+
         <?php
         if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
         {
             $mic = MacroService::find($mac)->microservices()->where(function($query){
                 $query->where('gender', Input::get('gender'))
                       ->orWhere('gender','U');
+            })->get();    
+        }
+        else if(strtr(Input::get('search'), array("+" => " ")) != '')
+        {
+            $src = strtr(Input::get('search'), array("+" => " "));
+            $mic = MacroService::find($mac)->microservices()->where(function($query) use ($src) {
+                $query->where('name', 'like','%'.$src.'%')
+                      ->orWhere('title', 'like','%'.$src.'%');
             })->get();    
         }
         else{
