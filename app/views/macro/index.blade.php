@@ -22,13 +22,11 @@
     @if(count($macroService)==0)
         {{ Typography::warning(trans('messages.noProvidersYet')) }}
     @else
-        {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label(trans('general.filterProvidersByCategory')) }}
-        {{ Form::select('categories', $categoryName ,Input::get('categories')) }}
-        {{ Form::label(Lang::get('general.search') . ':') }}
-        {{ Form::text('search',Input::get('search')) }}
-        {{ Form::submit(trans('general.filter')) }}
-        {{ Form::close() }}
+        {{ Former::open()->method('GET') }}
+        {{ Former::select('categories',trans('general.filterProvidersByCategory'). ':')->options($categoryName)->value(Input::get('categories')) }}
+        {{ Former::text('search',trans('general.search'). ':')->value(Input::get('search')) }}
+        {{ Former::submit(trans('general.filter')) }}
+        {{ Former::close() }}
 
         <?php 
         if (array_key_exists (strtr(Input::get('categories'), array("+" => " ")),$categoryName) && (strtr(Input::get('categories'), array("+" => " "))) != 'none' &&

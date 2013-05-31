@@ -14,13 +14,12 @@
     @if(count($mic)==0)
         {{ Typography::warning(trans('messages.noServicesYet')) }}
     @else
-        {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label('gender', trans('messages.filterByGender').':') }}
-        {{ Form::select('gender', $filter,Input::get('gender')) }}
-        {{ Form::label(Lang::get('general.search') . ':') }}
-        {{ Form::text('search',Input::get('search')) }}
-        {{ Form::submit(trans('general.filter')) }}
-        {{ Form::close() }}
+
+        {{ Former::open()->method('GET') }}
+        {{ Former::select('gender',trans('messages.filterByGender').':')->options($filter)->value(Input::get('gender')) }}
+        {{ Former::text('search',trans('general.search'). ':')->value(Input::get('search')) }}
+        {{ Former::submit(trans('general.filter')) }}
+        {{ Former::close() }}
 
         <?php
         if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U') && strtr(Input::get('search'), array("+" => " ")) == '')
