@@ -21,9 +21,9 @@ class MicserviceTableSeeder extends Seeder {
 		for ($i=100; $i <151 ; $i++) { 
 			for ($j=1; $j <101 ; $j++) { 
 				if($i < 140)
-            		$micservice[] = ['macservice_id' => $i, 'title'=> 'ime$i$j', 'name'=>'Skin treatment', 'gender' => 'U', 'length' => '60', 'price' => '10', 'category'=>1];
+            		$micservice[] = ['macservice_id' => $i, 'title'=> 'ime'.$i.''.$j, 'name'=>'Skin treatment', 'gender' => 'U', 'length' => '60', 'price' => '10', 'category'=>1];
             	else	
-            		$micservice[] = ['macservice_id' => $i, 'title'=> 'ime$i$j', 'name'=>'Massage', 'gender' => 'U', 'length' => '60', 'price' => '10', 'category'=>8];
+            		$micservice[] = ['macservice_id' => $i, 'title'=> 'ime'.$i.''.$j, 'name'=>'Massage', 'gender' => 'U', 'length' => '60', 'price' => '10', 'category'=>8];
         	}
         }
 
