@@ -17,7 +17,9 @@
         {{ Former::open()->method('GET') }}
         {{ Former::select('gender',trans('messages.filterByGender').':')->options($filter)->value(Input::get('gender')) }}
         {{ Former::text('search',trans('general.search'). ':')->value(Input::get('search')) }}
+        <div class="controls">
         {{ Former::submit(trans('general.filter')) }}
+        </div>
         {{ Former::close() }}
 
         <?php
