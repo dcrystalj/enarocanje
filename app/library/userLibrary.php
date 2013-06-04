@@ -1,70 +1,70 @@
 <?php
 
 class UserLibrary {
-	private static $languageArray = array(
-		'english',	
-		'slovenian',	
-		'italian',	
-		'german',	
-	);
-	private static $languageAbbrsArray = array(
-		'en',	
-		'si',	
-		'it',	
-		'ge',	
-	);
+    private static $languageArray = array(
+        'english',  
+        'slovenian',    
+        'italian',  
+        'german',   
+    );
+    private static $languageAbbrsArray = array(
+        'en',   
+        'si',   
+        'it',   
+        'ge',   
+    );
 
-	private static $timezoneArray = array(
-		0 => "UTC-11",
-		1 => "UTC-10",
-		2  => "UTC-9",
-		3  => "UTC-8",
-		4  => "UTC-7",
-		5  => "UTC-6",
-		6  => 	"UTC-5",
-		7  => "UTC-4",
-		8  => "UTC-3",
-		9  => "UTC-2",
-		10  => "UTC-1",
-		11   => 	"UTC (United Kingdom)",
-		12   => 	"UTC+1 (Slovenia, Spain, Germany, Poland)",
-		13   =>  "UTC+2 (Ukraine)",
-		14   => "UTC+3",
-		15   => "UTC+4",
-		16   => "UTC+5",
-		17   => "UTC+6",
-		18   => "UTC+7",
-		19   => "UTC+8",
-		20   => "UTC+9",
-		21  => "UTC+10",
-		22  => "UTC+11",
-		23  => "UTC+12"
-	);
-
-
-	//returns translated languages array
-	public static function languages() {
-		return trans('general.languages');
-	}
-	//returns translated language
-	public static function language($i) {
-		return trans('general.languages')[$i]; 
-	}
-	public static function languageAbbrs($i) {
-		return self::$languageAbbrsArray[$i];
-	}
-	public static function getTimezoneIndex($i) {
-		return array_search($i,self::$timezoneArray);
-	}
-	public static function timezones() {
-		return self::$timezoneArray	;
-	}
-	public static function timezone($i) {
-		return self::$timezoneArray[$i];
-	}
+    private static $timezoneArray = array(
+        0 => "UTC-11",
+        1 => "UTC-10",
+        2  => "UTC-9",
+        3  => "UTC-8",
+        4  => "UTC-7",
+        5  => "UTC-6",
+        6  =>   "UTC-5",
+        7  => "UTC-4",
+        8  => "UTC-3",
+        9  => "UTC-2",
+        10  => "UTC-1",
+        11   =>     "UTC (United Kingdom)",
+        12   =>     "UTC+1 (Slovenia, Spain, Germany, Poland)",
+        13   =>  "UTC+2 (Ukraine)",
+        14   => "UTC+3",
+        15   => "UTC+4",
+        16   => "UTC+5",
+        17   => "UTC+6",
+        18   => "UTC+7",
+        19   => "UTC+8",
+        20   => "UTC+9",
+        21  => "UTC+10",
+        22  => "UTC+11",
+        23  => "UTC+12"
+    );
 
 
-	public static function generateUuid()
+    //returns translated languages array
+    public static function languages() {
+        return trans('general.languages');
+    }
+    //returns translated language
+    public static function language($i) {
+        return trans('general.languages')[$i]; 
+    }
+    public static function languageAbbrs($i) {
+        return self::$languageAbbrsArray[$i];
+    }
+    public static function getTimezoneIndex($i) {
+        return array_search($i,self::$timezoneArray);
+    }
+    public static function timezones() {
+        return self::$timezoneArray ;
+    }
+    public static function timezone($i) {
+        return self::$timezoneArray[$i];
+    }
+
+
+    public static function generateUuid()
     {
         // Generate Uuid
         $uuid = Uuid::v4(false);
@@ -79,24 +79,24 @@ class UserLibrary {
     }
 
 
-    public static function getImageWithSize($path,$imgx,$imgy,$lightbox){
-        if($path == '' || !File::exists('public/'.$path)){
+    public static function getImageWithSize($publicPath,$path,$imgx,$imgy,$lightbox){
+        if($path == '' || !File::exists($publicPath.$path)){
             return '';
         }
-        $imagetype = exif_imagetype('public/'.$path);
+        $imagetype = exif_imagetype($publicPath.$path);
         
         switch($imagetype){
-        	case 1: //gif
-        	$img = imagecreatefromgif('public/'.$path);
-        	break;
-        	case 2: //jpeg
-        	$img = imagecreatefromjpeg('public/'.$path);
-        	break;
-        	case 3: //png
-        	$img = imagecreatefrompng('public/'.$path);
-        	break;
-        	default: 
-    			return Redirect::back()->with('error','Image type not supported');
+            case 1: //gif
+            $img = imagecreatefromgif($publicPath.$path);
+            break;
+            case 2: //jpeg
+            $img = imagecreatefromjpeg($publicPath.$path);
+            break;
+            case 3: //png
+            $img = imagecreatefrompng($publicPath.$path);
+            break;
+            default: 
+                return Redirect::back()->with('error','Image type not supported');
         }
         $maxwidthmaxheight = '<script>screen.width/2</script> maxheight:<script>screen.height/2</script>';
         if(2*imagesy($img) > imagesx($img))
@@ -117,22 +117,22 @@ class UserLibrary {
             $styleBig = 'width:<script>3*screen.height/4</script>; height:auto';
         }
         */
-        $htmlImage = Html::image($path,trans('general.logo'),array('src' => $path,'style' => $style));
-        return '<a href="'.$path.'" '.$lightbox.' '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
+        $htmlImage = Html::image($publicPath.$path,trans('general.logo'),array('src' => $path,'style' => $style));
+        return '<a href="'.$publicPath.$path.'" '.$lightbox.' '.$styleBig.' title="'.trans('general.logo').'">'.$htmlImage.'</a>';
 
     }
     public static function getImageExtensionFromMime($mimetype){
-    	switch($mimetype){
-    		case 'image/png':
-    			return '.png';
-    		case 'image/jpeg':
-    			return '.jpg';
-    		case 'image/gif':
-    			return '.gif';
-    		default: 
-    			return Redirect::back()->with('error','Image type not supported');
-    			break;
-    		}
+        switch($mimetype){
+            case 'image/png':
+                return '.png';
+            case 'image/jpeg':
+                return '.jpg';
+            case 'image/gif':
+                return '.gif';
+            default: 
+                return Redirect::back()->with('error','Image type not supported');
+                break;
+            }
     }
     public static function getPicturesFromMacservice(){
 
@@ -154,8 +154,5 @@ class UserLibrary {
                     <img src="'.$path.'" height="100px" width="100px" alt="" />'
                     .Button::link(URL::action('Provider@deletePicture',array($path)),trans('general.deleteCurrentPicture')).
                     '</a>';
-//URL::action("MicroserviceApiController@getBreaks", array($id))
-        }               //URL::action("MicroserviceApiController@getWorkinghours", array($id))
-    //<a class="fancybox" rel="group" href="boxxy.jpg"><img src="boxxy.jpg" height="100px" width="100px" alt="" /></a>
-
+        }
 }
