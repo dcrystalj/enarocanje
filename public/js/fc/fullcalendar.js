@@ -63,8 +63,8 @@ var defaults = {
 	firstDay: 0,
 	monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
 	monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-	dayNames: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-	dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+	dayNames: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+	dayNamesShort: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
 	buttonText: {
 		prev: "<span class='fc-text-arrow'>&lsaquo;</span>",
 		next: "<span class='fc-text-arrow'>&rsaquo;</span>",
@@ -1257,7 +1257,7 @@ fc.formatDates = formatDates;
 /* Date Math
 -----------------------------------------------------------------------------*/
 
-var dayIDs = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+var dayIDs = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat','sun'],
 	DAY_MS = 86400000,
 	HOUR_MS = 3600000,
 	MINUTE_MS = 60000;
@@ -1567,22 +1567,22 @@ function formatDates(date1, date2, format, options) {
 };
 $(window).load(function() {
 var daysShort=new Array(
-	trans('general.sunShort'),
 	trans('general.monShort'),
 	trans('general.tueShort'),
 	trans('general.wedShort'),
 	trans('general.thuShort'),
 	trans('general.friShort'),
-	trans('general.satShort')
+	trans('general.satShort'),
+	trans('general.sunShort')
 );
 var daysLong=new Array(
-	trans('general.sun'),
 	trans('general.mon'),
 	trans('general.tue'),
 	trans('general.wed'),
 	trans('general.thu'),
 	trans('general.fri'),
-	trans('general.sat')
+	trans('general.sat'),
+	trans('general.sun')
 );
 var monthsShort=new Array(
 	trans('general.janShort'),

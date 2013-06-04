@@ -212,13 +212,13 @@ class Provider extends BaseController {
 		}
 		$macservice->logo = $filepath . '/' . $filename;
 		$macservice->save();
-        Input::file($image)->move('public/' . $filepath,$filename);
+        Input::file($image)->move('' . $filepath,$filename);
 		return Redirect::to('macro/create')->with('success',trans('messages.successfullySaved'));
 	}
 	public function deleteLogo()
 	{	
 		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
-		File::delete('public/'.$macservice->logo);
+		File::delete(''.$macservice->logo);
 		$macservice->logo = '';
 		$macservice->save();
 		return Redirect::back()->with('success',trans('messages.logoDeleted'));

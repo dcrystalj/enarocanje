@@ -28,7 +28,7 @@
 {{Former::actions()->submit(trans('general.submit'))}}
 @if(isSetLogo($logoPath))
 
-	{{UserLibrary::getImageWithSize("asdasds/",$logoPath,'200px','100px','rel="lightbox"')/*"public/" for ltpo, "" otherwise*/}}
+	{{UserLibrary::getImageWithSize("",$logoPath,'200px','100px','rel="lightbox"')/* "public/" or ""*/}}
 	{{'<br /><br /><br />'}}
 	{{Button::link(URL::to('providerDeleteLogo'),trans('general.deleteCurrentLogo'))}}
 @endif
