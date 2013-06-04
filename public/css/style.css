@@ -18,10 +18,14 @@ h1 {
 	top: -55px;
 	z-index: 1;
 }
-
+#google_import{
+	margin: 0 auto;
+	width: 174px;
+	padding: 12px;
+}
 .btn-large{
     margin-bottom: 10px;
-    width: 200px;
+    width: 220px;
 }
 .form-actions{
     background-color: white !important;

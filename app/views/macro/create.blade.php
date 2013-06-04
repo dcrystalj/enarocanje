@@ -19,7 +19,7 @@
     }
     ?>
     <div class="row-fluid">
-    <div class="offset1 span2">
+    <div class="offset1 span3">
         @if( isset($mac) && $mac->active==0 )
         
         {{Button::large_link(URL::route('timetable', $mac->id), trans('general.timetable'))}}
