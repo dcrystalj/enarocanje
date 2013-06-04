@@ -19,7 +19,7 @@
     }
     ?>
     <div class="row-fluid">
-    <div class="offset1 span2">
+    <div class="offset1 span3">
         @if( isset($mac) && $mac->active==0 )
         
         {{Button::large_link(URL::route('timetable', $mac->id), trans('general.timetable'))}}
@@ -51,6 +51,7 @@
             {{ Former::open(URL::route('macro.store'))->rules($rules) }}
             {{ Former::select('name',Lang::get('general.name').': ')->options($category)->autofocus() }}
         @endif
+        {{ Former::text('title',trans('general.title'). ':') }}
         {{ Former::text('ZIP_code',trans('general.zipCode').':')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$zipcode).'"]')->autocomplete('off')}}
         {{ Former::text('city',trans('general.city').':')->data_Items('8')->data_provide('typeahead')->data_source('["'.implode('","',$city).'"]')->autocomplete('off')}}
         {{ Former::text('street',trans('general.street').': ')}}

@@ -45,6 +45,7 @@ class MacroserviceController extends BaseController {
 				
 			$mac                   = new MacroService;
 			$mac->name             = Input::get( 'name' );
+			$mac->title 		   = Input::get( 'title');
 			$mac->ZIP_code         = Input::get( 'ZIP_code');
 			$mac->city             = Input::get( 'city');
 			$mac->street           = Input::get( 'street');
@@ -104,6 +105,7 @@ class MacroserviceController extends BaseController {
 		{
 			$zip = ZIPcode::where('ZIP_code', Input::get('ZIP_code'))->first();
 
+			$mac->title 		   = Input::get( 'title');
 			$mac->ZIP_code         = Input::get( 'ZIP_code');
 			$mac->city             = Input::get( 'city');
 			$mac->street           = Input::get( 'street');

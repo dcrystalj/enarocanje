@@ -79,6 +79,10 @@ $(document).ready(function() {
       pickDate: false,
       maskInput:false,
    });
+
+   $('.carousel').carousel({
+    interval: 4000
+   })
 });
 
 

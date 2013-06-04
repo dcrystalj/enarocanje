@@ -70,9 +70,9 @@
     {{ Former::close() }}
 	{{-- Button::link("/google/export", trans('general.export')) --}}
 </div>
-<div class="span5 offset2">
-
-    {{ Button::large_link("/google/import", trans('general.gimport'), array('id' => 'google_import')) }}
+<div class="span5">
+    <form class="form-horizontal"> 
+    <div class="controls">{{ Button::large_link("/google/import", trans('general.gimport'), array('id' => 'google_import')) }}</div></form>
 
 </div>
 </div>

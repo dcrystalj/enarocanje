@@ -40,9 +40,10 @@ class MicroserviceController extends BaseController {
 		{
 			$macName  = MacroService::find($mac)->name;
 			$category = Service::categoryId($macName);
+			$name = Service::serviceNameOrigin($macName,Input::get('name'));
 
 			$micservice                = new MicroService;
-			$micservice->name          = Input::get('name');
+			$micservice->name          = $name;
 			$micservice->title         = Input::get('title');
 			$micservice->length        = date('H:i', strtotime(Input::get('length')));
 			$micservice->description   = Input::get( 'description' );
@@ -95,8 +96,9 @@ class MicroserviceController extends BaseController {
 			
 		    $macName  = MacroService::find($mac)->name;
 			$category = Service::categoryId($macName);
+			$name = Service::serviceNameOrigin($macName,Input::get('name'));
 
-			$micservice->name          = Input::get( 'name' );
+			$micservice->name          = $name;
 			$micservice->title         = Input::get( 'title');
 			$micservice->length        = Input::get( 'length' );
 			$micservice->description   = Input::get( 'description' );

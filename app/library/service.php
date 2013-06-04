@@ -99,7 +99,7 @@ class Service {
 		$srv = [];
 		$categories = Categories::where('name',$macName)->first()->servicecat()->get();
 		foreach ($categories as $cat) {
-			$srv[] = $cat->name;
+			$srv[$cat->id] = $cat->name;
 		}
 		return $srv;
 	}
@@ -122,6 +122,14 @@ class Service {
 		return $mic->title;
 	}	
 
+	public static function serviceNameOrigin($macName,$micNameId){
+		$categories = Categories::where('name',$macName)->first()->servicecat()->get();
+		foreach ($categories as $cat) {
+			if($cat->id == $micNameId){
+				return $cat->name;
+			}
+		}
+	}
 	public static function serviceName1($micid){
 		$mic      = MicroService::find($micid);
 		$category = $mic->category;

@@ -66,7 +66,7 @@
                 $tbody[] = [
                     //'id'     => $i, 
                     'logo'   => UserLibrary::getImageWithSize("",$service->logo,'200px','100px','rel="lightbox"'), 
-                    /*"public/" for ltpo, "" otherwise*/  
+                    /*"public/" or "" */  
                     'name'   => $service->name,
                     'title'  => $service->title,
                     'City'   => $service->city . '<br>' . $service->street, 

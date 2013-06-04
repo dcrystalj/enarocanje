@@ -14,19 +14,43 @@
     @if(count($mic)==0)
         {{ Typography::warning(trans('messages.noServicesYet')) }}
     @else
-        {{ Form::open(['method'=>'GET']) }}
-        {{ Form::label('gender', trans('messages.filterByGender').':') }}
-        {{ Form::select('gender', $filter,Input::get('gender')) }}
-        {{ Form::submit(trans('general.filter')) }}
-        {{ Form::close() }}
+        {{ Former::open()->method('GET') }}
+        {{ Former::select('gender',trans('messages.filterByGender').':')->options($filter)->value(Input::get('gender')) }}
+        {{ Former::text('search',trans('general.search'). ':')->value(Input::get('search')) }}
+        <div class="controls">
+        {{ Former::submit(trans('general.filter')) }}
+        </div>
+        {{ Former::close() }}
 
         <?php
-        if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U'))
+        if (array_key_exists (Input::get('gender'),Service::gender()) && (Input::get('gender') != 'U') && strtr(Input::get('search'), array("+" => " ")) == '')
         {
             $mic = MacroService::find($mac)->microservices()->where(function($query){
                 $query->where('gender', Input::get('gender'))
                       ->orWhere('gender','U');
             })->get();    
+        }
+        else if(strtr(Input::get('search'), array("+" => " ")) != '' && (Input::get('gender') != 'U'))
+        {
+            $src = strtr(Input::get('search'), array("+" => " "));
+            $gen = Input::get('gender');
+            $mic = MacroService::find($mac)->microservices()->where(function($query) use ($gen)
+                {
+                    $query->where('gender',Input::get('gender'))
+                          ->orwhere('gender','U');
+                })
+            ->where(function($query) use ($src) {
+                $query->where('name', 'like','%'.$src.'%')
+                      ->orWhere('title', 'like','%'.$src.'%');
+            })->get();    
+        }
+        else if(strtr(Input::get('search'), array("+" => " ")) != '' && (Input::get('gender') == 'U'))
+        {
+            $src = strtr(Input::get('search'), array("+" => " "));
+            $mic = MacroService::find($mac)->microservices()->where(function($query) use ($src) {
+                $query->where('name', 'like','%'.$src.'%')
+                      ->orWhere('title', 'like','%'.$src.'%');
+            })->get();       
         }
         else{
             $mic = MacroService::find($mac)->microservices()->get();       
