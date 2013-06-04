@@ -3,6 +3,17 @@
 	margin-bottom: 0;
 }
 
+h1 {
+	z-index: 2;
+	position: relative;
+}
+.carousel {
+	max-width: 700px;
+	margin: 0 auto;
+	top: -55px;
+	z-index: 1;
+}
+
 .btn-large{
     margin-bottom: 10px;
     width: 200px;
