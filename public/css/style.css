@@ -7,6 +7,11 @@ h1 {
 	z-index: 2;
 	position: relative;
 }
+
+.alert {
+	z-index: 5;
+	position: relative;
+}
 .carousel {
 	max-width: 700px;
 	margin: 0 auto;
