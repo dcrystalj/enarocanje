@@ -70,6 +70,7 @@ return array(
 	'noProvidersYet' => 'No providers avaliable yet',
 	'error' => 'An error has occured!',
 	'logoDeleted' => 'Logo was deleted.',
+	'imageType' => 'File type not supported',
 
 
 

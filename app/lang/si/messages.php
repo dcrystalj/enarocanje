@@ -71,6 +71,7 @@ return array(
 	'noProvidersYet' => 'Ponudnikov še ni',
 	'error' => 'Zgodila se je napaka!',
 	'logoDeleted' => 'Logo je bil zbrisan.',
+	'imageType' => 'Nedovoljen tip datoteke',
 
 
 

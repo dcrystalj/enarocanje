@@ -24,7 +24,7 @@
 		}
 	?>
 	{{Former::open_for_files(URL::to('providerSaveLogo'),'POST')->id('logoForm')}}
-	{{Former::file("logo",trans('general.logo'))->accept('image')->max(2, 'MB')}}
+	{{Former::file("logo",trans('general.logo'))->max(2, 'MB')}}
 {{Former::actions()->submit(trans('general.submit'))}}
 @if(isSetLogo($logoPath))
 

@@ -96,7 +96,7 @@ class UserLibrary {
             $img = imagecreatefrompng($publicPath.$path);
             break;
             default: 
-                return Redirect::back()->with('error','Image type not supported');
+                return Redirect::back()->with('error',trans('messages.imageType'));
         }
         $maxwidthmaxheight = '<script>screen.width/2</script> maxheight:<script>screen.height/2</script>';
         if(2*imagesy($img) > imagesx($img))
@@ -130,7 +130,7 @@ class UserLibrary {
             case 'image/gif':
                 return '.gif';
             default: 
-                return Redirect::back()->with('error','Image type not supported');
+                return Redirect::back()->with('error',trans('messages.imageType'));
                 break;
             }
     }

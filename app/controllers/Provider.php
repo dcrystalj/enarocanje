@@ -172,7 +172,7 @@ class Provider extends BaseController {
 	public function logo()
 	{	
 
-		return View::make('logo');
+		return View::make('logo')->with('rules', array('logo' => 'image'));
 
 	}
 
@@ -180,13 +180,19 @@ class Provider extends BaseController {
 	public function saveLogo()
 	{	
 		$imageRule = array(
-		    'image'     => 'image',
+		    'logo'     => 'image',
 		);
 
 		$image = 'logo';
 		$filepath = 'image/logo';
 		$filename = '';
+		$validation = Validator::make(Input::all(),$imageRule);
+		//if(true) echo(var_dump($validation));
+        if($validation->fails())
+        {
 
+            return Redirect::back()->withErrors($validation)->withInput();
+		} 
         //$imagetype = exif_imagetype('public/'.$path);
 		//if(true) return $_FILES[$image]['type'];
 		if ($_FILES[$image]["error"] > 0)
@@ -194,16 +200,19 @@ class Provider extends BaseController {
 			return Redirect::back()->with('Error',trans('messages.error'));
 		}
 		do {
-			$filename = Str::random('20','alpha') . UserLibrary::getImageExtensionFromMime($_FILES[$image]['type']);
+			$extension = UserLibrary::getImageExtensionFromMime($_FILES[$image]['type']);
+			if(in_array($extension,array('.jpg','.png','.gif')))
+			{
+				$filename = Str::random('20','alpha') . $extension;
+			}
+			else
+			{
+				return Redirect::back()->with('error',trans('messages.imageType'));
+			}
 		}
 		while(File::exists($filepath . $filename));
 				
-		$validation = Validator::make(Input::all(),$imageRule);
-
-        if($validation->fails())
-        {
-            return Redirect::back()->withErrors($validation)->withInput();
-		} 
+		
 
 		$macservice = Auth::user()->macroservices()->where('user_id','=',Auth::user()->id)->first();
 		if($macservice->logo != '')
