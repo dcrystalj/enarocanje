@@ -364,15 +364,16 @@ class MicroserviceApiController extends BaseController
 		    	->subject(trans('messages.successfulReservation'));
 			});
 
-			Mail::send('emails.reservation.provider', $data, function($m) use ($r)
-			{
-			    $m->to(
-		    		$r->microservice->macroservice->email, 
-		    		$r->microservice->macroservice->name
-		    	)
-		    	->subject(trans('messages.successfulReservation'));
-			});
-
+			if(filter_var($r->microservice->macroservice->email, FILTER_VALIDATE_EMAIL)) {
+				Mail::send('emails.reservation.provider', $data, function($m) use ($r)
+				{
+				    $m->to(
+			    		$r->microservice->macroservice->email, 
+			    		$r->microservice->macroservice->name
+			    	)
+			    	->subject(trans('messages.successfulReservation'));
+				});
+			}
 			return json_encode(array('success'=>true,'text'=>trans('messages.successfullySaved')));
 		}
 		return json_encode(array('success'=>false,'text'=>trans('messages.emailTakenPleaseLogin')));
