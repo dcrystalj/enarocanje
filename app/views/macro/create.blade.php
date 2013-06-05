@@ -41,7 +41,7 @@
         {{ Former::close() }}
     </div>
     @endif
-    <div class="offset2 span5">
+    <div class="offset1 span5">
         @if(isset($mac))
             {{ Former::open(URL::route('macro.update', $mac->id ))->method('PUT')->rules($rules) }}
             {{ Former::populate($mac) }}

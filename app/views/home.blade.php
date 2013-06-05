@@ -6,10 +6,6 @@
 
 @section('content')
 
-	@if (Auth::check())
-	<p>{{trans('general.welcome'); Auth::user()->name }} </p>
-	@endif
-
 	{{ Carousel::create([
 	array(
 		'image'=>'img/massage.jpg',

@@ -34,6 +34,14 @@ h1 {
     visibility: hidden;
 }
 
+#tofridaytime {
+	margin-bottom: 10px;
+}
+
+dd {
+	margin-top: 10px;
+}
+
 input {
 	min-width: 200px!important;
 }
@@ -113,7 +121,7 @@ input {
 #mobileTable { display: table; }
 #stacktable { display: none; }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 800px) {
 	#mobileTable { display: none; }
 	#stacktable { display: table; }
 	
