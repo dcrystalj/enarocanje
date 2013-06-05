@@ -1,0 +1,24 @@
+1. Registirajte se kot ponudnik storitev
+matic.volk@gmail.com
+2. Vnesite delovni čas novo dodanega ponudnika, ki je med tednom od 9 do 21 ure s pavzo med 13 in 15 uro, v soboto pa od 9 do 15 ure
+
+urnik:
+delavniki 9-21
+sobota 9-15
+pavze:
+delavmiki 13-15
+
+3. Vnesite seznam (vsaj 3) storitev, ki jih opravlja novo dodani ponudnik storitev
+
+
+4. Novo dodanemu ponudniku vnesite logotip
+
+5. Kot ponudnik storitev povežite svoj (Google) koledar s sistemom
+
+6. Registrirajte se kot stranka
+riba1122@gmail.com
+7. Rezervirajte si storitev striženja kot registrirana stranka
+riba1122@gmail.com
+8. Odjavite se in si (kot neregistrirana stranka) rezervirajte najcenejšo 60 minutno tajsko masažo v Ljubljani
+
+9. Kot ponudnik preverite zasedenost salona za naslednji teden

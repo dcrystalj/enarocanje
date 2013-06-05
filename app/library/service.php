@@ -105,7 +105,12 @@ class Service {
 	}
 
 	public static function gender() {
-		return self::$sex;
+		//return self::$sex;
+		return array(
+	        'U' => trans('general.unisex'),
+	        'M' => trans('general.male'),
+	        'W' => trans('general.female'),
+        );
 	}
 
 	/*public static function absence() {
@@ -133,7 +138,27 @@ class Service {
 	public static function serviceName1($micid){
 		$mic      = MicroService::find($micid);
 		$category = $mic->category;
-		$name     = Service::services()[$category][$mic->name];
+		//$name     = Service::services()[$category][$mic->name];
+
+		/*$transServices = array(
+		'3' => array('general.manicure', 
+					 'general.pedicure',
+					 'general.depilation',
+					 'general.solarium',
+					 'general.makeUp',),
+		'1' => array('general.massage'),       
+		'2' => array('general.hairServices'),
+		'0' => array('general.skinTreatments',
+					 'general.manicure', 
+					 'general.pedicure',
+					 'general.depilation',
+					 'general.solarium',
+					 'general.makeIp',
+					 'general.massage',
+					 'general.hairServices',),
+	);
+		$name     = $transServices[$category][$mic->name];
+		*/
 		return $name;
 	}	
 
