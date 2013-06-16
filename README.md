@@ -9,10 +9,8 @@ fist ```composer install``` or ```composer update```
 To run server 
 ```php artisan serve```
 
-L4 documentation:
-```
-http://four.laravel.com/
-```
+
+change ```app/config/mail.php``` and ```app/config/database.php``` for your own needs
 
 
 -----------------------------------------------------------------
