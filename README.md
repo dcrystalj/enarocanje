@@ -1,9 +1,8 @@
 enarocanje
 ==========
 
-e-narocanje, za TPO
+e-narocanje
 
-For simplicity we write everything in english.
 
 fist ```composer install``` or ```composer update```
 
@@ -14,6 +13,10 @@ L4 documentation:
 ```
 http://four.laravel.com/
 ```
+
+
+-----------------------------------------------------------------
+HELPERS:
 
 Bundles documentations:
 ```
