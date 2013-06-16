@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => "tt3710@student.uni-lj.si", 'name' => "tt3710"),
+	'from' => array('address' => "yourmail", 'name' => "yourname"),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => "51971860-2b02-42d6-8a9f-7d4ccda70ee0",
+	'username' => "todo",
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,6 +93,6 @@ return array(
 	|
 	*/
 
-	'password' => "51971860-2b02-42d6-8a9f-7d4ccda70ee0",
+	'password' => "todo",
 
 );
